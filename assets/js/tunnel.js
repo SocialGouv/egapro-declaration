@@ -3,7 +3,7 @@ const progress = document.querySelector('progress')
 const previousButton = document.querySelector('a[rel=prev]')
 const nextButton = document.querySelector('button[rel=next]')
 const steps = [
-   {name: 'declaration'},
+   {name: 'commencer'},
    {name: 'declarant'},
    {name: 'annee', nextStep: data => {
     if(data['entreprise.structure'] === 'ues') return 'ues'
