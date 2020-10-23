@@ -7,6 +7,6 @@
     localStorage.token = location.search.slice(tokenParam.length)
   }
   else if (localStorage.token) token = true
-  token ? redirect('/declaration/commencer') : redirect('/declaration/presentation')
+  token ? redirect('/declaration/commencer.html') : redirect('/declaration/presentation.html')
 </script>
 
