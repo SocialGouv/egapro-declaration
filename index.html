@@ -10,5 +10,5 @@ layout: empty
     localStorage.token = location.search.slice(tokenParam.length)
   }
   else if (localStorage.token) token = true
-  token ? redirect('{{site.baseurl}}/commencer') : redirect('{{site.baseurl}}/presentation')
+  token ? redirect('{{site.baseurl}}/commencer.html') : redirect('{{site.baseurl}}/presentation.html')
 </script>
