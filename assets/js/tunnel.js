@@ -30,7 +30,8 @@ const steps = [
   {name: 'transmission'}
 ]
 
-const pageName = location.pathname.slice(1)
+const path = location.pathname
+const pageName = path.slice(1, path.lastIndexOf('.'))
 const step = steps.findIndex(step => step.name === pageName)
 
 window.data = JSON.parse(localStorage.data || '{}')
@@ -59,9 +60,9 @@ form.addEventListener('submit', async (event) => {
 
   const nextStep = steps[step].nextStep
   if (nextStep) {
-    return redirect(`/${nextStep(data)}`)
+    return redirect(`/${nextStep(data)}.html`)
   }
-  return redirect(`/${steps[step + 1].name}`)
+  return redirect(`/${steps[step + 1].name}.html`)
 })
 
 // "Previous" button
