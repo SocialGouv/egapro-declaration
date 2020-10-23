@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/remuneration-coef.html">
+  <main>
+  <hgroup>
+  <h1>Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique</h1>
+  <h3>Il faut saisir les écarts de rémunération en % <em>avant</em> application du seuil de pertinence</h3>
+</hgroup>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Moins de 30 ans</th>
+      <th>De 30 à 39 ans</th>
+      <th>De 40 à 49 ans</th>
+      <th>50 ans et plus</th>
+    </tr>
+  </thead>
+
+  <tbody id="container">
+    <template id="looper">
+      <tr>
+        <th>Niveau - Coefficient {index} (en %)</th>
+        <td>
+          
+<input
+  id="field--indicateur.30-moins"
+  value="{indicateur.30-moins}"
+  type="number"
+  name="indicateur.30-moins"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+/>
+
+        </td>
+        <td>
+          
+<input
+  id="field--indicateur.30-39"
+  value="{indicateur.30-39}"
+  type="number"
+  name="indicateur.30-39"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+/>
+
+        </td>
+        <td>
+          
+<input
+  id="field--indicateur.40-49"
+  value="{indicateur.40-49}"
+  type="number"
+  name="indicateur.40-49"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+/>
+
+        </td>
+        <td>
+          
+<input
+  id="field--indicateur.50-plus"
+  value="{indicateur.50-plus}"
+  type="number"
+  name="indicateur.50-plus"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+/>
+
+        </td>
+      </tr>
+    </template>
+  </tbody>
+</table>
+
+<script>
+  document.onready = (() => {
+    const container = document.getElementById('container')
+    const template = document.getElementById('looper').innerHTML
+    const count = Number(window.data['indicateur.niveaux'])
+    const content = Array(count).fill().map((_, i) => {
+      const index = i + 1
+      return template
+        .replaceAll('{index}', index)
+        .replaceAll('{indicateur.30-moins}', window.data['indicateur.30-moins'])
+        .replaceAll('{indicateur.30-39}', window.data['indicateur.30-39'])
+        .replaceAll('{indicateur.40-49}', window.data['indicateur.40-49'])
+        .replaceAll('{indicateur.50-plus}', window.data['indicateur.50-plus'])
+    }).join('')
+    container.innerHTML = content
+  })
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

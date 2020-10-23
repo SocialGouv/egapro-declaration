@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Vous êtes une Unité Économique et Sociale (UES) - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/ues.html">
+  <main>
+  <h1>Vous êtes une Unité Économique et Sociale (UES)</h1>
+
+<fieldset>
+  <div class=row>
+    <div>
+  <label for="field--ues.nom">Nom de l'UES*</label>
+
+
+<input
+  id="field--ues.nom"
+  value=""
+  type=""
+  name="ues.nom"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <div>
+  <label for="field--ues.declarant">Nom de l'entreprise déclarant pour le compte de l'UES*</label>
+
+
+<input
+  id="field--ues.declarant"
+  value=""
+  type=""
+  name="ues.declarant"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <div>
+  <label for="field--entreprise.siren">Numéro SIREN de cette entreprise*</label>
+
+
+<input
+  id="field--entreprise.siren"
+  value=""
+  type=""
+  name="entreprise.siren"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <div><label for="field--entreprise.naf">Code NAF de cette entreprise*</label>
+
+<select
+  id="field--entreprise.naf"
+  name="entreprise.naf"
+  required
+  
+>
+</select>
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <div>
+  <label for="field--ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
+
+
+<input
+  id="field--ues.nombre_entreprises"
+  value=""
+  type="number"
+  name="ues.nombre_entreprises"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+  </div>
+</fieldset>
+
+<script>
+  document.onready = function() {
+    const select = selectField('entreprise.naf')
+    const options = [
+      { value: '1071z', label: '10.71Z – Fabrication industrielle de pain et de patisserie fraiche' },
+      { value: '0126z', label: '01.26Z – Culture des fuits oléagéneux' },
+      { value: '0130z', label: '01.30Z – Reproduction de plantes' },
+      ]
+    buildSelectOptions(select, options)
+
+    const siren = selectField('entreprise.siren')
+    siren.value = window.data['entreprise.siren']
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

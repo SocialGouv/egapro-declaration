@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Informations déclarant - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/declarant.html">
+  <main>
+  <h1>Informations déclarant</h1>
+
+<fieldset>
+  <!-- fieldset display flex can't work in Chromium -->
+  <div class=row>
+    <div>
+  <label for="field--declarant.nom">Nom du déclarant*</label>
+
+
+<input
+  id="field--declarant.nom"
+  value=""
+  type=""
+  name="declarant.nom"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+    <div>
+  <label for="field--declarant.prenom">Prénom du déclarant*</label>
+
+
+<input
+  id="field--declarant.prenom"
+  value=""
+  type=""
+  name="declarant.prenom"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  
+  <label for="field--declarant.tel">Numéro de téléphone*</label>
+
+
+<input
+  id="field--declarant.tel"
+  value=""
+  type=""
+  name="declarant.tel"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+</fieldset>
+
+<fieldset>
+  <p>Adresse de l'entreprise déclarante ou siège de l'UES</p>
+  <div class=row id="departement-selector">
+    <div><label for="field--entreprise.region">Région*</label>
+
+<select
+  id="field--entreprise.region"
+  name="entreprise.region"
+  required
+  empty
+>
+</select>
+</div>
+    <div><label for="field--entreprise.departement">Département*</label>
+
+<select
+  id="field--entreprise.departement"
+  name="entreprise.departement"
+  required
+  
+>
+</select>
+</div>
+  </div>
+
+  <div class=row>
+    
+  <label for="field--entreprise.adresse">Adresse*</label>
+
+
+<input
+  id="field--entreprise.adresse"
+  value=""
+  type=""
+  name="entreprise.adresse"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+  </div>
+
+  <div class=row>
+    
+  <label for="field--entreprise.codePostal">Code postal (5 car.)*</label>
+
+
+<input
+  id="field--entreprise.codePostal"
+  value=""
+  type=""
+  name="entreprise.codePostal"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+    
+  <label for="field--entreprise.commune">Commune*</label>
+
+
+<input
+  id="field--entreprise.commune"
+  value=""
+  type=""
+  name="entreprise.commune"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+  </div>
+</fieldset>
+
+<script>
+  const regionSelect = selectField('entreprise.region')
+  regionSelect.addEventListener('change', loadDepartments)
+  const departmentSelect = selectField('entreprise.departement')
+
+  document.onready = async () => {
+    if(!window.app.regions) {
+      const response = await fetch('/datasets/regions.json')
+      window.app.regions = await response.json()
+    }
+    dataLoaded()
+  }
+
+  function dataLoaded() {
+    const regionsData = Object.keys(window.app.regions).map(region => ({label: region, value: region}))
+    buildSelectOptions(regionSelect, regionsData, window.data['entreprise.region'])
+
+    if(window.data['entreprise.region']) loadDepartments()
+  }
+
+  function loadDepartments() {
+    const region = regionSelect.value
+    const departments = window.app.regions[region].map(r => ({ label: r, value: r }))
+    buildSelectOptions(departmentSelect, departments, window.data['entreprise.departement'])
+  }
+
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

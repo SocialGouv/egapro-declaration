@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Niveau de résultat global - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/note.html">
+  <main>
+  <h1>Niveau de résultat global</h1>
+
+<fieldset>
+  <div class=row>
+  <label for="field--note.total_points_obtenus">Total des points obtenus</label>
+
+
+<input
+  id="field--note.total_points_obtenus"
+  value=""
+  type="number"
+  name="note.total_points_obtenus"
+  placeholder=""
+  
+  min="0"
+  max="100"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+  <label for="field--note.nombre_points_maximum">Nombre de points maximum pouvant être obtenus</label>
+
+
+<input
+  id="field--note.nombre_points_maximum"
+  value=""
+  type="number"
+  name="note.nombre_points_maximum"
+  placeholder=""
+  
+  min="0"
+  max="100"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset class=note>
+  <div class=row>
+  <label for="field--note.resultat_final">Résultat final sur 100 points</label>
+
+
+<input
+  id="field--note.resultat_final"
+  value=""
+  type="number"
+  name="note.resultat_final"
+  placeholder=""
+  
+  min="0"
+  max="100"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row><label for="field--note.mesures_correction">Mesures de correction prévues à l'article D. 1142-6</label>
+
+<select
+  id="field--note.mesures_correction"
+  name="note.mesures_correction"
+  
+  empty
+>
+</select>
+</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const mesuresCorrectionOptions = [
+      { value: 'mises-en-oeuvre', label: "Mesures mises en oeuvre"},
+      { value: 'envisagees', label: "Mesures envisagées"},
+      { value: 'non-envisagees', label: "Mesures non envisagées"},
+    ]
+    buildSelectOptions(selectField('note.mesures_correction'), mesuresCorrectionOptions)
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

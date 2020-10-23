@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Ecart de taux d'augmentations individuelles entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/augmentation.html">
+  <main>
+  <h1>Ecart de taux d'augmentations individuelles entre les femmes et les hommes</h1>
+
+<fieldset>
+  <div class=row>
+    <div><label for="field--augmentation-calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
+
+<div
+  id="field--augmentation-calculable"
+  name="augmentation-calculable"
+  type="radiogroup"
+  
+  >
+</div>
+</div>
+  </div>
+</fieldset>
+
+<fieldset id="non-calculable">
+  <div class=row><label for="field--augmentation-precision-motif">Précision du motif</label>
+
+<select
+  id="field--augmentation-precision-motif"
+  name="augmentation-precision-motif"
+  
+  empty
+>
+</select>
+</div>
+</fieldset>
+
+<fieldset id="autre-motif">
+  <div class=row><label for="field--augmentation-precision-autre-motif">Préciser "autres motifs"</label>
+
+<textarea
+  id="field--augmentation-precision-autre-motif"
+  name="augmentation-precision-autre-motif"
+  placeholder=""
+  
+></textarea>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+  <label for="field--augmentation-resultat-pourcentage">Résultat final en pourcentage (%)</label>
+
+
+<input
+  id="field--augmentation-resultat-pourcentage"
+  value=""
+  type="number"
+  name="augmentation-resultat-pourcentage"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+  <label for="field--augmentation-resultat-nombre-salaries">Résultat final en nombre de salariés</label>
+
+
+<input
+  id="field--augmentation-resultat-nombre-salaries"
+  value=""
+  type="number"
+  name="augmentation-resultat-nombre-salaries"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row><label for="field--augmentation-favorable">Population envers laquelle l'écart est favorable</label>
+
+<select
+  id="field--augmentation-favorable"
+  name="augmentation-favorable"
+  
+  empty
+>
+</select>
+</div>
+</fieldset>
+
+<fieldset class="note subnote">
+  <div class=row>
+  <label for="field--augmentation-resultat-pourcentage">Nombre de points obtenus sur le résultat final en pourcentage</label>
+
+
+<input
+  id="field--augmentation-resultat-pourcentage"
+  value=""
+  type="number"
+  name="augmentation-resultat-pourcentage"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset class="note subnote">
+  <div class=row>
+  <label for="field--augmentation-resultat-nombre-salaries">Nombre de points obtenus sur le résultat final en nombre de salariés</label>
+
+
+<input
+  id="field--augmentation-resultat-nombre-salaries"
+  value=""
+  type="number"
+  name="augmentation-resultat-nombre-salaries"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset class=note>
+  <div class=row>
+  <label for="field--remuneration-note">Nombre de points obtenus sur l'indicateur</label>
+
+
+<input
+  id="field--remuneration-note"
+  value=""
+  type="number"
+  name="remuneration-note"
+  placeholder=""
+  
+  min="0"
+  max="35"
+  
+  
+/>
+</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const calculOptions = [
+      {value: "calculable", label: "oui"},
+      {value: "nc", label: "non"},
+    ]
+    buildRadioOptions(selectField('augmentation-calculable'), calculOptions, "calculable")
+    const motifsOptions = [
+      { value: 'asbaugi', label: "Absence d'augmentations individuelles"},
+      { value: 'xxxxxx', label: "L'entreprise ne comporte pas au moins 5 femmes et 5 hommes"},
+      { value: 'autre', label: "Autres motifs"},
+    ]
+    buildSelectOptions(selectField('augmentation-precision-motif'), motifsOptions)
+    const favorableOptions = [
+      { value: 'femmes', label: "Femmes" },
+      { value: 'hommes', label: "Hommes" }
+    ]
+    buildSelectOptions(selectField('augmentation-favorable'), favorableOptions)
+
+    const checkCalculable = (calculableSelector, motifSelector, precisionAutreSelector) => {
+      const nonCalculableMotifFieldset = document.querySelector(motifSelector)
+      const nonCalculableMotif = document.querySelector(`${motifSelector} select`)
+
+      const nonCalculableAutreFieldset = document.querySelector(precisionAutreSelector)
+
+      const isCalculable = !document.querySelector(calculableSelector).checked
+
+      // The "précision du motif" select should only be enabled if the indicator isn't computable
+      nonCalculableMotifFieldset.disabled = isCalculable
+      // The "préciser autre motif" textarea should only be enabled if the indicator isn't computable and the "motif" is "autre"
+      nonCalculableAutreFieldset.disabled = isCalculable || nonCalculableMotif.value != 'autre'
+    }
+
+    checkCalculable('[value="nc"]', '#non-calculable', '#autre-motif')
+
+    Array.from(document.querySelectorAll('[name=augmentation-calculable]')).forEach(function(radio) {
+      radio.addEventListener('change', function(event) {
+        checkCalculable('[value="nc"]', '#non-calculable', '#autre-motif')
+      })
+    })
+
+    // Only enable the "préciser autre motif" textarea if the "motif" is "autre"
+    document.querySelector('[name=augmentation-precision-motif]').addEventListener('change', function(event) {
+      checkCalculable('[value="nc"]', '#non-calculable', '#autre-motif')
+    })
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

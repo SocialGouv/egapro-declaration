@@ -1,0 +1,172 @@
+{
+  "informations": {
+    "nomEntreprise": "",
+    "trancheEffectifs": "50 à 250",
+    "debutPeriodeReference": "",
+    "finPeriodeReference": ""
+  },
+  "effectif": {
+    "nombreSalaries": [{
+      "categorieSocioPro": 0,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }, {
+      "categorieSocioPro": 1,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }, {
+      "categorieSocioPro": 2,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }, {
+      "categorieSocioPro": 3,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }]
+  },
+  "indicateurUn": {
+    "csp": true,
+    "coef": false,
+    "autre": false,
+    "remunerationAnnuelle": [{
+      "categorieSocioPro": 0,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }, {
+      "categorieSocioPro": 1,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }, {
+      "categorieSocioPro": 2,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }, {
+      "categorieSocioPro": 3,
+      "tranchesAges": [{
+        "trancheAge": 0
+      }, {
+        "trancheAge": 1
+      }, {
+        "trancheAge": 2
+      }, {
+        "trancheAge": 3
+      }]
+    }],
+    "coefficientGroupFormValidated": false,
+    "coefficientEffectifFormValidated": false,
+    "coefficient": []
+  },
+  "indicateurDeux": {
+    "presenceAugmentation": true,
+    "tauxAugmentation": [{
+      "categorieSocioPro": 0
+    }, {
+      "categorieSocioPro": 1
+    }, {
+      "categorieSocioPro": 2
+    }, {
+      "categorieSocioPro": 3
+    }]
+  },
+  "indicateurTrois": {
+    "presencePromotion": true,
+    "tauxPromotion": [{
+      "categorieSocioPro": 0
+    }, {
+      "categorieSocioPro": 1
+    }, {
+      "categorieSocioPro": 2
+    }, {
+      "categorieSocioPro": 3
+    }]
+  },
+  "indicateurDeuxTrois": {
+    "presenceAugmentationPromotion": null,
+    "periodeDeclaration": "unePeriodeReference"
+  },
+  "indicateurQuatre": {
+    "presenceCongeMat": true
+  },
+  "indicateurCinq": {
+    "formValidated": false
+  },
+  "informationsEntreprise": {
+    "√ nomEntreprise": "",
+    "√ siren": "",
+    "√ codeNaf": "",
+    "√ region": "",
+    "√ departement": "",
+    "√ adresse": "",
+    "√ codePostal": "",
+    "√ commune": "",
+    "structure": "Entreprise",
+    "nomUES": "",
+    "entreprisesUES": []
+  },
+  "informationsDeclarant": {
+    "√ nom": "",
+    "√ prenom": "",
+    "√ tel": "",
+    "√ email": "",
+    "acceptationCGU": false
+  },
+  "declaration": {
+    "formValidated": false,
+    "mesuresCorrection": "",
+    "dateConsultationCSE": "",
+    "datePublication": "",
+    "lienPublication": "",
+    "dateDeclaration": "",
+    "totalPoint": 0,
+    "totalPointCalculable": 0
+  }
+}

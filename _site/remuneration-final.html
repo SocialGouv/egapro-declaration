@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/remuneration-final.html">
+  <main>
+  <h1>Ecart de rémunération entre les femmes et les hommes</h1>
+
+<fieldset>
+  <div class=row>
+  <label for="field--ecart-final-pourcentage">Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie</label>
+
+
+<input
+  id="field--ecart-final-pourcentage"
+  value=""
+  type="number"
+  name="ecart-final-pourcentage"
+  placeholder=""
+  
+  min="0"
+  max="100"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row><label for="field--remuneration-favorable">Population envers laquelle l'écart est favorable</label>
+
+<select
+  id="field--remuneration-favorable"
+  name="remuneration-favorable"
+  
+  empty
+>
+</select>
+</div>
+</fieldset>
+
+<fieldset class=note>
+  <div class=row>
+  <label for="field--remuneration-note">Nombre de points obtenus sur l'indicateur</label>
+
+
+<input
+  id="field--remuneration-note"
+  value=""
+  type="number"
+  name="remuneration-note"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  
+  
+/>
+</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const favorableOptions = [
+      { value: 'femmes', label: "Femmes" },
+      { value: 'hommes', label: "Hommes" }
+    ]
+    buildSelectOptions(selectField('remuneration-favorable'), favorableOptions)
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

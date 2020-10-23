@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/ues-composition.html">
+  <main>
+  <h1>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES</h1>
+
+<fieldset id=container>
+  <template id=looper>
+    <div class=row>
+      
+  <label for="field--ues.nom_{index}">Raison sociale #{index}*</label>
+
+
+<input
+  id="field--ues.nom_{index}"
+  value="{nom}"
+  type=""
+  name="ues.nom_{index}"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+      
+  <label for="field--ues.siren_{index}">SIREN #{index}*</label>
+
+
+<input
+  id="field--ues.siren_{index}"
+  value="{siren}"
+  type=""
+  name="ues.siren_{index}"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+    </div>
+  </template>
+</fieldset>
+
+<script>
+  document.onready = function() {
+    const template = document.getElementById('looper').innerHTML
+    const container = document.getElementById('container')
+    const count = Number(window.data['ues.nombre_entreprises'])
+    let html = ''
+    for(let i = 1; i <= count; i++) {
+      html += template
+        .replaceAll('{index}', i)
+        .replaceAll('{nom}', window.data[`ues.nom_${i}`])
+        .replaceAll('{siren}', window.data[`ues.siren_${i}`])
+    }
+    container.innerHTML = html
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

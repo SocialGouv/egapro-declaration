@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/remuneration.html">
+  <main>
+  <h1>Ecart de rémunération entre les femmes et les hommes</h1>
+
+<fieldset>
+  <div class=row>
+    <div><label for="field--indicateur.calcul">Modalités de calcul de l'indicateur relatif à l'écart de rémunération entre les femmes et les hommes</label>
+
+<div
+  id="field--indicateur.calcul"
+  name="indicateur.calcul"
+  type="radiogroup"
+  option-block
+  >
+</div>
+</div>
+  </div>
+</fieldset>
+
+<fieldset id="fieldset-cse">
+  <div class=row>
+    
+  <label for="field--indicateur.cse">Date de consultation au CSE*</label>
+
+
+<input
+  id="field--indicateur.cse"
+  value=""
+  type="date"
+  name="indicateur.cse"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+
+  </div>
+</fieldset>
+
+<fieldset id="fieldset-niveaux">
+  <div class=row>
+  <label for="field--indicateur.niveaux">Nombre de coefficients ou niveaux pour les modalités de calcul</label>
+
+
+<input
+  id="field--indicateur.niveaux"
+  value=""
+  type="number"
+  name="indicateur.niveaux"
+  placeholder=""
+  
+  min="1"
+  max="50"
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset id="fieldset-motif">
+  <div class=row><label for="field--indicateur.motif">Précision du motif de non calculabilité de l'indicateur</label>
+
+<select
+  id="field--indicateur.motif"
+  name="indicateur.motif"
+  
+  empty
+>
+</select>
+</div>
+</fieldset>
+
+<fieldset id="fieldset-autre_motif">
+  <div class=row><label for="field--indicateur.autre_motif">Préciser le motif</label>
+
+<textarea
+  id="field--indicateur.autre_motif"
+  name="indicateur.autre_motif"
+  placeholder=""
+  
+></textarea>
+</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const motifOptions = [
+      { value: '40', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
+      { value: 'autre', label: "Autre motif" }
+    ]
+    buildSelectOptions(selectField('indicateur.motif'), motifOptions)
+    const calculOptions = [
+      {value: "coef", label: "Par niveau ou coefficient hiérarchique en application de la classification de branche"},
+      {value: "coef-autre", label: "Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes"},
+      {value: "csp", label: "Par catégorie socio-professionnelle"},
+      {value: "nc", label: "L’indicateur n’est pas calculable"},
+    ]
+    buildRadioOptions(selectField('indicateur.calcul'), calculOptions, "csp")
+
+    const switcher = selectField('indicateur.calcul')
+    const indicateurMotif = selectField('indicateur.motif')
+    toggleFields()
+    switcher.addEventListener('change', toggleFields)
+    indicateurMotif.addEventListener('change', toggleFields)
+
+    function toggleFields() {
+      const value = document.querySelector('[name="indicateur.calcul"]:checked').value
+      toggleField('#fieldset-cse', ['coef', 'autre'].includes(value))
+      toggleField('#fieldset-niveaux', ['coef', 'autre'].includes(value))
+      toggleField('#fieldset-motif', value === 'nc')
+      toggleField('#fieldset-autre_motif', value === 'nc' && indicateurMotif.value === 'autre')
+    }
+
+    function toggleField(selector, enabled) {
+      document.querySelector(selector).disabled = !enabled
+    }
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>
