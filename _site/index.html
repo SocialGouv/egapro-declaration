@@ -1,4 +1,4 @@
-<script src="/declaration/assets/js/utils.js"></script>
+<script src="/assets/js/utils.js"></script>
 <script>
   const tokenParam = '?token='
   let token = false
@@ -7,6 +7,6 @@
     localStorage.token = location.search.slice(tokenParam.length)
   }
   else if (localStorage.token) token = true
-  token ? redirect('/declaration/commencer.html') : redirect('/declaration/presentation.html')
+  token ? redirect('/commencer.html') : redirect('/presentation.html')
 </script>
 

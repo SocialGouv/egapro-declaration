@@ -1,4 +1,4 @@
-# EgaPro – Solen
+# Egapro – Solen
 
 Ce projet est une application cliente qui utilise l'API d'EgaPro, dont elle dépend.
 
@@ -9,7 +9,7 @@ Accessoirement il permet aussi d'utiliser des composants.
 Il faudra donc installer Jekyll et lancer le project avec la commande
 
 ```
-jekyll serve
+make serve
 ```
 
 Le client s'authentifie par _token_.
