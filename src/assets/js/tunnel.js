@@ -44,7 +44,7 @@ progress.value = step
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
   const form = event.target
-  const data = formToData(form)
+  const data = serializeForm(form)
   let shouldSendData = true
 
   if(typeof document.onsend === 'function') {
@@ -84,13 +84,28 @@ if(step >= steps.length - 1) {
   nextButton.setAttribute('disabled', 'disabled')
 }
 
-function formToData(form) {
+function serializeForm(form) {
   const formData = new FormData(form)
   var data = {}
   formData.forEach((value, key) => {
       data[key] = value
   })
   return data
+}
+
+function validateData(data) {
+  const schema = window.app.schema
+  const formatted = Object.keys(data).reduce((acc, key) => {
+    let value = data[key]
+    // Extract field info from the
+    const [category, property] = key.split('.')
+    const info = schema.properties[category].properties[property]
+    info.required = schema[category].required.includes(property)
+    if(info)
+    // Build
+    acc[key] = value
+    return acc
+  }, {})
 }
 
 async function sendData(data) {

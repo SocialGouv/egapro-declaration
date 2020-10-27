@@ -12,7 +12,7 @@ async function loadApp() {
     window.app.config[key.toLowerCase()] = value
   })
   const schema = await request('GET', '/jsonschema.json')
-  window.app.schema = schema.data
+  window.app.schema = flattenJsonSchema(schema.data)
 }
 
 
@@ -69,8 +69,18 @@ function selectField(name) {
   return field
 }
 
-function getFieldProperties(fieldName) {
-  window.app.schema
+function flattenJsonSchema(jsonSchema) {
+  return Object.keys(jsonSchema.properties).reduce((acc = {}, key) => {
+    const category = jsonSchema.properties[key]
+    const props = category.properties
+    if(!props) return
+    Object.keys(props).forEach(prop => {
+      const value = props[prop]
+      value.required = category.required && category.required.includes(prop)
+      acc[`${key}.${prop}`] = value
+    })
+    return acc
+  }, {})
 }
 
 // Shortcut event
