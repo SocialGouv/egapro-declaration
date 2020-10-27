@@ -7,20 +7,23 @@ title: "Informations déclarant"
 <fieldset>
   <!-- fieldset display flex can't work in Chromium -->
   <div class=row>
-    <div>{% include input.html name="declarant.nom" label="Nom du déclarant" required=true %}</div>
-    <div>{% include input.html name="declarant.prenom" label="Prénom du déclarant" required=true %}</div>
+    <div>{% include input.html name="déclarant.nom" label="Nom du déclarant" required=true %}</div>
+    <div>{% include input.html name="déclarant.prénom" label="Prénom du déclarant" required=true %}</div>
   </div>
 </fieldset>
 
 <fieldset>
-  {% include input.html name="declarant.tel" label="Numéro de téléphone" required=true %}
+  <div class=row>{% include input.html name="déclarant.email" label="Email du déclarant" required=true %}</div>
+  <div class=row>
+    {% include input.html name="déclarant.téléphone" label="Numéro de téléphone" required=true %}
+  </div>
 </fieldset>
 
 <fieldset>
   <p>Adresse de l'entreprise déclarante ou siège de l'UES</p>
-  <div class=row id="departement-selector">
-    <div>{% include select.html name="entreprise.region" label="Région" required=true empty=true %}</div>
-    <div>{% include select.html name="entreprise.departement" label="Département" required=true %}</div>
+  <div class=row id="département-selector">
+    <div>{% include select.html name="entreprise.région" label="Région" required=true empty=true %}</div>
+    <div>{% include select.html name="entreprise.département" label="Département" required=true %}</div>
   </div>
 
   <div class=row>
@@ -28,15 +31,15 @@ title: "Informations déclarant"
   </div>
 
   <div class=row>
-    {% include input.html name="entreprise.codePostal" label="Code postal (5 car.)" required=true regex="\d[\dab]\d{3}" %}
+    {% include input.html name="entreprise.code_postal" label="Code postal (5 car.)" required=true regex="\d[\dab]\d{3}" %}
     {% include input.html name="entreprise.commune" label="Commune" required=true %}
   </div>
 </fieldset>
 
 <script>
-  const regionSelect = selectField('entreprise.region')
+  const regionSelect = selectField('entreprise.région')
   regionSelect.addEventListener('change', loadDepartments)
-  const departmentSelect = selectField('entreprise.departement')
+  const departmentSelect = selectField('entreprise.département')
 
   document.onready = async () => {
     if(!window.app.regions) {
@@ -48,15 +51,15 @@ title: "Informations déclarant"
 
   function dataLoaded() {
     const regionsData = Object.keys(window.app.regions).map(region => ({label: region, value: region}))
-    buildSelectOptions(regionSelect, regionsData, window.data['entreprise.region'])
+    buildSelectOptions(regionSelect, regionsData, window.data['entreprise.région'])
 
-    if(window.data['entreprise.region']) loadDepartments()
+    if(window.data['entreprise.région']) loadDepartments()
   }
 
   function loadDepartments() {
     const region = regionSelect.value
     const departments = window.app.regions[region].map(r => ({ label: r, value: r }))
-    buildSelectOptions(departmentSelect, departments, window.data['entreprise.departement'])
+    buildSelectOptions(departmentSelect, departments, window.data['entreprise.département'])
   }
 
 </script>

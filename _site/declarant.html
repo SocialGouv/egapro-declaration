@@ -24,14 +24,14 @@
   <!-- fieldset display flex can't work in Chromium -->
   <div class=row>
     <div>
-  <label for="field--declarant.nom">Nom du déclarant*</label>
+  <label for="field--déclarant.nom">Nom du déclarant*</label>
 
 
 <input
-  id="field--declarant.nom"
+  id="field--déclarant.nom"
   value=""
   type=""
-  name="declarant.nom"
+  name="déclarant.nom"
   placeholder=""
   
   
@@ -41,14 +41,14 @@
 />
 </div>
     <div>
-  <label for="field--declarant.prenom">Prénom du déclarant*</label>
+  <label for="field--déclarant.prénom">Prénom du déclarant*</label>
 
 
 <input
-  id="field--declarant.prenom"
+  id="field--déclarant.prénom"
   value=""
   type=""
-  name="declarant.prenom"
+  name="déclarant.prénom"
   placeholder=""
   
   
@@ -61,15 +61,33 @@
 </fieldset>
 
 <fieldset>
-  
-  <label for="field--declarant.tel">Numéro de téléphone*</label>
+  <div class=row>
+  <label for="field--déclarant.email">Email du déclarant*</label>
 
 
 <input
-  id="field--declarant.tel"
+  id="field--déclarant.email"
   value=""
   type=""
-  name="declarant.tel"
+  name="déclarant.email"
+  placeholder=""
+  
+  
+  
+  required
+  
+/>
+</div>
+  <div class=row>
+    
+  <label for="field--déclarant.téléphone">Numéro de téléphone*</label>
+
+
+<input
+  id="field--déclarant.téléphone"
+  value=""
+  type=""
+  name="déclarant.téléphone"
   placeholder=""
   
   
@@ -78,26 +96,27 @@
   
 />
 
+  </div>
 </fieldset>
 
 <fieldset>
   <p>Adresse de l'entreprise déclarante ou siège de l'UES</p>
-  <div class=row id="departement-selector">
-    <div><label for="field--entreprise.region">Région*</label>
+  <div class=row id="département-selector">
+    <div><label for="field--entreprise.région">Région*</label>
 
 <select
-  id="field--entreprise.region"
-  name="entreprise.region"
+  id="field--entreprise.région"
+  name="entreprise.région"
   required
   empty
 >
 </select>
 </div>
-    <div><label for="field--entreprise.departement">Département*</label>
+    <div><label for="field--entreprise.département">Département*</label>
 
 <select
-  id="field--entreprise.departement"
-  name="entreprise.departement"
+  id="field--entreprise.département"
+  name="entreprise.département"
   required
   
 >
@@ -127,14 +146,14 @@
 
   <div class=row>
     
-  <label for="field--entreprise.codePostal">Code postal (5 car.)*</label>
+  <label for="field--entreprise.code_postal">Code postal (5 car.)*</label>
 
 
 <input
-  id="field--entreprise.codePostal"
+  id="field--entreprise.code_postal"
   value=""
   type=""
-  name="entreprise.codePostal"
+  name="entreprise.code_postal"
   placeholder=""
   
   
@@ -164,9 +183,9 @@
 </fieldset>
 
 <script>
-  const regionSelect = selectField('entreprise.region')
+  const regionSelect = selectField('entreprise.région')
   regionSelect.addEventListener('change', loadDepartments)
-  const departmentSelect = selectField('entreprise.departement')
+  const departmentSelect = selectField('entreprise.département')
 
   document.onready = async () => {
     if(!window.app.regions) {
@@ -178,15 +197,15 @@
 
   function dataLoaded() {
     const regionsData = Object.keys(window.app.regions).map(region => ({label: region, value: region}))
-    buildSelectOptions(regionSelect, regionsData, window.data['entreprise.region'])
+    buildSelectOptions(regionSelect, regionsData, window.data['entreprise.région'])
 
-    if(window.data['entreprise.region']) loadDepartments()
+    if(window.data['entreprise.région']) loadDepartments()
   }
 
   function loadDepartments() {
     const region = regionSelect.value
     const departments = window.app.regions[region].map(r => ({ label: r, value: r }))
-    buildSelectOptions(departmentSelect, departments, window.data['entreprise.departement'])
+    buildSelectOptions(departmentSelect, departments, window.data['entreprise.département'])
   }
 
 </script>

@@ -3,14 +3,16 @@ async function loadApp() {
     data: {},
     regions: null,
     config: {},
+    schema: {},
   }
 
-  const response = await request('GET', '/config')
-  if(!response.ok) {
-    Object.entries(response.data).forEach(([key, value]) => {
-      window.app.config[key.toLowerCase()] = value
-    })
-  }
+  const config = await request('GET', '/config')
+  if(!config.ok) alert("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
+  Object.entries(config.data).forEach(([key, value]) => {
+    window.app.config[key.toLowerCase()] = value
+  })
+  const schema = await request('GET', '/jsonschema.json')
+  window.app.schema = schema.data
 }
 
 
@@ -18,7 +20,10 @@ async function request(method, uri, body, options = {}) {
   if(!['get', 'head'].includes(method.toLowerCase()))
     options.body = body ? JSON.stringify(body) : ""
   options.method = method
-  options.headers = { 'API-KEY': localStorage.token }
+  options.headers = {
+    'API-KEY': localStorage.token,
+    'ACCEPT': 'application/vnd.egapro.v1.flat',
+  }
   const response = await fetch(`${apiUrl}${uri}`, options)
   try {
     response.data = await response.json()
@@ -62,6 +67,10 @@ function selectField(name) {
   const field = document.getElementById(`field--${name}`)
   if(!field) throw new Error(`field name "${name}" does not exist.`)
   return field
+}
+
+function getFieldProperties(fieldName) {
+  window.app.schema
 }
 
 // Shortcut event

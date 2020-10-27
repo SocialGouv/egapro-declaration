@@ -7,7 +7,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
 
 <fieldset>
   <div class="row">
-    {% include input.html name="declaration.annee" label="Année au titre de laquelle vous transmettez vos indicateurs" readonly="true" disabled="true" %}
+    {% include input.html name="déclaration.annee" label="Année au titre de laquelle vous transmettez vos indicateurs" readonly="true" disabled="true" %}
   </div>
 </fieldset>
 
@@ -52,7 +52,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
 
 <script>
   document.onready = () => {
-    const annee = selectField('declaration.annee')
+    const annee = selectField('déclaration.annee')
     const date = new Date()
     annee.min = `${date.getFullYear() - 1}-01-01`
     annee.max = `${date.getFullYear() - 1}-12-31`

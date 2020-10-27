@@ -4,7 +4,7 @@ title: "Commencer la déclaration"
 ---
 <h1>{{ page.title }}</h1>
   <div>
-    {% include select.html name="declaration.annee" label="Année de déclaration" required=true %}
+    {% include select.html name="déclaration.année_indicateurs" label="Année de déclaration" required=true %}
   </div>
   <div>
     {% include input.html type="regex" name="entreprise.siren" label="Numéro SIREN" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" value="123456789" %}
@@ -14,7 +14,7 @@ title: "Commencer la déclaration"
   document.onready = function() {
     const year = (new Date()).getFullYear()
     buildSelectOptions(
-      selectField('declaration.annee'),
+      selectField('déclaration.année_indicateurs'),
       [{ value: year-1, label: year-1 }, { value: year, label: year }],
       null
     )
@@ -26,10 +26,12 @@ title: "Commencer la déclaration"
   }
 
   document.onsend = async function(data) {
-    localStorage.annee = data['declaration.annee']
+    localStorage.annee = data['déclaration.année_indicateurs']
     localStorage.siren = data['entreprise.siren']
 
     const response = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
+    debugger
     if(response.ok) window.app.data = JSON.stringify(response.data.data)
+    return false
   }
 </script>

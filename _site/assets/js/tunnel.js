@@ -45,18 +45,21 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault()
   const form = event.target
   const data = formToData(form)
+  let shouldSendData = true
 
   if(typeof document.onsend === 'function') {
     try {
-      await document.onsend(data)
+      if(await document.onsend(data) === false) shouldSendData = false
     } catch(e) {
       alert(e)
       return
     }
   }
 
-  const response = await sendData(data)
-  if(!response.ok) return
+  if(shouldSendData) {
+    const response = await sendData(data)
+    if(!response.ok) return
+  }
 
   const nextStep = steps[step].nextStep
   if (nextStep) {
@@ -91,8 +94,14 @@ function formToData(form) {
 }
 
 async function sendData(data) {
-  // const response = await request('PUT', `/declaration/${localStorage.siren}/${localStorage.annee}`, data)
-  const response = { ok: true }  // while server is not available in staging
+  const cleanedData = Object.keys(data).reduce((acc, k) => {
+    let value = data[k]
+    if(!isNaN(parseInt(value)) && String(parseInt(value)).length === value.length) value = parseInt(value)
+    acc[k] = value
+    return acc
+  }, {})
+  const response = await request('PUT', `/declaration/${localStorage.siren}/${localStorage.annee}`, data)
+  // const response = { ok: true }  // while server is not available in staging
   if(response.ok) localStorage.data = JSON.stringify(Object.assign(window.data, data))
   return response
 }

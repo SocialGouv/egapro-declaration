@@ -20,11 +20,11 @@
   <main>
   <h1>Commencer la déclaration</h1>
   <div>
-    <label for="field--declaration.annee">Année de déclaration*</label>
+    <label for="field--déclaration.année_indicateurs">Année de déclaration*</label>
 
 <select
-  id="field--declaration.annee"
-  name="declaration.annee"
+  id="field--déclaration.année_indicateurs"
+  name="déclaration.année_indicateurs"
   required
   
 >
@@ -55,7 +55,7 @@
   document.onready = function() {
     const year = (new Date()).getFullYear()
     buildSelectOptions(
-      selectField('declaration.annee'),
+      selectField('déclaration.année_indicateurs'),
       [{ value: year-1, label: year-1 }, { value: year, label: year }],
       null
     )
@@ -67,11 +67,13 @@
   }
 
   document.onsend = async function(data) {
-    localStorage.annee = data['declaration.annee']
+    localStorage.annee = data['déclaration.année_indicateurs']
     localStorage.siren = data['entreprise.siren']
 
     const response = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
+    debugger
     if(response.ok) window.app.data = JSON.stringify(response.data.data)
+    return false
   }
 </script>
 
