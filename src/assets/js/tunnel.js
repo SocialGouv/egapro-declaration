@@ -100,8 +100,8 @@ async function sendData(data) {
     acc[k] = value
     return acc
   }, {})
-  const response = await request('PUT', `/declaration/${localStorage.siren}/${localStorage.annee}`, data)
-  // const response = { ok: true }  // while server is not available in staging
+  // const response = await request('PUT', `/declaration/${localStorage.siren}/${localStorage.annee}`, cleanedData)
+  const response = { ok: true }  // while server is not available in staging
   if(response.ok) localStorage.data = JSON.stringify(Object.assign(window.data, data))
   return response
 }
