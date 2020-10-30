@@ -13,8 +13,7 @@ title: "Informations déclarant"
 </fieldset>
 
 <fieldset>
-  <div class=row>{% include input.html name="déclarant.email" label="Email du déclarant" required=true %}</div>
-  <div class=row>
+  <div>
     {% include input.html name="déclarant.téléphone" label="Numéro de téléphone" required=true %}
   </div>
 </fieldset>
@@ -51,15 +50,15 @@ title: "Informations déclarant"
 
   function dataLoaded() {
     const regionsData = Object.keys(window.app.regions).map(region => ({label: region, value: region}))
-    buildSelectOptions(regionSelect, regionsData, window.data['entreprise.région'])
+    buildSelectOptions(regionSelect, regionsData, window.app.data['entreprise.région'])
 
-    if(window.data['entreprise.région']) loadDepartments()
+    if(window.app.data['entreprise.région']) loadDepartments()
   }
 
   function loadDepartments() {
     const region = regionSelect.value
     const departments = window.app.regions[region].map(r => ({ label: r, value: r }))
-    buildSelectOptions(departmentSelect, departments, window.data['entreprise.département'])
+    buildSelectOptions(departmentSelect, departments, window.app.data['entreprise.département'])
   }
 
 </script>

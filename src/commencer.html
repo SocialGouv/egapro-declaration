@@ -30,7 +30,6 @@ title: "Commencer la déclaration"
     localStorage.siren = data['entreprise.siren']
 
     const response = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
-    debugger
     if(response.ok) window.app.data = JSON.stringify(response.data.data)
     return false
   }

@@ -1,20 +1,34 @@
 async function loadApp() {
   window.app = window.app || {
-    data: {},
     regions: null,
     config: {},
+    data: {},
     schema: {},
+    token: localStorage.token,
+    isNew: true,
   }
 
+  // Load config
   const config = await request('GET', '/config')
   if(!config.ok) alert("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
   Object.entries(config.data).forEach(([key, value]) => {
     window.app.config[key.toLowerCase()] = value
   })
+
+  if(!window.app.token) return
+
+  // Load JSON Schema
   const schema = await request('GET', '/jsonschema.json')
   window.app.schema = flattenJsonSchema(schema.data)
-}
 
+  // Load existing record
+  const record = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
+  if(record.ok) {
+    localStorage.data = JSON.stringify(record.data)
+    window.app.isNew = false
+  }
+  window.app.data = JSON.parse(localStorage.data || '{}')
+}
 
 async function request(method, uri, body, options = {}) {
   if(!['get', 'head'].includes(method.toLowerCase()))
@@ -31,7 +45,7 @@ async function request(method, uri, body, options = {}) {
   catch {
     response.data = null
   }
-  if(!response.ok && response.data) alert(response.data.error)
+  // if(!response.ok && response.data) alert(response.data.error)
   return response
 }
 
@@ -83,8 +97,43 @@ function flattenJsonSchema(jsonSchema) {
   }, {})
 }
 
+function flattenJson(json) {
+  return Object.keys(json).reduce((acc = {}, key) => {
+    const props = json[key]
+    if(!props) return
+    Object.keys(props).forEach(prop => {
+      const value = props[prop]
+      value.required = category.required && category.required.includes(prop)
+      acc[`${key}.${prop}`] = value
+    })
+    return acc
+  }, {})
+}
+
 // Shortcut event
 window.addEventListener('DOMContentLoaded', async () => {
   await loadApp()
+  document.dispatchEvent(new Event('ready'))
   document.onready && document.onready()
 })
+
+
+class DataStorage {
+
+  constructor() {
+    this.data = {}
+  }
+
+  async load() {
+    if(!localStorage.dataStorage) localStorage.dataStorage = '{}'
+    Object.assign(this.data, JSON.parse(localStorage.dataStorage))
+    if(this.data.siren && this.data.year) {
+      const request = await request('GET', `/declaration/${siren}/${year}`)
+      if(request.ok) Object.assign(this.data, request.data)
+    }
+  }
+
+  async save() {
+
+  }
+}
