@@ -34,9 +34,10 @@ const path = location.pathname
 const pageName = path.slice(1, path.lastIndexOf('.'))
 const step = steps.findIndex(step => step.name === pageName)
 
-window.data = JSON.parse(localStorage.data || '{}')
 
-loadFormValues(form, data)
+document.addEventListener('ready', () => {
+  loadFormValues(form, window.app.data)
+})
 
 progress.max = steps.length - 1
 progress.value = step
@@ -44,22 +45,19 @@ progress.value = step
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
   const form = event.target
-  const data = formToData(form)
-  let shouldSendData = true
+  const data = serializeForm(form)
 
   if(typeof document.onsend === 'function') {
     try {
-      if(await document.onsend(data) === false) shouldSendData = false
+      await document.onsend(data)
     } catch(e) {
       alert(e)
       return
     }
   }
 
-  if(shouldSendData) {
-    const response = await sendData(data)
-    if(!response.ok) return
-  }
+  const response = await sendData(data)
+  if(!response.ok) return
 
   const nextStep = steps[step].nextStep
   if (nextStep) {
@@ -84,7 +82,7 @@ if(step >= steps.length - 1) {
   nextButton.setAttribute('disabled', 'disabled')
 }
 
-function formToData(form) {
+function serializeForm(form) {
   const formData = new FormData(form)
   var data = {}
   formData.forEach((value, key) => {
@@ -93,20 +91,37 @@ function formToData(form) {
   return data
 }
 
-async function sendData(data) {
-  const cleanedData = Object.keys(data).reduce((acc, k) => {
-    let value = data[k]
-    if(!isNaN(parseInt(value)) && String(parseInt(value)).length === value.length) value = parseInt(value)
-    acc[k] = value
-    return acc
+function validateData(data = {}) {
+  return Object.keys(data).reduce((acc, key) => {
+    // Some keys are for internal use only, not corresponding to the schema
+    if(!Object.keys(window.app.schema).includes(key)) return
+    let value = data[key]
+    const validator = window.app.schema[key]
+    if(validator.type === 'string') value = String(value)
+    if(validator.type === 'integer') value = Number(value)
+    return Object.assign(acc, { [key]: value })
   }, {})
-  // const response = await request('PUT', `/declaration/${localStorage.siren}/${localStorage.annee}`, cleanedData)
-  const response = { ok: true }  // while server is not available in staging
-  if(response.ok) localStorage.data = JSON.stringify(Object.assign(window.data, data))
+}
+
+async function sendData(data) {
+  const minimalData = {
+    "entreprise.siren": "",
+    "déclaration.année_indicateurs": 0,
+    "déclaration.période_référence": [],
+    "déclaration.raison_sociale": "",
+    "entreprise.raison_sociale": "",
+  }
+  const cleanedData = Object.assign({}, minimalData, validateData(data))
+  Object.assign(window.app.data, cleanedData)
+
+  const method = window.app.isNew ? 'PUT' : 'PATCH'
+  // const response = await request(method, `/declaration/${window.app.data["entreprise.siren"]}/${window.app.data["déclaration.année_indicateurs"]}`, cleanedData)
+  const response = { ok: true }  // for testing staging
+  if(response.ok) localStorage.data = JSON.stringify(Object.assign(window.app.data, cleanedData))
   return response
 }
 
-function loadFormValues(form, data) {
+function loadFormValues(form, data = {}) {
   Object.keys(data).forEach((prop) => {
     const node = form.elements[prop]
     if(node) node.value = data[prop]
