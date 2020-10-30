@@ -1,5 +1,5 @@
 serve:
-	jekyll serve -s src
+	jekyll serve -dw -s src
 
 build:
 	jekyll build --baseurl "/declaration"
