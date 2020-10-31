@@ -106,10 +106,27 @@ function validateData(data = {}) {
 async function sendData(data) {
   const minimalData = {
     "entreprise.siren": "",
-    "déclaration.année_indicateurs": 0,
-    "déclaration.période_référence": [],
-    "déclaration.raison_sociale": "",
     "entreprise.raison_sociale": "",
+    "entreprise.région": "",
+    "entreprise.département": "",
+    "entreprise.adresse": "",
+    "entreprise.commune": "",
+    "entreprise.code_postal": "",
+    "entreprise.code_naf": "",
+    "entreprise.effectif": "",
+    "entreprise.ues": "",
+    "déclaration.date": "",
+    "déclaration.publication": "",
+    "déclaration.année_indicateurs": "",
+    "déclaration.période_référence": "",
+    "déclaration.date_consultation_CSE": "",
+    "déclaration.total_points": "",
+    "déclaration.total_points_calculables": "",
+    "déclaration.mesures_correctives": "",
+    "déclaration.index": "",
+    // "déclaration.année_indicateurs": 0,
+    // "déclaration.période_référence": [],
+    // "déclaration.date"
   }
   const cleanedData = Object.assign({}, minimalData, validateData(data))
   Object.assign(window.app.data, cleanedData)
