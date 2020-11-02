@@ -41,24 +41,19 @@ title: "Informations déclarant"
   const departmentSelect = selectField('entreprise.département')
 
   document.onready = async () => {
-    if(!window.app.regions) {
-      const response = await fetch('/datasets/regions.json')
-      window.app.regions = await response.json()
-    }
-    dataLoaded()
-  }
+    // Load regions
+    const regions = Object.keys(app.config.regions).map(code => ({ value: code, label: app.config.regions[code] }))
+    buildSelectOptions(regionSelect, regions, app.data['entreprise.région'])
 
-  function dataLoaded() {
-    const regionsData = Object.keys(window.app.regions).map(region => ({label: region, value: region}))
-    buildSelectOptions(regionSelect, regionsData, window.app.data['entreprise.région'])
-
-    if(window.app.data['entreprise.région']) loadDepartments()
+    // Load departements
+    if(regionSelect.value) loadDepartments()
   }
 
   function loadDepartments() {
-    const region = regionSelect.value
-    const departments = window.app.regions[region].map(r => ({ label: r, value: r }))
-    buildSelectOptions(departmentSelect, departments, window.app.data['entreprise.département'])
+    const selectedRegion = regionSelect.value
+    const departementCodes = app.config.regions_to_departements[selectedRegion]
+    const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
+    buildSelectOptions(departmentSelect, departements, app.data['entreprise.département'])
   }
 
 </script>

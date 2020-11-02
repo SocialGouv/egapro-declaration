@@ -36,8 +36,8 @@ const step = steps.findIndex(step => step.name === pageName)
 
 
 document.addEventListener('ready', () => {
-  if(!window.app.token) location.href = '/'
-  loadFormValues(form, window.app.data)
+  if(!app.token) location.href = '/'
+  loadFormValues(form, app.data)
 })
 
 progress.max = steps.length - 1
@@ -95,9 +95,9 @@ function serializeForm(form) {
 function validateData(data = {}) {
   return Object.keys(data).reduce((acc, key) => {
     // Some keys are for internal use only, not corresponding to the schema
-    if(!Object.keys(window.app.schema).includes(key)) return
+    if(!Object.keys(app.schema).includes(key)) return
     let value = data[key]
-    const validator = window.app.schema[key]
+    const validator = app.schema[key]
     if(validator.type === 'string') value = String(value)
     if(validator.type === 'integer') value = Number(value)
     return Object.assign(acc, { [key]: value })
@@ -106,10 +106,14 @@ function validateData(data = {}) {
 
 async function sendData(data) {
   const cleanedData = validateData(data)
-  Object.assign(window.app.data, cleanedData)
-  // const method = window.app.isNew ? 'PUT' : 'PATCH'
-  const response = await request('PUT', `/declaration/${window.app.data["entreprise.siren"]}/${window.app.data["déclaration.année_indicateurs"]}`, cleanedData)
-  if(response.ok) localStorage.data = JSON.stringify(Object.assign(window.app.data, cleanedData))
+  Object.assign(app.data, cleanedData)
+  /* discussion avec @ybon au 2 novembre 2020
+  le PATCH ne fonctionne que sur les clés de premier niveau en l'état
+  donc si tu passes "entreprise", il écrase "entreprise", mais pas les autres clés de premier niveau
+  // const method = app.isNew ? 'PUT' : 'PATCH'
+  */
+  const response = await request('PUT', `/declaration/${app.data["entreprise.siren"]}/${app.data["déclaration.année_indicateurs"]}`, app.data)
+  if(response.ok) localStorage.data = JSON.stringify(app.data)
   else if(response.data.error) notify.error(response.data.error)
   return response
 }
