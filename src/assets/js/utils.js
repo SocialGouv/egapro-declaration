@@ -1,3 +1,9 @@
+/**
+ * 1. Prepare a global `app` object
+ * 2. import api config
+ * 3. import api schema
+ * 4. import existing record
+ */
 async function loadApp() {
   window.app = window.app || {
     regions: null,
@@ -5,7 +11,9 @@ async function loadApp() {
     data: {},
     schema: {},
     token: localStorage.token,
-    isNew: true,
+    isNew: Boolean(localStorage.siren && localStorage.annee),
+    siren: localStorage.siren,
+    annee: localStorage.annee,
   }
 
   // Load config
@@ -20,12 +28,13 @@ async function loadApp() {
   // Load JSON Schema
   const schema = await request('GET', '/jsonschema.json')
   window.app.schema = flattenJsonSchema(schema.data)
-
   // Load existing record
-  const record = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
-  if(record.ok) {
-    localStorage.data = JSON.stringify(record.data)
-    window.app.isNew = false
+  if(app.siren && app.annee) {
+    const record = await request('GET', `/declaration/${app.siren}/${app.annee}`)
+    if(record.ok) {
+      localStorage.data = JSON.stringify(record.data.data)
+      window.app.isNew = false
+    }
   }
   window.app.data = JSON.parse(localStorage.data || '{}')
 }
@@ -117,23 +126,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.onready && document.onready()
 })
 
-
-class DataStorage {
-
-  constructor() {
-    this.data = {}
-  }
-
-  async load() {
-    if(!localStorage.dataStorage) localStorage.dataStorage = '{}'
-    Object.assign(this.data, JSON.parse(localStorage.dataStorage))
-    if(this.data.siren && this.data.year) {
-      const request = await request('GET', `/declaration/${siren}/${year}`)
-      if(request.ok) Object.assign(this.data, request.data)
-    }
-  }
-
-  async save() {
-
+notify = {
+  error(message) {
+    alert(message)
   }
 }

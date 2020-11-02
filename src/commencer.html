@@ -19,18 +19,20 @@ title: "Commencer la déclaration"
       null
     )
 
-    document.querySelector('button[rel=next]').disabled = !localStorage.token
+    document.querySelector('button[rel=next]').disabled = !window.app.token
     window.validateForm = async function(form) {
-      if(localStorage.token) return true
+      if(window.app.token) return true
     }
   }
 
   document.onsend = async function(data) {
-    localStorage.annee = data['déclaration.année_indicateurs']
-    localStorage.siren = data['entreprise.siren']
+    app.siren = data['entreprise.siren']
+    app.annee = data['déclaration.année_indicateurs']
 
-    const response = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
-    if(response.ok) window.app.data = JSON.stringify(response.data.data)
-    return false
+    localStorage.siren = app.siren
+    localStorage.annee = app.annee
+
+    const response = await request('GET', `/declaration/${app.siren}/${app.annee}`)
+    if(response.ok) window.app.data = response.data.data
   }
 </script>

@@ -1,8 +1,8 @@
 serve:
-	jekyll serve -dw -s src
+	jekyll serve -w
 
 build:
-	jekyll build -s src --baseurl "/declaration"
+	jekyll build --baseurl "/declaration"
 
 publish:
 	make build

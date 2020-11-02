@@ -36,6 +36,7 @@ const step = steps.findIndex(step => step.name === pageName)
 
 
 document.addEventListener('ready', () => {
+  if(!window.app.token) location.href = '/'
   loadFormValues(form, window.app.data)
 })
 
@@ -104,20 +105,12 @@ function validateData(data = {}) {
 }
 
 async function sendData(data) {
-  const minimalData = {
-    "entreprise.siren": "",
-    "déclaration.année_indicateurs": 0,
-    "déclaration.période_référence": [],
-    "déclaration.raison_sociale": "",
-    "entreprise.raison_sociale": "",
-  }
-  const cleanedData = Object.assign({}, minimalData, validateData(data))
+  const cleanedData = validateData(data)
   Object.assign(window.app.data, cleanedData)
-
-  const method = window.app.isNew ? 'PUT' : 'PATCH'
-  // const response = await request(method, `/declaration/${window.app.data["entreprise.siren"]}/${window.app.data["déclaration.année_indicateurs"]}`, cleanedData)
-  const response = { ok: true }  // for testing staging
+  // const method = window.app.isNew ? 'PUT' : 'PATCH'
+  const response = await request('PUT', `/declaration/${window.app.data["entreprise.siren"]}/${window.app.data["déclaration.année_indicateurs"]}`, cleanedData)
   if(response.ok) localStorage.data = JSON.stringify(Object.assign(window.app.data, cleanedData))
+  else if(response.data.error) notify.error(response.data.error)
   return response
 }
 
