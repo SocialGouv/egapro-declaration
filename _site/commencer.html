@@ -2,7 +2,7 @@
 <html lang="fr">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<title>Commencer la déclaration - </title>
+<title>Commencer la déclaration - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
 <script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
@@ -60,19 +60,21 @@
       null
     )
 
-    document.querySelector('button[rel=next]').disabled = !localStorage.token
+    document.querySelector('button[rel=next]').disabled = !window.app.token
     window.validateForm = async function(form) {
-      if(localStorage.token) return true
+      if(window.app.token) return true
     }
   }
 
   document.onsend = async function(data) {
-    localStorage.annee = data['déclaration.année_indicateurs']
-    localStorage.siren = data['entreprise.siren']
+    app.siren = data['entreprise.siren']
+    app.annee = data['déclaration.année_indicateurs']
 
-    const response = await request('GET', `/declaration/${localStorage.siren}/${localStorage.annee}`)
-    if(response.ok) window.app.data = JSON.stringify(response.data.data)
-    return false
+    localStorage.siren = app.siren
+    localStorage.annee = app.annee
+
+    const response = await request('GET', `/declaration/${app.siren}/${app.annee}`)
+    if(response.ok) window.app.data = response.data.data
   }
 </script>
 
