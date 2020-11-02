@@ -107,11 +107,6 @@ function validateData(data = {}) {
 async function sendData(data) {
   const cleanedData = validateData(data)
   Object.assign(app.data, cleanedData)
-  /* discussion avec @ybon au 2 novembre 2020
-  le PATCH ne fonctionne que sur les clés de premier niveau en l'état
-  donc si tu passes "entreprise", il écrase "entreprise", mais pas les autres clés de premier niveau
-  // const method = app.isNew ? 'PUT' : 'PATCH'
-  */
   const response = await request('PUT', `/declaration/${app.data["entreprise.siren"]}/${app.data["déclaration.année_indicateurs"]}`, app.data)
   if(response.ok) localStorage.data = JSON.stringify(app.data)
   else if(response.data.error) notify.error(response.data.error)
