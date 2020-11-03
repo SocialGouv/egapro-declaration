@@ -62,9 +62,9 @@ form.addEventListener('submit', async (event) => {
 
   const nextStep = steps[step].nextStep
   if (nextStep) {
-    return redirect(`/${nextStep(data)}.html`)
+    return redirect(`${nextStep(data)}.html`)
   }
-  return redirect(`/${steps[step + 1].name}.html`)
+  return redirect(`${steps[step + 1].name}.html`)
 })
 
 // "Previous" button
