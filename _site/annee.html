@@ -22,22 +22,15 @@
 
 <fieldset>
   <div class="row">
-    
-  <label for="field--déclaration.annee">Année au titre de laquelle vous transmettez vos indicateurs</label>
+    <label for="field--déclaration.année_indicateurs">Année au titre de laquelle vous transmettez vos indicateurs</label>
 
-
-<input
-  id="field--déclaration.annee"
-  value=""
-  type=""
-  name="déclaration.annee"
-  placeholder=""
+<select
+  id="field--déclaration.année_indicateurs"
+  name="déclaration.année_indicateurs"
   
   
-  
-  
-  disabled
-/>
+>
+</select>
 
   </div>
 </fieldset>
@@ -53,37 +46,61 @@
 <fieldset>
   <div class=row>
     <h4>Tranches d'effectifs</h4>
-    <div id="informations.effectifs">
-      <label><input type=radio name="informations.effectifs" value="{value}"> {label}</label>
+    <div id="entreprise.effectifs.tranche">
+      <label><input type=radio name="entreprise.effectifs.tranche" value="{value}"> {label}</label>
+    </div>
+  </div>
+  <div class=row>
+    <h4>Tranches d'effectifs</h4>
+    <div id="entreprise.effectifs.tranche2">
     </div>
   </div>
 </fieldset>
 
 <h1>Période de référence considérée pour le calcul des indicateurs</h1>
 
-<fieldset>
+<fieldset id="_déclaration.période_référence">
   <div class=row>
     <h4>Période de référence</h4>
-    <label><input type=radio name="periode.type" value="civile"> Année civile</label>
-    <label><input type=radio name="periode.type" value="autre"> Autre période de référence</label>
+    <label><input type=radio name="_déclaration.période_référence" value="civile"> Année civile</label>
+    <label><input type=radio name="_déclaration.période_référence" value="autre"> Autre période de référence</label>
   </div>
 </fieldset>
 
-<fieldset class="periode-reference">
+<fieldset id="déclaration.période_référence">
   <div class=row>
     
-  <label for="field--periode.debut">Date de début de la période de référence</label>
+  <label for="field--déclaration.période_référence[]">Date de début de la période de référence</label>
 
 
 <input
-  id="field--periode.debut"
+  id="field--déclaration.période_référence[]"
   value=""
   type="date"
-  name="periode.debut"
+  name="déclaration.période_référence[]"
   placeholder=""
   
-  min="2019-01-01"
-  max="2019-12-31"
+  
+  
+  
+  
+/>
+
+  </div>
+  <div class=row>
+    
+  <label for="field--déclaration.période_référence[]">Date de fin de la période de référence</label>
+
+
+<input
+  id="field--déclaration.période_référence[]"
+  value=""
+  type="date"
+  name="déclaration.période_référence[]"
+  placeholder=""
+  
+  
+  
   
   
 />
@@ -115,26 +132,26 @@
 
 <script>
   document.onready = () => {
-    const annee = selectField('déclaration.annee')
-    const date = new Date()
-    annee.min = `${date.getFullYear() - 1}-01-01`
-    annee.max = `${date.getFullYear() - 1}-12-31`
-    annee.value = date.getFullYear() - 1
+    // déclaration.année_indicateurs
+    const anneeName = 'déclaration.année_indicateurs'
+    const anneeField = selectField(anneeName)
+    const years = [
+      { value: app.schema[anneeName].maximum, label: app.schema[anneeName].maximum },
+      { value: app.schema[anneeName].minimum, label: app.schema[anneeName].minimum },
+    ]
+    buildSelectOptions(anneeField, years, app.data[anneeName])
+
+    // entreprise.effectifs.tranche
+    const tranches = Object.entries(app.config.effectifs).map(([value, label]) => ({ value, label }))
+    buildRadioOptions(document.getElementById('entreprise.effectifs.tranche'), tranches)
+
+    // déclaration.période_référence
     Array.from(document.querySelectorAll('[name=periode]')).forEach(function(radio) {
       radio.addEventListener('change', function(event) {
         const value = event.target.value
-        selectField('periode.type').disabled = value !== 'autre'
+        selectField('déclaration.période_référence').disabled = value !== 'autre'
       })
     })
-
-    const container = document.getElementById('informations.effectifs')
-    const template = container.innerHTML
-    const content = Object.entries(window.app.config.effectifs).map(([key, value]) => {
-      return template
-        .replaceAll('{value}', key)
-        .replaceAll('{label}', value)
-    }).join('')
-    container.innerHTML = content
   }
 </script>
 
