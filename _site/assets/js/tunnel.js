@@ -30,8 +30,8 @@ const steps = [
   {name: 'transmission'}
 ]
 
-const path = location.pathname
-const pageName = path.slice(1, path.lastIndexOf('.'))
+const fileName = location.pathname.lastIndexOf('/') < 0 ? location.pathname : location.pathname.split('/').pop()
+const pageName = fileName.split('.')[0]
 const step = steps.findIndex(step => step.name === pageName)
 
 
