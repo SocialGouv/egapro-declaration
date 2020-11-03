@@ -48,11 +48,18 @@ async function request(method, uri, body, options = {}) {
     'ACCEPT': 'application/vnd.egapro.v1.flat',
   }
   const response = await fetch(`${apiUrl}${uri}`, options)
+
   try {
     response.data = await response.json()
   }
   catch {
     response.data = null
+  }
+  if(response.status == 401) {
+    const error = response.json
+    if(response.data.error) notify.error(response.data.error)
+    delete localStorage.token
+    redirect('..')
   }
   // if(!response.ok && response.data) alert(response.data.error)
   return response
