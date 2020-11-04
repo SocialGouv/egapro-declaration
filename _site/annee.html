@@ -3,13 +3,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Année et périmètre retenus pour le calcul et la publication des indicateurs - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -22,15 +22,23 @@
 
 <fieldset>
   <div class="row">
-    <label for="field--déclaration.année_indicateurs">Année au titre de laquelle vous transmettez vos indicateurs</label>
+    
+  <label for="field--déclaration.annee">Année au titre de laquelle vous transmettez vos indicateurs</label>
 
-<select
-  id="field--déclaration.année_indicateurs"
-  name="déclaration.année_indicateurs"
+
+<input
+  id="field--déclaration.annee"
+  value=""
+  type=""
+  name="déclaration.annee"
+  placeholder=""
   
   
->
-</select>
+  
+  
+  disabled
+  
+/>
 
   </div>
 </fieldset>
@@ -46,60 +54,37 @@
 <fieldset>
   <div class=row>
     <h4>Tranches d'effectifs</h4>
-    <div id="entreprise.effectifs.tranche">
-      <label><input type=radio name="entreprise.effectifs.tranche" value="{value}"> {label}</label>
-    </div>
-  </div>
-  <div class=row>
-    <h4>Tranches d'effectifs</h4>
-    <div id="entreprise.effectifs.tranche2">
+    <div id="informations.effectifs">
+      <label><input type=radio name="informations.effectifs" value="{value}"> {label}</label>
     </div>
   </div>
 </fieldset>
 
 <h1>Période de référence considérée pour le calcul des indicateurs</h1>
 
-<fieldset id="_déclaration.période_référence">
+<fieldset>
   <div class=row>
     <h4>Période de référence</h4>
-    <label><input type=radio name="_déclaration.période_référence" value="civile"> Année civile</label>
-    <label><input type=radio name="_déclaration.période_référence" value="autre"> Autre période de référence</label>
+    <label><input type=radio name="periode.type" value="civile"> Année civile</label>
+    <label><input type=radio name="periode.type" value="autre"> Autre période de référence</label>
   </div>
 </fieldset>
 
-<fieldset id="déclaration.période_référence">
+<fieldset class="periode-reference">
   <div class=row>
     
-  <label for="field--déclaration.période_référence[]">Date de début de la période de référence</label>
+  <label for="field--periode.debut">Date de début de la période de référence</label>
 
 
 <input
-  id="field--déclaration.période_référence[]"
+  id="field--periode.debut"
   value=""
   type="date"
-  name="déclaration.période_référence[]"
+  name="periode.debut"
   placeholder=""
   
-  
-  
-  
-  
-/>
-
-  </div>
-  <div class=row>
-    
-  <label for="field--déclaration.période_référence[]">Date de fin de la période de référence</label>
-
-
-<input
-  id="field--déclaration.période_référence[]"
-  value=""
-  type="date"
-  name="déclaration.période_référence[]"
-  placeholder=""
-  
-  
+  min="2019-01-01"
+  max="2019-12-31"
   
   
   
@@ -125,6 +110,7 @@
   
   
   
+  
 />
 
   </div>
@@ -132,33 +118,33 @@
 
 <script>
   document.onready = () => {
-    // déclaration.année_indicateurs
-    const anneeName = 'déclaration.année_indicateurs'
-    const anneeField = selectField(anneeName)
-    const years = [
-      { value: app.schema[anneeName].maximum, label: app.schema[anneeName].maximum },
-      { value: app.schema[anneeName].minimum, label: app.schema[anneeName].minimum },
-    ]
-    buildSelectOptions(anneeField, years, app.data[anneeName])
-
-    // entreprise.effectifs.tranche
-    const tranches = Object.entries(app.config.effectifs).map(([value, label]) => ({ value, label }))
-    buildRadioOptions(document.getElementById('entreprise.effectifs.tranche'), tranches)
-
-    // déclaration.période_référence
+    const annee = selectField('déclaration.annee')
+    const date = new Date()
+    annee.min = `${date.getFullYear() - 1}-01-01`
+    annee.max = `${date.getFullYear() - 1}-12-31`
+    annee.value = date.getFullYear() - 1
     Array.from(document.querySelectorAll('[name=periode]')).forEach(function(radio) {
       radio.addEventListener('change', function(event) {
         const value = event.target.value
-        selectField('déclaration.période_référence').disabled = value !== 'autre'
+        selectField('periode.type').disabled = value !== 'autre'
       })
     })
+
+    const container = document.getElementById('informations.effectifs')
+    const template = container.innerHTML
+    const content = Object.entries(window.app.config.effectifs).map(([key, value]) => {
+      return template
+        .replaceAll('{value}', key)
+        .replaceAll('{label}', value)
+    }).join('')
+    container.innerHTML = content
   }
 </script>
 
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button href="/" rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
@@ -166,7 +152,7 @@
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
-<script src="/declaration/assets/js/tunnel.js"></script>
+<script src="/assets/js/tunnel.js"></script>
 
 </form>
 

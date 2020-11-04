@@ -3,13 +3,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Validation de l'adresse de messagerie - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -41,6 +41,7 @@ Pour pouvoir permettre de poursuivre la transmission des informations requises, 
   
   required
   
+  
 />
 
 </div>
@@ -58,7 +59,7 @@ Pour pouvoir permettre de poursuivre la transmission des informations requises, 
     const response = await request('post', '/token', { email })
     if(response.ok) {
       localStorage.email = email
-      redirect('/declaration/validation-email.html')
+      redirect('/validation-email.html')
     }
   })
 </script>

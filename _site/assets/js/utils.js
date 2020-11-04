@@ -20,23 +20,24 @@ async function loadApp() {
   const config = await request('GET', '/config')
   if(!config.ok) alert("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
   Object.entries(config.data).forEach(([key, value]) => {
-    window.app.config[key.toLowerCase()] = value
+    app.config[key.toLowerCase()] = value
   })
 
-  if(!window.app.token) return
+  if(!app.token) return
 
   // Load JSON Schema
   const schema = await request('GET', '/jsonschema.json')
-  window.app.schema = flattenJsonSchema(schema.data)
+  app.schema = flattenJsonSchema(schema.data)
+
   // Load existing record
   if(app.siren && app.annee) {
     const record = await request('GET', `/declaration/${app.siren}/${app.annee}`)
     if(record.ok) {
-      localStorage.data = JSON.stringify(record.data.data)
-      window.app.isNew = false
+      app.isNew = false
+      app.data = record.data.data
     }
+    else delete localStorage.data
   }
-  window.app.data = JSON.parse(localStorage.data || '{}')
 }
 
 async function request(method, uri, body, options = {}) {

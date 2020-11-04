@@ -7,7 +7,7 @@ title: "Commencer la déclaration"
     {% include select.html name="déclaration.année_indicateurs" label="Année de déclaration" required=true %}
   </div>
   <div>
-    {% include input.html type="regex" name="entreprise.siren" label="Numéro SIREN" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" value="123456789" %}
+    {% include input.html type="regex" name="entreprise.siren" label="Numéro SIREN" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" %}
   </div>
 
 <script>
@@ -31,8 +31,5 @@ title: "Commencer la déclaration"
 
     localStorage.siren = app.siren
     localStorage.annee = app.annee
-
-    const response = await request('GET', `/declaration/${app.siren}/${app.annee}`)
-    if(response.ok) window.app.data = response.data.data
   }
 </script>

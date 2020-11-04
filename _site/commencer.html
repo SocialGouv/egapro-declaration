@@ -3,13 +3,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Commencer la déclaration - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/config.js"></script>
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -38,7 +38,7 @@
 
 <input
   id="field--entreprise.siren"
-  value="123456789"
+  value=""
   type="regex"
   name="entreprise.siren"
   placeholder="9 chiffres"
@@ -47,6 +47,7 @@
   
   required
   
+  pattern="[0-9]{9}"
 />
 
   </div>
@@ -72,16 +73,13 @@
 
     localStorage.siren = app.siren
     localStorage.annee = app.annee
-
-    const response = await request('GET', `/declaration/${app.siren}/${app.annee}`)
-    if(response.ok) window.app.data = response.data.data
   }
 </script>
 
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button href="/" rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
@@ -89,7 +87,7 @@
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
-<script src="/declaration/assets/js/tunnel.js"></script>
+<script src="/assets/js/tunnel.js"></script>
 
 </form>
 
