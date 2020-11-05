@@ -6,12 +6,14 @@
  */
 async function loadApp() {
   window.app = window.app || {
-    regions: null,
+    // Config from server /config
     config: {},
+    // User form data that is got and sent to the API
     data: {},
+    // JSON validation and structure schema
     schema: {},
+    // Required data for communication with the API
     token: localStorage.token,
-    isNew: Boolean(localStorage.siren && localStorage.annee),
     siren: localStorage.siren,
     annee: localStorage.annee,
   }
@@ -33,7 +35,6 @@ async function loadApp() {
   if(app.siren && app.annee) {
     const record = await request('GET', `/declaration/${app.siren}/${app.annee}`)
     if(record.ok) {
-      app.isNew = false
       app.data = record.data.data
     }
     else delete localStorage.data
