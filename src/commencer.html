@@ -12,11 +12,13 @@ title: "Commencer la déclaration"
 
 <script>
   document.onready = function() {
-    const year = (new Date()).getFullYear()
+    const schema = app.schema['déclaration.année_indicateurs']
     buildSelectOptions(
       selectField('déclaration.année_indicateurs'),
-      [{ value: year-1, label: year-1 }, { value: year, label: year }],
-      null
+      [
+        { label: schema.maximum, value: schema.maximum },
+        { label: schema.minimum, value: schema.minimum },
+      ]
     )
 
     document.querySelector('button[rel=next]').disabled = !window.app.token
