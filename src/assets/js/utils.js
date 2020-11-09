@@ -83,11 +83,11 @@ function buildSelectOptions(select, list, value) {
   })
 }
 
-function buildRadioOptions(optgroup, list, value) {
+function buildRadioOptions(optgroup, list, value, attributes = {}) {
   const name = optgroup.getAttribute('name')
   optgroup.innerHTML = list.map((val) => {
     const content = `<label>
-    <input type="radio" name="${name}" value="${val.value}" ${val.value == value ? 'checked' : ''}>
+    <input type="radio" name="${name}" value="${val.value}" ${val.value == value ? 'checked' : ''} ${Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ')}>
     ${val.label}
     </label>`
     const wrapped = optgroup.hasAttribute('option-block') ? `<div>${content}</div>` : content

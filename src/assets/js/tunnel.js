@@ -6,7 +6,7 @@ const steps = [
    {name: 'commencer'},
    {name: 'declarant'},
    {name: 'annee', nextStep: data => {
-    if(data['entreprise.structure'] === 'ues') return 'ues'
+    if(data['_entreprise.structure'] === 'ues') return 'ues'
     return 'entreprise'
   }},
   {name: 'ues'},
