@@ -42,10 +42,8 @@ title: "Informations déclarant"
 
   document.onready = async () => {
     // Load regions
-    const regions = Object.keys(app.config.regions).map(code => ({ value: code, label: app.config.regions[code] }))
+    const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
     buildSelectOptions(regionSelect, regions, app.data['entreprise.région'])
-
-    // Load departements
     if(regionSelect.value) loadDepartments()
   }
 

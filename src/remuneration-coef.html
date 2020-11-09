@@ -44,15 +44,15 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
   document.onready = (() => {
     const container = document.getElementById('container')
     const template = document.getElementById('looper').innerHTML
-    const count = Number(window.app.data['indicateur.niveaux'])
+    const count = Number(app.data['indicateur.niveaux'])
     const content = Array(count).fill().map((_, i) => {
       const index = i + 1
       return template
         .replaceAll('{index}', index)
-        .replaceAll('{indicateur.30-moins}', window.app.data['indicateur.30-moins'])
-        .replaceAll('{indicateur.30-39}', window.app.data['indicateur.30-39'])
-        .replaceAll('{indicateur.40-49}', window.app.data['indicateur.40-49'])
-        .replaceAll('{indicateur.50-plus}', window.app.data['indicateur.50-plus'])
+        .replaceAll('{indicateur.30-moins}', app.data['indicateur.30-moins'])
+        .replaceAll('{indicateur.30-39}', app.data['indicateur.30-39'])
+        .replaceAll('{indicateur.40-49}', app.data['indicateur.40-49'])
+        .replaceAll('{indicateur.50-plus}', app.data['indicateur.50-plus'])
     }).join('')
     container.innerHTML = content
   })

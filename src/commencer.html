@@ -21,9 +21,9 @@ title: "Commencer la déclaration"
       ]
     )
 
-    document.querySelector('button[rel=next]').disabled = !window.app.token
+    document.querySelector('button[rel=next]').disabled = !app.token
     window.validateForm = async function(form) {
-      if(window.app.token) return true
+      if(app.token) return true
     }
   }
 
