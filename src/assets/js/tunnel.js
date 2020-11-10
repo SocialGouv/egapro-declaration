@@ -52,19 +52,15 @@ form.addEventListener('submit', async (event) => {
     try {
       await document.onsend(data)
     } catch(e) {
-      alert(e)
-      return
+      return alert(e)
     }
   }
 
-  const response = await sendData(data)
+  const response = await app.save(data)
   if(!response.ok) return
-
   const nextStep = steps[step].nextStep
-  if (nextStep) {
-    return redirect(`${nextStep(data)}.html`)
-  }
-  return redirect(`${steps[step + 1].name}.html`)
+  if (nextStep) return redirect(`${nextStep(data)}.html`)
+  else return redirect(`${steps[step + 1].name}.html`)
 })
 
 // "Previous" button
@@ -92,33 +88,9 @@ function serializeForm(form) {
   return data
 }
 
-function validateData(data = {}) {
-  return Object.keys(data).reduce((acc, key) => {
-    // Some keys are for internal use only, not corresponding to the schema
-    if(!Object.keys(app.schema).includes(key)) return
-    let value = data[key]
-    const validator = app.schema[key]
-    if(validator.type === 'string') value = String(value)
-    if(validator.type === 'integer') value = Number(value)
-    return Object.assign(acc, { [key]: value })
-  }, {})
-}
-
-async function sendData(data) {
-  const cleanedData = validateData(data)
-  Object.assign(app.data, cleanedData)
-  const response = await request('PUT', `/declaration/${app.data["entreprise.siren"]}/${app.data["déclaration.année_indicateurs"]}`, app.data)
-  if(response.ok) localStorage.data = JSON.stringify(app.data)
-  else if(response.data.error) notify.error(response.data.error)
-  return response
-}
-
 function loadFormValues(form, data = {}) {
   Object.keys(data).forEach((prop) => {
     const node = form.elements[prop]
     if(node) node.value = data[prop]
-    if(!node) {
-      // debugger
-    }
   })
 }

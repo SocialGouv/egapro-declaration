@@ -7,8 +7,8 @@ layout: empty
   let token = false
   if(location.search.startsWith(tokenParam)) {
     token = true
-    localStorage.token = location.search.slice(tokenParam.length)
+    app.token = location.search.slice(tokenParam.length)
   }
-  else if (localStorage.token) token = true
+  else if (app.token) token = true
   token ? redirect('{{site.baseurl}}/commencer.html') : redirect('{{site.baseurl}}/presentation.html')
 </script>

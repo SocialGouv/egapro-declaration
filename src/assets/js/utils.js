@@ -1,46 +1,3 @@
-/**
- * 1. Prepare a global `app` object
- * 2. import api config
- * 3. import api schema
- * 4. import existing record
- */
-async function loadApp() {
-  window.app = window.app || {
-    // Config from server /config
-    config: {},
-    // User form data that is got and sent to the API
-    data: {},
-    // JSON validation and structure schema
-    schema: {},
-    // Required data for communication with the API
-    token: localStorage.token,
-    siren: localStorage.siren,
-    annee: localStorage.annee,
-  }
-
-  // Load config
-  const config = await request('GET', '/config')
-  if(!config.ok) alert("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
-  Object.entries(config.data).forEach(([key, value]) => {
-    app.config[key.toLowerCase()] = value
-  })
-
-  if(!app.token) return
-
-  // Load JSON Schema
-  const schema = await request('GET', '/jsonschema.json')
-  app.schema = flattenJsonSchema(schema.data)
-
-  // Load existing record
-  if(app.siren && app.annee) {
-    const record = await request('GET', `/declaration/${app.siren}/${app.annee}`)
-    if(record.ok) {
-      app.data = record.data.data
-    }
-    else delete localStorage.data
-  }
-}
-
 async function request(method, uri, body, options = {}) {
   if(!['get', 'head'].includes(method.toLowerCase()))
     options.body = body ? JSON.stringify(body) : ""
@@ -130,7 +87,8 @@ function flattenJson(json) {
 
 // Shortcut event
 window.addEventListener('DOMContentLoaded', async () => {
-  await loadApp()
+  app = new AppStorage()
+  await app.init()
   document.dispatchEvent(new Event('ready'))
   document.onready && document.onready()
 })
@@ -138,5 +96,96 @@ window.addEventListener('DOMContentLoaded', async () => {
 notify = {
   error(message) {
     alert(message)
+  }
+}
+
+
+class AppStorage {
+  constructor() {
+    this.data = {}
+    this.config = {}
+    this.schema = {}
+  }
+
+  async init() {
+    await this.loadConfig()
+    await this.loadSchema()
+    if(!this.token) return
+    this.loadLocalData()
+    // Is remote data actually necessary as we must have local data for token anyways?
+    // if(this.siren && this.annee) await this.loadRemoteData()
+  }
+
+  async loadConfig() {
+    const response = await request('GET', '/config')
+    if(!response.ok) alert("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
+    Object.entries(response.data).forEach(([key, value]) => {
+      this.config[key.toLowerCase()] = value
+    })
+  }
+
+  async loadSchema() {
+    const response = await request('GET', '/jsonschema.json')
+    this.schema = flattenJsonSchema(response.data)
+  }
+
+  async loadLocalData() {
+    Object.assign(this.data, JSON.parse(localStorage.data || '{}'))
+  }
+
+  async loadRemoteData() {
+    const response = await request('GET', `/declaration/${this.siren}/${this.annee}`)
+    if(response.ok) Object.assign(this.data, response.data.data)
+    else {
+      delete localStorage.data
+      this.data = {}
+    }
+  }
+
+  set token(token) {
+    localStorage.token = token
+  }
+
+  get token() {
+    return localStorage.token
+  }
+
+  validateSchema(data) {
+    return Object.keys(data).reduce((acc, key) => {
+      // Some keys are for internal use only, not corresponding to the schema
+      let value = data[key]
+      if(!Object.keys(this.schema).includes(key)) throw new Error(`key ${key} is not in jsonschema.`)
+      const validator = this.schema[key]
+      if(validator.type === 'string') value = String(value)
+      if(validator.type === 'integer') value = Number(value)
+      return Object.assign(acc, { [key]: value })
+    }, {})
+  }
+
+  filterSchemaData(data) {
+    return Object.keys(data).reduce((acc, key) => {
+      if(!key.startsWith('_')) acc[key] = data[key]
+      return acc
+    }, {})
+  }
+
+  get annee() {
+    return app.data["déclaration.année_indicateurs"]
+  }
+
+  get siren() {
+    return app.data["entreprise.siren"]
+  }
+
+  async save(data) {
+    const schemaData = this.filterSchemaData(data)
+    const cleanedData = this.validateSchema(schemaData)
+    const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, cleanedData)
+    if(response.ok) {
+      Object.assign(this.data, cleanedData)
+      localStorage.data = JSON.stringify(this.data)
+    }
+    else if(response.data.error) notify.error(response.data.error)
+    return response
   }
 }

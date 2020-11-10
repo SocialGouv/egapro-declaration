@@ -26,12 +26,4 @@ title: "Commencer la déclaration"
       if(app.token) return true
     }
   }
-
-  document.onsend = async function(data) {
-    app.siren = data['entreprise.siren']
-    app.annee = data['déclaration.année_indicateurs']
-
-    localStorage.siren = app.siren
-    localStorage.annee = app.annee
-  }
 </script>
