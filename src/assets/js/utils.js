@@ -88,9 +88,10 @@ class AppStorage {
     this.data = {}
     this.config = {}
     this.schema = {}
+    debugger
     this.apiUrl = location.hostname === 'localhost'
-      ? 'https://dev.egapro.fabrique.social.gouv.fr/api'
-      : 'http://localhost:2626'
+      ? 'http://localhost:2626'
+      : 'https://dev.egapro.fabrique.social.gouv.fr/api'
   }
 
   async init() {
