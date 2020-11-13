@@ -88,7 +88,6 @@ class AppStorage {
     this.data = {}
     this.config = {}
     this.schema = {}
-    debugger
     this.apiUrl = location.hostname === 'localhost'
       ? 'http://localhost:2626'
       : 'https://dev.egapro.fabrique.social.gouv.fr/api'
@@ -165,6 +164,7 @@ class AppStorage {
   }
 
   async save(data) {
+    data = Object.assign(this.data, data)
     const schemaData = this.filterSchemaData(data)
     const cleanedData = this.validateSchema(schemaData)
     const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, cleanedData)

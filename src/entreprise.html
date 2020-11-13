@@ -6,25 +6,25 @@ title: "Vous êtes une entreprise"
 
 <fieldset>
   <div class=row>
-    <div>{% include input.html name="entreprise.nom" label="Raison Sociale" required=true %}</div>
+    <div>{% include input.html name="entreprise.raison_sociale" label="Raison Sociale" required=true %}</div>
   </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
-    <div>{% include input.html name="entreprise.siren" label="Numéro SIREN" required=true value="" disabled=true %}</div>
+    <div>{% include input.html name="_entreprise.siren" label="Numéro SIREN" required=true value="" disabled=true %}</div>
   </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
-    <div>{% include select.html name="entreprise.naf" label="Code NAF" required=true %}</div>
+    <div>{% include select.html name="entreprise.code_naf" label="Code NAF" required=true %}</div>
   </div>
 </fieldset>
 
 <script>
   document.onready = function() {
-    const select = selectField('entreprise.naf')
+    const select = selectField('entreprise.code_naf')
     const options = [
       { value: '1071z', label: '10.71Z – Fabrication industrielle de pain et de patisserie fraiche' },
       { value: '0126z', label: '01.26Z – Culture des fuits oléagéneux' },
@@ -32,7 +32,7 @@ title: "Vous êtes une entreprise"
       ]
     buildSelectOptions(select, options)
 
-    const siren = selectField('entreprise.siren')
+    const siren = selectField('_entreprise.siren')
     siren.value = app.data['entreprise.siren']
   }
 </script>
