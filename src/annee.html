@@ -56,6 +56,8 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
       app.data['entreprise.effectif.tranche'],
       { required: true }
     )
+
+    updatePeriode(app.data['_periode.reference'])
   }
 
   function updatePeriode(value) {
