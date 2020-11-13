@@ -6,7 +6,7 @@ async function request(method, uri, body, options = {}) {
     'API-KEY': localStorage.token,
     'ACCEPT': 'application/vnd.egapro.v1.flat',
   }
-  const response = await fetch(`${apiUrl}${uri}`, options)
+  const response = await fetch(`${app.apiUrl}${uri}`, options)
 
   try {
     response.data = await response.json()
@@ -58,30 +58,13 @@ function selectField(name) {
   return field
 }
 
-function flattenJsonSchema(jsonSchema) {
-  return Object.keys(jsonSchema.properties).reduce((acc = {}, key) => {
-    const category = jsonSchema.properties[key]
-    const props = category.properties
-    if(!props) return
-    Object.keys(props).forEach(prop => {
-      const value = props[prop]
-      value.required = category.required && category.required.includes(prop)
-      acc[`${key}.${prop}`] = value
-    })
-    return acc
-  }, {})
-}
-
-function flattenJson(json) {
-  return Object.keys(json).reduce((acc = {}, key) => {
-    const props = json[key]
-    if(!props) return
-    Object.keys(props).forEach(prop => {
-      const value = props[prop]
-      value.required = category.required && category.required.includes(prop)
-      acc[`${key}.${prop}`] = value
-    })
-    return acc
+function flattenJsonSchema(parent, prefix) {
+  return Object.keys(parent.properties).reduce((acc, key) => {
+    const child = parent.properties[key]
+    const label = prefix ? `${prefix}.${key}` : key
+    if(child.properties) return Object.assign(acc, flattenJsonSchema(child, label))
+    child.required = Array.isArray(parent.required) && parent.required.includes(key)
+    return Object.assign(acc, { [label]: child })
   }, {})
 }
 
@@ -105,6 +88,9 @@ class AppStorage {
     this.data = {}
     this.config = {}
     this.schema = {}
+    this.apiUrl = location.hostname === 'localhost'
+      ? 'https://dev.egapro.fabrique.social.gouv.fr/api'
+      : 'http://localhost:2626'
   }
 
   async init() {
