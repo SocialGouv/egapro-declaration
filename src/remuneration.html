@@ -12,12 +12,12 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
 <fieldset id="fieldset-cse">
   <div class=row>
-    {% include input.html type="date" name="déclaration.date_consultation_CSE" label="Date de consultation au CSE" required=true %}
+    {% include input.html type="date" name="déclaration.date_consultation_cse" label="Date de consultation au CSE" required=true %}
   </div>
 </fieldset>
 
 <fieldset id="fieldset-niveaux">
-  <div class=row>{% include input.html type="number" name="indicateur.niveaux" label="Nombre de coefficients ou niveaux pour les modalités de calcul" min=1 max=50 %}</div>
+  <div class=row>{% include input.html type="number" name="_indicateurs.rémunérations.niveaux" label="Nombre de coefficients ou niveaux pour les modalités de calcul" min=1 max=50 %}</div>
 </fieldset>
 
 <fieldset id="fieldset-motif">
@@ -25,7 +25,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-non_calculable">
-  <div class=row>{% include textarea.html name="indicateur.autre_motif" label="Préciser le motif" %}</div>
+  <div class=row>{% include textarea.html name="_indicateurs.rémunérations.autre_motif" label="Préciser le motif" %}</div>
 </fieldset>
 
 <script>
