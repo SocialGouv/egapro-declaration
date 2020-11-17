@@ -24,7 +24,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   <div class=row>{% include select.html name="indicateurs.rémunérations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" %}</div>
 </fieldset>
 
-<fieldset id="fieldset-autre_motif">
+<fieldset id="fieldset-non_calculable">
   <div class=row>{% include textarea.html name="indicateur.autre_motif" label="Préciser le motif" %}</div>
 </fieldset>
 
@@ -55,7 +55,8 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       enableField('#fieldset-cse', ['coef', 'autre'].includes(value))
       enableField('#fieldset-niveaux', ['coef', 'autre'].includes(value))
       enableField('#fieldset-motif', value === '')
-      enableField('#fieldset-autre_motif', value === '' && nonCalculableField.value === 'autre')
+      enableField('#fieldset-non_calculable', value === '' && nonCalculableField.value === '')
+      if(modeField.value === '') console.info("This is in progress")
     }
 
     function enableField(selector, enabled) {
