@@ -56,7 +56,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       enableField('#fieldset-niveaux', ['coef', 'autre'].includes(value))
       enableField('#fieldset-motif', value === '')
       enableField('#fieldset-non_calculable', value === '' && nonCalculableField.value === '')
-      if(modeField.value === '') console.info("This is in progress")
     }
 
     function enableField(selector, enabled) {

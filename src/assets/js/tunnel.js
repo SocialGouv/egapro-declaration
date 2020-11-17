@@ -82,9 +82,17 @@ if(step >= steps.length - 1) {
 function serializeForm(form) {
   const formData = new FormData(form)
   var data = {}
+  // Add all the form data to the app data
   formData.forEach((value, key) => {
-      data[key] = value
+    data[key] = value
   })
+  // Force remove all the disabled form fields' values from the app data
+  // in case they were added previously
+  const allNames = Array.from(form.elements).filter(field => field.name).map(field => field.name)
+  const formDataNames = Array.from(formData).map(item => item[0])
+  const disabledNames = allNames.filter(name => !formDataNames.includes(name))
+  disabledNames.forEach(name => app.deleteKey(name))
+
   return data
 }
 

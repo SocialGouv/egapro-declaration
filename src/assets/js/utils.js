@@ -163,6 +163,10 @@ class AppStorage {
     return app.data["entreprise.siren"]
   }
 
+  deleteKey(key) {
+    delete this.data[key]
+  }
+
   async save(data) {
     data = Object.assign(this.data, data)
     const schemaData = this.filterSchemaData(data)
