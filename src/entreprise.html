@@ -34,7 +34,7 @@ title: "Vous êtes une entreprise"
     const nafs = await getNafCodes()
     const select = selectField('entreprise.code_naf')
     const options = Object.keys(nafs).map(code => ({ value: code, label: `${code} — ${nafs[code]}` }))
-    buildSelectOptions(select, options)
+    buildSelectOptions(select, options, app.data['entreprise.code_naf'])
 
     const siren = selectField('_entreprise.siren')
     siren.value = app.data['entreprise.siren']
