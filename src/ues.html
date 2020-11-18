@@ -35,14 +35,16 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 </fieldset>
 
 <script>
-  document.onready = function() {
+  async function getNafCodes() {
+    const response = await request('GET', '/config?key=NAF')
+    return response.data.NAF
+  }
+  
+  document.onready = async function() {
+    const nafs = await getNafCodes()
     const select = selectField('entreprise.code_naf')
-    const options = [
-      { value: '1071z', label: '10.71Z – Fabrication industrielle de pain et de patisserie fraiche' },
-      { value: '0126z', label: '01.26Z – Culture des fuits oléagéneux' },
-      { value: '0130z', label: '01.30Z – Reproduction de plantes' },
-      ]
-    buildSelectOptions(select, options)
+    const options = Object.keys(nafs).map(code => ({ value: code, label: `${code} — ${nafs[code]}` }))
+    buildSelectOptions(select, options, app.data['entreprise.code_naf'])
 
     const siren = selectField('entreprise.siren')
     siren.value = app.data['entreprise.siren']
