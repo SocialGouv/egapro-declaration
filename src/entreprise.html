@@ -23,18 +23,9 @@ title: "Vous êtes une entreprise"
 </fieldset>
 
 <script>
-
-
-  async function getNafCodes() {
-    const response = await request('GET', '/config?key=NAF')
-    return response.data.NAF
-  }
-
   document.onready = async function() {
-    const nafs = await getNafCodes()
     const select = selectField('entreprise.code_naf')
-    const options = Object.keys(nafs).map(code => ({ value: code, label: `${code} — ${nafs[code]}` }))
-    buildSelectOptions(select, options, app.data['entreprise.code_naf'])
+    await buildNafOptions(select, app.data['entreprise.code_naf'])
 
     const siren = selectField('entreprise.siren')
     siren.value = app.data['entreprise.siren']

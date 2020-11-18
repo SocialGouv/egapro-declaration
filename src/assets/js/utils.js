@@ -52,6 +52,18 @@ function buildRadioOptions(optgroup, list, value, attributes = {}) {
   }).join('')
 }
 
+async function getNafCodes() {
+  const response = await request('GET', '/config?key=NAF')
+  return response.data.NAF
+}
+
+async function buildNafOptions(optgroup, value, attributes = {}) {
+  const nafs = await getNafCodes()
+  
+  const options = Object.keys(nafs).map(code => ({ value: code, label: `${code} — ${nafs[code]}` }))
+  buildSelectOptions(optgroup, options, value, attributes)
+}
+
 function selectField(name) {
   const field = document.getElementById(`field--${name}`)
   if(!field) throw new Error(`field name "${name}" does not exist.`)
