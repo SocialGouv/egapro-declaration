@@ -6,7 +6,7 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 
 <fieldset>
   <div class=row>
-    <div>{% include input.html name="ues.nom" label="Nom de l'UES" required=true %}</div>
+    <div>{% include input.html name="entreprise.ues.raison_sociale" label="Nom de l'UES" required=true %}</div>
   </div>
 </fieldset>
 
@@ -24,7 +24,7 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 
 <fieldset>
   <div class=row>
-    <div>{% include select.html name="entreprise.naf" label="Code NAF de cette entreprise" required=true %}</div>
+    <div>{% include select.html name="entreprise.code_naf" label="Code NAF de cette entreprise" required=true %}</div>
   </div>
 </fieldset>
 
@@ -36,7 +36,7 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 
 <script>
   document.onready = function() {
-    const select = selectField('entreprise.naf')
+    const select = selectField('entreprise.code_naf')
     const options = [
       { value: '1071z', label: '10.71Z – Fabrication industrielle de pain et de patisserie fraiche' },
       { value: '0126z', label: '01.26Z – Culture des fuits oléagéneux' },
