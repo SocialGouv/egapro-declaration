@@ -7,8 +7,8 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
 <fieldset id=container>
   <template id=looper>
     <div class=row>
-      {% include input.html name="ues.nom_{index}" label="Raison sociale #{index}" required=true value="{nom}" %}
-      {% include input.html name="ues.siren_{index}" label="SIREN #{index}" required=true value="{siren}" %}
+      {% include input.html name="entreprise.ues.entreprises.{index}.raison_sociale" label="Raison sociale #{index}" required=true value="{entreprise.ues.entreprises.{index}.raison_sociale}" %}
+      {% include input.html name="entreprise.ues.entreprises.{index}.siren" label="SIREN #{index}" required=true value="{entreprise.ues.entreprises.{index}.siren}" %}
     </div>
   </template>
 </fieldset>
@@ -17,13 +17,13 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
   document.onready = function() {
     const template = document.getElementById('looper').innerHTML
     const container = document.getElementById('container')
-    const count = Number(app.data['ues.nombre_entreprises'])
+    const count = Number(app.data['_entreprise.ues.nombre_entreprises'])
     let html = ''
-    for(let i = 1; i <= count; i++) {
+    for(let index = 1; index <= count; index++) {
       html += template
-        .replaceAll('{index}', i)
-        .replaceAll('{nom}', app.data[`ues.nom_${i}`])
-        .replaceAll('{siren}', app.data[`ues.siren_${i}`])
+        .replaceAll('{index}', index)
+        .replaceAll(`{entreprise.ues.entreprises.${index}.raison_sociale}`, app.data[`entreprise.ues.entreprises.${index}.raison_sociale`] || '')
+        .replaceAll(`{entreprise.ues.entreprises.${index}.siren}`, app.data[`entreprise.ues.entreprises.${index}.siren`] || '')
     }
     container.innerHTML = html
   }
