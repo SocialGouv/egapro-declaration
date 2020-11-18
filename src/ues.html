@@ -30,7 +30,7 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 
 <fieldset>
   <div class=row>
-    <div>{% include input.html type="number" name="ues.nombre_entreprises" label="Nombre d'entreprises composant l'UES (le déclarant compris)" required=true %}</div>
+    <div>{% include input.html type="number" name="_entreprise.ues.nombre_entreprises" label="Nombre d'entreprises composant l'UES (le déclarant compris)" required=true min=2 %}</div>
   </div>
 </fieldset>
 
