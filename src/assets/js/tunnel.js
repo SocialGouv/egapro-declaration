@@ -80,25 +80,78 @@ if(step >= steps.length - 1) {
 }
 
 function serializeForm(form) {
-  const formData = new FormData(form)
-  var data = {}
-  // Add all the form data to the app data
-  formData.forEach((value, key) => {
-    data[key] = value
+  let data = app.data
+  // Only get "real" inputs (not submit buttons), they have names
+  const allFields = Array.from(form.elements).filter(field => field.name)
+  // Get all the names of the fields that aren't disabled (and thus included in FormData)
+  const enabledFields = Array.from(new FormData(form)).map(formDataItem => formDataItem[0])
+  allFields.forEach(field => {
+    if (!enabledFields.includes(field.name)) {
+      // Force remove disabled form fields' values from the app data
+      delVal(app.data, field.name)
+    } else {
+      let value = field.value
+      if (field.dataset.validation === 'Number') {
+        value = Number(value)
+      }
+      setVal(data, field.name, value)
+    }
   })
-  // Force remove all the disabled form fields' values from the app data
-  // in case they were added previously
-  const allNames = Array.from(form.elements).filter(field => field.name).map(field => field.name)
-  const formDataNames = Array.from(formData).map(item => item[0])
-  const disabledNames = allNames.filter(name => !formDataNames.includes(name))
-  disabledNames.forEach(name => app.deleteKey(name))
-
   return data
 }
 
 function loadFormValues(form, data = {}) {
-  Object.keys(data).forEach((prop) => {
-    const node = form.elements[prop]
-    if(node) node.value = data[prop]
+  Array.from(form.elements).forEach(node => {
+    if (node.name) {
+      node.value = getVal(data, node.name)
+    }
   })
+}
+
+function keyFromFlatKey(flatKey) {
+  // Change "entreprise.ues.entreprises.0.raison_sociale" to '["entreprise"]["ues"]["entreprises"]["0"]["raison_sociale"]'
+  return flatKey.split(".").map(key => `["${key}"]`).join('')
+}
+
+function getVal(data, flatKey) {
+  const keys = flatKey.split('.')
+  try {
+    const value = keys.reduce((item, key) => {
+      return item[key]
+    }, data)
+    return value || ''
+  } catch {
+    // Fail silently if the item doesn't exist yet
+    return ''
+  }
+}
+
+function setVal(data, flatKey, val) {
+  const keys = flatKey.split('.')
+  let item = data
+  while (keys.length > 1) {
+    const key = keys.shift()
+    if (!(key in item)) { // This item doesn't exist yet
+      item[key] = {}
+    }
+    item = item[key]
+  }
+  // Only one key left, it's the one that identifies the item we want to set
+  item[keys[0]] = val
+}
+
+function delVal(data, flatKey) {
+  debugger
+  // Delete a nested value from a flat key
+  const keys = flatKey.split('.')
+  let item = data
+  while (keys.length > 1) {
+    const key = keys.shift()
+    if (!(key in item)) { // This item doesn't exist yet
+      return
+    }
+    item = item[key]
+  }
+  // Only one key left, it's the one that identifies the item we want to delete
+  delete item[keys[0]]
 }
