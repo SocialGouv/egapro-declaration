@@ -102,8 +102,12 @@ function serializeForm(form) {
 
 function loadFormValues(form, data = {}) {
   Array.from(form.elements).forEach(node => {
-    if (node.name) {
-      node.value = getVal(data, node.name)
+    const value = getVal(data, node.name)
+    if (!node.name) return
+    if (node.type === "radio") {
+      node.checked = node.value === value
+    } else {
+      node.value = value
     }
   })
 }
