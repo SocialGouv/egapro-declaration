@@ -138,7 +138,6 @@ class AppStorage {
     return localStorage.token
   }
 
-
   filterSchemaData(data) {
     return Object.keys(data).reduce((acc, key) => {
       if(!key.startsWith('_') && Object.keys(data[key]).length !== 0) {
