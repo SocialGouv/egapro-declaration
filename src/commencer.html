@@ -12,7 +12,7 @@ title: "Commencer la déclaration"
 
 <script>
   document.onready = function() {
-    const schema = app.schema['déclaration.année_indicateurs']
+    const schema = app.schema.properties['déclaration']['properties']['année_indicateurs']
     buildSelectOptions(
       selectField('déclaration.année_indicateurs'),
       [
