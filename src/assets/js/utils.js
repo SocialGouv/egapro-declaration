@@ -70,16 +70,6 @@ function selectField(name) {
   return field
 }
 
-function flattenJsonSchema(parent, prefix) {
-  return Object.keys(parent.properties).reduce((acc, key) => {
-    const child = parent.properties[key]
-    const label = prefix ? `${prefix}.${key}` : key
-    if(child.properties) return Object.assign(acc, flattenJsonSchema(child, label))
-    child.required = Array.isArray(parent.required) && parent.required.includes(key)
-    return Object.assign(acc, { [label]: child })
-  }, {})
-}
-
 // Shortcut event
 window.addEventListener('DOMContentLoaded', async () => {
   app = new AppStorage()
@@ -124,7 +114,7 @@ class AppStorage {
 
   async loadSchema() {
     const response = await request('GET', '/jsonschema.json')
-    this.schema = flattenJsonSchema(response.data)
+    this.schema = response.data
   }
 
   async loadLocalData() {
