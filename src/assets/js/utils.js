@@ -4,7 +4,6 @@ async function request(method, uri, body, options = {}) {
   options.method = method
   options.headers = {
     'API-KEY': localStorage.token,
-    'ACCEPT': 'application/vnd.egapro.v1.flat',
   }
   const response = await fetch(`${app.apiUrl}${uri}`, options)
 
