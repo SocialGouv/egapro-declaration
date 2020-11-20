@@ -6,15 +6,15 @@ const steps = [
    {name: 'commencer'},
    {name: 'declarant'},
    {name: 'annee', nextStep: data => {
-    if(data['_entreprise.structure'] === 'ues') return 'ues'
+    if(getVal(data, '_entreprise.structure') === 'ues') return 'ues'
     return 'entreprise'
   }},
   {name: 'ues'},
   {name: 'ues-composition', nextStep: _ => 'remuneration'},
   {name: 'entreprise', nextStep: _ => 'remuneration'},
   {name: 'remuneration', nextStep: data => {
-    if (data['indicateurs.rémunérations.mode'] === "coef") return 'remuneration-coef'
-    if (data['indicateurs.rémunérations.mode'] === "csp") return 'remuneration-csp'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "coef") return 'remuneration-coef'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "csp") return 'remuneration-csp'
     return 'augmentation'
   }},
   {name: 'remuneration-coef', nextStep: _ => 'remuneration-final'},
