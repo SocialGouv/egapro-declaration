@@ -7,7 +7,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
 
 <fieldset>
   <div class="row">
-    {% include input.html name="déclaration.année_indicateurs" label="Année au titre de laquelle vous transmettez vos indicateurs" readonly=true %}
+    {% include input.html name="déclaration.année_indicateurs" label="Année au titre de laquelle vous transmettez vos indicateurs" readonly=true validation="Number" %}
   </div>
 </fieldset>
 
@@ -44,7 +44,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
 
 <fieldset>
   <div class=row>
-    {% include input.html type=number name="_effectif.nombre" min=0 label="Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence" required="true" %}
+    {% include input.html type=number name="_effectif.nombre" min=0 label="Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence" required="true" validation="Number" %}
   </div>
 </fieldset>
 
