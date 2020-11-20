@@ -81,20 +81,26 @@ if(step >= steps.length - 1) {
 
 function serializeForm(form) {
   let data = app.data
-  // Only get "real" inputs (not submit buttons), they have names
+
+  // Only the fields that have names are of interest for us (not submit buttons)
   const allFields = Array.from(form.elements).filter(field => field.name)
-  // Get all the names of the fields that aren't disabled (and thus included in FormData)
-  const enabledFields = Array.from(new FormData(form)).map(formDataItem => formDataItem[0])
-  allFields.forEach(field => {
-    if (!enabledFields.includes(field.name)) {
-      // Force remove disabled form fields' values from the app data
-      delVal(app.data, field.name)
-    } else {
-      let value = field.value
+
+  const formData = new FormData(form)
+  formData.forEach((value, key) => {
+      const field = allFields.find(node => node.name === key)
       if (field.dataset.validation === 'Number') {
         value = Number(value)
       }
-      setVal(data, field.name, value)
+    setVal(data, key, value)
+  })
+
+  // Get all the names of the fields that aren't disabled (and thus included in FormData)
+  const enabledFields = Array.from(formData).map(formDataItem => formDataItem[0])
+
+  // We need to force remove disabled fields that might have been set previously
+  allFields.forEach(field => {
+    if (!enabledFields.includes(field.name)) {
+      delVal(app.data, field.name)
     }
   })
   return data
