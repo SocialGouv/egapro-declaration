@@ -17,13 +17,13 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
   document.onready = function() {
     const template = document.getElementById('looper').innerHTML
     const container = document.getElementById('container')
-    const count = Number(app.data['_entreprise.ues.nombre_entreprises'])
+    const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
     for(let index = 1; index <= count; index++) {
       html += template
         .replaceAll('{index}', index)
-        .replaceAll(`{entreprise.ues.entreprises.${index}.raison_sociale}`, app.data[`entreprise.ues.entreprises.${index}.raison_sociale`] || '')
-        .replaceAll(`{entreprise.ues.entreprises.${index}.siren}`, app.data[`entreprise.ues.entreprises.${index}.siren`] || '')
+        .replaceAll(`{entreprise.ues.entreprises.${index}.raison_sociale}`, getVal(app.data, `entreprise.ues.entreprises.${index}.raison_sociale`) || '')
+        .replaceAll(`{entreprise.ues.entreprises.${index}.siren}`, getVal(app.data, `entreprise.ues.entreprises.${index}.siren`) || '')
     }
     container.innerHTML = html
   }
