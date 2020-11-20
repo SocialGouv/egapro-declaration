@@ -147,11 +147,11 @@ class AppStorage {
   }
 
   get annee() {
-    return app.data["déclaration.année_indicateurs"]
+    return app.data["déclaration"]["année_indicateurs"]
   }
 
   get siren() {
-    return app.data["entreprise.siren"]
+    return app.data["entreprise"]["siren"]
   }
 
   deleteKey(key) {
