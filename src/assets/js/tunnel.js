@@ -141,7 +141,6 @@ function setVal(data, flatKey, val) {
 }
 
 function delVal(data, flatKey) {
-  debugger
   // Delete a nested value from a flat key
   const keys = flatKey.split('.')
   let item = data
