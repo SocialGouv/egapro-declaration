@@ -141,7 +141,12 @@ class AppStorage {
 
   filterSchemaData(data) {
     return Object.keys(data).reduce((acc, key) => {
-      if(!key.startsWith('_')) acc[key] = data[key]
+      if(!key.startsWith('_') && Object.keys(data[key]).length !== 0) {
+        debugger
+        // Items which start with "_" are only local and shouldn't be sent to the API
+        // Items which are empty shouldn't either
+        acc[key] = data[key]
+      }
       return acc
     }, {})
   }
