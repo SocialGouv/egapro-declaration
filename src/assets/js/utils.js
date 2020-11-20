@@ -138,17 +138,6 @@ class AppStorage {
     return localStorage.token
   }
 
-  validateSchema(data) {
-    return Object.keys(data).reduce((acc, key) => {
-      // Some keys are for internal use only, not corresponding to the schema
-      let value = data[key]
-      if(!Object.keys(this.schema).includes(key)) throw new Error(`key ${key} is not in jsonschema.`)
-      const validator = this.schema[key]
-      if(validator.type === 'string') value = String(value)
-      if(validator.type === 'integer') value = Number(value)
-      return Object.assign(acc, { [key]: value })
-    }, {})
-  }
 
   filterSchemaData(data) {
     return Object.keys(data).reduce((acc, key) => {
@@ -172,10 +161,9 @@ class AppStorage {
   async save(data) {
     data = Object.assign(this.data, data)
     const schemaData = this.filterSchemaData(data)
-    const cleanedData = this.validateSchema(schemaData)
-    const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, cleanedData)
+    const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, schemaData)
     if(response.ok) {
-      Object.assign(this.data, cleanedData)
+      Object.assign(this.data, schemaData)
       localStorage.data = JSON.stringify(this.data)
     }
     else if(response.data.error) notify.error(response.data.error)
