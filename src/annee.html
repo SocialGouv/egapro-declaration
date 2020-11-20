@@ -62,10 +62,6 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
 
   function updatePeriode(value) {
     const fieldset = document.getElementById('_periode.reference')
-    if(value === "autre") {
-      fieldset.disabled = false
-      selectField('periode.debut').value = ''
-    }
-    else fieldset.disabled = true
+    fieldset.disabled = value !== "autre"
   }
 </script>
