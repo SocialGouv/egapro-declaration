@@ -37,6 +37,6 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 <script>
   document.onready = async function() {
     const select = selectField('entreprise.code_naf')
-    await buildNafOptions(select, app.data['entreprise.code_naf'])
+    await buildNafOptions(select, getVal(app.data, ('entreprise.code_naf')))
   }
 </script>
