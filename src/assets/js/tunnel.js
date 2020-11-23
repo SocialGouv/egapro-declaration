@@ -109,8 +109,8 @@ function serializeForm(form) {
 
 function loadFormValues(form, data = {}) {
   Array.from(form.elements).forEach(node => {
-    const value = getVal(data, node.name)
     if (!node.name) return
+    const value = getVal(data, node.name)
     if (node.type === "radio") {
       node.checked = node.value === value
     } else {
@@ -119,10 +119,19 @@ function loadFormValues(form, data = {}) {
   })
 }
 
+function extractKey(flatKey) {
+    // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
+    return flatKey.match(/([^\[]+)\[?(\d+)?\]?/)
+}
+
 function getVal(data, flatKey) {
   const keys = flatKey.split('.')
   try {
-    const value = keys.reduce((item, key) => {
+    const value = keys.reduce((item, currentKey) => {
+      const [_, key, index] = extractKey(currentKey)
+      if (index) {
+        return item[key][index]
+      }
       return item[key]
     }, data)
     return value || ''
@@ -130,11 +139,6 @@ function getVal(data, flatKey) {
     // Fail silently if the item doesn't exist yet
     return ''
   }
-}
-
-function extractKey(flatKey) {
-    // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
-    return flatKey.match(/([^\[]+)\[?(\d+)?\]?/)
 }
 
 function setVal(data, flatKey, val) {
