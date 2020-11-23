@@ -44,7 +44,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       {value: "csp", label: "Par catégorie socio-professionnelle"},
       {value: "", label: "L’indicateur n’est pas calculable"},
     ]
-    buildRadioOptions(modeField, calculOptions, app.data['indicateurs.rémunérations.mode'])
+    buildRadioOptions(modeField, calculOptions, getVal(app.data, ('indicateurs.rémunérations.mode')) || "csp")
 
     toggleFields()
     modeField.addEventListener('change', toggleFields)
