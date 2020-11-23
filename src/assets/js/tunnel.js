@@ -169,12 +169,20 @@ function delVal(data, flatKey) {
   const keys = flatKey.split('.')
   let item = data
   while (keys.length > 1) {
-    const key = keys.shift()
+    const [_, key, index] = extractKey(keys.shift())
     if (!(key in item)) { // This item doesn't exist yet
       return
     }
-    item = item[key]
+    if (index && !item[key][index]) {
+      return
+    }
+    item = index ? item[key][index] : item[key]
   }
   // Only one key left, it's the one that identifies the item we want to delete
-  delete item[keys[0]]
+  const [_, key, index] = extractKey(keys.shift())
+  if (index) {
+    delete item[key][index]
+  } else {
+    delete item[key]
+  }
 }
