@@ -119,11 +119,6 @@ function loadFormValues(form, data = {}) {
   })
 }
 
-function keyFromFlatKey(flatKey) {
-  // Change "entreprise.ues.entreprises.0.raison_sociale" to '["entreprise"]["ues"]["entreprises"]["0"]["raison_sociale"]'
-  return flatKey.split(".").map(key => `["${key}"]`).join('')
-}
-
 function getVal(data, flatKey) {
   const keys = flatKey.split('.')
   try {
