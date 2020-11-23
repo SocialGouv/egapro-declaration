@@ -132,18 +132,35 @@ function getVal(data, flatKey) {
   }
 }
 
+function extractKey(flatKey) {
+    // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
+    return flatKey.match(/([^\[]+)\[?(\d+)?\]?/)
+}
+
 function setVal(data, flatKey, val) {
+  // Deeply set a value in data given a flatKey like `entreprise.ues.entreprises[0].raison_sociale`
   const keys = flatKey.split('.')
-  let item = data
+  let item = data // item holds the current "branch" of the app.data tree (eg app.data['entreprise']['ues']
   while (keys.length > 1) {
-    const key = keys.shift()
-    if (!(key in item)) { // This item doesn't exist yet
-      item[key] = {}
+    const [_, key, index] = extractKey(keys.shift())
+
+    // Initialise the item as an array or object depending on the presence of an index (eg entreprises[0])
+    if (!(key in item)) {
+      item[key] = index ? [] : {}
     }
-    item = item[key]
+    // If the current item is an array, initialize its element (only works for array of objects)
+    if (index && !item[key][index]) {
+      item[key][index] = {}
+    }
+    item = index ? item[key][index] : item[key]
   }
   // Only one key left, it's the one that identifies the item we want to set
-  item[keys[0]] = val
+  const [_, key, index] = extractKey(keys.shift())
+  if (index) {
+    item[key][index] = val
+  } else {
+    item[key] = val
+  }
 }
 
 function delVal(data, flatKey) {
