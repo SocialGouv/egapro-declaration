@@ -7,8 +7,8 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
 <fieldset id=container>
   <template id=looper>
     <div class=row>
-      {% include input.html name="entreprise.ues.entreprises.{index}.raison_sociale" label="Raison sociale #{index}" required=true value="{entreprise.ues.entreprises.{index}.raison_sociale}" %}
-      {% include input.html name="entreprise.ues.entreprises.{index}.siren" label="SIREN #{index}" required=true value="{entreprise.ues.entreprises.{index}.siren}" %}
+      {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale #{index}" required=true %}
+      {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="SIREN #{index}" required=true %}
     </div>
   </template>
 </fieldset>
@@ -19,11 +19,8 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
     const container = document.getElementById('container')
     const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
-    for(let index = 1; index <= count; index++) {
-      html += template
-        .replaceAll('{index}', index)
-        .replaceAll(`{entreprise.ues.entreprises.${index}.raison_sociale}`, getVal(app.data, `entreprise.ues.entreprises.${index}.raison_sociale`) || '')
-        .replaceAll(`{entreprise.ues.entreprises.${index}.siren}`, getVal(app.data, `entreprise.ues.entreprises.${index}.siren`) || '')
+    for(let index = 0; index < count; index++) {
+      html += template.replaceAll('{index}', index)
     }
     container.innerHTML = html
   }
