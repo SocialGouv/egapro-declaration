@@ -18,7 +18,7 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
 
 <fieldset>
   <div class=row>
-    <div>{% include input.html name="entreprise.siren" label="Numéro SIREN de cette entreprise" required=true value="" readonly=true %}</div>
+    <div>{% include input.html name="entreprise.siren" label="Numéro SIREN de cette entreprise" required=true readonly=true %}</div>
   </div>
 </fieldset>
 
@@ -38,8 +38,5 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
   document.onready = async function() {
     const select = selectField('entreprise.code_naf')
     await buildNafOptions(select, app.data['entreprise.code_naf'])
-
-    const siren = selectField('entreprise.siren')
-    siren.value = app.data['entreprise.siren']
   }
 </script>
