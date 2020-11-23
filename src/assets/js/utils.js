@@ -73,8 +73,8 @@ function selectField(name) {
 window.addEventListener('DOMContentLoaded', async () => {
   app = new AppStorage()
   await app.init()
-  document.dispatchEvent(new Event('ready'))
   document.onready && document.onready()
+  document.dispatchEvent(new Event('ready'))
 })
 
 notify = {
