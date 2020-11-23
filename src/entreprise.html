@@ -26,8 +26,5 @@ title: "Vous êtes une entreprise"
   document.onready = async function() {
     const select = selectField('entreprise.code_naf')
     await buildNafOptions(select, app.data['entreprise.code_naf'])
-
-    const siren = selectField('entreprise.siren')
-    siren.value = app.data['entreprise.siren']
   }
 </script>
