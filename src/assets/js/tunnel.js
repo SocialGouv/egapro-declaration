@@ -129,10 +129,7 @@ function getVal(data, flatKey) {
   try {
     const value = keys.reduce((item, currentKey) => {
       const [_, key, index] = extractKey(currentKey)
-      if (index) {
-        return item[key][index]
-      }
-      return item[key]
+      return index ? item[key][index] : item[key]
     }, data)
     return value || ''
   } catch {
