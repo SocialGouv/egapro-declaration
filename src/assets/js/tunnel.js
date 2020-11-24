@@ -13,8 +13,8 @@ const steps = [
   {name: 'ues-composition', nextStep: _ => 'remuneration'},
   {name: 'entreprise', nextStep: _ => 'remuneration'},
   {name: 'remuneration', nextStep: data => {
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "coef") return 'remuneration-coef'
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "autre") return 'remuneration-coef'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_branche") return 'remuneration-coef'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_autre") return 'remuneration-coef'
     if (getVal(data, 'indicateurs.rémunérations.mode') === "csp") return 'remuneration-csp'
     return 'augmentation'
   }},
