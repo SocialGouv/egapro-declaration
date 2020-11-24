@@ -6,23 +6,24 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="ecart-final-pourcentage" label="Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie" min=0 max=100 %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie" min=0 max=100 required=true validation="Number" %}</div>
 </fieldset>
 
 <fieldset>
-  <div class=row>{% include select.html name="remuneration-favorable" empty="true" label="Population envers laquelle l'écart est favorable" %}</div>
+  <div class=row>{% include select.html name="indicateurs.rémunérations.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true %}</div>
 </fieldset>
 
 <fieldset class=note>
-  <div class=row>{% include input.html type="number" name="remuneration-note" label="Nombre de points obtenus sur l'indicateur" min=0 max=40 %}</div>
+  <div class=row>{% include input.html type="number" name="_indicateurs.rémunérations.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=40 validation="Number" %}</div>
 </fieldset>
 
 <script>
   document.onready = () => {
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" }
+      { value: 'hommes', label: "Hommes" },
+      { value: 'égalité', label: "Égalité" }
     ]
-    buildSelectOptions(selectField('remuneration-favorable'), favorableOptions)
+    buildSelectOptions(selectField('indicateurs.rémunérations.population_favorable'), favorableOptions)
   }
 </script>
