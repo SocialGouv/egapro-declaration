@@ -114,7 +114,8 @@ function loadFormValues(form, data = {}) {
     if (node.type === "radio") {
       node.checked = node.value === value
     } else {
-      node.value = value
+      // If it's a hidden input, it's one we generated, we don't want to overwrite it with an empty value
+      node.value = node.type === "hidden" ? node.value : value
     }
   })
 }
