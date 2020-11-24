@@ -57,7 +57,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
     modeField.addEventListener('change', toggleFields)
-    nonCalculableField.addEventListener('change', toggleFields)
 
     function toggleFields() {
       const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
