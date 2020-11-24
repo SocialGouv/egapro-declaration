@@ -24,16 +24,17 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
       <tr>
         <th>Niveau - Coefficient {index} (en %)</th>
         <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories.{index}.:29" value="{indicateurs.rémunérations.catégories.{index}.:29}" min=0 required=true validation="Number" %}
+          {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie 1" %}         
+          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.:29" min=0 required=true validation="Number" %}
         </td>
         <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories.{index}.30:39" value="{indicateurs.rémunérations.catégories.{index}.30:39}" min=0 required=true validation="Number" %}
+          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.30:39" min=0 required=true validation="Number" %}
         </td>
         <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories.{index}.40:49" value="{indicateurs.rémunérations.catégories.{index}.40:49}" min=0 required=true validation="Number" %}
+          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.40:49" min=0 required=true validation="Number" %}
         </td>
         <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories.{index}.50:" value="{indicateurs.rémunérations.catégories.{index}.50:}" min=0 required=true validation="Number" %}
+          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.50:" min=0 required=true validation="Number" %}
         </td>
       </tr>
     </template>
@@ -46,13 +47,9 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
     const template = document.getElementById('looper').innerHTML
     const count = Number(getVal(app.data, '_indicateurs.rémunérations.niveaux'))
     const content = Array(count).fill().map((_, i) => {
-      const index = i + 1
+      const index = i
       return template
         .replaceAll('{index}', index)
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.:29}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.:29`))
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.30:39}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.30:39`))
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.40:49}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.40:49`))
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.50:}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.50:`))
     }).join('')
     container.innerHTML = content
   })
