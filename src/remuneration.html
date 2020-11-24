@@ -41,8 +41,8 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
     const modeField = selectField('indicateurs.rémunérations.mode')
     const modeOptions = [
-      {value: "coef", label: "Par niveau ou coefficient hiérarchique en application de la classification de branche"},
-      {value: "autre", label: "Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes"},
+      {value: "niveau_branche", label: "Par niveau ou coefficient hiérarchique en application de la classification de branche"},
+      {value: "niveau_autre", label: "Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes"},
       {value: "csp", label: "Par catégorie socio-professionnelle"},
     ]
     buildRadioOptions(modeField, modeOptions, getVal(app.data, 'indicateurs.rémunérations.mode') || 'csp', {required: true})
@@ -61,10 +61,10 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
     function toggleFields() {
       const isCalculable = calculableField.querySelector(':checked').value === 'oui'
-      const mode = modeField.querySelector(':checked').value
+      const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
       enableField('#fieldset-mode', isCalculable)
-      enableField('#fieldset-cse', isCalculable && ['coef', 'autre'].includes(mode))
-      enableField('#fieldset-niveaux', isCalculable && ['coef', 'autre'].includes(mode))
+      enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
+      enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
       enableField('#fieldset-motif', !isCalculable)
     }
 
