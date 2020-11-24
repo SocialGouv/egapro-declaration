@@ -37,7 +37,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, 'indicateurs.rémunérations.calculable') || 'oui', {required: true})
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.rémunérations.calculable') || 'oui', {required: true})
 
     const modeField = selectField('indicateurs.rémunérations.mode')
     const modeOptions = [
