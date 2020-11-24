@@ -141,26 +141,30 @@ function getVal(data, flatKey) {
 function setVal(data, flatKey, val) {
   // Deeply set a value in data given a flatKey like `entreprise.ues.entreprises[0].raison_sociale`
   const keys = flatKey.split('.')
-  let item = data // item holds the current "branch" of the app.data tree (eg app.data['entreprise']['ues']
-  while (keys.length > 1) {
-    const [_, key, index] = extractKey(keys.shift())
+  const ancestors = keys.slice(0, -1)
+  const property = keys.pop()
 
-    // Initialise the item as an array or object depending on the presence of an index (eg entreprises[0])
-    if (!(key in item)) {
-      item[key] = index ? [] : {}
+  const target = ancestors.reduce((parent, name) => {
+    const [_, key, index] = extractKey(name)
+    // parent is an array
+    if(index) {
+      if(!(key in parent)) parent[key] = []
+      if(!parent[key][index]) parent[key][index] = {}
+      return parent[key][index]
     }
-    // If the current item is an array, initialize its element (only works for array of objects)
-    if (index && !item[key][index]) {
-      item[key][index] = {}
+    // parent is an object
+    else {
+      if(!(key in parent)) parent[key] = {}
+      return parent[key]
     }
-    item = index ? item[key][index] : item[key]
-  }
-  // Only one key left, it's the one that identifies the item we want to set
-  const [_, key, index] = extractKey(keys.shift())
+  }, data)
+
+  // Set the value on the
+  const [_, key, index] = extractKey(property)
   if (index) {
-    item[key][index] = val
+    target[key][index] = val
   } else {
-    item[key] = val
+    target[key] = val
   }
 }
 
