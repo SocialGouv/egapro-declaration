@@ -27,7 +27,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row>{% include select.html name="indicateurs.rémunérations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" %}</div>
+  <div class=row>{% include select.html name="indicateurs.rémunérations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" required=true %}</div>
 </fieldset>
 
 <script>
@@ -60,7 +60,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     nonCalculableField.addEventListener('change', toggleFields)
 
     function toggleFields() {
-      const isCalculable = calculableField.querySelector(':checked').value === 'oui'
+      const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
       const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
       enableField('#fieldset-mode', isCalculable)
       enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
