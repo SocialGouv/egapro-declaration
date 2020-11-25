@@ -88,10 +88,13 @@ function serializeForm(form) {
 
   const formData = new FormData(form)
   formData.forEach((value, key) => {
-      const field = allFields.find(node => node.name === key)
-      if (field.dataset.validation === 'Number') {
-        value = Number(value)
-      }
+    if (!value) {
+      return
+    }
+    const field = allFields.find(node => node.name === key)
+    if (field.dataset.validation === 'Number') {
+      value = Number(value)
+    }
     setVal(data, key, value)
   })
 
