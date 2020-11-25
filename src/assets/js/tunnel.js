@@ -135,7 +135,7 @@ function getVal(data, flatKey) {
       const [_, key, index] = extractKey(currentKey)
       return index ? item[key][index] : item[key]
     }, data)
-    return value || ''
+    return (value !== undefined ? value : '')
   } catch {
     // Fail silently if the item doesn't exist yet
     return ''
