@@ -103,7 +103,7 @@ function serializeForm(form) {
 
   // We need to force remove disabled fields that might have been set previously
   allFields.forEach(field => {
-    if (!enabledFields.includes(field.name)) {
+    if (!enabledFields.includes(field.name) || field.value === "") {
       delVal(app.data, field.name)
     }
   })
