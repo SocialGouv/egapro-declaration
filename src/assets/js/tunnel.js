@@ -114,6 +114,7 @@ function loadFormValues(form, data = {}) {
   Array.from(form.elements).forEach(node => {
     if (!node.name) return
     const value = getVal(data, node.name)
+    if (value === "") return
     if (node.type === "radio") {
       node.checked = node.value === value
     } else {
