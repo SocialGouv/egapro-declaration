@@ -6,28 +6,28 @@ title: "Niveau de résultat global"
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="note.total_points_obtenus" label="Total des points obtenus" min=0 max=100 %}</div>
+  <div class=row>{% include input.html type="number" name="déclaration.points" label="Total des points obtenus" min=0 max=100 validation="Number" %}</div>
 </fieldset>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="note.nombre_points_maximum" label="Nombre de points maximum pouvant être obtenus" min=0 max=100 %}</div>
+  <div class=row>{% include input.html type="number" name="déclaration.points_calculables" label="Nombre de points maximum pouvant être obtenus" min=0 max=100 validation="Number" %}</div>
 </fieldset>
 
 <fieldset class=note>
-  <div class=row>{% include input.html type="number" name="note.resultat_final" label="Résultat final sur 100 points" min=0 max=100 %}</div>
+  <div class=row>{% include input.html type="number" name="déclaration.index" label="Résultat final sur 100 points" min=0 max=100 validation="Number" %}</div>
 </fieldset>
 
 <fieldset>
-  <div class=row>{% include select.html name="note.mesures_correction" empty="true" label="Mesures de correction prévues à l'article D. 1142-6" %}</div>
+  <div class=row>{% include select.html name="déclaration.mesures_correctives" empty="true" label="Mesures de correction prévues à l'article D. 1142-6" %}</div>
 </fieldset>
 
 <script>
   document.onready = () => {
     const mesuresCorrectionOptions = [
-      { value: 'mises-en-oeuvre', label: "Mesures mises en oeuvre"},
-      { value: 'envisagees', label: "Mesures envisagées"},
-      { value: 'non-envisagees', label: "Mesures non envisagées"},
+      { value: 'mmo', label: "Mesures mises en oeuvre"},
+      { value: 'me', label: "Mesures envisagées"},
+      { value: 'mne', label: "Mesures non envisagées"},
     ]
-    buildSelectOptions(selectField('note.mesures_correction'), mesuresCorrectionOptions)
+    buildSelectOptions(selectField('déclaration.mesures_correctives'), mesuresCorrectionOptions)
   }
 </script>
