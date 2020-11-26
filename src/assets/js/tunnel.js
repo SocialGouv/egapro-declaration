@@ -57,7 +57,7 @@ form.addEventListener('submit', async (event) => {
 
   if(typeof document.onsend === 'function') {
     try {
-      await document.onsend(data)
+      await document.onsend(app.data)
     } catch(e) {
       return alert(e)
     }
