@@ -70,4 +70,20 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       document.querySelector(selector).disabled = !enabled
     }
   }
+
+  document.onsend = data => {
+    if (data.indicateurs.rémunérations.non_calculable) {
+      delete data.indicateurs.rémunérations.catégories
+      delete data.indicateurs.rémunérations.résultat
+      delete data.indicateurs.rémunérations.population_favorable
+    }
+    const mode = data.indicateurs.rémunérations.mode
+    if (mode) {
+      data.indicateurs.rémunérations.catégories = (
+        mode === "csp"
+        ? data.indicateurs.rémunérations.catégories.slice(0, 4)
+        : data.indicateurs.rémunérations.catégories.slice(0, data._indicateurs.rémunérations.niveaux)
+      )
+    }
+  }
 </script>
