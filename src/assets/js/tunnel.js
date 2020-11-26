@@ -113,7 +113,25 @@ function serializeForm(form) {
       delVal(app.data, field.name)
     }
   })
-  return data
+  return removeEmpty(data)
+}
+
+function removeEmpty(data) {
+  return Object.keys(data).forEach(key => {
+    if (typeof data[key] === "array") {
+      if (!data[key].filter(item => item !== undefined).length) {
+        delete data[key]
+      } else {
+        removeEmpty(data[key])
+      }
+    } else if (typeof data[key] === "object") {
+      if (!Object.keys(data[key]).length) {
+        delete data[key]
+      } else {
+        removeEmpty(data[key])
+      }
+    }
+  })
 }
 
 function loadFormValues(form, data = {}) {
