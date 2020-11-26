@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -41,10 +40,10 @@
         <td>
           
 <input
-  id="field--indicateur.30-moins"
-  value="{indicateur.30-moins}"
+  id="field--indicateurs.rémunérations.catégories.{index}.:29"
+  value="{indicateurs.rémunérations.catégories.{index}.:29}"
   type="number"
-  name="indicateur.30-moins"
+  name="indicateurs.rémunérations.catégories.{index}.:29"
   placeholder=""
   
   min="0"
@@ -52,16 +51,18 @@
   required
   
   
+  
+  data-validation="Number"
 />
 
         </td>
         <td>
           
 <input
-  id="field--indicateur.30-39"
-  value="{indicateur.30-39}"
+  id="field--indicateurs.rémunérations.catégories.{index}.30:39"
+  value="{indicateurs.rémunérations.catégories.{index}.30:39}"
   type="number"
-  name="indicateur.30-39"
+  name="indicateurs.rémunérations.catégories.{index}.30:39"
   placeholder=""
   
   min="0"
@@ -69,16 +70,18 @@
   required
   
   
+  
+  data-validation="Number"
 />
 
         </td>
         <td>
           
 <input
-  id="field--indicateur.40-49"
-  value="{indicateur.40-49}"
+  id="field--indicateurs.rémunérations.catégories.{index}.40:49"
+  value="{indicateurs.rémunérations.catégories.{index}.40:49}"
   type="number"
-  name="indicateur.40-49"
+  name="indicateurs.rémunérations.catégories.{index}.40:49"
   placeholder=""
   
   min="0"
@@ -86,16 +89,18 @@
   required
   
   
+  
+  data-validation="Number"
 />
 
         </td>
         <td>
           
 <input
-  id="field--indicateur.50-plus"
-  value="{indicateur.50-plus}"
+  id="field--indicateurs.rémunérations.catégories.{index}.50:"
+  value="{indicateurs.rémunérations.catégories.{index}.50:}"
   type="number"
-  name="indicateur.50-plus"
+  name="indicateurs.rémunérations.catégories.{index}.50:"
   placeholder=""
   
   min="0"
@@ -103,6 +108,8 @@
   required
   
   
+  
+  data-validation="Number"
 />
 
         </td>
@@ -115,15 +122,15 @@
   document.onready = (() => {
     const container = document.getElementById('container')
     const template = document.getElementById('looper').innerHTML
-    const count = Number(window.app.data['indicateur.niveaux'])
+    const count = Number(getVal(app.data, '_indicateurs.rémunérations.niveaux'))
     const content = Array(count).fill().map((_, i) => {
       const index = i + 1
       return template
         .replaceAll('{index}', index)
-        .replaceAll('{indicateur.30-moins}', window.app.data['indicateur.30-moins'])
-        .replaceAll('{indicateur.30-39}', window.app.data['indicateur.30-39'])
-        .replaceAll('{indicateur.40-49}', window.app.data['indicateur.40-49'])
-        .replaceAll('{indicateur.50-plus}', window.app.data['indicateur.50-plus'])
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.:29}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.:29`))
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.30:39}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.30:39`))
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.40:49}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.40:49`))
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.50:}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.50:`))
     }).join('')
     container.innerHTML = content
   })

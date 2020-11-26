@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Vous êtes une Unité Économique et Sociale (UES) - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -23,19 +22,21 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--ues.nom">Nom de l'UES*</label>
+  <label for="field--entreprise.ues.raison_sociale">Nom de l'UES*</label>
 
 
 <input
-  id="field--ues.nom"
+  id="field--entreprise.ues.raison_sociale"
   value=""
   type=""
-  name="ues.nom"
+  name="entreprise.ues.raison_sociale"
   placeholder=""
   
   
   
   required
+  
+  
   
   
 />
@@ -46,19 +47,21 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--ues.declarant">Nom de l'entreprise déclarant pour le compte de l'UES*</label>
+  <label for="field--entreprise.raison_sociale">Nom de l'entreprise déclarant pour le compte de l'UES*</label>
 
 
 <input
-  id="field--ues.declarant"
+  id="field--entreprise.raison_sociale"
   value=""
   type=""
-  name="ues.declarant"
+  name="entreprise.raison_sociale"
   placeholder=""
   
   
   
   required
+  
+  
   
   
 />
@@ -84,19 +87,22 @@
   required
   
   
+  readonly="readonly"
+  
 />
 </div>
   </div>
 </fieldset>
 
 <fieldset>
-  <div class=row>
-    <div><label for="field--entreprise.naf">Code NAF de cette entreprise*</label>
+  <div>
+    <div><label for="field--entreprise.code_naf">Code NAF de cette entreprise*</label>
 
 <select
-  id="field--entreprise.naf"
-  name="entreprise.naf"
+  id="field--entreprise.code_naf"
+  name="entreprise.code_naf"
   required
+  
   
 >
 </select>
@@ -107,19 +113,21 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
+  <label for="field--_entreprise.ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
 
 
 <input
-  id="field--ues.nombre_entreprises"
+  id="field--_entreprise.ues.nombre_entreprises"
   value=""
   type="number"
-  name="ues.nombre_entreprises"
+  name="_entreprise.ues.nombre_entreprises"
   placeholder=""
   
-  
+  min="2"
   
   required
+  
+  
   
   
 />
@@ -128,17 +136,9 @@
 </fieldset>
 
 <script>
-  document.onready = function() {
-    const select = selectField('entreprise.naf')
-    const options = [
-      { value: '1071z', label: '10.71Z – Fabrication industrielle de pain et de patisserie fraiche' },
-      { value: '0126z', label: '01.26Z – Culture des fuits oléagéneux' },
-      { value: '0130z', label: '01.30Z – Reproduction de plantes' },
-      ]
-    buildSelectOptions(select, options)
-
-    const siren = selectField('entreprise.siren')
-    siren.value = window.app.data['entreprise.siren']
+  document.onready = async function() {
+    const select = selectField('entreprise.code_naf')
+    await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
   }
 </script>
 

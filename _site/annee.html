@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Année et périmètre retenus pour le calcul et la publication des indicateurs - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -23,21 +22,23 @@
 <fieldset>
   <div class="row">
     
-  <label for="field--déclaration.annee">Année au titre de laquelle vous transmettez vos indicateurs</label>
+  <label for="field--déclaration.année_indicateurs">Année au titre de laquelle vous transmettez vos indicateurs</label>
 
 
 <input
-  id="field--déclaration.annee"
+  id="field--déclaration.année_indicateurs"
   value=""
   type=""
-  name="déclaration.annee"
+  name="déclaration.année_indicateurs"
   placeholder=""
   
   
   
   
-  disabled
   
+  
+  readonly="readonly"
+  data-validation="Number"
 />
 
   </div>
@@ -46,17 +47,15 @@
 <fieldset>
   <div class=row>
     <h4>Vous êtes une</h4>
-    <label><input type=radio name="entreprise.structure" value="entreprise"> Entreprise</label>
-    <label><input type=radio name="entreprise.structure" value="ues"> Unité Économique et Sociale (UES)</label>
+    <label><input required type=radio name="_entreprise.structure" value="entreprise"> Entreprise</label>
+    <label><input required type=radio name="_entreprise.structure" value="ues"> Unité Économique et Sociale (UES)</label>
   </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
     <h4>Tranches d'effectifs</h4>
-    <div id="informations.effectifs">
-      <label><input type=radio name="informations.effectifs" value="{value}"> {label}</label>
-    </div>
+    <div name="entreprise.effectif.tranche"></div>
   </div>
 </fieldset>
 
@@ -65,26 +64,28 @@
 <fieldset>
   <div class=row>
     <h4>Période de référence</h4>
-    <label><input type=radio name="periode.type" value="civile"> Année civile</label>
-    <label><input type=radio name="periode.type" value="autre"> Autre période de référence</label>
+    <label><input type=radio required name="_periode.type" onchange="updatePeriode(this.value)" value="civile"> Année civile</label>
+    <label><input type=radio required name="_periode.type" onchange="updatePeriode(this.value)" value="autre"> Autre période de référence</label>
   </div>
 </fieldset>
 
-<fieldset class="periode-reference">
+<fieldset id="_periode.reference">
   <div class=row>
     
-  <label for="field--periode.debut">Date de début de la période de référence</label>
+  <label for="field--déclaration.fin_période_référence">Date de fin de la période de référence</label>
 
 
 <input
-  id="field--periode.debut"
+  id="field--déclaration.fin_période_référence"
   value=""
   type="date"
-  name="periode.debut"
+  name="déclaration.fin_période_référence"
   placeholder=""
   
-  min="2019-01-01"
-  max="2019-12-31"
+  
+  
+  
+  
   
   
   
@@ -96,21 +97,23 @@
 <fieldset>
   <div class=row>
     
-  <label for="field--effectif.nombre">Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence</label>
+  <label for="field--entreprise.effectif.total">Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence*</label>
 
 
 <input
-  id="field--effectif.nombre"
+  id="field--entreprise.effectif.total"
   value=""
   type=""
-  name="effectif.nombre"
+  name="entreprise.effectif.total"
   placeholder=""
   
   min="0"
   
+  required
   
   
   
+  data-validation="Number"
 />
 
   </div>
@@ -118,26 +121,19 @@
 
 <script>
   document.onready = () => {
-    const annee = selectField('déclaration.annee')
-    const date = new Date()
-    annee.min = `${date.getFullYear() - 1}-01-01`
-    annee.max = `${date.getFullYear() - 1}-12-31`
-    annee.value = date.getFullYear() - 1
-    Array.from(document.querySelectorAll('[name=periode]')).forEach(function(radio) {
-      radio.addEventListener('change', function(event) {
-        const value = event.target.value
-        selectField('periode.type').disabled = value !== 'autre'
-      })
-    })
+    buildRadioOptions(
+      document.querySelector('[name="entreprise.effectif.tranche"]'),
+      Object.entries(app.config.effectifs).map(([value, label]) => ({ value, label })),
+      getVal(app.data, "entreprise.effectif.tranche"),
+      { required: true }
+    )
 
-    const container = document.getElementById('informations.effectifs')
-    const template = container.innerHTML
-    const content = Object.entries(window.app.config.effectifs).map(([key, value]) => {
-      return template
-        .replaceAll('{value}', key)
-        .replaceAll('{label}', value)
-    }).join('')
-    container.innerHTML = content
+    updatePeriode(getVal(app.data, '_periode.type'))
+  }
+
+  function updatePeriode(value) {
+    const fieldset = document.getElementById('_periode.reference')
+    fieldset.disabled = value !== "autre"
   }
 </script>
 

@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -24,37 +23,41 @@
   <template id=looper>
     <div class=row>
       
-  <label for="field--ues.nom_{index}">Raison sociale #{index}*</label>
+  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index}*</label>
 
 
 <input
-  id="field--ues.nom_{index}"
-  value="{nom}"
+  id="field--entreprise.ues.entreprises[{index}].raison_sociale"
+  value=""
   type=""
-  name="ues.nom_{index}"
+  name="entreprise.ues.entreprises[{index}].raison_sociale"
   placeholder=""
   
   
   
   required
+  
+  
   
   
 />
 
       
-  <label for="field--ues.siren_{index}">SIREN #{index}*</label>
+  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index}*</label>
 
 
 <input
-  id="field--ues.siren_{index}"
-  value="{siren}"
+  id="field--entreprise.ues.entreprises[{index}].siren"
+  value=""
   type=""
-  name="ues.siren_{index}"
+  name="entreprise.ues.entreprises[{index}].siren"
   placeholder=""
   
   
   
   required
+  
+  
   
   
 />
@@ -67,13 +70,10 @@
   document.onready = function() {
     const template = document.getElementById('looper').innerHTML
     const container = document.getElementById('container')
-    const count = Number(window.app.data['ues.nombre_entreprises'])
+    const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
-    for(let i = 1; i <= count; i++) {
-      html += template
-        .replaceAll('{index}', i)
-        .replaceAll('{nom}', window.app.data[`ues.nom_${i}`])
-        .replaceAll('{siren}', window.app.data[`ues.siren_${i}`])
+    for(let index = 0; index < count; index++) {
+      html += template.replaceAll('{index}', index)
     }
     container.innerHTML = html
   }

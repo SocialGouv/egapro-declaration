@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <script src="/declaration/assets/js/utils.js"></script>
 <script>
-  const tokenParam = '?token='
-  let token = false
-  if(location.search.startsWith(tokenParam)) {
-    token = true
-    localStorage.token = location.search.slice(tokenParam.length)
+  document.onready = () => {
+    const tokenParam = '?token='
+    let token = false
+    if(location.search.startsWith(tokenParam)) {
+      token = true
+      app.token = location.search.slice(tokenParam.length)
+    }
+    else if (app.token) token = true
+    token ? redirect('/declaration/commencer.html') : redirect('/declaration/presentation.html')
   }
-  else if (localStorage.token) token = true
-  token ? redirect('/declaration/commencer.html') : redirect('/declaration/presentation.html')
 </script>
 

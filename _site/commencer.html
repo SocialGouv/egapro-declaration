@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Commencer la déclaration - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -27,6 +26,7 @@
   name="déclaration.année_indicateurs"
   required
   
+  data-validation="Number"
 >
 </select>
 
@@ -48,13 +48,15 @@
   required
   
   pattern="[0-9]{9}"
+  
+  
 />
 
   </div>
 
 <script>
   document.onready = function() {
-    const schema = app.schema['déclaration.année_indicateurs']
+    const schema = app.schema.properties['déclaration']['properties']['année_indicateurs']
     buildSelectOptions(
       selectField('déclaration.année_indicateurs'),
       [
@@ -63,18 +65,10 @@
       ]
     )
 
-    document.querySelector('button[rel=next]').disabled = !window.app.token
+    document.querySelector('button[rel=next]').disabled = !app.token
     window.validateForm = async function(form) {
-      if(window.app.token) return true
+      if(app.token) return true
     }
-  }
-
-  document.onsend = async function(data) {
-    app.siren = data['entreprise.siren']
-    app.annee = data['déclaration.année_indicateurs']
-
-    localStorage.siren = app.siren
-    localStorage.annee = app.annee
   }
 </script>
 

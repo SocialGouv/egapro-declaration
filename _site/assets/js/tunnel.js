@@ -6,15 +6,16 @@ const steps = [
    {name: 'commencer'},
    {name: 'declarant'},
    {name: 'annee', nextStep: data => {
-    if(data['entreprise.structure'] === 'ues') return 'ues'
+    if(getVal(data, '_entreprise.structure') === 'ues') return 'ues'
     return 'entreprise'
   }},
   {name: 'ues'},
   {name: 'ues-composition', nextStep: _ => 'remuneration'},
   {name: 'entreprise', nextStep: _ => 'remuneration'},
   {name: 'remuneration', nextStep: data => {
-    if (data['indicateur.calcul'] === "coef") return 'remuneration-coef'
-    if (data['indicateur.calcul'] === "csp") return 'remuneration-csp'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_branche") return 'remuneration-coef'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_autre") return 'remuneration-coef'
+    if (getVal(data, 'indicateurs.rémunérations.mode') === "csp") return 'remuneration-csp'
     return 'augmentation'
   }},
   {name: 'remuneration-coef', nextStep: _ => 'remuneration-final'},
@@ -52,19 +53,15 @@ form.addEventListener('submit', async (event) => {
     try {
       await document.onsend(data)
     } catch(e) {
-      alert(e)
-      return
+      return alert(e)
     }
   }
 
-  const response = await sendData(data)
+  const response = await app.save(data)
   if(!response.ok) return
-
   const nextStep = steps[step].nextStep
-  if (nextStep) {
-    return redirect(`${nextStep(data)}.html`)
-  }
-  return redirect(`${steps[step + 1].name}.html`)
+  if (nextStep) return redirect(`${nextStep(data)}.html`)
+  else return redirect(`${steps[step + 1].name}.html`)
 })
 
 // "Previous" button
@@ -84,41 +81,112 @@ if(step >= steps.length - 1) {
 }
 
 function serializeForm(form) {
+  let data = app.data
+
+  // Only the fields that have names are of interest for us (not submit buttons)
+  const allFields = Array.from(form.elements).filter(field => field.name)
+
   const formData = new FormData(form)
-  var data = {}
   formData.forEach((value, key) => {
-      data[key] = value
+      const field = allFields.find(node => node.name === key)
+      if (field.dataset.validation === 'Number') {
+        value = Number(value)
+      }
+    setVal(data, key, value)
+  })
+
+  // Get all the names of the fields that aren't disabled (and thus included in FormData)
+  const enabledFields = Array.from(formData).map(formDataItem => formDataItem[0])
+
+  // We need to force remove disabled fields that might have been set previously
+  allFields.forEach(field => {
+    if (!enabledFields.includes(field.name)) {
+      delVal(app.data, field.name)
+    }
   })
   return data
 }
 
-function validateData(data = {}) {
-  return Object.keys(data).reduce((acc, key) => {
-    // Some keys are for internal use only, not corresponding to the schema
-    if(!Object.keys(app.schema).includes(key)) return
-    let value = data[key]
-    const validator = app.schema[key]
-    if(validator.type === 'string') value = String(value)
-    if(validator.type === 'integer') value = Number(value)
-    return Object.assign(acc, { [key]: value })
-  }, {})
-}
-
-async function sendData(data) {
-  const cleanedData = validateData(data)
-  Object.assign(app.data, cleanedData)
-  const response = await request('PUT', `/declaration/${app.data["entreprise.siren"]}/${app.data["déclaration.année_indicateurs"]}`, app.data)
-  if(response.ok) localStorage.data = JSON.stringify(app.data)
-  else if(response.data.error) notify.error(response.data.error)
-  return response
-}
-
 function loadFormValues(form, data = {}) {
-  Object.keys(data).forEach((prop) => {
-    const node = form.elements[prop]
-    if(node) node.value = data[prop]
-    if(!node) {
-      // debugger
+  Array.from(form.elements).forEach(node => {
+    if (!node.name) return
+    const value = getVal(data, node.name)
+    if (node.type === "radio") {
+      node.checked = node.value === value
+    } else {
+      node.value = value
     }
   })
+}
+
+function extractKey(flatKey) {
+    // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
+    return flatKey.match(/([^\[]+)\[?(\d+)?\]?/)
+}
+
+function getVal(data, flatKey) {
+  const keys = flatKey.split('.')
+  try {
+    const value = keys.reduce((item, currentKey) => {
+      const [_, key, index] = extractKey(currentKey)
+      return index ? item[key][index] : item[key]
+    }, data)
+    return value || ''
+  } catch {
+    // Fail silently if the item doesn't exist yet
+    return ''
+  }
+}
+
+function setVal(data, flatKey, val) {
+  // Deeply set a value in data given a flatKey like `entreprise.ues.entreprises[0].raison_sociale`
+  const keys = flatKey.split('.')
+  const ancestors = keys.slice(0, -1)
+  const property = keys.pop()
+
+  const target = ancestors.reduce((parent, name) => {
+    const [_, key, index] = extractKey(name)
+    // parent is an array
+    if(index) {
+      if(!(key in parent)) parent[key] = []
+      if(!parent[key][index]) parent[key][index] = {}
+      return parent[key][index]
+    }
+    // parent is an object
+    else {
+      if(!(key in parent)) parent[key] = {}
+      return parent[key]
+    }
+  }, data)
+
+  // Set the value on the
+  const [_, key, index] = extractKey(property)
+  if (index) {
+    target[key][index] = val
+  } else {
+    target[key] = val
+  }
+}
+
+function delVal(data, flatKey) {
+  // Delete a nested value from a flat key
+  const keys = flatKey.split('.')
+  let item = data
+  while (keys.length > 1) {
+    const [_, key, index] = extractKey(keys.shift())
+    if (!(key in item)) { // This item doesn't exist yet
+      return
+    }
+    if (index && !item[key][index]) {
+      return
+    }
+    item = index ? item[key][index] : item[key]
+  }
+  // Only one key left, it's the one that identifies the item we want to delete
+  const [_, key, index] = extractKey(keys.shift())
+  if (index) {
+    delete item[key][index]
+  } else {
+    delete item[key]
+  }
 }

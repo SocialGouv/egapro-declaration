@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Informations déclarant - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -39,6 +38,8 @@
   required
   
   
+  
+  
 />
 </div>
     <div>
@@ -55,6 +56,8 @@
   
   
   required
+  
+  
   
   
 />
@@ -80,6 +83,8 @@
   required
   
   
+  
+  
 />
 
   </div>
@@ -95,6 +100,7 @@
   name="entreprise.région"
   required
   empty
+  
 >
 </select>
 </div>
@@ -104,6 +110,7 @@
   id="field--entreprise.département"
   name="entreprise.département"
   required
+  
   
 >
 </select>
@@ -127,6 +134,8 @@
   required
   
   
+  
+  
 />
 
   </div>
@@ -148,6 +157,8 @@
   required
   
   
+  
+  
 />
 
     
@@ -166,6 +177,8 @@
   required
   
   
+  
+  
 />
 
   </div>
@@ -178,10 +191,8 @@
 
   document.onready = async () => {
     // Load regions
-    const regions = Object.keys(app.config.regions).map(code => ({ value: code, label: app.config.regions[code] }))
-    buildSelectOptions(regionSelect, regions, app.data['entreprise.région'])
-
-    // Load departements
+    const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
+    buildSelectOptions(regionSelect, regions, getVal(app.data, 'entreprise.région'))
     if(regionSelect.value) loadDepartments()
   }
 
@@ -189,7 +200,7 @@
     const selectedRegion = regionSelect.value
     const departementCodes = app.config.regions_to_departements[selectedRegion]
     const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
-    buildSelectOptions(departmentSelect, departements, app.data['entreprise.département'])
+    buildSelectOptions(departmentSelect, departements, getVal(app.data, 'entreprise.département'))
   }
 
 </script>

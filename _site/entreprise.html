@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <title>Vous êtes une entreprise - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/config.js"></script>
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -23,19 +22,21 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--entreprise.nom">Raison Sociale*</label>
+  <label for="field--entreprise.raison_sociale">Raison Sociale*</label>
 
 
 <input
-  id="field--entreprise.nom"
+  id="field--entreprise.raison_sociale"
   value=""
   type=""
-  name="entreprise.nom"
+  name="entreprise.raison_sociale"
   placeholder=""
   
   
   
   required
+  
+  
   
   
 />
@@ -59,7 +60,9 @@
   
   
   required
-  disabled
+  
+  
+  readonly="readonly"
   
 />
 </div>
@@ -67,13 +70,14 @@
 </fieldset>
 
 <fieldset>
-  <div class=row>
-    <div><label for="field--entreprise.naf">Code NAF*</label>
+  <div>
+    <div><label for="field--entreprise.code_naf">Code NAF*</label>
 
 <select
-  id="field--entreprise.naf"
-  name="entreprise.naf"
+  id="field--entreprise.code_naf"
+  name="entreprise.code_naf"
   required
+  
   
 >
 </select>
@@ -82,17 +86,9 @@
 </fieldset>
 
 <script>
-  document.onready = function() {
-    const select = selectField('entreprise.naf')
-    const options = [
-      { value: '1071z', label: '10.71Z – Fabrication industrielle de pain et de patisserie fraiche' },
-      { value: '0126z', label: '01.26Z – Culture des fuits oléagéneux' },
-      { value: '0130z', label: '01.30Z – Reproduction de plantes' },
-      ]
-    buildSelectOptions(select, options)
-
-    const siren = selectField('entreprise.siren')
-    siren.value = window.app.data['entreprise.siren']
+  document.onready = async function() {
+    const select = selectField('entreprise.code_naf')
+    await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
   }
 </script>
 
