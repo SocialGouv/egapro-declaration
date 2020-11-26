@@ -214,6 +214,9 @@ function delVal(data, flatKey) {
   }
   // Only one key left, it's the one that identifies the item we want to delete
   const [_, key, index] = extractKey(keys.shift())
+  if (!(key in item)) {
+    return
+  }
   if (index) {
     delete item[key][index]
   } else {
