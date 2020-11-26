@@ -6,16 +6,16 @@ const steps = [
    {name: 'commencer'},
    {name: 'declarant'},
    {name: 'annee', nextStep: data => {
-    if(getVal(data, '_entreprise.structure') === 'ues') return 'ues'
+    if(data._entreprise.structure === 'ues') return 'ues'
     return 'entreprise'
   }},
   {name: 'ues'},
   {name: 'ues-composition', nextStep: _ => 'remuneration'},
   {name: 'entreprise', nextStep: _ => 'remuneration'},
   {name: 'remuneration', nextStep: data => {
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_branche") return 'remuneration-coef'
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_autre") return 'remuneration-coef'
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "csp") return 'remuneration-csp'
+    if (data.indicateurs.rémunérations.mode === "niveau_branche") return 'remuneration-coef'
+    if (data.indicateurs.rémunérations.mode === "niveau_autre") return 'remuneration-coef'
+    if (data.indicateurs.rémunérations.mode === "csp") return 'remuneration-csp'
     return data.entreprise.effectif.tranche === '50:250' ? 'augmentation' : 'augmentation-hors-promotion'
   }},
   {name: 'remuneration-coef', nextStep: _ => 'remuneration-final'},
@@ -66,7 +66,7 @@ form.addEventListener('submit', async (event) => {
   const response = await app.save(data)
   if(!response.ok) return
   const nextStep = steps[step].nextStep
-  if (nextStep) return redirect(`${nextStep(data)}.html`)
+  if (nextStep) return redirect(`${nextStep(app.data)}.html`)
   else return redirect(`${steps[step + 1].name}.html`)
 })
 
