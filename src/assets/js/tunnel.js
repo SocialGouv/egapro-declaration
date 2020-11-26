@@ -16,13 +16,19 @@ const steps = [
     if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_branche") return 'remuneration-coef'
     if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_autre") return 'remuneration-coef'
     if (getVal(data, 'indicateurs.rémunérations.mode') === "csp") return 'remuneration-csp'
-    return 'augmentation'
+    return data.entreprise.effectif.tranche === '50:250' ? 'augmentation' : 'augmentation-hors-promotion'
   }},
   {name: 'remuneration-coef', nextStep: _ => 'remuneration-final'},
   {name: 'remuneration-autre', nextStep: _ => 'remuneration-final'},
   {name: 'remuneration-csp', nextStep: _ => 'remuneration-final'},
-  {name: 'remuneration-final'},
+  {name: 'remuneration-final', nextStep: data => data.entreprise.effectif.tranche === '50:250' ? 'augmentation' : 'augmentation-hors-promotion'
+  },
+  // If tranche effectif is > 50:250
+  {name: 'augmentation-hors-promotion'},
+  {name: 'promotion', nextStep: _ => 'maternite'},
+  // If tranche effectif is 50:250
   {name: 'augmentation'},
+  //
   {name: 'maternite'},
   {name: 'hautesremunerations'},
   {name: 'note'},
