@@ -164,9 +164,10 @@ function setVal(data, flatKey, val) {
     }
   }, data)
 
-  // Set the value on the
+  // Set the value on the item
   const [_, key, index] = extractKey(property)
   if (index) {
+    if(!(key in target)) target[key] = []
     target[key][index] = val
   } else {
     target[key] = val
