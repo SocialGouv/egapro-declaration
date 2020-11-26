@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Pourcentage de salariées ayant bénéficié d'une augmentation dans l'année suivant leur retour de congé maternité - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/declaration/assets/css/solen.css">
+<script src="/declaration/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/maternite.html">
+  <main>
+  <h1>Pourcentage de salariées ayant bénéficié d'une augmentation dans l'année suivant leur retour de congé maternité</h1>
+
+<fieldset>
+  <div class=row>
+    <div><label for="field--maternite.calculable">L'indicateur est-il calculable</label>
+
+<div
+  id="field--maternite.calculable"
+  name="maternite.calculable"
+  type="radiogroup"
+  
+  >
+</div>
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row><label for="field--maternite.precision_motif">Précision du motif</label>
+
+<select
+  id="field--maternite.precision_motif"
+  name="maternite.precision_motif"
+  
+  empty
+  
+>
+</select>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row><label for="field--maternite.precision_autre_motif">Préciser "autres motifs"</label>
+
+<textarea
+  id="field--maternite.precision_autre_motif"
+  name="maternite.precision_autre_motif"
+  placeholder=""
+  
+></textarea>
+</div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+  <label for="field--maternite.resultat_pourcentage">Résultat final en pourcentage (%)</label>
+
+
+<input
+  id="field--maternite.resultat_pourcentage"
+  value=""
+  type="number"
+  name="maternite.resultat_pourcentage"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  
+  
+  
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset class=note>
+  <div class=row>
+  <label for="field--maternite.note">Nombre de points obtenus sur l'indicateur</label>
+
+
+<input
+  id="field--maternite.note"
+  value=""
+  type="number"
+  name="maternite.note"
+  placeholder=""
+  
+  min="0"
+  max="15"
+  
+  
+  
+  
+  
+/>
+</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const calculOptions = [
+      {value: "calculable", label: "oui"},
+      {value: "nc", label: "non"},
+    ]
+    buildRadioOptions(selectField('maternite.calculable'), calculOptions)
+    const motifsOptions = [
+      { value: 'absretmat', label: "Absence de retours de congé de maternité"},
+      { value: 'absaug', label: "Absence d'augmentations pendant ce congé"},
+      { value: 'autre', label: "Autres motifs"},
+    ]
+    buildSelectOptions(selectField('maternite.precision_motif'), motifsOptions)
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/declaration/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

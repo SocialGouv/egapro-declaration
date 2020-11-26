@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/declaration/assets/css/solen.css">
+<script src="/declaration/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/ues-composition.html">
+  <main>
+  <h1>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES</h1>
+
+<fieldset id=container>
+  <template id=looper>
+    <div class=row>
+      
+  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index}*</label>
+
+
+<input
+  id="field--entreprise.ues.entreprises[{index}].raison_sociale"
+  value=""
+  type=""
+  name="entreprise.ues.entreprises[{index}].raison_sociale"
+  placeholder=""
+  
+  
+  
+  required
+  
+  
+  
+  
+/>
+
+      
+  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index}*</label>
+
+
+<input
+  id="field--entreprise.ues.entreprises[{index}].siren"
+  value=""
+  type=""
+  name="entreprise.ues.entreprises[{index}].siren"
+  placeholder=""
+  
+  
+  
+  required
+  
+  
+  
+  
+/>
+
+    </div>
+  </template>
+</fieldset>
+
+<script>
+  document.onready = function() {
+    const template = document.getElementById('looper').innerHTML
+    const container = document.getElementById('container')
+    const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
+    let html = ''
+    for(let index = 0; index < count; index++) {
+      html += template.replaceAll('{index}', index)
+    }
+    container.innerHTML = html
+  }
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/declaration/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique - Egalité professionnelle - Ministère du Travail</title>
+<link rel="stylesheet" href="/declaration/assets/css/solen.css">
+<script src="/declaration/assets/js/utils.js"></script>
+
+<header>
+  <div>
+    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <hgroup>
+      <h1>Égalité professionnelle</h1>
+    </hgroup>
+  </div>
+</header>
+
+<form class=main id="page-form" action="/remuneration-coef.html">
+  <main>
+  <hgroup>
+  <h1>Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique</h1>
+  <h3>Il faut saisir les écarts de rémunération en % <em>avant</em> application du seuil de pertinence</h3>
+</hgroup>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Moins de 30 ans</th>
+      <th>De 30 à 39 ans</th>
+      <th>De 40 à 49 ans</th>
+      <th>50 ans et plus</th>
+    </tr>
+  </thead>
+
+  <tbody id="container">
+    <template id="looper">
+      <tr>
+        <th>Niveau - Coefficient {index} (en %)</th>
+        <td>
+          
+<input
+  id="field--indicateurs.rémunérations.catégories.{index}.:29"
+  value="{indicateurs.rémunérations.catégories.{index}.:29}"
+  type="number"
+  name="indicateurs.rémunérations.catégories.{index}.:29"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+
+        </td>
+        <td>
+          
+<input
+  id="field--indicateurs.rémunérations.catégories.{index}.30:39"
+  value="{indicateurs.rémunérations.catégories.{index}.30:39}"
+  type="number"
+  name="indicateurs.rémunérations.catégories.{index}.30:39"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+
+        </td>
+        <td>
+          
+<input
+  id="field--indicateurs.rémunérations.catégories.{index}.40:49"
+  value="{indicateurs.rémunérations.catégories.{index}.40:49}"
+  type="number"
+  name="indicateurs.rémunérations.catégories.{index}.40:49"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+
+        </td>
+        <td>
+          
+<input
+  id="field--indicateurs.rémunérations.catégories.{index}.50:"
+  value="{indicateurs.rémunérations.catégories.{index}.50:}"
+  type="number"
+  name="indicateurs.rémunérations.catégories.{index}.50:"
+  placeholder=""
+  
+  min="0"
+  
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+
+        </td>
+      </tr>
+    </template>
+  </tbody>
+</table>
+
+<script>
+  document.onready = (() => {
+    const container = document.getElementById('container')
+    const template = document.getElementById('looper').innerHTML
+    const count = Number(getVal(app.data, '_indicateurs.rémunérations.niveaux'))
+    const content = Array(count).fill().map((_, i) => {
+      const index = i + 1
+      return template
+        .replaceAll('{index}', index)
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.:29}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.:29`))
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.30:39}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.30:39`))
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.40:49}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.40:49`))
+        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.50:}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.50:`))
+    }).join('')
+    container.innerHTML = content
+  })
+</script>
+
+</main>
+
+<nav>
+  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <progress max=0 value=0></progress>
+  
+  <button rel=next>Suivant</button>
+  
+</nav>
+
+<!-- tunnel.js uses DOM and should be loaded last -->
+<script src="/declaration/assets/js/tunnel.js"></script>
+
+</form>
+
+</html>
