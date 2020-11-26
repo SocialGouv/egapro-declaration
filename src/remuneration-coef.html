@@ -24,7 +24,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
       <tr>
         <th>Niveau - Coefficient {index} (en %)</th>
         <td>
-          {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie 1" %}         
+          {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie {index}" %}         
           {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.:29" min=0 required=true validation="Number" %}
         </td>
         <td>
