@@ -1,0 +1,23 @@
+{
+  "name": "egapro-declaration",
+  "version": "1.0.0",
+  "description": "Ce projet est une application cliente qui utilise l'API d'EgaPro, dont elle dépend.",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d _site -b deploy"
+  },
+  "dependencies": {
+    "gh-pages": "^3.1.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SocialGouv/egapro-declaration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SocialGouv/egapro-declaration/issues"
+  },
+  "homepage": "https://github.com/SocialGouv/egapro-declaration#readme"
+}

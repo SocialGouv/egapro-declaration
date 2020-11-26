@@ -6,5 +6,4 @@ build:
 
 publish:
 	make build
-	git commit _site -m "building _site for publishing"
-	git push
+	npm run deploy
