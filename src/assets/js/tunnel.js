@@ -52,8 +52,6 @@ progress.value = step
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
-  const form = event.target
-  const data = serializeForm(form)
 
   if(typeof document.onsend === 'function') {
     try {
@@ -62,6 +60,9 @@ form.addEventListener('submit', async (event) => {
       return alert(e)
     }
   }
+
+  const form = event.target
+  const data = serializeForm(form)
 
   const response = await app.save(data)
   if(!response.ok) return
