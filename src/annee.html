@@ -70,6 +70,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
       delete data.entreprise.ues
       delete data._entreprise.ues
     }
+    if (!data.indicateurs) return
     if (data.entreprise.effectif.tranche === "50:250") {
       delete data.indicateurs.augmentations_hors_promotions
       delete data.indicateurs.promotions
