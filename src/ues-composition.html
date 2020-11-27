@@ -4,13 +4,19 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
 ---
 <h1>{{ page.title }}</h1>
 
-<fieldset id=container>
-  <template id=looper>
-    <div class=row>
-      {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale #{index}" required=true %}
-      {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="SIREN #{index}" required=true %}
-    </div>
-  </template>
+<fieldset>
+  <div class=row>
+    {% include input.html name="entreprise.raison_sociale" label="Raison sociale #0" readonly=true %}
+    {% include input.html name="entreprise.siren" label="SIREN #0" readonly=true %}
+  </div>
+  <div id=container>
+    <template id=looper>
+      <div class=row>
+        {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale #{index+1}" required=true %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="SIREN #{index+1}" required=true %}
+      </div>
+    </template>
+  </div>
 </fieldset>
 
 <script>
@@ -19,8 +25,8 @@ title: "Raison sociale et numéro de SIREN de chacune des entreprises composant 
     const container = document.getElementById('container')
     const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
-    for(let index = 0; index < count; index++) {
-      html += template.replaceAll('{index}', index)
+    for(let index = 0; index < count - 1; index++) {
+      html += template.replaceAll('{index}', index).replaceAll('{index+1}', index + 1)
     }
     container.innerHTML = html
   }
