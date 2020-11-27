@@ -137,16 +137,15 @@
   }
 
   document.onsend = data => {
-    if (data._entreprise.structure === "entreprise") {
-      delete data.entreprise.ues
-      delete data._entreprise.ues
+    if (data?._entreprise?.structure === "entreprise") {
+      delete data?.entreprise?.ues
+      delete data?._entreprise?.ues
     }
-    if (!data.indicateurs) return
-    if (data.entreprise.effectif.tranche === "50:250") {
-      delete data.indicateurs.augmentations_hors_promotions
-      delete data.indicateurs.promotions
+    if (data?.entreprise?.effectif?.tranche === "50:250") {
+      delete data?.indicateurs?.augmentations_hors_promotions
+      delete data?.indicateurs?.promotions
     } else {
-      delete data.indicateurs.augmentations
+      delete data?.indicateurs?.augmentations
     }
   }
 </script>

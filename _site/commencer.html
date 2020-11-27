@@ -19,7 +19,6 @@
   <main>
   <h1>Commencer la déclaration</h1>
   <div>
-    <input id="declarant-email" type="hidden" name="déclarant.email" />
     <label for="field--déclaration.année_indicateurs">Année de déclaration*</label>
 
 <select
@@ -66,13 +65,21 @@
       ]
     )
 
-    const email = document.getElementById("declarant-email")
-    email.value = localStorage.getItem("email")
-
     document.querySelector('button[rel=next]').disabled = !app.token
     window.validateForm = async function(form) {
       if(app.token) return true
     }
+  }
+
+  document.onsend = async _ => {
+    // Make sure we don't overwrite a declaration with empty data (eg on commencer.html if we have no localStorage)
+    if (!app.data.déclaration && !app.data.entreprise) {
+      app.data.déclaration = {}
+      app.data.entreprise = {}
+    }
+    app.data.déclaration.année_indicateurs = selectField("déclaration.année_indicateurs").value
+    app.data.entreprise.siren = selectField("entreprise.siren").value
+    await app.loadRemoteData()
   }
 </script>
 

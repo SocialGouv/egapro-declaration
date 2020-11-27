@@ -100,7 +100,7 @@ class AppStorage {
     if(!this.token) return
     this.loadLocalData()
     // Is remote data actually necessary as we must have local data for token anyways?
-    // if(this.siren && this.annee) await this.loadRemoteData()
+    if(this.siren && this.annee) await this.loadRemoteData()
   }
 
   async loadConfig() {
@@ -149,11 +149,11 @@ class AppStorage {
   }
 
   get annee() {
-    return app.data["déclaration"]["année_indicateurs"]
+    return app.data?.["déclaration"]?.["année_indicateurs"]
   }
 
   get siren() {
-    return app.data["entreprise"]["siren"]
+    return app.data?.["entreprise"]?.["siren"]
   }
 
   deleteKey(key) {

@@ -19,11 +19,54 @@
   <main>
   <h1>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES</h1>
 
-<fieldset id=container>
-  <template id=looper>
-    <div class=row>
-      
-  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index}*</label>
+<fieldset>
+  <div class=row>
+    
+  <label for="field--entreprise.raison_sociale">Raison sociale #0</label>
+
+
+<input
+  id="field--entreprise.raison_sociale"
+  value=""
+  type=""
+  name="entreprise.raison_sociale"
+  placeholder=""
+  
+  
+  
+  
+  
+  
+  readonly="readonly"
+  
+/>
+
+    
+  <label for="field--entreprise.siren">SIREN #0</label>
+
+
+<input
+  id="field--entreprise.siren"
+  value=""
+  type=""
+  name="entreprise.siren"
+  placeholder=""
+  
+  
+  
+  
+  
+  
+  readonly="readonly"
+  
+/>
+
+  </div>
+  <div id=container>
+    <template id=looper>
+      <div class=row>
+        
+  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index+1}*</label>
 
 
 <input
@@ -42,8 +85,8 @@
   
 />
 
-      
-  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index}*</label>
+        
+  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index+1}*</label>
 
 
 <input
@@ -62,8 +105,9 @@
   
 />
 
-    </div>
-  </template>
+      </div>
+    </template>
+  </div>
 </fieldset>
 
 <script>
@@ -72,8 +116,8 @@
     const container = document.getElementById('container')
     const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
-    for(let index = 0; index < count; index++) {
-      html += template.replaceAll('{index}', index)
+    for(let index = 0; index < count - 1; index++) {
+      html += template.replaceAll('{index}', index).replaceAll('{index+1}', index + 1)
     }
     container.innerHTML = html
   }
