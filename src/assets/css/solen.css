@@ -153,6 +153,9 @@ label {
   max-width: 50%;
 }
 
+input:read-only {
+  cursor: not-allowed;
+}
 input:not([type=radio]),
 select {
   width: 50%;

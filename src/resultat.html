@@ -7,18 +7,44 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
 
 <fieldset>
   <div class=row>
-    <label for="field-resultat-publication">Date de publication du niveau de résultat obtenu l'année 2019</label>
-    <input id="field-resultat-publication" type=date name="resultat-publication" min="2020-01-01" max="2020-12-31">
+    {% include input.html type="date" name="déclaration.publication.date" label="Date de publication du niveau de résultat obtenu" required=true %}
   </div>
 </fieldset>
 
 <fieldset>
-  <div class=row>{% include textarea.html name="resultat-site" label='Adresse du site Internet de publication ou précision des modalités de publicité' %}</div>
-</fieldset>
-
-<fieldset>
-  <div class=row>{% include input.html type="number" name="resultat-2018" label="Résultat final sur 100 points obtenu l'année 2018" min=0 max=100 %}
-    <label for="resultat-2018-non-calculable">ou non calculable</label>
-    <input type=checkbox name="resultat-2018-non-calculable" />
+  <div class=row>
+    <div>{% include radios.html name="_déclaration.publication.site_internet" label="Avez-vous un site Internet pour publier le niveau de résultat obtenu ?" required="true" %}</div>
   </div>
 </fieldset>
+
+<fieldset id="fieldset-url">
+  <div class=row>{% include input.html name="déclaration.publication.url" label='Adresse du site Internet de publication ou précision des modalités de publicité' required=true %}</div>
+</fieldset>
+
+<fieldset id="fieldset-modalites">
+  <div class=row>{% include textarea.html name="déclaration.publication.modalités" label='Adresse du site Internet de publication ou précision des modalités de publicité' required=true %}</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const siteInternetField = selectField('_déclaration.publication.site_internet')
+    const siteInternetOptions = [
+      { value: 'oui', label: "oui" },
+      { value: 'non', label: "non" }
+    ]
+    buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet') || 'oui', {required: true})
+
+    toggleFields()
+    siteInternetField.addEventListener('change', toggleFields)
+
+    function toggleFields() {
+      const hasSiteInternet = siteInternetField.querySelector(':checked') && siteInternetField.querySelector(':checked').value === 'oui'
+      enableField('#fieldset-url', hasSiteInternet)
+      enableField('#fieldset-modalites', !hasSiteInternet)
+    }
+
+    function enableField(selector, enabled) {
+      document.querySelector(selector).disabled = !enabled
+    }
+  }
+</script>

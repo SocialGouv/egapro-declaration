@@ -50,14 +50,12 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     const nonCalculableField = selectField('indicateurs.rémunérations.non_calculable')
     const nonCalculableOptions = [
       { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
-      { value: 'am', label: "Autre motif" }
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
 
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
     modeField.addEventListener('change', toggleFields)
-    nonCalculableField.addEventListener('change', toggleFields)
 
     function toggleFields() {
       const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
@@ -70,6 +68,22 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
     function enableField(selector, enabled) {
       document.querySelector(selector).disabled = !enabled
+    }
+  }
+
+  document.onsend = data => {
+    if (data.indicateurs.rémunérations.non_calculable) {
+      delete data.indicateurs.rémunérations.catégories
+      delete data.indicateurs.rémunérations.résultat
+      delete data.indicateurs.rémunérations.population_favorable
+    }
+    const mode = data.indicateurs.rémunérations.mode
+    if (mode) {
+      data.indicateurs.rémunérations.catégories = (
+        mode === "csp"
+        ? data.indicateurs.rémunérations.catégories.slice(0, 4)
+        : data.indicateurs.rémunérations.catégories.slice(0, data._indicateurs.rémunérations.niveaux)
+      )
     }
   }
 </script>
