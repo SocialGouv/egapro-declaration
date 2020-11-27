@@ -78,7 +78,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       delete data?.indicateurs?.rémunérations?.population_favorable
     }
 
-    if (!data.indicateurs.rémunérations.catégories) return
+    if (!data?.indicateurs?.rémunérations?.catégories) return
     const mode = data.indicateurs.rémunérations.mode
     if (mode) {
       data.indicateurs.rémunérations.catégories = (
