@@ -64,4 +64,17 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
     const fieldset = document.getElementById('_periode.reference')
     fieldset.disabled = value !== "autre"
   }
+
+  document.onsend = data => {
+    if (data._entreprise.structure === "entreprise") {
+      delete data.entreprise.ues
+      delete data._entreprise.ues
+    }
+    if (data.entreprise.effectif.tranche === "50:250") {
+      delete data.indicateurs.augmentations_hors_promotions
+      delete data.indicateurs.promotions
+    } else {
+      delete data.indicateurs.augmentations
+    }
+  }
 </script>
