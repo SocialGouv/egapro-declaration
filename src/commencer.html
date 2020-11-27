@@ -4,6 +4,7 @@ title: "Commencer la déclaration"
 ---
 <h1>{{ page.title }}</h1>
   <div>
+    <input id="declarant-email" type="hidden" name="déclarant.email" />
     {% include select.html name="déclaration.année_indicateurs" label="Année de déclaration" required=true validation="Number" %}
   </div>
   <div>
@@ -20,6 +21,9 @@ title: "Commencer la déclaration"
         { label: schema.minimum, value: schema.minimum },
       ]
     )
+
+    const email = document.getElementById("declarant-email")
+    email.value = localStorage.getItem("email")
 
     document.querySelector('button[rel=next]').disabled = !app.token
     window.validateForm = async function(form) {
