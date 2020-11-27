@@ -26,4 +26,15 @@ title: "Commencer la déclaration"
       if(app.token) return true
     }
   }
+
+  document.onsend = async _ => {
+    // Make sure we don't overwrite a declaration with empty data (eg on commencer.html if we have no localStorage)
+    if (!app.data.déclaration && !app.data.entreprise) {
+      app.data.déclaration = {}
+      app.data.entreprise = {}
+    }
+    app.data.déclaration.année_indicateurs = selectField("déclaration.année_indicateurs").value
+    app.data.entreprise.siren = selectField("entreprise.siren").value
+    await app.loadRemoteData()
+  }
 </script>
