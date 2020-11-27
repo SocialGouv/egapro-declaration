@@ -72,11 +72,14 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   }
 
   document.onsend = data => {
+    if (!data.indicateurs.rémunérations) return
     if (data.indicateurs.rémunérations.non_calculable) {
       delete data.indicateurs.rémunérations.catégories
       delete data.indicateurs.rémunérations.résultat
       delete data.indicateurs.rémunérations.population_favorable
     }
+
+    if (!data.indicateurs.rémunérations.catégories) return
     const mode = data.indicateurs.rémunérations.mode
     if (mode) {
       data.indicateurs.rémunérations.catégories = (
