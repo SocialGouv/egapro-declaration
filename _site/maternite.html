@@ -21,11 +21,11 @@
 
 <fieldset>
   <div class=row>
-    <div><label for="field--maternite.calculable">L'indicateur est-il calculable</label>
+    <div><label for="field--_indicateurs.congés_maternité.calculable">L'indicateur est-il calculable</label>
 
 <div
-  id="field--maternite.calculable"
-  name="maternite.calculable"
+  id="field--_indicateurs.congés_maternité.calculable"
+  name="_indicateurs.congés_maternité.calculable"
   type="radiogroup"
   
   >
@@ -34,13 +34,36 @@
   </div>
 </fieldset>
 
-<fieldset>
-  <div class=row><label for="field--maternite.precision_motif">Précision du motif</label>
+<fieldset id="fieldset-resultat">
+  <div class=row>
+  <label for="field--indicateurs.congés_maternité.résultat">Résultat final en pourcentage (%)*</label>
+
+
+<input
+  id="field--indicateurs.congés_maternité.résultat"
+  value=""
+  type="number"
+  name="indicateurs.congés_maternité.résultat"
+  placeholder=""
+  
+  min="0"
+  max="100"
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+</div>
+</fieldset>
+
+<fieldset id="fieldset-motif">
+  <div class=row><label for="field--indicateurs.congés_maternité.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
 
 <select
-  id="field--maternite.precision_motif"
-  name="maternite.precision_motif"
-  
+  id="field--indicateurs.congés_maternité.non_calculable"
+  name="indicateurs.congés_maternité.non_calculable"
+  required
   empty
   
 >
@@ -48,51 +71,16 @@
 </div>
 </fieldset>
 
-<fieldset>
-  <div class=row><label for="field--maternite.precision_autre_motif">Préciser "autres motifs"</label>
-
-<textarea
-  id="field--maternite.precision_autre_motif"
-  name="maternite.precision_autre_motif"
-  placeholder=""
-  
-></textarea>
-</div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-  <label for="field--maternite.resultat_pourcentage">Résultat final en pourcentage (%)</label>
-
-
-<input
-  id="field--maternite.resultat_pourcentage"
-  value=""
-  type="number"
-  name="maternite.resultat_pourcentage"
-  placeholder=""
-  
-  min="0"
-  max="40"
-  
-  
-  
-  
-  
-/>
-</div>
-</fieldset>
-
 <fieldset class=note>
   <div class=row>
-  <label for="field--maternite.note">Nombre de points obtenus sur l'indicateur</label>
+  <label for="field--indicateurs.congés_maternité.note">Nombre de points obtenus sur l'indicateur</label>
 
 
 <input
-  id="field--maternite.note"
+  id="field--indicateurs.congés_maternité.note"
   value=""
   type="number"
-  name="maternite.note"
+  name="indicateurs.congés_maternité.note"
   placeholder=""
   
   min="0"
@@ -100,25 +88,40 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <script>
   document.onready = () => {
-    const calculOptions = [
-      {value: "calculable", label: "oui"},
-      {value: "nc", label: "non"},
+    const calculableField = selectField('_indicateurs.congés_maternité.calculable')
+    const calculableOptions = [
+      { value: 'oui', label: "oui" },
+      { value: 'non', label: "non" }
     ]
-    buildRadioOptions(selectField('maternite.calculable'), calculOptions)
-    const motifsOptions = [
-      { value: 'absretmat', label: "Absence de retours de congé de maternité"},
-      { value: 'absaug', label: "Absence d'augmentations pendant ce congé"},
-      { value: 'autre', label: "Autres motifs"},
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.congés_maternité.calculable') || 'oui', {required: true})
+
+    const nonCalculableField = selectField('indicateurs.congés_maternité.non_calculable')
+    const nonCalculableOptions = [
+      { value: 'absrcm', label: "Absence de retours de congé de maternité"},
+      { value: 'absaugpdtcm', label: "Absence d'augmentations pendant ce congé"},
     ]
-    buildSelectOptions(selectField('maternite.precision_motif'), motifsOptions)
+    buildSelectOptions(nonCalculableField, nonCalculableOptions)
+
+    toggleFields()
+    calculableField.addEventListener('change', toggleFields)
+
+    function toggleFields() {
+      const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
+      enableField('#fieldset-resultat', isCalculable)
+      enableField('#fieldset-motif', !isCalculable)
+    }
+
+    function enableField(selector, enabled) {
+      document.querySelector(selector).disabled = !enabled
+    }
   }
 </script>
 

@@ -21,34 +21,34 @@
 
 <fieldset>
   <div class=row>
-  <label for="field--hautesremunerations.resultat">Résultat en nombre de salariés</label>
+  <label for="field--indicateurs.hautes_rémunérations.résultat">Résultat en nombre de salariés*</label>
 
 
 <input
-  id="field--hautesremunerations.resultat"
+  id="field--indicateurs.hautes_rémunérations.résultat"
   value=""
   type="number"
-  name="hautesremunerations.resultat"
+  name="indicateurs.hautes_rémunérations.résultat"
   placeholder=""
   
   min="0"
-  max="9"
+  max="5"
+  required
   
   
   
-  
-  
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <fieldset>
-  <div class=row><label for="field--hautesremunerations.favorable">Sexe des salariés sur-représentés</label>
+  <div class=row><label for="field--indicateurs.hautes_rémunérations.population_favorable">Sexe des salariés sur-représentés*</label>
 
 <select
-  id="field--hautesremunerations.favorable"
-  name="hautesremunerations.favorable"
-  
+  id="field--indicateurs.hautes_rémunérations.population_favorable"
+  name="indicateurs.hautes_rémunérations.population_favorable"
+  required
   empty
   
 >
@@ -58,14 +58,14 @@
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--hautesremunerations.note">Nombre de points obtenus sur l'indicateur</label>
+  <label for="field--indicateurs.hautes_rémunérations.note">Nombre de points obtenus sur l'indicateur</label>
 
 
 <input
-  id="field--hautesremunerations.note"
+  id="field--indicateurs.hautes_rémunérations.note"
   value=""
   type="number"
-  name="hautesremunerations.note"
+  name="indicateurs.hautes_rémunérations.note"
   placeholder=""
   
   min="0"
@@ -73,8 +73,8 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
@@ -83,9 +83,10 @@
   document.onready = () => {
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" }
+      { value: 'hommes', label: "Hommes" },
+      { value: 'egalite', label: "Égalité" }
     ]
-    buildSelectOptions(selectField('hautesremunerations.favorable'), favorableOptions)
+    buildSelectOptions(selectField('indicateurs.hautes_rémunérations.population_favorable'), favorableOptions)
   }
 </script>
 

@@ -21,14 +21,14 @@
 
 <fieldset>
   <div class=row>
-  <label for="field--note.total_points_obtenus">Total des points obtenus</label>
+  <label for="field--déclaration.points">Total des points obtenus</label>
 
 
 <input
-  id="field--note.total_points_obtenus"
+  id="field--déclaration.points"
   value=""
   type="number"
-  name="note.total_points_obtenus"
+  name="déclaration.points"
   placeholder=""
   
   min="0"
@@ -36,22 +36,22 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
-  <label for="field--note.nombre_points_maximum">Nombre de points maximum pouvant être obtenus</label>
+  <label for="field--déclaration.points_calculables">Nombre de points maximum pouvant être obtenus</label>
 
 
 <input
-  id="field--note.nombre_points_maximum"
+  id="field--déclaration.points_calculables"
   value=""
   type="number"
-  name="note.nombre_points_maximum"
+  name="déclaration.points_calculables"
   placeholder=""
   
   min="0"
@@ -59,22 +59,22 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--note.resultat_final">Résultat final sur 100 points</label>
+  <label for="field--déclaration.index">Résultat final sur 100 points</label>
 
 
 <input
-  id="field--note.resultat_final"
+  id="field--déclaration.index"
   value=""
   type="number"
-  name="note.resultat_final"
+  name="déclaration.index"
   placeholder=""
   
   min="0"
@@ -82,18 +82,18 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <fieldset>
-  <div class=row><label for="field--note.mesures_correction">Mesures de correction prévues à l'article D. 1142-6</label>
+  <div class=row><label for="field--déclaration.mesures_correctives">Mesures de correction prévues à l'article D. 1142-6</label>
 
 <select
-  id="field--note.mesures_correction"
-  name="note.mesures_correction"
+  id="field--déclaration.mesures_correctives"
+  name="déclaration.mesures_correctives"
   
   empty
   
@@ -105,11 +105,11 @@
 <script>
   document.onready = () => {
     const mesuresCorrectionOptions = [
-      { value: 'mises-en-oeuvre', label: "Mesures mises en oeuvre"},
-      { value: 'envisagees', label: "Mesures envisagées"},
-      { value: 'non-envisagees', label: "Mesures non envisagées"},
+      { value: 'mmo', label: "Mesures mises en oeuvre"},
+      { value: 'me', label: "Mesures envisagées"},
+      { value: 'mne', label: "Mesures non envisagées"},
     ]
-    buildSelectOptions(selectField('note.mesures_correction'), mesuresCorrectionOptions)
+    buildSelectOptions(selectField('déclaration.mesures_correctives'), mesuresCorrectionOptions)
   }
 </script>
 

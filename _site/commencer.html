@@ -19,6 +19,7 @@
   <main>
   <h1>Commencer la déclaration</h1>
   <div>
+    <input id="declarant-email" type="hidden" name="déclarant.email" />
     <label for="field--déclaration.année_indicateurs">Année de déclaration*</label>
 
 <select
@@ -64,6 +65,9 @@
         { label: schema.minimum, value: schema.minimum },
       ]
     )
+
+    const email = document.getElementById("declarant-email")
+    email.value = localStorage.getItem("email")
 
     document.querySelector('button[rel=next]').disabled = !app.token
     window.validateForm = async function(form) {

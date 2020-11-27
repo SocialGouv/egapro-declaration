@@ -21,11 +21,11 @@
 
 <fieldset>
   <div class=row>
-    <div><label for="field--augmentation-calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
+    <div><label for="field--_indicateurs.augmentations.calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
 
 <div
-  id="field--augmentation-calculable"
-  name="augmentation-calculable"
+  id="field--_indicateurs.augmentations.calculable"
+  name="_indicateurs.augmentations.calculable"
   type="radiogroup"
   
   >
@@ -34,13 +34,59 @@
   </div>
 </fieldset>
 
-<fieldset id="non-calculable">
-  <div class=row><label for="field--augmentation-precision-motif">Précision du motif</label>
+<fieldset id="fieldset-resultat-pourcentage">
+  <div class=row>
+  <label for="field--indicateurs.augmentations.résultat">Résultat final en pourcentage (%)*</label>
+
+
+<input
+  id="field--indicateurs.augmentations.résultat"
+  value=""
+  type="number"
+  name="indicateurs.augmentations.résultat"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+</div>
+</fieldset>
+
+<fieldset id="fieldset-resultat-nombre-salaries">
+  <div class=row>
+  <label for="field--indicateurs.augmentations.résultat_nombre_salariés">Résultat final en nombre de salariés*</label>
+
+
+<input
+  id="field--indicateurs.augmentations.résultat_nombre_salariés"
+  value=""
+  type="number"
+  name="indicateurs.augmentations.résultat_nombre_salariés"
+  placeholder=""
+  
+  min="0"
+  max="40"
+  required
+  
+  
+  
+  data-validation="Number"
+/>
+</div>
+</fieldset>
+
+<fieldset id="fieldset-population-favorable">
+  <div class=row><label for="field--indicateurs.augmentations.population_favorable">Population envers laquelle l'écart est favorable*</label>
 
 <select
-  id="field--augmentation-precision-motif"
-  name="augmentation-precision-motif"
-  
+  id="field--indicateurs.augmentations.population_favorable"
+  name="indicateurs.augmentations.population_favorable"
+  required
   empty
   
 >
@@ -48,72 +94,14 @@
 </div>
 </fieldset>
 
-<fieldset id="autre-motif">
-  <div class=row><label for="field--augmentation-precision-autre-motif">Préciser "autres motifs"</label>
-
-<textarea
-  id="field--augmentation-precision-autre-motif"
-  name="augmentation-precision-autre-motif"
-  placeholder=""
-  
-></textarea>
-</div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-  <label for="field--augmentation-resultat-pourcentage">Résultat final en pourcentage (%)</label>
-
-
-<input
-  id="field--augmentation-resultat-pourcentage"
-  value=""
-  type="number"
-  name="augmentation-resultat-pourcentage"
-  placeholder=""
-  
-  min="0"
-  max="40"
-  
-  
-  
-  
-  
-/>
-</div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-  <label for="field--augmentation-resultat-nombre-salaries">Résultat final en nombre de salariés</label>
-
-
-<input
-  id="field--augmentation-resultat-nombre-salaries"
-  value=""
-  type="number"
-  name="augmentation-resultat-nombre-salaries"
-  placeholder=""
-  
-  min="0"
-  max="40"
-  
-  
-  
-  
-  
-/>
-</div>
-</fieldset>
-
-<fieldset>
-  <div class=row><label for="field--augmentation-favorable">Population envers laquelle l'écart est favorable</label>
+<fieldset id="fieldset-motif">
+  <div class=row><label for="field--indicateurs.augmentations.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
 
 <select
-  id="field--augmentation-favorable"
-  name="augmentation-favorable"
+  id="field--indicateurs.augmentations.non_calculable"
+  name="indicateurs.augmentations.non_calculable"
+  required
   
-  empty
   
 >
 </select>
@@ -122,14 +110,14 @@
 
 <fieldset class="note subnote">
   <div class=row>
-  <label for="field--augmentation-resultat-pourcentage">Nombre de points obtenus sur le résultat final en pourcentage</label>
+  <label for="field--indicateurs.augmentations.note_en_pourcentage">Nombre de points obtenus sur le résultat final en pourcentage</label>
 
 
 <input
-  id="field--augmentation-resultat-pourcentage"
+  id="field--indicateurs.augmentations.note_en_pourcentage"
   value=""
   type="number"
-  name="augmentation-resultat-pourcentage"
+  name="indicateurs.augmentations.note_en_pourcentage"
   placeholder=""
   
   min="0"
@@ -137,22 +125,22 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <fieldset class="note subnote">
   <div class=row>
-  <label for="field--augmentation-resultat-nombre-salaries">Nombre de points obtenus sur le résultat final en nombre de salariés</label>
+  <label for="field--indicateurs.augmentations.note_nombre_salariés">Nombre de points obtenus sur le résultat final en nombre de salariés</label>
 
 
 <input
-  id="field--augmentation-resultat-nombre-salaries"
+  id="field--indicateurs.augmentations.note_nombre_salariés"
   value=""
   type="number"
-  name="augmentation-resultat-nombre-salaries"
+  name="indicateurs.augmentations.note_nombre_salariés"
   placeholder=""
   
   min="0"
@@ -160,22 +148,22 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--remuneration-note">Nombre de points obtenus sur l'indicateur</label>
+  <label for="field--indicateurs.augmentations.note">Nombre de points obtenus sur l'indicateur</label>
 
 
 <input
-  id="field--remuneration-note"
+  id="field--indicateurs.augmentations.note"
   value=""
   type="number"
-  name="remuneration-note"
+  name="indicateurs.augmentations.note"
   placeholder=""
   
   min="0"
@@ -183,57 +171,49 @@
   
   
   
-  
-  
+  readonly="readonly"
+  data-validation="Number"
 />
 </div>
 </fieldset>
 
 <script>
   document.onready = () => {
-    const calculOptions = [
-      {value: "calculable", label: "oui"},
-      {value: "nc", label: "non"},
+    const calculableField = selectField('_indicateurs.augmentations.calculable')
+    const calculableOptions = [
+      { value: 'oui', label: "oui" },
+      { value: 'non', label: "non" }
     ]
-    buildRadioOptions(selectField('augmentation-calculable'), calculOptions, "calculable")
-    const motifsOptions = [
-      { value: 'asbaugi', label: "Absence d'augmentations individuelles"},
-      { value: 'xxxxxx', label: "L'entreprise ne comporte pas au moins 5 femmes et 5 hommes"},
-      { value: 'autre', label: "Autres motifs"},
-    ]
-    buildSelectOptions(selectField('augmentation-precision-motif'), motifsOptions)
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.augmentations.calculable') || 'oui', {required: true})
+
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" }
+      { value: 'hommes', label: "Hommes" },
+      { value: 'egalite', label: "Égalité" }
     ]
-    buildSelectOptions(selectField('augmentation-favorable'), favorableOptions)
+    buildSelectOptions(selectField('indicateurs.augmentations.population_favorable'), favorableOptions)
 
-    const checkCalculable = (calculableSelector, motifSelector, precisionAutreSelector) => {
-      const nonCalculableMotifFieldset = document.querySelector(motifSelector)
-      const nonCalculableMotif = document.querySelector(`${motifSelector} select`)
+    const nonCalculableField = selectField('indicateurs.augmentations.non_calculable')
+    const nonCalculableOptions = [
+      { value: 'etsno5f5h', label: "L'entreprise ne comporte pas au moins 5 femmes et 5 hommes" },
+      { value: 'absaugi', label: "Absence d'augmentations individuelles"},
+    ]
+    buildSelectOptions(nonCalculableField, nonCalculableOptions)
 
-      const nonCalculableAutreFieldset = document.querySelector(precisionAutreSelector)
+    toggleFields()
+    calculableField.addEventListener('change', toggleFields)
 
-      const isCalculable = !document.querySelector(calculableSelector).checked
-
-      // The "précision du motif" select should only be enabled if the indicator isn't computable
-      nonCalculableMotifFieldset.disabled = isCalculable
-      // The "préciser autre motif" textarea should only be enabled if the indicator isn't computable and the "motif" is "autre"
-      nonCalculableAutreFieldset.disabled = isCalculable || nonCalculableMotif.value != 'autre'
+    function toggleFields() {
+      const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
+      enableField('#fieldset-resultat-pourcentage', isCalculable)
+      enableField('#fieldset-resultat-nombre-salaries', isCalculable)
+      enableField('#fieldset-population-favorable', isCalculable)
+      enableField('#fieldset-motif', !isCalculable)
     }
 
-    checkCalculable('[value="nc"]', '#non-calculable', '#autre-motif')
-
-    Array.from(document.querySelectorAll('[name=augmentation-calculable]')).forEach(function(radio) {
-      radio.addEventListener('change', function(event) {
-        checkCalculable('[value="nc"]', '#non-calculable', '#autre-motif')
-      })
-    })
-
-    // Only enable the "préciser autre motif" textarea if the "motif" is "autre"
-    document.querySelector('[name=augmentation-precision-motif]').addEventListener('change', function(event) {
-      checkCalculable('[value="nc"]', '#non-calculable', '#autre-motif')
-    })
+    function enableField(selector, enabled) {
+      document.querySelector(selector).disabled = !enabled
+    }
   }
 </script>
 
