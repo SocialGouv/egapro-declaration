@@ -7,59 +7,59 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name="_indicateurs.augmentations_hors_promotions.calculable" label="L'indicateur sur les taux d'augmentations individuelles est-il calculable" required="true" %}</div>
+    <div>{% include radios.html name="_indicateurs.augmentations.calculable" label="L'indicateur sur les taux d'augmentations individuelles est-il calculable" required="true" %}</div>
   </div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-ouv">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_hors_promotions.catégories[0]" label="Ouvriers" min=0 max=100 required=true validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations.catégories[0]" label="Ouvriers" min=0 max=100 required=true validation="Number" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-emp">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_hors_promotions.catégories[1]" label="Employés" min=0 max=100 required=true validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations.catégories[1]" label="Employés" min=0 max=100 required=true validation="Number" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-tam">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_hors_promotions.catégories[2]" label="Techniciens et agents de maîtrise" min=0 max=100 required=true validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations.catégories[2]" label="Techniciens et agents de maîtrise" min=0 max=100 required=true validation="Number" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-ic">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_hors_promotions.catégories[3]" label="Ingénieurs et cadres" min=0 max=100 required=true validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations.catégories[3]" label="Ingénieurs et cadres" min=0 max=100 required=true validation="Number" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_hors_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true validation="Number" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row>{% include select.html name="indicateurs.augmentations_hors_promotions.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true %}</div>
+  <div class=row>{% include select.html name="indicateurs.augmentations.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row>{% include select.html name="indicateurs.augmentations_hors_promotions.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" required=true %}</div>
+  <div class=row>{% include select.html name="indicateurs.augmentations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" required=true %}</div>
 </fieldset>
 
 <fieldset class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_hors_promotions.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=35 validation="Number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=35 validation="Number" readonly=true %}</div>
 </fieldset>
 
 <script>
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.augmentations_hors_promotions.calculable')
+    const calculableField = selectField('_indicateurs.augmentations.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.augmentations_hors_promotions.calculable') || 'oui', {required: true})
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.augmentations.calculable') || 'oui', {required: true})
 
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
       { value: 'egalite', label: "Égalité" }
     ]
-    buildSelectOptions(selectField('indicateurs.augmentations_hors_promotions.population_favorable'), favorableOptions)
+    buildSelectOptions(selectField('indicateurs.augmentations.population_favorable'), favorableOptions)
 
-    const nonCalculableField = selectField('indicateurs.augmentations_hors_promotions.non_calculable')
+    const nonCalculableField = selectField('indicateurs.augmentations.non_calculable')
     const nonCalculableOptions = [
       { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
       { value: 'absaugi', label: "Absence d'augmentations individuelles"},
