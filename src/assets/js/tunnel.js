@@ -53,16 +53,16 @@ progress.value = step
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
 
+  const form = event.target
+  const data = serializeForm(form)
+
   if(typeof document.onsend === 'function') {
     try {
-      await document.onsend(app.data)
+      await document.onsend(data)
     } catch(e) {
       return alert(e)
     }
   }
-
-  const form = event.target
-  const data = serializeForm(form)
 
   const response = await app.save(data)
   if(!response.ok) return
@@ -114,11 +114,12 @@ function serializeForm(form) {
       delVal(app.data, field.name)
     }
   })
-  return removeEmpty(data)
+  removeEmpty(data)
+  return data
 }
 
 function removeEmpty(data) {
-  return Object.keys(data).forEach(key => {
+  Object.keys(data).forEach(key => {
     if (typeof data[key] === "array") {
       if (!data[key].filter(item => item !== undefined).length) {
         delete data[key]
