@@ -28,11 +28,11 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" onblur="refreshForm()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row>{% include select.html name="indicateurs.promotions.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true %}</div>
+  <div class=row>{% include select.html name="indicateurs.promotions.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true onblur="refreshForm()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-motif">
