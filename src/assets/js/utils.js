@@ -79,6 +79,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   await app.init()
   document.onready && document.onready()
   document.dispatchEvent(new Event('ready'))
+  document.onloaded && document.onloaded()
 })
 
 notify = {

@@ -24,14 +24,16 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       { value: 'hommes', label: "Hommes" },
     ]
     buildSelectOptions(selectField('indicateurs.rémunérations.population_favorable'), favorableOptions)
+  }
 
+  document.onloaded = () => {
     const resultatField = selectField("indicateurs.rémunérations.résultat")
 
     toggleFields()
     resultatField.addEventListener('input', toggleFields)
 
     function toggleFields() {
-      enableField("#fieldset-population-favorable", resultatField.value != 0)
+      enableField("#fieldset-population-favorable", resultatField.value != "0")
     }
   }
 </script>

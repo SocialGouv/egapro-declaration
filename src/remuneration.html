@@ -31,15 +31,16 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.rémunérations.calculable')
+  const modeField = selectField('indicateurs.rémunérations.mode')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.rémunérations.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
     buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.rémunérations.calculable'), {required: true})
 
-    const modeField = selectField('indicateurs.rémunérations.mode')
     const modeOptions = [
       {value: "niveau_branche", label: "Par niveau ou coefficient hiérarchique en application de la classification de branche"},
       {value: "niveau_autre", label: "Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes"},
@@ -52,7 +53,9 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
 
+  document.onloaded = () => {
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
     modeField.addEventListener('change', toggleFields)

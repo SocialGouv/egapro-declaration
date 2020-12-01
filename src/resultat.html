@@ -26,14 +26,17 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
 </fieldset>
 
 <script>
+  const siteInternetField = selectField('_déclaration.publication.site_internet')
+
   document.onready = () => {
-    const siteInternetField = selectField('_déclaration.publication.site_internet')
     const siteInternetOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
     buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet'), {required: true})
+  }
 
+  document.onloaded = () => {
     toggleFields()
     siteInternetField.addEventListener('change', toggleFields)
 

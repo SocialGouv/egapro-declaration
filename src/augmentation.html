@@ -44,8 +44,9 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.augmentations.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.augmentations.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -64,7 +65,9 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
       { value: 'absaugi', label: "Absence d'augmentations individuelles"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
 
+  document.onloaded = () => {
     const resultatField = selectField("indicateurs.augmentations.résultat")
 
     toggleFields()
@@ -79,7 +82,7 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
       enableField('#fieldset-resultat-tam', isCalculable)
       enableField('#fieldset-resultat-ic', isCalculable)
       enableField('#fieldset-resultat-pourcentage', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != 0)
+      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
   }

@@ -24,8 +24,9 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.congés_maternité.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.congés_maternité.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -38,7 +39,9 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
       { value: 'absaugpdtcm', label: "Absence d'augmentations pendant ce congé"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
 
+  document.onloaded = () => {
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
 

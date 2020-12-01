@@ -44,8 +44,9 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.promotions.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.promotions.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -64,7 +65,9 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
       { value: 'absprom', label: "Absence de promotions"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
 
+  document.onloaded = () => {
     const resultatField = selectField("indicateurs.promotions.résultat")
 
     toggleFields()
@@ -79,7 +82,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
       enableField('#fieldset-resultat-tam', isCalculable)
       enableField('#fieldset-resultat-ic', isCalculable)
       enableField('#fieldset-resultat-pourcentage', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != 0)
+      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
   }

@@ -40,8 +40,9 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -60,7 +61,9 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
       { value: 'absaugi', label: "Absence d'augmentations individuelles"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
-
+  }
+  
+  document.onloaded = () => {
     const resultatField = selectField("indicateurs.augmentations_et_promotions.résultat")
     const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
 
@@ -74,7 +77,7 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
       const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-resultat-pourcentage', isCalculable)
       enableField('#fieldset-resultat-nombre-salaries', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable && (resultatField.value != 0 || resultatNombreSalariesField.value != 0))
+      enableField('#fieldset-population-favorable', isCalculable && (resultatField.value != "0" || resultatNombreSalariesField.value != "0"))
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
   }
