@@ -69,6 +69,10 @@ function selectField(name) {
   return field
 }
 
+function enableField(selector, enabled) {
+  document.querySelector(selector).disabled = !enabled
+}
+
 // Shortcut event
 window.addEventListener('DOMContentLoaded', async () => {
   app = new AppStorage()

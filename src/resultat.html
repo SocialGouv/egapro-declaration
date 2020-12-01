@@ -43,9 +43,5 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
       enableField('#fieldset-url', hasSiteInternet)
       enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
     }
-
-    function enableField(selector, enabled) {
-      document.querySelector(selector).disabled = !enabled
-    }
   }
 </script>

@@ -66,10 +66,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
-
-    function enableField(selector, enabled) {
-      document.querySelector(selector).disabled = !enabled
-    }
   }
 
   document.onsend = data => {
