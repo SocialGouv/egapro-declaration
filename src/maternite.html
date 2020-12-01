@@ -12,7 +12,7 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
 </fieldset>
 
 <fieldset id="fieldset-resultat">
-  <div class=row>{% include input.html type="number" name="indicateurs.congés_maternité.résultat" label="Résultat final en pourcentage (%)" min=0 max=100 required="true" validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.congés_maternité.résultat" label="Résultat final en pourcentage (%)" min=0 max=100 required="true" type="number" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-motif">
@@ -20,7 +20,7 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
 </fieldset>
 
 <fieldset class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.congés_maternité.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=15 validation="Number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.congés_maternité.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=15 type="number" readonly=true %}</div>
 </fieldset>
 
 <script>
