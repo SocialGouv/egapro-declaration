@@ -19,7 +19,7 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
   <div class=row>{% include select.html name="indicateurs.congés_maternité.non_calculable" empty="true" label="Précision du motif de non calculabilité de l'indicateur" required="true" %}</div>
 </fieldset>
 
-<fieldset class=note>
+<fieldset id="fieldset-note" class=note>
   <div class=row>{% include input.html type="number" name="indicateurs.congés_maternité.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=15 type="number" readonly=true %}</div>
 </fieldset>
 
@@ -50,6 +50,7 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
       const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-resultat', isCalculable)
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+      enableField('#fieldset-note', isCalculable)
     }
   }
 </script>

@@ -27,15 +27,15 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
   <div class=row>{% include select.html name="indicateurs.augmentations_et_promotions.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" required=true empty=true %}</div>
 </fieldset>
 
-<fieldset class="note subnote">
+<fieldset id="fieldset-note-en-pourcentage" class="note subnote">
   <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_en_pourcentage" label="Nombre de points obtenus sur le résultat final en pourcentage" min=0 max=40 type="number" readonly=true %}</div>
 </fieldset>
 
-<fieldset class="note subnote">
+<fieldset id="fieldset-note-en-salaries" class="note subnote">
   <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_nombre_salariés" label="Nombre de points obtenus sur le résultat final en nombre de salariés" min=0 max=40 type="number" readonly=true %}</div>
 </fieldset>
 
-<fieldset class=note>
+<fieldset id="fieldset-note" class=note>
   <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=35 type="number" readonly=true %}</div>
 </fieldset>
 
@@ -79,6 +79,9 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
       enableField('#fieldset-resultat-nombre-salaries', isCalculable)
       enableField('#fieldset-population-favorable', isCalculable && (resultatField.value != "0" || resultatNombreSalariesField.value != "0"))
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+      enableField('#fieldset-note-en-pourcentage', isCalculable)
+      enableField('#fieldset-note-en-salaries', isCalculable)
+      enableField('#fieldset-note', isCalculable)
     }
   }
 </script>

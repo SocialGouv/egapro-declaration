@@ -39,7 +39,7 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
   <div class=row>{% include select.html name="indicateurs.augmentations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" required=true empty=true %}</div>
 </fieldset>
 
-<fieldset class=note>
+<fieldset id="fieldset-note" class=note>
   <div class=row>{% include input.html type="number" name="indicateurs.augmentations.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=35 type="number" readonly=true %}</div>
 </fieldset>
 
@@ -84,6 +84,7 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
       enableField('#fieldset-resultat-pourcentage', isCalculable)
       enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+      enableField('#fieldset-note', isCalculable)
     }
   }
 </script>
