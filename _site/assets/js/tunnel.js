@@ -16,18 +16,18 @@ const steps = [
     if (data.indicateurs.rémunérations.mode === "niveau_branche") return 'remuneration-coef'
     if (data.indicateurs.rémunérations.mode === "niveau_autre") return 'remuneration-coef'
     if (data.indicateurs.rémunérations.mode === "csp") return 'remuneration-csp'
-    return data.entreprise.effectif.tranche === '50:250' ? 'augmentation' : 'augmentation-hors-promotion'
+    return data.entreprise.effectif.tranche === '50:250' ? 'augmentation-et-promotion' : 'augmentation'
   }},
   {name: 'remuneration-coef', nextStep: _ => 'remuneration-final'},
   {name: 'remuneration-autre', nextStep: _ => 'remuneration-final'},
   {name: 'remuneration-csp', nextStep: _ => 'remuneration-final'},
-  {name: 'remuneration-final', nextStep: data => data.entreprise.effectif.tranche === '50:250' ? 'augmentation' : 'augmentation-hors-promotion'
+  {name: 'remuneration-final', nextStep: data => data.entreprise.effectif.tranche === '50:250' ? 'augmentation-et-promotion' : 'augmentation'
   },
   // If tranche effectif is > 50:250
-  {name: 'augmentation-hors-promotion'},
+  {name: 'augmentation'},
   {name: 'promotion', nextStep: _ => 'maternite'},
   // If tranche effectif is 50:250
-  {name: 'augmentation'},
+  {name: 'augmentation-et-promotion'},
   //
   {name: 'maternite'},
   {name: 'hautesremunerations'},
@@ -53,16 +53,16 @@ progress.value = step
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
 
+  const form = event.target
+  const data = serializeForm(form)
+
   if(typeof document.onsend === 'function') {
     try {
-      await document.onsend(app.data)
+      await document.onsend(data)
     } catch(e) {
       return alert(e)
     }
   }
-
-  const form = event.target
-  const data = serializeForm(form)
 
   const response = await app.save(data)
   if(!response.ok) return
@@ -114,11 +114,12 @@ function serializeForm(form) {
       delVal(app.data, field.name)
     }
   })
-  return removeEmpty(data)
+  removeEmpty(data)
+  return data
 }
 
 function removeEmpty(data) {
-  return Object.keys(data).forEach(key => {
+  Object.keys(data).forEach(key => {
     if (typeof data[key] === "array") {
       if (!data[key].filter(item => item !== undefined).length) {
         delete data[key]
