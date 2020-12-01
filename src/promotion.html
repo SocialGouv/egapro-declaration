@@ -50,7 +50,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.promotions.calculable') || 'oui', {required: true})
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.promotions.calculable'), {required: true})
 
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
@@ -70,14 +70,15 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
     calculableField.addEventListener('change', toggleFields)
 
     function toggleFields() {
-      const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
+      const isCalculableChosen = calculableField.querySelector(':checked')
+      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-resultat-ouv', isCalculable)
       enableField('#fieldset-resultat-emp', isCalculable)
       enableField('#fieldset-resultat-tam', isCalculable)
       enableField('#fieldset-resultat-ic', isCalculable)
       enableField('#fieldset-resultat-pourcentage', isCalculable)
       enableField('#fieldset-population-favorable', isCalculable)
-      enableField('#fieldset-motif', !isCalculable)
+      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
 
     function enableField(selector, enabled) {
