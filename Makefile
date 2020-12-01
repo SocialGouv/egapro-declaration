@@ -4,7 +4,13 @@ serve:
 build:
 	jekyll build --baseurl "/declaration"
 
-publish:
+deploy:
 	make build
-	git commit _site -m "building _site for publishing"
-	git push
+	git worktree add -b deploy deploying/ origin/deploy
+	rm -rf deploying/*
+	cp -r _site/* deploying/
+	cd deploying/ && \
+		git commit -am "Publishing" && \
+		git push
+	rm -rf deploying/
+	git worktree remove deploying
