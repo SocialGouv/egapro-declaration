@@ -30,6 +30,14 @@ Pour terminer la procédure, cliquez sur « **Valider et transmettre les
 résultats** ». Vous recevrez alors un accusé de réception avec, en pièce
 jointe, l'ensemble des informations saisies.
 
+<script>
+  document.onsend = async _ => {
+    // To "déclare" the declaration, we need to send its `déclaration.date`.
+    // Also, Javascript has this thing where it puts a Z instead of `+00:00`.
+    app.data.déclaration.date = new Date().toISOString().slice(0, -1) + "+00:00"
+  }
+</script>
+
 </main>
 
 <nav>

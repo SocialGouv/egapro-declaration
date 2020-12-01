@@ -127,6 +127,7 @@ class AppStorage {
       delete localStorage.data
       this.data = {}
     }
+    return response
   }
 
   set token(token) {
