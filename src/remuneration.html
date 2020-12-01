@@ -37,7 +37,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.rémunérations.calculable') || 'oui', {required: true})
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.rémunérations.calculable'), {required: true})
 
     const modeField = selectField('indicateurs.rémunérations.mode')
     const modeOptions = [
@@ -58,12 +58,13 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     modeField.addEventListener('change', toggleFields)
 
     function toggleFields() {
-      const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
+      const isCalculableChosen = calculableField.querySelector(':checked')
+      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
       enableField('#fieldset-mode', isCalculable)
       enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
       enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-      enableField('#fieldset-motif', !isCalculable)
+      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
 
     function enableField(selector, enabled) {
