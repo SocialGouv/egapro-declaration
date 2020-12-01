@@ -43,7 +43,7 @@
 </div>
 </fieldset>
 
-<fieldset>
+<fieldset id="fieldset-population-favorable">
   <div class=row><label for="field--indicateurs.hautes_rémunérations.population_favorable">Sexe des salariés sur-représentés*</label>
 
 <select
@@ -87,9 +87,19 @@
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
-      { value: 'egalite', label: "Égalité" }
     ]
     buildSelectOptions(selectField('indicateurs.hautes_rémunérations.population_favorable'), favorableOptions)
+  }
+
+  document.onloaded = () => {
+    const resultatField = selectField("indicateurs.hautes_rémunérations.résultat")
+
+    toggleFields()
+    resultatField.addEventListener('input', toggleFields)
+
+    function toggleFields() {
+      enableField('#fieldset-population-favorable', resultatField.value && resultatField.value != "5")
+    }
   }
 </script>
 

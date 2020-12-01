@@ -184,7 +184,7 @@
 </div>
 </fieldset>
 
-<fieldset class=note>
+<fieldset id="fieldset-note" class=note>
   <div class=row>
   <label for="field--indicateurs.promotions.note">Nombre de points obtenus sur l'indicateur</label>
 
@@ -209,8 +209,9 @@
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.promotions.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.promotions.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -220,7 +221,6 @@
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
-      { value: 'egalite', label: "Égalité" }
     ]
     buildSelectOptions(selectField('indicateurs.promotions.population_favorable'), favorableOptions)
 
@@ -230,9 +230,14 @@
       { value: 'absprom', label: "Absence de promotions"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
+
+  document.onloaded = () => {
+    const resultatField = selectField("indicateurs.promotions.résultat")
 
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
+    resultatField.addEventListener('input', toggleFields)
 
     function toggleFields() {
       const isCalculableChosen = calculableField.querySelector(':checked')
@@ -242,12 +247,9 @@
       enableField('#fieldset-resultat-tam', isCalculable)
       enableField('#fieldset-resultat-ic', isCalculable)
       enableField('#fieldset-resultat-pourcentage', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable)
+      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-    }
-
-    function enableField(selector, enabled) {
-      document.querySelector(selector).disabled = !enabled
+      enableField('#fieldset-note', isCalculable)
     }
   }
 </script>

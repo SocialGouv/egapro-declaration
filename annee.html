@@ -130,7 +130,9 @@
       getVal(app.data, "entreprise.effectif.tranche"),
       { required: true }
     )
+  }
 
+  document.onloaded = () => {
     updatePeriode(getVal(app.data, '_periode.type'))
   }
 

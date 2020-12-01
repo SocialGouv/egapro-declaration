@@ -73,7 +73,7 @@
 </div>
 </fieldset>
 
-<fieldset class=note>
+<fieldset id="fieldset-note" class=note>
   <div class=row>
   <label for="field--indicateurs.congés_maternité.note">Nombre de points obtenus sur l'indicateur</label>
 
@@ -98,8 +98,9 @@
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.congés_maternité.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.congés_maternité.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -112,7 +113,9 @@
       { value: 'absaugpdtcm', label: "Absence d'augmentations pendant ce congé"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
 
+  document.onloaded = () => {
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
 
@@ -121,10 +124,7 @@
       const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-resultat', isCalculable)
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-    }
-
-    function enableField(selector, enabled) {
-      document.querySelector(selector).disabled = !enabled
+      enableField('#fieldset-note', isCalculable)
     }
   }
 </script>

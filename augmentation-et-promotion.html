@@ -112,7 +112,7 @@
 </div>
 </fieldset>
 
-<fieldset class="note subnote">
+<fieldset id="fieldset-note-en-pourcentage" class="note subnote">
   <div class=row>
   <label for="field--indicateurs.augmentations_et_promotions.note_en_pourcentage">Nombre de points obtenus sur le résultat final en pourcentage</label>
 
@@ -136,7 +136,7 @@
 </div>
 </fieldset>
 
-<fieldset class="note subnote">
+<fieldset id="fieldset-note-en-salaries" class="note subnote">
   <div class=row>
   <label for="field--indicateurs.augmentations_et_promotions.note_nombre_salariés">Nombre de points obtenus sur le résultat final en nombre de salariés</label>
 
@@ -160,7 +160,7 @@
 </div>
 </fieldset>
 
-<fieldset class=note>
+<fieldset id="fieldset-note" class=note>
   <div class=row>
   <label for="field--indicateurs.augmentations_et_promotions.note">Nombre de points obtenus sur l'indicateur</label>
 
@@ -185,8 +185,9 @@
 </fieldset>
 
 <script>
+  const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')
+
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
@@ -196,7 +197,6 @@
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
-      { value: 'egalite', label: "Égalité" }
     ]
     buildSelectOptions(selectField('indicateurs.augmentations_et_promotions.population_favorable'), favorableOptions)
 
@@ -206,21 +206,27 @@
       { value: 'absaugi', label: "Absence d'augmentations individuelles"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  }
+  
+  document.onloaded = () => {
+    const resultatField = selectField("indicateurs.augmentations_et_promotions.résultat")
+    const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
 
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
+    resultatField.addEventListener('input', toggleFields)
+    resultatNombreSalariesField.addEventListener('input', toggleFields)
 
     function toggleFields() {
       const isCalculableChosen = calculableField.querySelector(':checked')
       const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-resultat-pourcentage', isCalculable)
       enableField('#fieldset-resultat-nombre-salaries', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable)
+      enableField('#fieldset-population-favorable', isCalculable && (resultatField.value != "0" || resultatNombreSalariesField.value != "0"))
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-    }
-
-    function enableField(selector, enabled) {
-      document.querySelector(selector).disabled = !enabled
+      enableField('#fieldset-note-en-pourcentage', isCalculable)
+      enableField('#fieldset-note-en-salaries', isCalculable)
+      enableField('#fieldset-note', isCalculable)
     }
   }
 </script>
