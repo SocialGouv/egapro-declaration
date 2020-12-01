@@ -50,10 +50,9 @@ document.addEventListener('ready', () => {
 progress.max = steps.length - 1
 progress.value = step
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault()
+const saveFormData = async (event) => {
+  event && event.preventDefault()
 
-  const form = event.target
   const data = serializeForm(form)
 
   if(typeof document.onsend === 'function') {
@@ -64,12 +63,28 @@ form.addEventListener('submit', async (event) => {
     }
   }
 
-  const response = await app.save(data)
-  if(!response.ok) return
+  return await app.save(data)
+}
+
+form.addEventListener('submit', async (event) => {
+  const response = await saveFormData(event)
+
+  if (!response.ok) return 
+
   const nextStep = steps[step].nextStep
   if (nextStep) return redirect(`${nextStep(app.data)}.html`)
   else return redirect(`${steps[step + 1].name}.html`)
 })
+
+const refreshForm = async () => {
+  let response = await saveFormData()
+
+  if (!response.ok) return 
+
+  response = await app.loadRemoteData()
+  if (!response.ok) return
+  loadFormValues(form, app.data)
+}
 
 // "Previous" button
 if (step > 0) {
