@@ -3,12 +3,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -21,36 +21,38 @@
 
 <fieldset>
   <div class=row>
-  <label for="field--ecart-final-pourcentage">Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie</label>
+  <label for="field--indicateurs.rémunérations.résultat">Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie*</label>
 
 
 <input
-  id="field--ecart-final-pourcentage"
+  id="field--indicateurs.rémunérations.résultat"
   value=""
   type="number"
-  name="ecart-final-pourcentage"
+  name="indicateurs.rémunérations.résultat"
   placeholder=""
   
   min="0"
   max="100"
+  required
   
   
   
   
-  
+  onblur="refreshForm()"
 />
 </div>
 </fieldset>
 
 <fieldset>
-  <div class=row><label for="field--remuneration-favorable">Population envers laquelle l'écart est favorable</label>
+  <div class=row><label for="field--indicateurs.rémunérations.population_favorable">Population envers laquelle l'écart est favorable*</label>
 
 <select
-  id="field--remuneration-favorable"
-  name="remuneration-favorable"
-  
+  id="field--indicateurs.rémunérations.population_favorable"
+  name="indicateurs.rémunérations.population_favorable"
+  required
   empty
   
+  onchange="refreshForm()"
 >
 </select>
 </div>
@@ -58,14 +60,14 @@
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--remuneration-note">Nombre de points obtenus sur l'indicateur</label>
+  <label for="field--indicateurs.rémunérations.note">Nombre de points obtenus sur l'indicateur</label>
 
 
 <input
-  id="field--remuneration-note"
+  id="field--indicateurs.rémunérations.note"
   value=""
   type="number"
-  name="remuneration-note"
+  name="indicateurs.rémunérations.note"
   placeholder=""
   
   min="0"
@@ -73,6 +75,7 @@
   
   
   
+  readonly="readonly"
   
   
 />
@@ -83,16 +86,17 @@
   document.onready = () => {
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" }
+      { value: 'hommes', label: "Hommes" },
+      { value: 'egalite', label: "Égalité" }
     ]
-    buildSelectOptions(selectField('remuneration-favorable'), favorableOptions)
+    buildSelectOptions(selectField('indicateurs.rémunérations.population_favorable'), favorableOptions)
   }
 </script>
 
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button href="/" rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
@@ -100,7 +104,7 @@
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
-<script src="/declaration/assets/js/tunnel.js"></script>
+<script src="/assets/js/tunnel.js"></script>
 
 </form>
 

@@ -3,12 +3,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -40,10 +40,28 @@
         <td>
           
 <input
-  id="field--indicateurs.rémunérations.catégories.{index}.:29"
-  value="{indicateurs.rémunérations.catégories.{index}.:29}"
+  id="field--indicateurs.rémunérations.catégories[{index}].nom"
+  value="categorie {index}"
+  type="hidden"
+  name="indicateurs.rémunérations.catégories[{index}].nom"
+  placeholder=""
+  
+  
+  
+  
+  
+  
+  
+  
+  
+/>
+         
+          
+<input
+  id="field--indicateurs.rémunérations.catégories[{index}].tranches.:29"
+  value=""
   type="number"
-  name="indicateurs.rémunérations.catégories.{index}.:29"
+  name="indicateurs.rémunérations.catégories[{index}].tranches.:29"
   placeholder=""
   
   min="0"
@@ -52,17 +70,18 @@
   
   
   
-  data-validation="Number"
+  
+  
 />
 
         </td>
         <td>
           
 <input
-  id="field--indicateurs.rémunérations.catégories.{index}.30:39"
-  value="{indicateurs.rémunérations.catégories.{index}.30:39}"
+  id="field--indicateurs.rémunérations.catégories[{index}].tranches.30:39"
+  value=""
   type="number"
-  name="indicateurs.rémunérations.catégories.{index}.30:39"
+  name="indicateurs.rémunérations.catégories[{index}].tranches.30:39"
   placeholder=""
   
   min="0"
@@ -71,17 +90,18 @@
   
   
   
-  data-validation="Number"
+  
+  
 />
 
         </td>
         <td>
           
 <input
-  id="field--indicateurs.rémunérations.catégories.{index}.40:49"
-  value="{indicateurs.rémunérations.catégories.{index}.40:49}"
+  id="field--indicateurs.rémunérations.catégories[{index}].tranches.40:49"
+  value=""
   type="number"
-  name="indicateurs.rémunérations.catégories.{index}.40:49"
+  name="indicateurs.rémunérations.catégories[{index}].tranches.40:49"
   placeholder=""
   
   min="0"
@@ -90,17 +110,18 @@
   
   
   
-  data-validation="Number"
+  
+  
 />
 
         </td>
         <td>
           
 <input
-  id="field--indicateurs.rémunérations.catégories.{index}.50:"
-  value="{indicateurs.rémunérations.catégories.{index}.50:}"
+  id="field--indicateurs.rémunérations.catégories[{index}].tranches.50:"
+  value=""
   type="number"
-  name="indicateurs.rémunérations.catégories.{index}.50:"
+  name="indicateurs.rémunérations.catégories[{index}].tranches.50:"
   placeholder=""
   
   min="0"
@@ -109,7 +130,8 @@
   
   
   
-  data-validation="Number"
+  
+  
 />
 
         </td>
@@ -124,13 +146,9 @@
     const template = document.getElementById('looper').innerHTML
     const count = Number(getVal(app.data, '_indicateurs.rémunérations.niveaux'))
     const content = Array(count).fill().map((_, i) => {
-      const index = i + 1
+      const index = i
       return template
         .replaceAll('{index}', index)
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.:29}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.:29`))
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.30:39}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.30:39`))
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.40:49}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.40:49`))
-        .replaceAll(`{indicateurs.rémunérations.catégories.${index}.50:}`, getVal(app.data, `indicateurs.rémunérations.catégories.${index}.50:`))
     }).join('')
     container.innerHTML = content
   })
@@ -139,7 +157,7 @@
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button href="/" rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
@@ -147,7 +165,7 @@
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
-<script src="/declaration/assets/js/tunnel.js"></script>
+<script src="/assets/js/tunnel.js"></script>
 
 </form>
 

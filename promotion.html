@@ -2,7 +2,7 @@
 <html lang="fr">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<title>Ecart de taux d'augmentations individuelles (hors promotion) entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
+<title>Ecart de taux de promotions entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/assets/css/solen.css">
 <script src="/assets/js/utils.js"></script>
 
@@ -15,17 +15,17 @@
   </div>
 </header>
 
-<form class=main id="page-form" action="/augmentation.html">
+<form class=main id="page-form" action="/promotion.html">
   <main>
-  <h1>Ecart de taux d'augmentations individuelles (hors promotion) entre les femmes et les hommes</h1>
+  <h1>Ecart de taux de promotions entre les femmes et les hommes</h1>
 
 <fieldset>
   <div class=row>
-    <div><label for="field--_indicateurs.augmentations.calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
+    <div><label for="field--_indicateurs.promotions.calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
 
 <div
-  id="field--_indicateurs.augmentations.calculable"
-  name="_indicateurs.augmentations.calculable"
+  id="field--_indicateurs.promotions.calculable"
+  name="_indicateurs.promotions.calculable"
   type="radiogroup"
   
   >
@@ -36,14 +36,14 @@
 
 <fieldset id="fieldset-resultat-ouv">
   <div class=row>
-  <label for="field--indicateurs.augmentations.catégories[0]">Ouvriers*</label>
+  <label for="field--indicateurs.promotions.catégories[0]">Ouvriers*</label>
 
 
 <input
-  id="field--indicateurs.augmentations.catégories[0]"
+  id="field--indicateurs.promotions.catégories[0]"
   value=""
   type="number"
-  name="indicateurs.augmentations.catégories[0]"
+  name="indicateurs.promotions.catégories[0]"
   placeholder=""
   
   min="0"
@@ -60,14 +60,14 @@
 
 <fieldset id="fieldset-resultat-emp">
   <div class=row>
-  <label for="field--indicateurs.augmentations.catégories[1]">Employés*</label>
+  <label for="field--indicateurs.promotions.catégories[1]">Employés*</label>
 
 
 <input
-  id="field--indicateurs.augmentations.catégories[1]"
+  id="field--indicateurs.promotions.catégories[1]"
   value=""
   type="number"
-  name="indicateurs.augmentations.catégories[1]"
+  name="indicateurs.promotions.catégories[1]"
   placeholder=""
   
   min="0"
@@ -84,14 +84,14 @@
 
 <fieldset id="fieldset-resultat-tam">
   <div class=row>
-  <label for="field--indicateurs.augmentations.catégories[2]">Techniciens et agents de maîtrise*</label>
+  <label for="field--indicateurs.promotions.catégories[2]">Techniciens et agents de maîtrise*</label>
 
 
 <input
-  id="field--indicateurs.augmentations.catégories[2]"
+  id="field--indicateurs.promotions.catégories[2]"
   value=""
   type="number"
-  name="indicateurs.augmentations.catégories[2]"
+  name="indicateurs.promotions.catégories[2]"
   placeholder=""
   
   min="0"
@@ -108,14 +108,14 @@
 
 <fieldset id="fieldset-resultat-ic">
   <div class=row>
-  <label for="field--indicateurs.augmentations.catégories[3]">Ingénieurs et cadres*</label>
+  <label for="field--indicateurs.promotions.catégories[3]">Ingénieurs et cadres*</label>
 
 
 <input
-  id="field--indicateurs.augmentations.catégories[3]"
+  id="field--indicateurs.promotions.catégories[3]"
   value=""
   type="number"
-  name="indicateurs.augmentations.catégories[3]"
+  name="indicateurs.promotions.catégories[3]"
   placeholder=""
   
   min="0"
@@ -132,14 +132,14 @@
 
 <fieldset id="fieldset-resultat-pourcentage">
   <div class=row>
-  <label for="field--indicateurs.augmentations.résultat">Résultat final en pourcentage (%)*</label>
+  <label for="field--indicateurs.promotions.résultat">Résultat final en pourcentage (%)*</label>
 
 
 <input
-  id="field--indicateurs.augmentations.résultat"
+  id="field--indicateurs.promotions.résultat"
   value=""
   type="number"
-  name="indicateurs.augmentations.résultat"
+  name="indicateurs.promotions.résultat"
   placeholder=""
   
   min="0"
@@ -155,11 +155,11 @@
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row><label for="field--indicateurs.augmentations.population_favorable">Population envers laquelle l'écart est favorable*</label>
+  <div class=row><label for="field--indicateurs.promotions.population_favorable">Population envers laquelle l'écart est favorable*</label>
 
 <select
-  id="field--indicateurs.augmentations.population_favorable"
-  name="indicateurs.augmentations.population_favorable"
+  id="field--indicateurs.promotions.population_favorable"
+  name="indicateurs.promotions.population_favorable"
   required
   empty
   
@@ -170,11 +170,11 @@
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row><label for="field--indicateurs.augmentations.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
+  <div class=row><label for="field--indicateurs.promotions.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
 
 <select
-  id="field--indicateurs.augmentations.non_calculable"
-  name="indicateurs.augmentations.non_calculable"
+  id="field--indicateurs.promotions.non_calculable"
+  name="indicateurs.promotions.non_calculable"
   required
   empty
   
@@ -186,14 +186,14 @@
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--indicateurs.augmentations.note">Nombre de points obtenus sur l'indicateur</label>
+  <label for="field--indicateurs.promotions.note">Nombre de points obtenus sur l'indicateur</label>
 
 
 <input
-  id="field--indicateurs.augmentations.note"
+  id="field--indicateurs.promotions.note"
   value=""
   type="number"
-  name="indicateurs.augmentations.note"
+  name="indicateurs.promotions.note"
   placeholder=""
   
   min="0"
@@ -210,24 +210,24 @@
 
 <script>
   document.onready = () => {
-    const calculableField = selectField('_indicateurs.augmentations.calculable')
+    const calculableField = selectField('_indicateurs.promotions.calculable')
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.augmentations.calculable'), {required: true})
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.promotions.calculable'), {required: true})
 
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
       { value: 'egalite', label: "Égalité" }
     ]
-    buildSelectOptions(selectField('indicateurs.augmentations.population_favorable'), favorableOptions)
+    buildSelectOptions(selectField('indicateurs.promotions.population_favorable'), favorableOptions)
 
-    const nonCalculableField = selectField('indicateurs.augmentations.non_calculable')
+    const nonCalculableField = selectField('indicateurs.promotions.non_calculable')
     const nonCalculableOptions = [
       { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
-      { value: 'absaugi', label: "Absence d'augmentations individuelles"},
+      { value: 'absprom', label: "Absence de promotions"},
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
 

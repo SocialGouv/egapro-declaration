@@ -6,23 +6,29 @@ const steps = [
    {name: 'commencer'},
    {name: 'declarant'},
    {name: 'annee', nextStep: data => {
-    if(getVal(data, '_entreprise.structure') === 'ues') return 'ues'
+    if(data._entreprise.structure === 'ues') return 'ues'
     return 'entreprise'
   }},
   {name: 'ues'},
   {name: 'ues-composition', nextStep: _ => 'remuneration'},
   {name: 'entreprise', nextStep: _ => 'remuneration'},
   {name: 'remuneration', nextStep: data => {
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_branche") return 'remuneration-coef'
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "niveau_autre") return 'remuneration-coef'
-    if (getVal(data, 'indicateurs.rémunérations.mode') === "csp") return 'remuneration-csp'
-    return 'augmentation'
+    if (data.indicateurs.rémunérations.mode === "niveau_branche") return 'remuneration-coef'
+    if (data.indicateurs.rémunérations.mode === "niveau_autre") return 'remuneration-coef'
+    if (data.indicateurs.rémunérations.mode === "csp") return 'remuneration-csp'
+    return data.entreprise.effectif.tranche === '50:250' ? 'augmentation-et-promotion' : 'augmentation'
   }},
   {name: 'remuneration-coef', nextStep: _ => 'remuneration-final'},
   {name: 'remuneration-autre', nextStep: _ => 'remuneration-final'},
   {name: 'remuneration-csp', nextStep: _ => 'remuneration-final'},
-  {name: 'remuneration-final'},
+  {name: 'remuneration-final', nextStep: data => data.entreprise.effectif.tranche === '50:250' ? 'augmentation-et-promotion' : 'augmentation'
+  },
+  // If tranche effectif is > 50:250
   {name: 'augmentation'},
+  {name: 'promotion', nextStep: _ => 'maternite'},
+  // If tranche effectif is 50:250
+  {name: 'augmentation-et-promotion'},
+  //
   {name: 'maternite'},
   {name: 'hautesremunerations'},
   {name: 'note'},
@@ -44,9 +50,9 @@ document.addEventListener('ready', () => {
 progress.max = steps.length - 1
 progress.value = step
 
-form.addEventListener('submit', async (event) => {
-  event.preventDefault()
-  const form = event.target
+const saveFormData = async (event) => {
+  event && event.preventDefault()
+
   const data = serializeForm(form)
 
   if(typeof document.onsend === 'function') {
@@ -57,12 +63,28 @@ form.addEventListener('submit', async (event) => {
     }
   }
 
-  const response = await app.save(data)
-  if(!response.ok) return
+  return await app.save(data)
+}
+
+form.addEventListener('submit', async (event) => {
+  const response = await saveFormData(event)
+
+  if (!response.ok) return 
+
   const nextStep = steps[step].nextStep
-  if (nextStep) return redirect(`${nextStep(data)}.html`)
+  if (nextStep) return redirect(`${nextStep(app.data)}.html`)
   else return redirect(`${steps[step + 1].name}.html`)
 })
+
+const refreshForm = async () => {
+  let response = await saveFormData()
+
+  if (!response.ok) return 
+
+  response = await app.loadRemoteData()
+  if (!response.ok) return
+  loadFormValues(form, app.data)
+}
 
 // "Previous" button
 if (step > 0) {
@@ -88,10 +110,13 @@ function serializeForm(form) {
 
   const formData = new FormData(form)
   formData.forEach((value, key) => {
-      const field = allFields.find(node => node.name === key)
-      if (field.dataset.validation === 'Number') {
-        value = Number(value)
-      }
+    if (!value) {
+      return
+    }
+    const field = allFields.find(node => node.name === key)
+    if (field.type === 'number') {
+      value = Number(value)
+    }
     setVal(data, key, value)
   })
 
@@ -100,21 +125,42 @@ function serializeForm(form) {
 
   // We need to force remove disabled fields that might have been set previously
   allFields.forEach(field => {
-    if (!enabledFields.includes(field.name)) {
+    if (!enabledFields.includes(field.name) || field.value === "") {
       delVal(app.data, field.name)
     }
   })
+  removeEmpty(data)
   return data
+}
+
+function removeEmpty(data) {
+  Object.keys(data).forEach(key => {
+    if (typeof data[key] === "array") {
+      if (!data[key].filter(item => item !== undefined).length) {
+        delete data[key]
+      } else {
+        removeEmpty(data[key])
+      }
+    } else if (typeof data[key] === "object") {
+      if (!Object.keys(data[key]).length) {
+        delete data[key]
+      } else {
+        removeEmpty(data[key])
+      }
+    }
+  })
 }
 
 function loadFormValues(form, data = {}) {
   Array.from(form.elements).forEach(node => {
     if (!node.name) return
     const value = getVal(data, node.name)
+    if (value === "") return
     if (node.type === "radio") {
       node.checked = node.value === value
     } else {
-      node.value = value
+      // If it's a hidden input, it's one we generated, we don't want to overwrite it with an empty value
+      node.value = node.type === "hidden" ? node.value : value
     }
   })
 }
@@ -131,7 +177,7 @@ function getVal(data, flatKey) {
       const [_, key, index] = extractKey(currentKey)
       return index ? item[key][index] : item[key]
     }, data)
-    return value || ''
+    return (value !== undefined ? value : '')
   } catch {
     // Fail silently if the item doesn't exist yet
     return ''
@@ -159,9 +205,10 @@ function setVal(data, flatKey, val) {
     }
   }, data)
 
-  // Set the value on the
+  // Set the value on the item
   const [_, key, index] = extractKey(property)
   if (index) {
+    if(!(key in target)) target[key] = []
     target[key][index] = val
   } else {
     target[key] = val
@@ -184,6 +231,9 @@ function delVal(data, flatKey) {
   }
   // Only one key left, it's the one that identifies the item we want to delete
   const [_, key, index] = extractKey(keys.shift())
+  if (!(key in item)) {
+    return
+  }
   if (index) {
     delete item[key][index]
   } else {

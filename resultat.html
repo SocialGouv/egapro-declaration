@@ -3,12 +3,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Niveau de résultat de l'entreprise ou de l'UES - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -21,37 +21,20 @@
 
 <fieldset>
   <div class=row>
-    <label for="field-resultat-publication">Date de publication du niveau de résultat obtenu l'année 2019</label>
-    <input id="field-resultat-publication" type=date name="resultat-publication" min="2020-01-01" max="2020-12-31">
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class=row><label for="field--resultat-site">Adresse du site Internet de publication ou précision des modalités de publicité</label>
-
-<textarea
-  id="field--resultat-site"
-  name="resultat-site"
-  placeholder=""
-  
-></textarea>
-</div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-  <label for="field--resultat-2018">Résultat final sur 100 points obtenu l'année 2018</label>
+    
+  <label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu*</label>
 
 
 <input
-  id="field--resultat-2018"
+  id="field--déclaration.publication.date"
   value=""
-  type="number"
-  name="resultat-2018"
+  type="date"
+  name="déclaration.publication.date"
   placeholder=""
   
-  min="0"
-  max="100"
+  
+  
+  required
   
   
   
@@ -59,15 +42,88 @@
   
 />
 
-    <label for="resultat-2018-non-calculable">ou non calculable</label>
-    <input type=checkbox name="resultat-2018-non-calculable" />
   </div>
 </fieldset>
 
+<fieldset>
+  <div class=row>
+    <div><label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu ?</label>
+
+<div
+  id="field--_déclaration.publication.site_internet"
+  name="_déclaration.publication.site_internet"
+  type="radiogroup"
+  
+  >
+</div>
+</div>
+  </div>
+</fieldset>
+
+<fieldset id="fieldset-url">
+  <div class=row>
+  <label for="field--déclaration.publication.url">Adresse du site Internet de publication ou précision des modalités de publicité*</label>
+
+
+<input
+  id="field--déclaration.publication.url"
+  value=""
+  type=""
+  name="déclaration.publication.url"
+  placeholder=""
+  
+  
+  
+  required
+  
+  
+  
+  
+  
+/>
+</div>
+</fieldset>
+
+<fieldset id="fieldset-modalites">
+  <div class=row><label for="field--déclaration.publication.modalités">Adresse du site Internet de publication ou précision des modalités de publicité</label>
+
+<textarea
+  id="field--déclaration.publication.modalités"
+  name="déclaration.publication.modalités"
+  placeholder=""
+  true
+></textarea>
+</div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    const siteInternetField = selectField('_déclaration.publication.site_internet')
+    const siteInternetOptions = [
+      { value: 'oui', label: "oui" },
+      { value: 'non', label: "non" }
+    ]
+    buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet'), {required: true})
+
+    toggleFields()
+    siteInternetField.addEventListener('change', toggleFields)
+
+    function toggleFields() {
+      const hasSiteInternetChosen = siteInternetField.querySelector(':checked')
+      const hasSiteInternet = hasSiteInternetChosen && siteInternetField.querySelector(':checked').value === 'oui'
+      enableField('#fieldset-url', hasSiteInternet)
+      enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
+    }
+
+    function enableField(selector, enabled) {
+      document.querySelector(selector).disabled = !enabled
+    }
+  }
+</script>
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button href="/" rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
@@ -75,7 +131,7 @@
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
-<script src="/declaration/assets/js/tunnel.js"></script>
+<script src="/assets/js/tunnel.js"></script>
 
 </form>
 

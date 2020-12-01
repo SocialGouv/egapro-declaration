@@ -3,12 +3,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
-<script src="/declaration/assets/js/utils.js"></script>
+<link rel="stylesheet" href="/assets/css/solen.css">
+<script src="/assets/js/utils.js"></script>
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <img src="/assets/img/marianne.png" alt="Marianne">
     <hgroup>
       <h1>Égalité professionnelle</h1>
     </hgroup>
@@ -19,11 +19,56 @@
   <main>
   <h1>Raison sociale et numéro de SIREN de chacune des entreprises composant l'UES</h1>
 
-<fieldset id=container>
-  <template id=looper>
-    <div class=row>
-      
-  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index}*</label>
+<fieldset>
+  <div class=row>
+    
+  <label for="field--entreprise.raison_sociale">Raison sociale #0</label>
+
+
+<input
+  id="field--entreprise.raison_sociale"
+  value=""
+  type=""
+  name="entreprise.raison_sociale"
+  placeholder=""
+  
+  
+  
+  
+  
+  
+  readonly="readonly"
+  
+  
+/>
+
+    
+  <label for="field--entreprise.siren">SIREN #0</label>
+
+
+<input
+  id="field--entreprise.siren"
+  value=""
+  type=""
+  name="entreprise.siren"
+  placeholder=""
+  
+  
+  
+  
+  
+  
+  readonly="readonly"
+  
+  
+/>
+
+  </div>
+  <div id=container>
+    <template id=looper>
+      <div class=row>
+        
+  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index+1}*</label>
 
 
 <input
@@ -40,10 +85,11 @@
   
   
   
+  
 />
 
-      
-  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index}*</label>
+        
+  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index+1}*</label>
 
 
 <input
@@ -60,10 +106,12 @@
   
   
   
+  
 />
 
-    </div>
-  </template>
+      </div>
+    </template>
+  </div>
 </fieldset>
 
 <script>
@@ -72,8 +120,8 @@
     const container = document.getElementById('container')
     const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
-    for(let index = 0; index < count; index++) {
-      html += template.replaceAll('{index}', index)
+    for(let index = 0; index < count - 1; index++) {
+      html += template.replaceAll('{index}', index).replaceAll('{index+1}', index + 1)
     }
     container.innerHTML = html
   }
@@ -82,7 +130,7 @@
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button href="/" rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
@@ -90,7 +138,7 @@
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
-<script src="/declaration/assets/js/tunnel.js"></script>
+<script src="/assets/js/tunnel.js"></script>
 
 </form>
 

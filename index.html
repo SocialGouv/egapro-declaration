@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<script src="/declaration/assets/js/utils.js"></script>
+<script src="/assets/js/utils.js"></script>
 <script>
   document.onready = () => {
     const tokenParam = '?token='
@@ -9,7 +9,7 @@
       app.token = location.search.slice(tokenParam.length)
     }
     else if (app.token) token = true
-    token ? redirect('/declaration/commencer.html') : redirect('/declaration/presentation.html')
+    token ? redirect('/commencer.html') : redirect('/presentation.html')
   }
 </script>
 
