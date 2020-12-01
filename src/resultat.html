@@ -32,15 +32,16 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet') || 'oui', {required: true})
+    buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet'), {required: true})
 
     toggleFields()
     siteInternetField.addEventListener('change', toggleFields)
 
     function toggleFields() {
-      const hasSiteInternet = siteInternetField.querySelector(':checked') && siteInternetField.querySelector(':checked').value === 'oui'
+      const hasSiteInternetChosen = siteInternetField.querySelector(':checked')
+      const hasSiteInternet = hasSiteInternetChosen && siteInternetField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-url', hasSiteInternet)
-      enableField('#fieldset-modalites', !hasSiteInternet)
+      enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
     }
 
     function enableField(selector, enabled) {
