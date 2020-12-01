@@ -99,7 +99,7 @@ function serializeForm(form) {
       return
     }
     const field = allFields.find(node => node.name === key)
-    if (field.dataset.validation === 'Number') {
+    if (field.type === 'number') {
       value = Number(value)
     }
     setVal(data, key, value)
