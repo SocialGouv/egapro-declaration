@@ -30,7 +30,7 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
     ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.congés_maternité.calculable') || 'oui', {required: true})
+    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.congés_maternité.calculable'), {required: true})
 
     const nonCalculableField = selectField('indicateurs.congés_maternité.non_calculable')
     const nonCalculableOptions = [
@@ -43,9 +43,10 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
     calculableField.addEventListener('change', toggleFields)
 
     function toggleFields() {
-      const isCalculable = calculableField.querySelector(':checked') && calculableField.querySelector(':checked').value === 'oui'
+      const isCalculableChosen = calculableField.querySelector(':checked')
+      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
       enableField('#fieldset-resultat', isCalculable)
-      enableField('#fieldset-motif', !isCalculable)
+      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
 
     function enableField(selector, enabled) {
