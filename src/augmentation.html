@@ -55,7 +55,6 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
-      { value: 'egalite', label: "Égalité" }
     ]
     buildSelectOptions(selectField('indicateurs.augmentations.population_favorable'), favorableOptions)
 
@@ -66,8 +65,11 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
 
+    const resultatField = selectField("indicateurs.augmentations.résultat")
+
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
+    resultatField.addEventListener('input', toggleFields)
 
     function toggleFields() {
       const isCalculableChosen = calculableField.querySelector(':checked')
@@ -77,7 +79,7 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
       enableField('#fieldset-resultat-tam', isCalculable)
       enableField('#fieldset-resultat-ic', isCalculable)
       enableField('#fieldset-resultat-pourcentage', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable)
+      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != 0)
       enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     }
   }

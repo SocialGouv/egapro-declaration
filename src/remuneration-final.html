@@ -9,7 +9,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie" min=0 max=100 required=true type="number" onblur="refreshForm()" %}</div>
 </fieldset>
 
-<fieldset>
+<fieldset id="fieldset-population-favorable">
   <div class=row>{% include select.html name="indicateurs.rémunérations.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true onchange="refreshForm()" %}</div>
 </fieldset>
 
@@ -22,8 +22,16 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
       { value: 'hommes', label: "Hommes" },
-      { value: 'egalite', label: "Égalité" }
     ]
     buildSelectOptions(selectField('indicateurs.rémunérations.population_favorable'), favorableOptions)
+
+    const resultatField = selectField("indicateurs.rémunérations.résultat")
+
+    toggleFields()
+    resultatField.addEventListener('input', toggleFields)
+
+    function toggleFields() {
+      enableField("#fieldset-population-favorable", resultatField.value != 0)
+    }
   }
 </script>
