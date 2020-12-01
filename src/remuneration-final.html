@@ -6,7 +6,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie" min=0 max=100 required=true validation="Number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie" min=0 max=100 required=true type="number" %}</div>
 </fieldset>
 
 <fieldset>
@@ -14,7 +14,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <fieldset class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=40 validation="Number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.note" label="Nombre de points obtenus sur l'indicateur" min=0 max=40 type="number" readonly=true %}</div>
 </fieldset>
 
 <script>
