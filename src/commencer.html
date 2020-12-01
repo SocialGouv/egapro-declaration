@@ -4,7 +4,7 @@ title: "Commencer la déclaration"
 ---
 <h1>{{ page.title }}</h1>
   <div>
-    {% include select.html name="déclaration.année_indicateurs" label="Année de déclaration" required=true validation="Number" %}
+    {% include select.html name="déclaration.année_indicateurs" label="Année de déclaration" required=true empty=true validation="Number" %}
   </div>
   <div>
     {% include input.html type="regex" name="entreprise.siren" label="Numéro SIREN" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" %}
