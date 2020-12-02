@@ -29,6 +29,13 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
   const siteInternetField = selectField('_déclaration.publication.site_internet')
 
   document.onready = () => {
+    if (app.data?.déclaration?.publication) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.déclaration.publication.site_internet" data.
+      if (!app.data._déclaration) app.data._déclaration = {}
+      app.data._déclaration.publication = {site_internet: app.data.déclaration.publication.url ? "oui" : "non"}
+    }
+
     const siteInternetOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
