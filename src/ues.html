@@ -47,4 +47,11 @@ title: "Vous êtes une Unité Économique et Sociale (UES)"
     const select = selectField('entreprise.code_naf')
     await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
   }
+
+  document.onsend = data => {
+    if (data?._entreprise?.ues?.nombre_entreprises && data?.entreprise?.ues?.entreprises) {
+      // The `nombre_entreprises` is one more than the actual length as we count the declaring entreprise in it.
+      data.entreprise.ues.entreprises = data.entreprise.ues.entreprises.slice(0, data._entreprise.ues.nombre_entreprises -1)
+    }
+  }
 </script>
