@@ -27,6 +27,13 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
   const calculableField = selectField('_indicateurs.congés_maternité.calculable')
 
   document.onready = () => {
+    if (app.data?.indicateurs?.congés_maternité) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.promotions.calculable" data.
+      if (!app.data._indicateurs) app.data._indicateurs = {}
+      app.data._indicateurs.congés_maternité = {calculable: app.data.indicateurs.congés_maternité.non_calculable ? "non" : "oui"}
+    }
+
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
