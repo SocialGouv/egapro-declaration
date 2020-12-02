@@ -17,7 +17,7 @@
       Eg: "value1==label for value 1|value2==label for value 2"
     {% endcomment %}
     {% assign optionsArray=include.options | split: "|" %} 
-    {% if include.empty %}<option> ––– </option>{% endif %}
+    {% if include.empty %}<option value=""> ––– </option>{% endif %}
     {% for option in optionsArray %}
       {% assign optionArray=option | split: "==" %}
       <option value="{{ optionArray[0] }}">{{ optionArray[1] }}</option>
