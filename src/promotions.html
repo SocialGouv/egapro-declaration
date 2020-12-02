@@ -47,6 +47,13 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
   const calculableField = selectField('_indicateurs.promotions.calculable')
 
   document.onready = () => {
+    if (app.data?.indicateurs?.promotions) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.promotions.calculable" data.
+      if (!app.data._indicateurs) app.data._indicateurs = {}
+      app.data._indicateurs.promotions = {calculable: app.data.indicateurs.promotions.non_calculable ? "non" : "oui"}
+    }
+
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
