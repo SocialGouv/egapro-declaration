@@ -7,7 +7,15 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name="_indicateurs.augmentations_et_promotions.calculable" label="L'indicateur sur les taux d'augmentations individuelles est-il calculable" required="true" %}</div>
+    <div>
+      {% include radios.html
+        name="_indicateurs.augmentations_et_promotions.calculable"
+        label="L'indicateur sur les taux d'augmentations individuelles est-il calculable"
+        required="true"
+        options="oui==oui|non==non"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
@@ -41,6 +49,8 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
 
 <script>
   const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')
+  const resultatField = selectField("indicateurs.augmentations_et_promotions.résultat")
+  const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
 
   document.onready = () => {
     if (app.data?.indicateurs?.augmentations_et_promotions) {
@@ -49,12 +59,6 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
       if (!app.data._indicateurs) app.data._indicateurs = {}
       app.data._indicateurs.augmentations_et_promotions = {calculable: app.data.indicateurs.augmentations_et_promotions.non_calculable ? "non" : "oui"}
     }
-
-    const calculableOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.augmentations_et_promotions.calculable'), {required: true})
 
     const favorableOptions = [
       { value: 'femmes', label: "Femmes" },
@@ -69,26 +73,24 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
     ]
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
   }
+
+  function toggleFields() {
+    const isCalculableChosen = calculableField.querySelector(':checked')
+    const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-resultat-pourcentage', isCalculable)
+    enableField('#fieldset-resultat-nombre-salaries', isCalculable)
+    enableField('#fieldset-population-favorable', isCalculable && (resultatField.value != "0" || resultatNombreSalariesField.value != "0"))
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-note-en-pourcentage', isCalculable)
+    enableField('#fieldset-note-en-salaries', isCalculable)
+    enableField('#fieldset-note', isCalculable)
+  }
   
   document.onloaded = () => {
-    const resultatField = selectField("indicateurs.augmentations_et_promotions.résultat")
-    const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
-
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
     resultatField.addEventListener('input', toggleFields)
     resultatNombreSalariesField.addEventListener('input', toggleFields)
 
-    function toggleFields() {
-      const isCalculableChosen = calculableField.querySelector(':checked')
-      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-resultat-pourcentage', isCalculable)
-      enableField('#fieldset-resultat-nombre-salaries', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable && (resultatField.value != "0" || resultatNombreSalariesField.value != "0"))
-      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-      enableField('#fieldset-note-en-pourcentage', isCalculable)
-      enableField('#fieldset-note-en-salaries', isCalculable)
-      enableField('#fieldset-note', isCalculable)
-    }
   }
 </script>

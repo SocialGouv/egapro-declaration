@@ -3,6 +3,29 @@
   id="field--{{ include.name }}"
   name="{{ include.name }}"
   type="radiogroup"
-  {% if include.block == 'true' %}option-block{% endif %}
   >
+  {% if include.options %}
+    {% comment %}
+      We can't pass arrays or objects as attributes in an include, so we fall
+      back to a concatenated string.
+      Options are structured like the following:
+      - join the value and the label with a "=="
+      - join the list of value@label with a "|"
+      Eg: "value1==label for value 1|value2==label for value 2"
+    {% endcomment %}
+    {% assign optionsArray=include.options | split: "|" %} 
+    {% for option in optionsArray %}
+      {% assign optionArray=option | split: "==" %}
+      {% if include.block == 'true' %}<div>{% endif %}
+      <label>
+        <input
+          {% if include.required %}required{% endif %}
+          type="radio"
+          {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
+          name="{{ include.name }}" value="{{ optionArray[0] }}"> {{ optionArray[1] }}
+        </input>
+      </label>
+      {% if include.block == 'true' %}</div>{% endif %}
+    {% endfor %}
+  {% endif %}
 </div>

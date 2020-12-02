@@ -7,7 +7,15 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name='_indicateurs.congés_maternité.calculable' label="L'indicateur est-il calculable" required="true" %}</div>
+    <div>
+      {% include radios.html
+        name="_indicateurs.congés_maternité.calculable"
+        label="L'indicateur est-il calculable"
+        required="true"
+        options="oui==oui|non==non"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
@@ -34,12 +42,6 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
       app.data._indicateurs.congés_maternité = {calculable: app.data.indicateurs.congés_maternité.non_calculable ? "non" : "oui"}
     }
 
-    const calculableOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.congés_maternité.calculable'), {required: true})
-
     const nonCalculableField = selectField('indicateurs.congés_maternité.non_calculable')
     const nonCalculableOptions = [
       { value: 'absrcm', label: "Absence de retours de congé de maternité"},
@@ -48,16 +50,16 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
     buildSelectOptions(nonCalculableField, nonCalculableOptions)
   }
 
+  function toggleFields() {
+    const isCalculableChosen = calculableField.querySelector(':checked')
+    const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-resultat', isCalculable)
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-note', isCalculable)
+  }
+
   document.onloaded = () => {
     toggleFields()
     calculableField.addEventListener('change', toggleFields)
-
-    function toggleFields() {
-      const isCalculableChosen = calculableField.querySelector(':checked')
-      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-resultat', isCalculable)
-      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-      enableField('#fieldset-note', isCalculable)
-    }
   }
 </script>
