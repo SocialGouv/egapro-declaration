@@ -41,7 +41,7 @@ const steps = [
   },
   // If tranche effectif is > 50:250
   { name: "augmentations" },
-  { name: "promotion", nextStep: (_) => "maternite" },
+  { name: "promotions", nextStep: (_) => "maternite" },
   // If tranche effectif is 50:250
   { name: "augmentation-et-promotion" },
   //
