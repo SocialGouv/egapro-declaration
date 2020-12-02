@@ -35,6 +35,21 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   const modeField = selectField('indicateurs.rémunérations.mode')
 
   document.onready = () => {
+    if (app.data?.indicateurs?.rémunérations) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.rémunérations.calculable" data.
+      if (!app.data._indicateurs) app.data._indicateurs = {}
+      app.data._indicateurs.rémunérations = {calculable: app.data.indicateurs.rémunérations.non_calculable ? "non" : "oui"}
+    }
+    if (app.data?.indicateurs?.rémunérations?.mode
+        && app.data.indicateurs.rémunérations.mode !== "csp"
+        && app.data.indicateurs.rémunérations?.catégories) {
+      // We can infer the number of "niveaux" from the number of "catégories" we already have
+      if (!app.data._indicateurs) app.data._indicateurs = {}
+      if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
+      app.data._indicateurs.rémunérations.niveaux = app.data.indicateurs.rémunérations.catégories.length
+    }
+
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
