@@ -6,7 +6,7 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.hautes_rémunérations.résultat" label="Résultat en nombre de salariés" min=0 max=5 type="number" required=true onblur="refreshForm()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.hautes_rémunérations.résultat" label="Résultat en nombre de salariés" min=0 max=5 type="number" required=true onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -27,14 +27,12 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
 </fieldset>
 
 <script>
+  const resultatField = selectField("indicateurs.hautes_rémunérations.résultat")
+  function toggleFields() {
+    enableField('#fieldset-population-favorable', resultatField.value && resultatField.value != "5")
+  }
+
   document.onloaded = () => {
-    const resultatField = selectField("indicateurs.hautes_rémunérations.résultat")
-
     toggleFields()
-    resultatField.addEventListener('input', toggleFields)
-
-    function toggleFields() {
-      enableField('#fieldset-population-favorable', resultatField.value && resultatField.value != "5")
-    }
   }
 </script>

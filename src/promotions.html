@@ -36,7 +36,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" onblur="refreshForm()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -96,7 +96,5 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 
   document.onloaded = () => {
     toggleFields()
-    calculableField.addEventListener('change', toggleFields)
-    resultatField.addEventListener('input', toggleFields)
   }
 </script>
