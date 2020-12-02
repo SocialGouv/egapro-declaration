@@ -47,6 +47,13 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
   const calculableField = selectField('_indicateurs.augmentations.calculable')
 
   document.onready = () => {
+    if (app.data?.indicateurs?.augmentations) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.augmentations.calculable" data.
+      if (!app.data._indicateurs) app.data._indicateurs = {}
+      app.data._indicateurs.augmentations = {calculable: app.data.indicateurs.augmentations.non_calculable ? "non" : "oui"}
+    }
+
     const calculableOptions = [
       { value: 'oui', label: "oui" },
       { value: 'non', label: "non" }
