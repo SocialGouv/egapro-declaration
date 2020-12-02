@@ -10,7 +10,16 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row>{% include select.html name="indicateurs.rémunérations.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true onchange="refreshForm()" %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.rémunérations.population_favorable"
+      label="Population envers laquelle l'écart est favorable"
+      empty="true"
+      required=true
+      onchange="refreshForm()"
+      options="femmes==Femmes|hommes==Hommes"
+    %}
+  </div>
 </fieldset>
 
 <fieldset class=note>
@@ -18,14 +27,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <script>
-  document.onready = () => {
-    const favorableOptions = [
-      { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" },
-    ]
-    buildSelectOptions(selectField('indicateurs.rémunérations.population_favorable'), favorableOptions)
-  }
-
   document.onloaded = () => {
     const resultatField = selectField("indicateurs.rémunérations.résultat")
 

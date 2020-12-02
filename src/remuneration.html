@@ -44,7 +44,15 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row>{% include select.html name="indicateurs.rémunérations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" empty=true required=true %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.rémunérations.non_calculable"
+      label="Précision du motif de non calculabilité de l'indicateur"
+      empty="true"
+      required=true
+      options="egvi40pcet==Effectif des groupes valides inférieur à 40% de l'effectif total"
+    %}
+  </div>
 </fieldset>
 
 <script>
@@ -66,12 +74,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
       app.data._indicateurs.rémunérations.niveaux = app.data.indicateurs.rémunérations.catégories.length
     }
-
-    const nonCalculableField = selectField('indicateurs.rémunérations.non_calculable')
-    const nonCalculableOptions = [
-      { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
-    ]
-    buildSelectOptions(nonCalculableField, nonCalculableOptions)
   }
 
   function toggleFields() {
