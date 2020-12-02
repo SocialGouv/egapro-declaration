@@ -25,7 +25,7 @@ const steps = [
       if (data.indicateurs.rémunérations.mode === "csp")
         return "remuneration-csp";
       return data.entreprise.effectif.tranche === "50:250"
-        ? "augmentation-et-promotion"
+        ? "augmentations-et-promotions"
         : "augmentations";
     },
   },
@@ -36,14 +36,14 @@ const steps = [
     name: "remuneration-final",
     nextStep: (data) =>
       data.entreprise.effectif.tranche === "50:250"
-        ? "augmentation-et-promotion"
+        ? "augmentations-et-promotions"
         : "augmentations",
   },
   // If tranche effectif is > 50:250
   { name: "augmentations" },
   { name: "promotions", nextStep: (_) => "maternite" },
   // If tranche effectif is 50:250
-  { name: "augmentation-et-promotion" },
+  { name: "augmentations-et-promotions" },
   //
   { name: "maternite" },
   { name: "hautes-remunerations" },
