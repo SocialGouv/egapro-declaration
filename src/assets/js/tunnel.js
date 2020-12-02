@@ -26,7 +26,7 @@ const steps = [
         return "remuneration-csp";
       return data.entreprise.effectif.tranche === "50:250"
         ? "augmentation-et-promotion"
-        : "augmentation";
+        : "augmentations";
     },
   },
   { name: "remuneration-coef", nextStep: (_) => "remuneration-final" },
@@ -37,10 +37,10 @@ const steps = [
     nextStep: (data) =>
       data.entreprise.effectif.tranche === "50:250"
         ? "augmentation-et-promotion"
-        : "augmentation",
+        : "augmentations",
   },
   // If tranche effectif is > 50:250
-  { name: "augmentation" },
+  { name: "augmentations" },
   { name: "promotion", nextStep: (_) => "maternite" },
   // If tranche effectif is 50:250
   { name: "augmentation-et-promotion" },
