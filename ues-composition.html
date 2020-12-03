@@ -22,7 +22,9 @@
 <fieldset>
   <div class=row>
     
-  <label for="field--entreprise.raison_sociale">Raison sociale #0</label>
+  
+<label for="field--entreprise.raison_sociale">Raison sociale #0</label>
+
 
 
 <input
@@ -40,10 +42,13 @@
   readonly="readonly"
   
   
+  
 />
 
     
-  <label for="field--entreprise.siren">SIREN #0</label>
+  
+<label for="field--entreprise.siren">SIREN #0</label>
+
 
 
 <input
@@ -61,6 +66,7 @@
   readonly="readonly"
   
   
+  
 />
 
   </div>
@@ -68,7 +74,9 @@
     <template id=looper>
       <div class=row>
         
-  <label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index+1}*</label>
+  
+<label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale #{index+1}*</label>
+
 
 
 <input
@@ -86,10 +94,13 @@
   
   
   
+  
 />
 
         
-  <label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index+1}*</label>
+  
+<label for="field--entreprise.ues.entreprises[{index}].siren">SIREN #{index+1}*</label>
+
 
 
 <input
@@ -107,6 +118,7 @@
   
   
   
+  
 />
 
       </div>
@@ -116,6 +128,14 @@
 
 <script>
   document.onready = function() {
+    if (!app.data?._entreprise?.ues?.nombre_entreprises && app.data?.entreprise?.ues?.entreprises) {
+      // We did already submit this current form, so we can infer the
+      // "_entreprise.ues.nombre_entreprises" data.
+      if (!app.data._entreprise) app.data._entreprise = {}
+      // Remember we need a length which is 1 more than the real length, as the declaring entreprise is also part of its UES
+      app.data._entreprise.ues = {nombre_entreprises: app.data.entreprise.ues.entreprises.length + 1}
+    }
+
     const template = document.getElementById('looper').innerHTML
     const container = document.getElementById('container')
     const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))

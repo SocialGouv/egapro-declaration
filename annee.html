@@ -22,7 +22,9 @@
 <fieldset>
   <div class="row">
     
-  <label for="field--déclaration.année_indicateurs">Année au titre de laquelle vous transmettez vos indicateurs</label>
+  
+<label for="field--déclaration.année_indicateurs">Année au titre de laquelle vous transmettez vos indicateurs</label>
+
 
 
 <input
@@ -40,6 +42,7 @@
   readonly="readonly"
   
   
+  
 />
 
   </div>
@@ -48,15 +51,93 @@
 <fieldset>
   <div class=row>
     <h4>Vous êtes une</h4>
-    <label><input required type=radio name="_entreprise.structure" value="entreprise"> Entreprise</label>
-    <label><input required type=radio name="_entreprise.structure" value="ues"> Unité Économique et Sociale (UES)</label>
+    
+
+<div
+  id="field--_entreprise.structure"
+  name="_entreprise.structure"
+  type="radiogroup"
+  >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="_entreprise.structure" value="entreprise"> Entreprise
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="_entreprise.structure" value="ues"> Unité Économique et Sociale
+      </label>
+      
+    
+  
+</div>
+
   </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
     <h4>Tranches d'effectifs</h4>
-    <div name="entreprise.effectif.tranche"></div>
+    
+
+<div
+  id="field--entreprise.effectif.tranche"
+  name="entreprise.effectif.tranche"
+  type="radiogroup"
+  >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="entreprise.effectif.tranche" value="50:250"> De 50 à 250 inclus
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="entreprise.effectif.tranche" value="251:999"> De 251 à 999 inclus
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="entreprise.effectif.tranche" value="1000:"> De 1000 ou plus
+      </label>
+      
+    
+  
+</div>
+
   </div>
 </fieldset>
 
@@ -65,15 +146,50 @@
 <fieldset>
   <div class=row>
     <h4>Période de référence</h4>
-    <label><input type=radio required name="_periode.type" onchange="updatePeriode(this.value)" value="civile"> Année civile</label>
-    <label><input type=radio required name="_periode.type" onchange="updatePeriode(this.value)" value="autre"> Autre période de référence</label>
+    
+
+<div
+  id="field--_periode.type"
+  name="_periode.type"
+  type="radiogroup"
+  >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="updatePeriode(this.value)"
+          name="_periode.type" value="civile"> Année civile
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="updatePeriode(this.value)"
+          name="_periode.type" value="autre"> Autre période
+      </label>
+      
+    
+  
+</div>
+
   </div>
 </fieldset>
 
 <fieldset id="_periode.reference">
   <div class=row>
     
-  <label for="field--déclaration.fin_période_référence">Date de fin de la période de référence</label>
+  
+<label for="field--déclaration.fin_période_référence">Date de fin de la période de référence</label>
+
 
 
 <input
@@ -91,6 +207,7 @@
   
   
   
+  
 />
 
   </div>
@@ -99,7 +216,9 @@
 <fieldset>
   <div class=row>
     
-  <label for="field--entreprise.effectif.total">Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence*</label>
+  
+<label for="field--entreprise.effectif.total">Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence*</label>
+
 
 
 <input
@@ -117,6 +236,7 @@
   
   
   
+  
 />
 
   </div>
@@ -124,12 +244,13 @@
 
 <script>
   document.onready = () => {
-    buildRadioOptions(
-      document.querySelector('[name="entreprise.effectif.tranche"]'),
-      Object.entries(app.config.effectifs).map(([value, label]) => ({ value, label })),
-      getVal(app.data, "entreprise.effectif.tranche"),
-      { required: true }
-    )
+    if (app.data?.entreprise?.raison_sociale) {
+      // There is already a "raison sociale" (filled in on the next screen) so we did
+      // already submit this current form, so we can infer the "_periode.type" data.
+      app.data._periode = {type: app.data.déclaration.fin_periode_référence ? "autre" : "civile"}
+      // And the "_entreprise.structure" data.
+      app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
+    }
   }
 
   document.onloaded = () => {

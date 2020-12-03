@@ -21,22 +21,53 @@
 
 <fieldset>
   <div class=row>
-    <div><label for="field--_indicateurs.congés_maternité.calculable">L'indicateur est-il calculable</label>
+    <div>
+      
+<label for="field--_indicateurs.congés_maternité.calculable">L'indicateur est-il calculable</label>
+
 
 <div
   id="field--_indicateurs.congés_maternité.calculable"
   name="_indicateurs.congés_maternité.calculable"
   type="radiogroup"
-  
   >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="toggleFields()"
+          name="_indicateurs.congés_maternité.calculable" value="oui"> oui
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="toggleFields()"
+          name="_indicateurs.congés_maternité.calculable" value="non"> non
+      </label>
+      
+    
+  
 </div>
-</div>
+
+    </div>
   </div>
 </fieldset>
 
 <fieldset id="fieldset-resultat">
   <div class=row>
-  <label for="field--indicateurs.congés_maternité.résultat">Résultat final en pourcentage (%)*</label>
+  
+<label for="field--indicateurs.congés_maternité.résultat">Résultat final en pourcentage (%)*</label>
+
 
 
 <input
@@ -54,12 +85,16 @@
   
   
   onblur="refreshForm()"
+  
 />
 </div>
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row><label for="field--indicateurs.congés_maternité.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
+  <div class=row>
+    
+<label for="field--indicateurs.congés_maternité.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
+
 
 <select
   id="field--indicateurs.congés_maternité.non_calculable"
@@ -69,13 +104,27 @@
   
   
 >
+  
+     
+    <option value=""> ––– </option>
+    
+      
+      <option value="absrcm">Absence de retours de congé de maternité</option>
+    
+      
+      <option value="absaugpdtcm">Absence d'augmentations pendant ce congé</option>
+    
+  
 </select>
-</div>
+
+  </div>
 </fieldset>
 
 <fieldset id="fieldset-note" class=note>
   <div class=row>
-  <label for="field--indicateurs.congés_maternité.note">Nombre de points obtenus sur l'indicateur</label>
+  
+<label for="field--indicateurs.congés_maternité.note">Nombre de points obtenus sur l'indicateur</label>
+
 
 
 <input
@@ -93,6 +142,7 @@
   readonly="readonly"
   
   
+  
 />
 </div>
 </fieldset>
@@ -101,31 +151,24 @@
   const calculableField = selectField('_indicateurs.congés_maternité.calculable')
 
   document.onready = () => {
-    const calculableOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.congés_maternité.calculable'), {required: true})
+    if (app.data?.indicateurs?.congés_maternité) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.promotions.calculable" data.
+      if (!app.data._indicateurs) app.data._indicateurs = {}
+      app.data._indicateurs.congés_maternité = {calculable: app.data.indicateurs.congés_maternité.non_calculable ? "non" : "oui"}
+    }
+  }
 
-    const nonCalculableField = selectField('indicateurs.congés_maternité.non_calculable')
-    const nonCalculableOptions = [
-      { value: 'absrcm', label: "Absence de retours de congé de maternité"},
-      { value: 'absaugpdtcm', label: "Absence d'augmentations pendant ce congé"},
-    ]
-    buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  function toggleFields() {
+    const isCalculableChosen = calculableField.querySelector(':checked')
+    const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-resultat', isCalculable)
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-note', isCalculable)
   }
 
   document.onloaded = () => {
     toggleFields()
-    calculableField.addEventListener('change', toggleFields)
-
-    function toggleFields() {
-      const isCalculableChosen = calculableField.querySelector(':checked')
-      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-resultat', isCalculable)
-      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-      enableField('#fieldset-note', isCalculable)
-    }
   }
 </script>
 

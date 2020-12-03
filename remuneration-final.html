@@ -21,7 +21,9 @@
 
 <fieldset>
   <div class=row>
-  <label for="field--indicateurs.rémunérations.résultat">Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie*</label>
+  
+<label for="field--indicateurs.rémunérations.résultat">Résultat final en pourcentage (%) après application du seuil de pertinence à chaque catégorie*</label>
+
 
 
 <input
@@ -39,12 +41,16 @@
   
   
   onblur="refreshForm()"
+  oninput="toggleFields()"
 />
 </div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row><label for="field--indicateurs.rémunérations.population_favorable">Population envers laquelle l'écart est favorable*</label>
+  <div class=row>
+    
+<label for="field--indicateurs.rémunérations.population_favorable">Population envers laquelle l'écart est favorable*</label>
+
 
 <select
   id="field--indicateurs.rémunérations.population_favorable"
@@ -54,13 +60,27 @@
   
   onchange="refreshForm()"
 >
+  
+     
+    <option value=""> ––– </option>
+    
+      
+      <option value="femmes">Femmes</option>
+    
+      
+      <option value="hommes">Hommes</option>
+    
+  
 </select>
-</div>
+
+  </div>
 </fieldset>
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--indicateurs.rémunérations.note">Nombre de points obtenus sur l'indicateur</label>
+  
+<label for="field--indicateurs.rémunérations.note">Nombre de points obtenus sur l'indicateur</label>
+
 
 
 <input
@@ -78,28 +98,20 @@
   readonly="readonly"
   
   
+  
 />
 </div>
 </fieldset>
 
 <script>
-  document.onready = () => {
-    const favorableOptions = [
-      { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" },
-    ]
-    buildSelectOptions(selectField('indicateurs.rémunérations.population_favorable'), favorableOptions)
+  const resultatField = selectField("indicateurs.rémunérations.résultat")
+
+  function toggleFields() {
+    enableField("#fieldset-population-favorable", resultatField.value != "0")
   }
 
   document.onloaded = () => {
-    const resultatField = selectField("indicateurs.rémunérations.résultat")
-
     toggleFields()
-    resultatField.addEventListener('input', toggleFields)
-
-    function toggleFields() {
-      enableField("#fieldset-population-favorable", resultatField.value != "0")
-    }
   }
 </script>
 

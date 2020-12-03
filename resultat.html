@@ -22,7 +22,9 @@
 <fieldset>
   <div class=row>
     
-  <label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu*</label>
+  
+<label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu*</label>
+
 
 
 <input
@@ -40,6 +42,7 @@
   
   
   
+  
 />
 
   </div>
@@ -47,22 +50,53 @@
 
 <fieldset>
   <div class=row>
-    <div><label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu ?</label>
+    <div>
+      
+<label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu ?</label>
+
 
 <div
   id="field--_déclaration.publication.site_internet"
   name="_déclaration.publication.site_internet"
   type="radiogroup"
-  
   >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="toggleFields()"
+          name="_déclaration.publication.site_internet" value="oui"> oui
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="toggleFields()"
+          name="_déclaration.publication.site_internet" value="non"> non
+      </label>
+      
+    
+  
 </div>
-</div>
+
+    </div>
   </div>
 </fieldset>
 
 <fieldset id="fieldset-url">
   <div class=row>
-  <label for="field--déclaration.publication.url">Adresse du site Internet de publication ou précision des modalités de publicité*</label>
+  
+<label for="field--déclaration.publication.url">Adresse du site Internet de publication ou précision des modalités de publicité*</label>
+
 
 
 <input
@@ -80,12 +114,15 @@
   
   
   
+  
 />
 </div>
 </fieldset>
 
 <fieldset id="fieldset-modalites">
-  <div class=row><label for="field--déclaration.publication.modalités">Adresse du site Internet de publication ou précision des modalités de publicité</label>
+  <div class=row>
+<label for="field--déclaration.publication.modalités">Adresse du site Internet de publication ou précision des modalités de publicité</label>
+
 
 <textarea
   id="field--déclaration.publication.modalités"
@@ -100,23 +137,23 @@
   const siteInternetField = selectField('_déclaration.publication.site_internet')
 
   document.onready = () => {
-    const siteInternetOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet'), {required: true})
+    if (app.data?.déclaration?.publication) {
+      // We did already submit this current form, so we can infer the
+      // "_indicateurs.déclaration.publication.site_internet" data.
+      if (!app.data._déclaration) app.data._déclaration = {}
+      app.data._déclaration.publication = {site_internet: app.data.déclaration.publication.url ? "oui" : "non"}
+    }
+  }
+
+  function toggleFields() {
+    const hasSiteInternetChosen = siteInternetField.querySelector(':checked')
+    const hasSiteInternet = hasSiteInternetChosen && siteInternetField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-url', hasSiteInternet)
+    enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
   }
 
   document.onloaded = () => {
     toggleFields()
-    siteInternetField.addEventListener('change', toggleFields)
-
-    function toggleFields() {
-      const hasSiteInternetChosen = siteInternetField.querySelector(':checked')
-      const hasSiteInternet = hasSiteInternetChosen && siteInternetField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-url', hasSiteInternet)
-      enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
-    }
   }
 </script>
 </main>

@@ -22,7 +22,9 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--entreprise.ues.raison_sociale">Nom de l'UES*</label>
+  
+<label for="field--entreprise.ues.raison_sociale">Nom de l'UES*</label>
+
 
 
 <input
@@ -40,6 +42,7 @@
   
   
   
+  
 />
 </div>
   </div>
@@ -48,7 +51,9 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--entreprise.raison_sociale">Nom de l'entreprise déclarant pour le compte de l'UES*</label>
+  
+<label for="field--entreprise.raison_sociale">Nom de l'entreprise déclarant pour le compte de l'UES*</label>
+
 
 
 <input
@@ -66,6 +71,7 @@
   
   
   
+  
 />
 </div>
   </div>
@@ -74,7 +80,9 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--entreprise.siren">Numéro SIREN de cette entreprise*</label>
+  
+<label for="field--entreprise.siren">Numéro SIREN de cette entreprise*</label>
+
 
 
 <input
@@ -92,6 +100,7 @@
   readonly="readonly"
   
   
+  
 />
 </div>
   </div>
@@ -99,7 +108,9 @@
 
 <fieldset>
   <div>
-    <div><label for="field--entreprise.code_naf">Code NAF de cette entreprise*</label>
+    <div>
+<label for="field--entreprise.code_naf">Code NAF de cette entreprise*</label>
+
 
 <select
   id="field--entreprise.code_naf"
@@ -109,6 +120,7 @@
   
   
 >
+  
 </select>
 </div>
   </div>
@@ -117,7 +129,9 @@
 <fieldset>
   <div class=row>
     <div>
-  <label for="field--_entreprise.ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
+  
+<label for="field--_entreprise.ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
+
 
 
 <input
@@ -135,6 +149,7 @@
   
   
   
+  
 />
 </div>
   </div>
@@ -142,8 +157,23 @@
 
 <script>
   document.onready = async function() {
+    if (!app.data?._entreprise?.ues?.nombre_entreprises && app.data?.entreprise?.ues?.entreprises) {
+      // We did already submit this current form, so we can infer the
+      // "_entreprise.ues.nombre_entreprises" data.
+      if (!app.data._entreprise) app.data._entreprise = {}
+      // Remember we need a length which is 1 more than the real length, as the declaring entreprise is also part of its UES
+      app.data._entreprise.ues = {nombre_entreprises: app.data.entreprise.ues.entreprises.length + 1}
+    }
+
     const select = selectField('entreprise.code_naf')
     await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
+  }
+
+  document.onsend = data => {
+    if (data?._entreprise?.ues?.nombre_entreprises && data?.entreprise?.ues?.entreprises) {
+      // The `nombre_entreprises` is one more than the actual length as we count the declaring entreprise in it.
+      data.entreprise.ues.entreprises = data.entreprise.ues.entreprises.slice(0, data._entreprise.ues.nombre_entreprises -1)
+    }
   }
 </script>
 

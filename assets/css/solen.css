@@ -153,7 +153,7 @@ label {
   max-width: 50%;
 }
 
-input:read-only {
+input:not([type="radio"]):read-only {
   cursor: not-allowed;
 }
 input:not([type=radio]),

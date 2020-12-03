@@ -21,7 +21,9 @@
 
 <fieldset>
   <div class=row>
-  <label for="field--déclaration.points">Total des points obtenus</label>
+  
+<label for="field--déclaration.points">Total des points obtenus</label>
+
 
 
 <input
@@ -39,13 +41,16 @@
   readonly="readonly"
   
   
+  
 />
 </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
-  <label for="field--déclaration.points_calculables">Nombre de points maximum pouvant être obtenus</label>
+  
+<label for="field--déclaration.points_calculables">Nombre de points maximum pouvant être obtenus</label>
+
 
 
 <input
@@ -63,13 +68,16 @@
   readonly="readonly"
   
   
+  
 />
 </div>
 </fieldset>
 
 <fieldset class=note>
   <div class=row>
-  <label for="field--déclaration.index">Résultat final sur 100 points</label>
+  
+<label for="field--déclaration.index">Résultat final sur 100 points</label>
+
 
 
 <input
@@ -87,12 +95,16 @@
   readonly="readonly"
   
   
+  
 />
 </div>
 </fieldset>
 
 <fieldset>
-  <div class=row><label for="field--déclaration.mesures_correctives">Mesures de correction prévues à l'article D. 1142-6</label>
+  <div class=row>
+    
+<label for="field--déclaration.mesures_correctives">Mesures de correction prévues à l'article D. 1142-6</label>
+
 
 <select
   id="field--déclaration.mesures_correctives"
@@ -102,20 +114,24 @@
   
   
 >
+  
+     
+    <option value=""> ––– </option>
+    
+      
+      <option value="mmo">Mesures mises en oeuvre</option>
+    
+      
+      <option value="me">Mesures envisagées</option>
+    
+      
+      <option value="mne">Mesures non envisagées</option>
+    
+  
 </select>
-</div>
-</fieldset>
 
-<script>
-  document.onready = () => {
-    const mesuresCorrectionOptions = [
-      { value: 'mmo', label: "Mesures mises en oeuvre"},
-      { value: 'me', label: "Mesures envisagées"},
-      { value: 'mne', label: "Mesures non envisagées"},
-    ]
-    buildSelectOptions(selectField('déclaration.mesures_correctives'), mesuresCorrectionOptions)
-  }
-</script>
+  </div>
+</fieldset>
 
 </main>
 
