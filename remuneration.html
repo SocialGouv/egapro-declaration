@@ -2,7 +2,7 @@
 <html lang="fr">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
+<title>Ecart de rémunération entre les femmes et les hommes par catégorie socio-professionnelle OU Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
 <script src="/declaration/assets/js/utils.js"></script>
 
@@ -17,7 +17,9 @@
 
 <form class=main id="page-form" action="/remuneration.html">
   <main>
-  <h1>Ecart de rémunération entre les femmes et les hommes</h1>
+  <h1>Ecart de rémunération entre les femmes et les hommes par catégorie socio-professionnelle OU Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique</h1>
+
+<p>Il faut saisir les écarts de rémunération en % avant application du seuil de pertinence.</p>
 
 <fieldset>
   <div class=row>
@@ -122,7 +124,7 @@
   <div class=row>
     
   
-<label for="field--déclaration.date_consultation_cse">Date de consultation au CSE*</label>
+<label for="field--déclaration.date_consultation_cse">Date de consultation du CSE*</label>
 
 
 
@@ -174,6 +176,50 @@
 </div>
 </fieldset>
 
+<fieldset id="fieldset-calculable-csp">
+  <div class=row>
+    <div>
+      
+<label for="field--_indicateurs.rémunérations.calculable_csp">Vous déclarez que votre indicateur n’est pas calculable, avez-vous procédé au calcul de cet indicateur par catégorie socio-professionnelle ?</label>
+
+
+<div
+  id="field--_indicateurs.rémunérations.calculable_csp"
+  name="_indicateurs.rémunérations.calculable_csp"
+  type="radiogroup"
+  >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="checkCalculableCSP(event)"
+          name="_indicateurs.rémunérations.calculable_csp" value="oui"> oui
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="checkCalculableCSP(event)"
+          name="_indicateurs.rémunérations.calculable_csp" value="non"> non
+      </label>
+      
+    
+  
+</div>
+
+    </div>
+  </div>
+</fieldset>
+
 <fieldset id="fieldset-motif">
   <div class=row>
     
@@ -203,6 +249,7 @@
 
 <script>
   const calculableField = selectField('_indicateurs.rémunérations.calculable')
+  const calculableCspField = selectField('_indicateurs.rémunérations.calculable_csp')
   const modeField = selectField('indicateurs.rémunérations.mode')
 
   document.onready = () => {
@@ -210,7 +257,10 @@
       // We did already submit this current form, so we can infer the
       // "_indicateurs.rémunérations.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}
-      app.data._indicateurs.rémunérations = {calculable: app.data.indicateurs.rémunérations.non_calculable ? "non" : "oui"}
+      if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
+      const calculable = app.data.indicateurs.rémunérations.non_calculable ? "non" : "oui"
+      app.data._indicateurs.rémunérations.calculable = calculable
+      if (app.data.indicateurs.rémunérations.non_calculable) app.data._indicateurs.rémunérations.calculable_csp = "oui"
     }
     if (app.data?.indicateurs?.rémunérations?.mode
         && app.data.indicateurs.rémunérations.mode !== "csp"
@@ -218,18 +268,29 @@
       // We can infer the number of "niveaux" from the number of "catégories" we already have
       if (!app.data._indicateurs) app.data._indicateurs = {}
       if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
-      app.data._indicateurs.rémunérations.niveaux = app.data.indicateurs.rémunérations.catégories.length
+      app.data._indicateurs.rémunérations.niveaux = app.data._indicateurs.rémunérations.niveaux || app.data.indicateurs.rémunérations.catégories.length
     }
   }
 
   function toggleFields() {
     const isCalculableChosen = calculableField.querySelector(':checked')
     const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    const isCalculatedCsp = calculableCspField.querySelector(':checked') && calculableCspField.querySelector(':checked').value === 'oui'
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
     enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
     enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
+  }
+
+  function checkCalculableCSP(event) {
+    const target = event.target
+    if (target.value === "non") {
+      target.checked = false
+      alert("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
+    }
+    toggleFields()
   }
 
   document.onloaded = () => {
