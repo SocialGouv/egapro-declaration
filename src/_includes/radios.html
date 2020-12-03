@@ -15,7 +15,6 @@
           type="radio"
           {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
           name="{{ include.name }}" value="{{ optionArray[0] }}"> {{ optionArray[1] }}
-        </input>
       </label>
       {% if include.block == 'true' %}</div>{% endif %}
     {% endfor %}
