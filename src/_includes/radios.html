@@ -5,17 +5,9 @@
   type="radiogroup"
   >
   {% if include.options %}
-    {% comment %}
-      We can't pass arrays or objects as attributes in an include, so we fall
-      back to a concatenated string.
-      Options are structured like the following:
-      - join the value and the label with a "=="
-      - join the list of value@label with a "|"
-      Eg: "value1==label for value 1|value2==label for value 2"
-    {% endcomment %}
-    {% assign optionsArray=include.options | split: "|" %} 
+    {% assign optionsArray=include.options | split: "&" %} 
     {% for option in optionsArray %}
-      {% assign optionArray=option | split: "==" %}
+      {% assign optionArray=option | split: "=" %}
       {% if include.block == 'true' %}<div>{% endif %}
       <label>
         <input

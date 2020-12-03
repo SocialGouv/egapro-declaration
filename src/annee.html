@@ -16,7 +16,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
     <h4>Vous êtes une</h4>
     {% include radios.html
       name="_entreprise.structure"
-      options="entreprise==Entreprise|ues==Unité Économique et Sociale"
+      options="entreprise=Entreprise&ues=Unité Économique et Sociale"
       required="required" %}
   </div>
 </fieldset>
@@ -26,7 +26,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
     <h4>Tranches d'effectifs</h4>
     {% include radios.html
       name="entreprise.effectif.tranche"
-      options="50:250==De 50 à 250 inclus|251:999==De 251 à 999 inclus|1000:==De 1000 ou plus"
+      options="50:250=De 50 à 250 inclus&251:999=De 251 à 999 inclus&1000:=De 1000 ou plus"
       required="required" %}
   </div>
 </fieldset>
@@ -38,7 +38,7 @@ title: "Année et périmètre retenus pour le calcul et la publication des indic
     <h4>Période de référence</h4>
     {% include radios.html
       name="_periode.type"
-      options="civile==Année civile|autre==Autre période"
+      options="civile=Année civile&autre=Autre période"
       onchange="updatePeriode(this.value)"
       required="required" %}
   </div>

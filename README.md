@@ -21,3 +21,11 @@ En parallèle, l'API pourra être lancée avec la commande `EGAPRO_REQUIRE_TOKEN
 Par souci de facilité de développement et d'augmenter la pérennité du code, le code utilises HTML5 et ES6.
 
 Afin d'augmenter la couverture de navigateurs, le projet demandera certainement à être transpilé pour être rendu compatible avec des navigateurs constatés comme utilisés dans les statistiques récentes.
+
+## Options pour les radio buttons et selects
+
+On ne peut pas passer d'array ou d'objet en tant qu'attributs lors d'un `{% include %}`,
+donc on se rabat sur le passage par une chaîne de caractères, encodée comme
+pour une `query string` : `valeur1=label 1&valeur2=label 2`.
+
+On retrouve cet encodage dans `src/_includes/radios.html` et `src/_includes/select.html`.
