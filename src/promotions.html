@@ -7,7 +7,15 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name="_indicateurs.promotions.calculable" label="L'indicateur sur les taux d'augmentations individuelles est-il calculable" required="true" %}</div>
+    <div>
+      {% include radios.html
+        name="_indicateurs.promotions.calculable"
+        label="L'indicateur sur les taux de promotions individuelles est-il calculable"
+        required="true"
+        options="oui=oui&non=non"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
@@ -28,15 +36,32 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" onblur="refreshForm()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row>{% include select.html name="indicateurs.promotions.population_favorable" empty="true" label="Population envers laquelle l'écart est favorable" required=true onchange="refreshForm()" %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.promotions.population_favorable"
+      label="Population envers laquelle l'écart est favorable"
+      empty="true"
+      required=true
+      onchange="refreshForm()"
+      options="femmes=Femmes&hommes=Hommes"
+    %}
+  </div>
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row>{% include select.html name="indicateurs.promotions.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" required=true empty=true %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.promotions.non_calculable"
+      label="Précision du motif de non calculabilité de l'indicateur"
+      empty="true"
+      required=true
+      options="egvi40pcet=Effectif des groupes valides inférieur à 40% de l'effectif total&absprom=Absence de promotions"
+    %}
+  </div>
 </fieldset>
 
 <fieldset id="fieldset-note" class=note>
@@ -45,6 +70,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 
 <script>
   const calculableField = selectField('_indicateurs.promotions.calculable')
+  const resultatField = selectField("indicateurs.promotions.résultat")
 
   document.onready = () => {
     if (app.data?.indicateurs?.promotions) {
@@ -53,45 +79,22 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
       if (!app.data._indicateurs) app.data._indicateurs = {}
       app.data._indicateurs.promotions = {calculable: app.data.indicateurs.promotions.non_calculable ? "non" : "oui"}
     }
+  }
 
-    const calculableOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.promotions.calculable'), {required: true})
-
-    const favorableOptions = [
-      { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" },
-    ]
-    buildSelectOptions(selectField('indicateurs.promotions.population_favorable'), favorableOptions)
-
-    const nonCalculableField = selectField('indicateurs.promotions.non_calculable')
-    const nonCalculableOptions = [
-      { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
-      { value: 'absprom', label: "Absence de promotions"},
-    ]
-    buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  function toggleFields() {
+    const isCalculableChosen = calculableField.querySelector(':checked')
+    const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-resultat-ouv', isCalculable)
+    enableField('#fieldset-resultat-emp', isCalculable)
+    enableField('#fieldset-resultat-tam', isCalculable)
+    enableField('#fieldset-resultat-ic', isCalculable)
+    enableField('#fieldset-resultat-pourcentage', isCalculable)
+    enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-note', isCalculable)
   }
 
   document.onloaded = () => {
-    const resultatField = selectField("indicateurs.promotions.résultat")
-
     toggleFields()
-    calculableField.addEventListener('change', toggleFields)
-    resultatField.addEventListener('input', toggleFields)
-
-    function toggleFields() {
-      const isCalculableChosen = calculableField.querySelector(':checked')
-      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-resultat-ouv', isCalculable)
-      enableField('#fieldset-resultat-emp', isCalculable)
-      enableField('#fieldset-resultat-tam', isCalculable)
-      enableField('#fieldset-resultat-ic', isCalculable)
-      enableField('#fieldset-resultat-pourcentage', isCalculable)
-      enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
-      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-      enableField('#fieldset-note', isCalculable)
-    }
   }
 </script>

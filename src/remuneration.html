@@ -6,13 +6,30 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name="_indicateurs.rémunérations.calculable" label="L’indicateur sur l’écart de rémunération est-il calculable ?" required="true" %}</div>
+    <div>
+      {% include radios.html
+        name="_indicateurs.rémunérations.calculable"
+        label="L’indicateur sur l’écart de rémunération est-il calculable ?"
+        required="true"
+        options="oui=oui&non=non"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
 <fieldset id="fieldset-mode">
   <div class=row>
-    <div>{% include radios.html name="indicateurs.rémunérations.mode" label="Modalités de calcul de l'indicateur relatif à l'écart de rémunération entre les femmes et les hommes" required="true" block="true" %}</div>
+    <div>
+      {% include radios.html
+        name="indicateurs.rémunérations.mode"
+        label="Modalités de calcul de l'indicateur relatif à l'écart de rémunération entre les femmes et les hommes"
+        required="true"
+        block="true"
+        options="niveau_branche=Par niveau ou coefficient hiérarchique en application de la classification de branche&niveau_autre=Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes&csp=Par catégorie socio-professionnelle"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
@@ -27,7 +44,15 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row>{% include select.html name="indicateurs.rémunérations.non_calculable" label="Précision du motif de non calculabilité de l'indicateur" empty=true required=true %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.rémunérations.non_calculable"
+      label="Précision du motif de non calculabilité de l'indicateur"
+      empty="true"
+      required=true
+      options="egvi40pcet=Effectif des groupes valides inférieur à 40% de l'effectif total"
+    %}
+  </div>
 </fieldset>
 
 <script>
@@ -49,41 +74,20 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
       app.data._indicateurs.rémunérations.niveaux = app.data.indicateurs.rémunérations.catégories.length
     }
+  }
 
-    const calculableOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.rémunérations.calculable'), {required: true})
-
-    const modeOptions = [
-      {value: "niveau_branche", label: "Par niveau ou coefficient hiérarchique en application de la classification de branche"},
-      {value: "niveau_autre", label: "Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes"},
-      {value: "csp", label: "Par catégorie socio-professionnelle"},
-    ]
-    buildRadioOptions(modeField, modeOptions, getVal(app.data, 'indicateurs.rémunérations.mode'), {required: true})
-
-    const nonCalculableField = selectField('indicateurs.rémunérations.non_calculable')
-    const nonCalculableOptions = [
-      { value: 'egvi40pcet', label: "Effectif des groupes valides inférieur à 40% de l'effectif total" },
-    ]
-    buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  function toggleFields() {
+    const isCalculableChosen = calculableField.querySelector(':checked')
+    const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
+    enableField('#fieldset-mode', isCalculable)
+    enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
+    enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
   }
 
   document.onloaded = () => {
     toggleFields()
-    calculableField.addEventListener('change', toggleFields)
-    modeField.addEventListener('change', toggleFields)
-
-    function toggleFields() {
-      const isCalculableChosen = calculableField.querySelector(':checked')
-      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-      const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
-      enableField('#fieldset-mode', isCalculable)
-      enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-      enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-    }
   }
 
   document.onsend = data => {

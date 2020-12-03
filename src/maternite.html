@@ -7,7 +7,15 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name='_indicateurs.congés_maternité.calculable' label="L'indicateur est-il calculable" required="true" %}</div>
+    <div>
+      {% include radios.html
+        name="_indicateurs.congés_maternité.calculable"
+        label="L'indicateur est-il calculable"
+        required="true"
+        options="oui=oui&non=non"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
@@ -16,7 +24,15 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
 </fieldset>
 
 <fieldset id="fieldset-motif">
-  <div class=row>{% include select.html name="indicateurs.congés_maternité.non_calculable" empty="true" label="Précision du motif de non calculabilité de l'indicateur" required="true" %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.congés_maternité.non_calculable"
+      label="Précision du motif de non calculabilité de l'indicateur"
+      empty="true"
+      required=true
+      options="absrcm=Absence de retours de congé de maternité&absaugpdtcm=Absence d'augmentations pendant ce congé"
+    %}
+  </div>
 </fieldset>
 
 <fieldset id="fieldset-note" class=note>
@@ -33,31 +49,17 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
       if (!app.data._indicateurs) app.data._indicateurs = {}
       app.data._indicateurs.congés_maternité = {calculable: app.data.indicateurs.congés_maternité.non_calculable ? "non" : "oui"}
     }
+  }
 
-    const calculableOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(calculableField, calculableOptions, getVal(app.data, '_indicateurs.congés_maternité.calculable'), {required: true})
-
-    const nonCalculableField = selectField('indicateurs.congés_maternité.non_calculable')
-    const nonCalculableOptions = [
-      { value: 'absrcm', label: "Absence de retours de congé de maternité"},
-      { value: 'absaugpdtcm', label: "Absence d'augmentations pendant ce congé"},
-    ]
-    buildSelectOptions(nonCalculableField, nonCalculableOptions)
+  function toggleFields() {
+    const isCalculableChosen = calculableField.querySelector(':checked')
+    const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-resultat', isCalculable)
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-note', isCalculable)
   }
 
   document.onloaded = () => {
     toggleFields()
-    calculableField.addEventListener('change', toggleFields)
-
-    function toggleFields() {
-      const isCalculableChosen = calculableField.querySelector(':checked')
-      const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-resultat', isCalculable)
-      enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
-      enableField('#fieldset-note', isCalculable)
-    }
   }
 </script>

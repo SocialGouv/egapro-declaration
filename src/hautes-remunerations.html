@@ -6,11 +6,20 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.hautes_rémunérations.résultat" label="Résultat en nombre de salariés" min=0 max=5 type="number" required=true onblur="refreshForm()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.hautes_rémunérations.résultat" label="Résultat en nombre de salariés" min=0 max=5 type="number" required=true onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
-  <div class=row>{% include select.html name="indicateurs.hautes_rémunérations.population_favorable" empty="true" label="Sexe des salariés sur-représentés" required=true onchange="refreshForm()" %}</div>
+  <div class=row>
+    {% include select.html
+      name="indicateurs.hautes_rémunérations.population_favorable"
+      label="Population envers laquelle l'écart est favorable"
+      empty="true"
+      required=true
+      onchange="refreshForm()"
+      options="femmes=Femmes&hommes=Hommes"
+    %}
+  </div>
 </fieldset>
 
 <fieldset class=note>
@@ -18,22 +27,12 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
 </fieldset>
 
 <script>
-  document.onready = () => {
-    const favorableOptions = [
-      { value: 'femmes', label: "Femmes" },
-      { value: 'hommes', label: "Hommes" },
-    ]
-    buildSelectOptions(selectField('indicateurs.hautes_rémunérations.population_favorable'), favorableOptions)
+  const resultatField = selectField("indicateurs.hautes_rémunérations.résultat")
+  function toggleFields() {
+    enableField('#fieldset-population-favorable', resultatField.value && resultatField.value != "5")
   }
 
   document.onloaded = () => {
-    const resultatField = selectField("indicateurs.hautes_rémunérations.résultat")
-
     toggleFields()
-    resultatField.addEventListener('input', toggleFields)
-
-    function toggleFields() {
-      enableField('#fieldset-population-favorable', resultatField.value && resultatField.value != "5")
-    }
   }
 </script>

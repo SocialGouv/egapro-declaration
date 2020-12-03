@@ -7,4 +7,12 @@
   {% if include.type %}type="{{ include.type }}"{% endif %}
   {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
 >
+  {% if include.options %}
+    {% assign optionsArray=include.options | split: "&" %} 
+    {% if include.empty %}<option value=""> ––– </option>{% endif %}
+    {% for option in optionsArray %}
+      {% assign optionArray=option | split: "=" %}
+      <option value="{{ optionArray[0] }}">{{ optionArray[1] }}</option>
+    {% endfor %}
+  {% endif %}
 </select>

@@ -3,6 +3,21 @@
   id="field--{{ include.name }}"
   name="{{ include.name }}"
   type="radiogroup"
-  {% if include.block == 'true' %}option-block{% endif %}
   >
+  {% if include.options %}
+    {% assign optionsArray=include.options | split: "&" %} 
+    {% for option in optionsArray %}
+      {% assign optionArray=option | split: "=" %}
+      {% if include.block == 'true' %}<div>{% endif %}
+      <label>
+        <input
+          {% if include.required %}required{% endif %}
+          type="radio"
+          {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
+          name="{{ include.name }}" value="{{ optionArray[0] }}"> {{ optionArray[1] }}
+        </input>
+      </label>
+      {% if include.block == 'true' %}</div>{% endif %}
+    {% endfor %}
+  {% endif %}
 </div>

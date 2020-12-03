@@ -13,7 +13,14 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
 
 <fieldset>
   <div class=row>
-    <div>{% include radios.html name="_déclaration.publication.site_internet" label="Avez-vous un site Internet pour publier le niveau de résultat obtenu ?" required="true" %}</div>
+    <div>
+      {% include radios.html
+        name="_déclaration.publication.site_internet"
+        label="Avez-vous un site Internet pour publier le niveau de résultat obtenu ?"
+        options="oui=oui&non=non"
+        onchange="toggleFields()"
+        required="required" %}
+    </div>
   </div>
 </fieldset>
 
@@ -35,23 +42,16 @@ title: "Niveau de résultat de l'entreprise ou de l'UES"
       if (!app.data._déclaration) app.data._déclaration = {}
       app.data._déclaration.publication = {site_internet: app.data.déclaration.publication.url ? "oui" : "non"}
     }
+  }
 
-    const siteInternetOptions = [
-      { value: 'oui', label: "oui" },
-      { value: 'non', label: "non" }
-    ]
-    buildRadioOptions(siteInternetField, siteInternetOptions, getVal(app.data, '_déclaration.publication.site_internet'), {required: true})
+  function toggleFields() {
+    const hasSiteInternetChosen = siteInternetField.querySelector(':checked')
+    const hasSiteInternet = hasSiteInternetChosen && siteInternetField.querySelector(':checked').value === 'oui'
+    enableField('#fieldset-url', hasSiteInternet)
+    enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
   }
 
   document.onloaded = () => {
     toggleFields()
-    siteInternetField.addEventListener('change', toggleFields)
-
-    function toggleFields() {
-      const hasSiteInternetChosen = siteInternetField.querySelector(':checked')
-      const hasSiteInternet = hasSiteInternetChosen && siteInternetField.querySelector(':checked').value === 'oui'
-      enableField('#fieldset-url', hasSiteInternet)
-      enableField('#fieldset-modalites', hasSiteInternetChosen && !hasSiteInternet)
-    }
   }
 </script>

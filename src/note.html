@@ -18,16 +18,12 @@ title: "Niveau de résultat global"
 </fieldset>
 
 <fieldset>
-  <div class=row>{% include select.html name="déclaration.mesures_correctives" empty="true" label="Mesures de correction prévues à l'article D. 1142-6" %}</div>
+  <div class=row>
+    {% include select.html
+      name="déclaration.mesures_correctives"
+      empty="true"
+      label="Mesures de correction prévues à l'article D. 1142-6"
+      options="mmo=Mesures mises en oeuvre&me=Mesures envisagées&mne=Mesures non envisagées"
+    %}
+  </div>
 </fieldset>
-
-<script>
-  document.onready = () => {
-    const mesuresCorrectionOptions = [
-      { value: 'mmo', label: "Mesures mises en oeuvre"},
-      { value: 'me', label: "Mesures envisagées"},
-      { value: 'mne', label: "Mesures non envisagées"},
-    ]
-    buildSelectOptions(selectField('déclaration.mesures_correctives'), mesuresCorrectionOptions)
-  }
-</script>
