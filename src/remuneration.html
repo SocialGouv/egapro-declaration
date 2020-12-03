@@ -43,6 +43,20 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   <div class=row>{% include input.html type="number" name="_indicateurs.rémunérations.niveaux" label="Nombre de coefficients ou niveaux pour les modalités de calcul" min=2 max=50 required=true %}</div>
 </fieldset>
 
+<fieldset id="fieldset-calculable-csp">
+  <div class=row>
+    <div>
+      {% include radios.html
+        name="_indicateurs.rémunérations.calculable_csp"
+        label="Vous déclarez que votre indicateur n’est pas calculable, avez-vous procédé au calcul de cet indicateur par catégorie socio-professionnelle ?"
+        required="true"
+        options="oui=oui&non=non"
+        onchange="checkCalculableCSP(event)"
+        required="required" %}
+    </div>
+  </div>
+</fieldset>
+
 <fieldset id="fieldset-motif">
   <div class=row>
     {% include select.html
@@ -57,6 +71,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
 <script>
   const calculableField = selectField('_indicateurs.rémunérations.calculable')
+  const calculableCspField = selectField('_indicateurs.rémunérations.calculable_csp')
   const modeField = selectField('indicateurs.rémunérations.mode')
 
   document.onready = () => {
@@ -64,7 +79,10 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       // We did already submit this current form, so we can infer the
       // "_indicateurs.rémunérations.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}
-      app.data._indicateurs.rémunérations = {calculable: app.data.indicateurs.rémunérations.non_calculable ? "non" : "oui"}
+      if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
+      const calculable = app.data.indicateurs.rémunérations.non_calculable ? "non" : "oui"
+      app.data._indicateurs.rémunérations.calculable = calculable
+      if (app.data.indicateurs.rémunérations.non_calculable) app.data._indicateurs.rémunérations.calculable_csp = "oui"
     }
     if (app.data?.indicateurs?.rémunérations?.mode
         && app.data.indicateurs.rémunérations.mode !== "csp"
@@ -72,18 +90,29 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       // We can infer the number of "niveaux" from the number of "catégories" we already have
       if (!app.data._indicateurs) app.data._indicateurs = {}
       if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
-      app.data._indicateurs.rémunérations.niveaux = app.data.indicateurs.rémunérations.catégories.length
+      app.data._indicateurs.rémunérations.niveaux = app.data._indicateurs.rémunérations.niveaux || app.data.indicateurs.rémunérations.catégories.length
     }
   }
 
   function toggleFields() {
     const isCalculableChosen = calculableField.querySelector(':checked')
     const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
+    const isCalculatedCsp = calculableCspField.querySelector(':checked') && calculableCspField.querySelector(':checked').value === 'oui'
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
     enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
     enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-    enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
+    enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
+  }
+
+  function checkCalculableCSP(event) {
+    const target = event.target
+    if (target.value === "non") {
+      target.checked = false
+      alert("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
+    }
+    toggleFields()
   }
 
   document.onloaded = () => {
