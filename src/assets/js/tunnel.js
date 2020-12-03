@@ -85,6 +85,15 @@ const saveFormData = async (event) => {
 };
 
 form.addEventListener("submit", async (event) => {
+  event.preventDefault()
+  if (typeof document.preFormSubmit === "function") {
+    try {
+      const result = await document.preFormSubmit(event)
+      if (!result) return false
+    } catch (e) {
+      return alert(e)
+    }
+  }
   const response = await saveFormData(event);
 
   if (!response.ok) return;

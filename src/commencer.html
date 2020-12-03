@@ -15,6 +15,12 @@ title: "Commencer la déclaration"
   </fieldset>
 
 <script>
+  document.preFormSubmit = event => {
+    const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
+    const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
+    return confirm(message)
+  }
+
   document.onready = function() {
     const schema = app.schema.properties['déclaration']['properties']['année_indicateurs']
     buildSelectOptions(
