@@ -30,7 +30,7 @@ title: "Informations déclarant pour tout contact ultérieur"
   </div>
 
   <div class=row>
-    {% include input.html name="entreprise.code_postal" label="Code postal (5 car.)" required=true regex="\d[\dab]\d{3}" %}
+    {% include input.html name="entreprise.code_postal" label="Code postal (5 car.)" required=true pattern="\d{5}" %}
     {% include input.html name="entreprise.commune" label="Commune" required=true %}
   </div>
 </fieldset>
