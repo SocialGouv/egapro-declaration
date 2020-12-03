@@ -131,7 +131,7 @@ function serializeForm(form) {
       return;
     }
     const field = allFields.find((node) => node.name === key);
-    if (field.type === "number") {
+    if (field.getAttribute("type") === "number") {
       value = Number(value);
     }
     setVal(data, key, value);
