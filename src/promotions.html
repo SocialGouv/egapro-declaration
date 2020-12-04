@@ -10,7 +10,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
     <div>
       {% include radios.html
         name="_indicateurs.promotions.calculable"
-        label="L'indicateur sur les taux de promotions individuelles est-il calculable"
+        label="L’indicateur sur les écarts de taux de promotions est-il calculable?"
         required="true"
         options="oui=oui&non=non"
         onchange="toggleFields()"
@@ -18,6 +18,8 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
     </div>
   </div>
 </fieldset>
+
+<h1>Ecarts de taux de promotions obtenus par CSP en %</h1>
 
 <fieldset id="fieldset-resultat-ouv">
   <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[0]" label="Ouvriers" min=0 required=true type="number" %}</div>
@@ -36,7 +38,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en pourcentage (%)" min=0 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
