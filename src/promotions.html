@@ -22,23 +22,23 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 <h1>Ecarts de taux de promotions obtenus par CSP en %</h1>
 
 <fieldset id="fieldset-resultat-ouv">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[0]" label="Ouvriers" min=0 required=true type="number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[0]" label="Ouvriers" min=0 step="any" required=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-emp">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[1]" label="Employés" min=0 required=true type="number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[1]" label="Employés" min=0 step="any" required=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-tam">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[2]" label="Techniciens et agents de maîtrise" min=0 required=true type="number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[2]" label="Techniciens et agents de maîtrise" min=0 step="any" required=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-ic">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[3]" label="Ingénieurs et cadres" min=0 required=true type="number" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[3]" label="Ingénieurs et cadres" min=0 step="any" required=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 required=true type="number" onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 step="any" required=true onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -67,7 +67,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-note" class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 type="number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true %}</div>
 </fieldset>
 
 <script>

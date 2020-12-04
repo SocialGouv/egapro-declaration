@@ -10,6 +10,7 @@
   {% if pattern %}pattern="{{ include.pattern || '.*' }}"{% endif %}
   {% if include.min %}min="{{ include.min }}"{% endif %}
   {% if include.max %}max="{{ include.max }}"{% endif %}
+  {% if include.step %}step="{{ include.step }}"{% endif %}
   {% if include.required %}required{% endif %}
   {% if include.disabled %}disabled{% endif %}
   {% if include.pattern %}pattern="{{ include.pattern }}"{% endif %}

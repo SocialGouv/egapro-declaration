@@ -6,7 +6,7 @@ title: "Résultat final de l’écart de rémunération entre les femmes et les 
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en % après application du seuil de pertinence à chaque catégorie" min=0 required=true type="number" onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en % après application du seuil de pertinence à chaque catégorie" min=0 step="any" required=true onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -23,7 +23,7 @@ title: "Résultat final de l’écart de rémunération entre les femmes et les 
 </fieldset>
 
 <fieldset class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.note" label="Nombre de points obtenus à l'indicateur" min=0 type="number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true %}</div>
 </fieldset>
 
 <script>
