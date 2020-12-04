@@ -103,7 +103,9 @@ form.addEventListener("submit", async (event) => {
   else return redirect(`${steps[step + 1].name}.html`);
 });
 
-const refreshForm = async () => {
+const refreshForm = async (event) => {
+  if (!event.target.checkValidity()) return
+
   let response = await saveFormData();
 
   if (!response.ok) return;

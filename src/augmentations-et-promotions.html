@@ -20,11 +20,11 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 required=true type="number" onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-nombre-salaries">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés" label="Résultat final en nombre équivalent de salariés" min=0 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés" label="Résultat final en nombre équivalent de salariés" min=0 required=true type="number" onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -34,7 +34,7 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
       label="Population envers laquelle l'écart est favorable"
       empty="true"
       required=true
-      onchange="refreshForm()"
+      onchange="refreshForm(event)"
       options="femmes=Femmes&hommes=Hommes"
     %}
   </div>
