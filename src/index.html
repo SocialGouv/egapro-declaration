@@ -1,6 +1,17 @@
 ---
 layout: empty
 ---
+<script>
+  // First, check the browser is compatible
+  try {
+    eval("async function _(){}")
+  }
+  catch (e) {
+    window.location.href = '{{site.baseurl}}/compatibilite.html'
+  }
+</script>
+
+
 <script src="{{ site.baseurl }}/assets/js/utils.js"></script>
 <script>
   document.onready = () => {
