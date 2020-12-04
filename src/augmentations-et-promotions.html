@@ -20,11 +20,11 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 max=40 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-resultat-nombre-salaries">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés" label="Résultat final en nombre de salariés" min=0 max=40 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés" label="Résultat final en nombre de salariés" min=0 required=true type="number" onblur="refreshForm()" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -53,15 +53,15 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
 </fieldset>
 
 <fieldset id="fieldset-note-en-pourcentage" class="note subnote">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_en_pourcentage" label="Nombre de points obtenus sur le résultat final en pourcentage" min=0 max=40 type="number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_en_pourcentage" label="Nombre de points obtenus sur le résultat final en pourcentage" min=0 type="number" readonly=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-note-en-salaries" class="note subnote">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_nombre_salariés" label="Nombre de points obtenus sur le résultat final en nombre de salariés" min=0 max=40 type="number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_nombre_salariés" label="Nombre de points obtenus sur le résultat final en nombre de salariés" min=0 type="number" readonly=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-note" class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 max=35 type="number" readonly=true %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 type="number" readonly=true %}</div>
 </fieldset>
 
 <script>
