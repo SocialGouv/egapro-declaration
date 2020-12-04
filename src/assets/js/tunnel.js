@@ -5,18 +5,15 @@ const nextButton = document.querySelector("button[rel=next]");
 const steps = [
   { name: "commencer" },
   { name: "declarant" },
-  {
-    name: "annee",
+  { name: "perimetre",
     nextStep: (data) => {
-      if (data._entreprise.structure === "ues") return "ues";
-      return "entreprise";
+      if (data._entreprise.structure === "ues") return "ues-composition";
+      return "informations";
     },
   },
-  { name: "ues" },
-  { name: "ues-composition", nextStep: (_) => "remuneration" },
-  { name: "entreprise", nextStep: (_) => "remuneration" },
-  {
-    name: "remuneration",
+  { name: "ues-composition" },
+  { name: "informations" },
+  { name: "remuneration",
     nextStep: (data) => {
       if (data.indicateurs.rémunérations.mode === "niveau_branche")
         return "remuneration-coef";
@@ -32,8 +29,7 @@ const steps = [
   { name: "remuneration-coef", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-csp", nextStep: (_) => "remuneration-final" },
-  {
-    name: "remuneration-final",
+  { name: "remuneration-final",
     nextStep: (data) =>
       data.entreprise.effectif.tranche === "50:250"
         ? "augmentations-et-promotions"

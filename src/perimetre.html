@@ -1,0 +1,141 @@
+---
+layout: tunnel
+title: "Périmètre retenu pour le calcul et la publication des indicateurs"
+---
+<h1>{{ page.title }}</h1>
+
+<fieldset>
+  <div class=row>
+    <h4>Vous déclarez en tant que</h4>
+    {% include radios.html
+      name="_entreprise.structure"
+      options="entreprise=Entreprise&ues=Unité Économique et Sociale"
+      onchange="toggleFields()"
+      required="required" %}
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <h4>Tranches d'effectifs</h4>
+    {% include radios.html
+      name="entreprise.effectif.tranche"
+      options="50:250=De 50 à 250 inclus&251:999=De 251 à 999 inclus&1000:=De 1000 ou plus"
+      required="required" %}
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <div>{% include input.html name="entreprise.raison_sociale" label="Raison sociale de l'entreprise déclarante" required=true %}</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <div>{% include input.html name="entreprise.siren" label="Numéro Siren de l'entreprise déclarante" required=true value="" readonly=true %}</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div>
+    <div>{% include select.html name="entreprise.code_naf" label="Code NAF de l'entreprise déclarante" required=true empty=true %}</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <p>Adresse du siège de l'entreprise déclarante</p>
+  <div class=row id="département-selector">
+    <div>{% include select.html name="entreprise.région" label="Région" required=true empty=true %}</div>
+    <div>{% include select.html name="entreprise.département" label="Département" required=true %}</div>
+  </div>
+
+  <div class=row>
+    {% include input.html name="entreprise.adresse" label="Adresse" required=true %}
+  </div>
+
+  <div class=row>
+    {% include input.html name="entreprise.code_postal" label="Code postal (5 car.)" required=true pattern="\d{5}" %}
+    {% include input.html name="entreprise.commune" label="Commune" required=true %}
+  </div>
+</fieldset>
+
+<fieldset id="fieldset-raison-sociale-ues">
+  <div class=row>
+    <div>{% include input.html name="entreprise.ues.raison_sociale" label="Nom de l'UES" required=true %}</div>
+  </div>
+</fieldset>
+
+<fieldset id="fieldset-nombre-entreprises">
+  <div class=row>
+    <div>{% include input.html type="number" name="_entreprise.ues.nombre_entreprises" label="Nombre d'entreprises composant l'UES (le déclarant compris)" required=true min=2 %}</div>
+  </div>
+</fieldset>
+
+<script>
+  const regionSelect = selectField('entreprise.région')
+  regionSelect.addEventListener('change', loadDepartments)
+  const departmentSelect = selectField('entreprise.département')
+
+  document.onready = async function() {
+    // Load regions
+    const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
+    buildSelectOptions(regionSelect, regions, getVal(app.data, 'entreprise.région'))
+    if(regionSelect.value) loadDepartments()
+
+    if (app.data?.entreprise?.raison_sociale) {
+      // There is already a "raison sociale" (filled in on the next screen) so we did
+      // already submit this current form, so we can infer the "_periode.type" data.
+      app.data._periode = {type: app.data.déclaration.fin_periode_référence ? "autre" : "civile"}
+      // And the "_entreprise.structure" data.
+      app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
+    }
+
+    if (!app.data?._entreprise?.ues?.nombre_entreprises && app.data?.entreprise?.ues?.entreprises) {
+      // We did already submit this current form, so we can infer the
+      // "_entreprise.ues.nombre_entreprises" data.
+      if (!app.data._entreprise) app.data._entreprise = {}
+      // Remember we need a length which is 1 more than the real length, as the declaring entreprise is also part of its UES
+      app.data._entreprise.ues = {nombre_entreprises: app.data.entreprise.ues.entreprises.length + 1}
+    }
+
+    const select = selectField('entreprise.code_naf')
+    await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
+
+    toggleFields()
+  }
+
+  function loadDepartments() {
+    const selectedRegion = regionSelect.value
+    const departementCodes = app.config.regions_to_departements[selectedRegion]
+    const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
+    buildSelectOptions(departmentSelect, departements, getVal(app.data, 'entreprise.département'))
+  }
+
+  function toggleFields() {
+    const structureField = selectField("_entreprise.structure")
+    const isUES = structureField.querySelector(':checked') && structureField.querySelector(':checked').value === "ues"
+    enableField('#fieldset-raison-sociale-ues', isUES)
+    enableField('#fieldset-nombre-entreprises', isUES)
+  }
+
+  document.onsend = data => {
+    if (data?._entreprise?.structure === "entreprise") {
+      delete data?.entreprise?.ues
+      delete data?._entreprise?.ues
+    }
+
+    if (data?.entreprise?.effectif?.tranche === "50:250") {
+      delete data?.indicateurs?.augmentations
+      delete data?.indicateurs?.promotions
+    } else {
+      delete data?.indicateurs?.augmentations_et_promotions
+    }
+
+    if (data?._entreprise?.ues?.nombre_entreprises && data?.entreprise?.ues?.entreprises) {
+      // The `nombre_entreprises` is one more than the actual length as we count the declaring entreprise in it.
+      data.entreprise.ues.entreprises = data.entreprise.ues.entreprises.slice(0, data._entreprise.ues.nombre_entreprises -1)
+    }
+  }
+
+</script>

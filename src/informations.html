@@ -1,0 +1,46 @@
+---
+layout: tunnel
+title: "Informations calcul et période de référence"
+---
+
+<h1>{{ page.title }}</h1>
+
+<fieldset>
+  <div class="row">
+    {% include input.html type="number" name="déclaration.année_indicateurs" label="Année au titre de laquelle vous transmettez vos indicateurs" readonly=true %}
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    <h4>Période de référence</h4>
+    {% include radios.html
+      name="_periode.type"
+      options="civile=Année civile&autre=Autre période"
+      onchange="updatePeriode(this.value)"
+      required="required" %}
+  </div>
+</fieldset>
+
+<fieldset id="_periode.reference">
+  <div class=row>
+    {% include input.html type="date" label="Date de fin de la période de référence" name="déclaration.fin_période_référence" %}
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    {% include input.html type="number" name="entreprise.effectif.total" min=1 step="any" label="Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence" required="true" %}
+  </div>
+</fieldset>
+
+<script>
+  document.onloaded = () => {
+    updatePeriode(getVal(app.data, '_periode.type'))
+  }
+
+  function updatePeriode(value) {
+    const fieldset = document.getElementById('_periode.reference')
+    fieldset.disabled = value !== "autre"
+  }
+</script>
