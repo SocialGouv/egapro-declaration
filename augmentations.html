@@ -23,7 +23,7 @@
   <div class=row>
     <div>
       
-<label for="field--_indicateurs.augmentations.calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
+<label for="field--_indicateurs.augmentations.calculable">L’indicateur sur les écarts de taux d’augmentations individuelles est-il calculable ?</label>
 
 
 <div
@@ -63,10 +63,12 @@
   </div>
 </fieldset>
 
+<h1>Ecarts de taux d’augmentations obtenus par CSP en %</h1>
+
 <fieldset id="fieldset-resultat-ouv">
   <div class=row>
   
-<label for="field--indicateurs.augmentations.catégories[0]">Ouvriers*</label>
+<label for="field--indicateurs.augmentations.catégories[0]">Ouvriers</label>
 
 
 
@@ -78,8 +80,9 @@
   placeholder=""
   
   min="0"
-  max="100"
-  required
+  
+  step="any"
+  
   
   
   
@@ -93,7 +96,7 @@
 <fieldset id="fieldset-resultat-emp">
   <div class=row>
   
-<label for="field--indicateurs.augmentations.catégories[1]">Employés*</label>
+<label for="field--indicateurs.augmentations.catégories[1]">Employés</label>
 
 
 
@@ -105,8 +108,9 @@
   placeholder=""
   
   min="0"
-  max="100"
-  required
+  
+  step="any"
+  
   
   
   
@@ -120,7 +124,7 @@
 <fieldset id="fieldset-resultat-tam">
   <div class=row>
   
-<label for="field--indicateurs.augmentations.catégories[2]">Techniciens et agents de maîtrise*</label>
+<label for="field--indicateurs.augmentations.catégories[2]">Techniciens et agents de maîtrise</label>
 
 
 
@@ -132,8 +136,9 @@
   placeholder=""
   
   min="0"
-  max="100"
-  required
+  
+  step="any"
+  
   
   
   
@@ -147,7 +152,7 @@
 <fieldset id="fieldset-resultat-ic">
   <div class=row>
   
-<label for="field--indicateurs.augmentations.catégories[3]">Ingénieurs et cadres*</label>
+<label for="field--indicateurs.augmentations.catégories[3]">Ingénieurs et cadres</label>
 
 
 
@@ -159,8 +164,9 @@
   placeholder=""
   
   min="0"
-  max="100"
-  required
+  
+  step="any"
+  
   
   
   
@@ -174,7 +180,7 @@
 <fieldset id="fieldset-resultat-pourcentage">
   <div class=row>
   
-<label for="field--indicateurs.augmentations.résultat">Résultat final en pourcentage (%)*</label>
+<label for="field--indicateurs.augmentations.résultat">Résultat final en %*</label>
 
 
 
@@ -186,13 +192,14 @@
   placeholder=""
   
   min="0"
-  max="40"
+  
+  step="any"
   required
   
   
   
   
-  onblur="refreshForm()"
+  onblur="refreshForm(event)"
   oninput="toggleFields()"
 />
 </div>
@@ -210,7 +217,7 @@
   required
   empty
   
-  onchange="refreshForm()"
+  onchange="refreshForm(event)"
 >
   
      
@@ -273,7 +280,8 @@
   placeholder=""
   
   min="0"
-  max="35"
+  
+  step="any"
   
   
   

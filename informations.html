@@ -2,7 +2,7 @@
 <html lang="fr">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<title>Année et périmètre retenus pour le calcul et la publication des indicateurs - Egalité professionnelle - Ministère du Travail</title>
+<title>Informations calcul et période de référence - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
 <script src="/declaration/assets/js/utils.js"></script>
 
@@ -15,9 +15,9 @@
   </div>
 </header>
 
-<form class=main id="page-form" action="/annee.html">
+<form class=main id="page-form" action="/informations.html">
   <main>
-  <h1>Année et périmètre retenus pour le calcul et la publication des indicateurs</h1>
+  <h1>Informations calcul et période de référence</h1>
 
 <fieldset>
   <div class="row">
@@ -39,6 +39,7 @@
   
   
   
+  
   readonly="readonly"
   
   
@@ -47,101 +48,6 @@
 
   </div>
 </fieldset>
-
-<fieldset>
-  <div class=row>
-    <h4>Vous êtes une</h4>
-    
-
-<div
-  id="field--_entreprise.structure"
-  name="_entreprise.structure"
-  type="radiogroup"
-  >
-  
-     
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="_entreprise.structure" value="entreprise"> Entreprise
-      </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="_entreprise.structure" value="ues"> Unité Économique et Sociale
-      </label>
-      
-    
-  
-</div>
-
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-    <h4>Tranches d'effectifs</h4>
-    
-
-<div
-  id="field--entreprise.effectif.tranche"
-  name="entreprise.effectif.tranche"
-  type="radiogroup"
-  >
-  
-     
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="entreprise.effectif.tranche" value="50:250"> De 50 à 250 inclus
-      </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="entreprise.effectif.tranche" value="251:999"> De 251 à 999 inclus
-      </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="entreprise.effectif.tranche" value="1000:"> De 1000 ou plus
-      </label>
-      
-    
-  
-</div>
-
-  </div>
-</fieldset>
-
-<h1>Période de référence considérée pour le calcul des indicateurs</h1>
 
 <fieldset>
   <div class=row>
@@ -208,6 +114,7 @@
   
   
   
+  
 />
 
   </div>
@@ -230,6 +137,7 @@
   
   min="1"
   
+  step="any"
   required
   
   
@@ -243,16 +151,6 @@
 </fieldset>
 
 <script>
-  document.onready = () => {
-    if (app.data?.entreprise?.raison_sociale) {
-      // There is already a "raison sociale" (filled in on the next screen) so we did
-      // already submit this current form, so we can infer the "_periode.type" data.
-      app.data._periode = {type: app.data.déclaration.fin_periode_référence ? "autre" : "civile"}
-      // And the "_entreprise.structure" data.
-      app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
-    }
-  }
-
   document.onloaded = () => {
     updatePeriode(getVal(app.data, '_periode.type'))
   }
@@ -260,19 +158,6 @@
   function updatePeriode(value) {
     const fieldset = document.getElementById('_periode.reference')
     fieldset.disabled = value !== "autre"
-  }
-
-  document.onsend = data => {
-    if (data?._entreprise?.structure === "entreprise") {
-      delete data?.entreprise?.ues
-      delete data?._entreprise?.ues
-    }
-    if (data?.entreprise?.effectif?.tranche === "50:250") {
-      delete data?.indicateurs?.augmentations
-      delete data?.indicateurs?.promotions
-    } else {
-      delete data?.indicateurs?.augmentations_et_promotions
-    }
   }
 </script>
 

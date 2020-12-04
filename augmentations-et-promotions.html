@@ -78,13 +78,14 @@
   placeholder=""
   
   min="0"
-  max="40"
+  
+  step="any"
   required
   
   
   
   
-  onblur="refreshForm()"
+  onblur="refreshForm(event)"
   oninput="toggleFields()"
 />
 </div>
@@ -93,7 +94,7 @@
 <fieldset id="fieldset-resultat-nombre-salaries">
   <div class=row>
   
-<label for="field--indicateurs.augmentations_et_promotions.résultat_nombre_salariés">Résultat final en nombre de salariés*</label>
+<label for="field--indicateurs.augmentations_et_promotions.résultat_nombre_salariés">Résultat final en nombre équivalent de salariés*</label>
 
 
 
@@ -105,13 +106,14 @@
   placeholder=""
   
   min="0"
-  max="40"
+  
+  step="any"
   required
   
   
   
   
-  onblur="refreshForm()"
+  onblur="refreshForm(event)"
   oninput="toggleFields()"
 />
 </div>
@@ -129,7 +131,7 @@
   required
   empty
   
-  onchange="refreshForm()"
+  onchange="refreshForm(event)"
 >
   
      
@@ -192,7 +194,8 @@
   placeholder=""
   
   min="0"
-  max="40"
+  
+  step="any"
   
   
   
@@ -219,7 +222,8 @@
   placeholder=""
   
   min="0"
-  max="40"
+  
+  step="any"
   
   
   
@@ -246,7 +250,8 @@
   placeholder=""
   
   min="0"
-  max="35"
+  
+  step="any"
   
   
   

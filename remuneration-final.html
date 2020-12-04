@@ -34,13 +34,14 @@
   placeholder=""
   
   min="0"
-  max="100"
+  
+  step="any"
   required
   
   
   
   
-  onblur="refreshForm()"
+  onblur="refreshForm(event)"
   oninput="toggleFields()"
 />
 </div>
@@ -58,7 +59,7 @@
   required
   empty
   
-  onchange="refreshForm()"
+  onchange="refreshForm(event)"
 >
   
      
@@ -91,7 +92,8 @@
   placeholder=""
   
   min="0"
-  max="40"
+  
+  
   
   
   

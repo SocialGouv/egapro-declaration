@@ -22,7 +22,7 @@
 <fieldset>
   <div class=row>
   
-<label for="field--indicateurs.hautes_rémunérations.résultat">Résultat en nombre de salariés*</label>
+<label for="field--indicateurs.hautes_rémunérations.résultat">Résultat en nombre de salariés du sexe sous-représenté*</label>
 
 
 
@@ -35,12 +35,13 @@
   
   min="0"
   max="5"
+  
   required
   
   
   
   
-  onblur="refreshForm()"
+  onblur="refreshForm(event)"
   oninput="toggleFields()"
 />
 </div>
@@ -49,7 +50,7 @@
 <fieldset id="fieldset-population-favorable">
   <div class=row>
     
-<label for="field--indicateurs.hautes_rémunérations.population_favorable">Population envers laquelle l'écart est favorable*</label>
+<label for="field--indicateurs.hautes_rémunérations.population_favorable">Sexe des salariés sur-représentés*</label>
 
 
 <select
@@ -58,7 +59,7 @@
   required
   empty
   
-  onchange="refreshForm()"
+  onchange="refreshForm(event)"
 >
   
      
@@ -92,6 +93,7 @@
   
   min="0"
   max="35"
+  
   
   
   

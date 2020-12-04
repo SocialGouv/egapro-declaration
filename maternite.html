@@ -66,7 +66,7 @@
 <fieldset id="fieldset-resultat">
   <div class=row>
   
-<label for="field--indicateurs.congés_maternité.résultat">Résultat final en pourcentage (%)*</label>
+<label for="field--indicateurs.congés_maternité.résultat">Résultat final en %*</label>
 
 
 
@@ -79,12 +79,13 @@
   
   min="0"
   max="100"
+  step="any"
   required
   
   
   
   
-  onblur="refreshForm()"
+  onblur="refreshForm(event)"
   
 />
 </div>
@@ -136,6 +137,7 @@
   
   min="0"
   max="15"
+  
   
   
   
