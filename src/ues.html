@@ -1,0 +1,84 @@
+---
+layout: tunnel
+title: "Raison sociale et numéro SIREN de chacune des entreprises composant l’UES"
+---
+<h1>{{ page.title }}</h1>
+
+<fieldset>
+  <div class=row>
+    <div>{% include input.html name="entreprise.ues.raison_sociale" label="Nom de l'UES" required=true %}</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div class=row>
+    {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true %}
+    {% include input.html name="entreprise.siren" label="SIREN" readonly=true %}
+  </div>
+  <div id=container>
+    <template id=looper>
+      <div class=row>
+        {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" required=true %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="SIREN" required=true %}
+      </div>
+    </template>
+  </div>
+
+  <button onclick="addEntreprise(event)">Ajouter une entreprise</button>
+  <span id="nombreEntreprises"></span> entreprises composent cette UES
+  <button onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
+</fieldset>
+
+<script>
+  let nombreEntreprises
+  const template = document.getElementById('looper')
+  const container = document.getElementById('container')
+  const nombreEntreprisesField = document.getElementById('nombreEntreprises')
+
+  document.onready = function() {
+    nombreEntreprises = app.data?.entreprise?.ues?.entreprises?.length || 2
+    nombreEntreprisesField.innerText = nombreEntreprises
+    let html = ''
+    for(let index = 0; index < nombreEntreprises; index++) {
+      const node = document.importNode(template.content, true)
+      container.appendChild(node)
+    }
+    renameInputs()
+  }
+
+  renameInputs = function() {
+    const nodes = Array.from(container.querySelectorAll(".row"))
+    nodes.map((node, index) => {
+      const inputs = node.querySelectorAll("input")
+      inputs[0].id = `field--entreprise.ues.entreprises[${index}].raison_sociale`
+      inputs[0].name = `entreprise.ues.entreprises[${index}].raison_sociale`
+      inputs[1].id = `field--entreprise.ues.entreprises[${index}].siren`
+      inputs[1].name = `entreprise.ues.entreprises[${index}].siren`
+    })
+  }
+
+  addEntreprise = function(event) {
+    event.preventDefault()
+    const node = document.importNode(template.content, true)
+    container.appendChild(node)
+    nombreEntreprises += 1
+    nombreEntreprisesField.innerText = nombreEntreprises
+    renameInputs()
+  }
+
+  removeEntreprise = function(event) {
+    event.preventDefault()
+    const nodes = Array.from(container.children)
+    const node = nodes[nodes.length - 1] // Select the last line
+    container.removeChild(node)
+    nombreEntreprises -= 1
+    nombreEntreprisesField.innerText = nombreEntreprises
+    renameInputs()
+  }
+
+  document.onsend = data => {
+    if (!app.data?.entreprise?.ues?.entreprises) return
+    // Make sure we remove the entreprises that were deleted (needed if they were previously saved)
+    app.data.entreprise.ues.entreprises = app.data.entreprise.ues.entreprises.slice(0, nombreEntreprises)
+  }
+</script>

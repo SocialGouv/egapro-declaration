@@ -7,11 +7,11 @@ const steps = [
   { name: "declarant" },
   { name: "perimetre",
     nextStep: (data) => {
-      if (data._entreprise.structure === "ues") return "ues-composition";
+      if (data._entreprise.structure === "ues") return "ues";
       return "informations";
     },
   },
-  { name: "ues-composition" },
+  { name: "ues" },
   { name: "informations" },
   { name: "remuneration",
     nextStep: (data) => {
