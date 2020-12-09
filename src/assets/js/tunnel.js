@@ -1,6 +1,6 @@
 const form = document.getElementById("page-form");
 const progress = document.querySelector("progress");
-const previousButton = document.querySelector("a[rel=prev]");
+const previousButton = document.querySelector("button[rel=prev]");
 const nextButton = document.querySelector("button[rel=next]");
 const steps = [
   { name: "commencer" },
