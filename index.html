@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<script>
+  // First, check the browser is compatible
+  try {
+    eval("async function _(){}")
+  }
+  catch (e) {
+    window.location.href = '/declaration/compatibilite.html'
+  }
+</script>
+
+
 <script src="/declaration/assets/js/utils.js"></script>
 <script>
   document.onready = () => {

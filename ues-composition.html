@@ -15,69 +15,9 @@
   </div>
 </header>
 
-<form class=main id="page-form" action="/ues.html">
+<form class=main id="page-form" action="/ues-composition.html">
   <main>
   <h1>Raison sociale et numéro SIREN de chacune des entreprises composant l’UES</h1>
-
-<fieldset>
-  <div class=row>
-    <div>
-  
-<label for="field--entreprise.ues.raison_sociale">Nom de l'UES*</label>
-
-
-
-<input
-  id="field--entreprise.ues.raison_sociale"
-  value=""
-  type=""
-  name="entreprise.ues.raison_sociale"
-  placeholder=""
-  
-  
-  
-  
-  required
-  
-  
-  
-  
-  
-  
-/>
-</div>
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-    <div>
-  
-<label for="field--_entreprise.ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
-
-
-
-<input
-  id="field--_entreprise.ues.nombre_entreprises"
-  value=""
-  type="number"
-  name="_entreprise.ues.nombre_entreprises"
-  placeholder=""
-  
-  min="2"
-  
-  
-  required
-  
-  
-  
-  
-  
-  
-/>
-</div>
-  </div>
-</fieldset>
 
 <fieldset>
   <div class=row>
@@ -188,29 +128,26 @@
       </div>
     </template>
   </div>
-
-  <button onclick="addEntreprise(event)">Ajouter une entreprise</button>
 </fieldset>
 
 <script>
-  let nombreEntreprises = app.data?.entreprise?.ues?.entreprises.length || 2
-  const template = document.getElementById('looper').innerHTML
-  const container = document.getElementById('container')
-
   document.onready = function() {
+    if (!app.data?._entreprise?.ues?.nombre_entreprises && app.data?.entreprise?.ues?.entreprises) {
+      // We did already submit this current form, so we can infer the
+      // "_entreprise.ues.nombre_entreprises" data.
+      if (!app.data._entreprise) app.data._entreprise = {}
+      // Remember we need a length which is 1 more than the real length, as the declaring entreprise is also part of its UES
+      app.data._entreprise.ues = {nombre_entreprises: app.data.entreprise.ues.entreprises.length + 1}
+    }
+
     const template = document.getElementById('looper').innerHTML
     const container = document.getElementById('container')
     const count = Number(getVal(app.data, '_entreprise.ues.nombre_entreprises'))
     let html = ''
-    for(let index = 0; index < nombreEntreprises - 1; index++) {
+    for(let index = 0; index < count - 1; index++) {
       html += template.replaceAll('{index}', index).replaceAll('{index+1}', index + 1)
     }
     container.innerHTML = html
-  }
-
-  addEntreprise = function(event) {
-    event.preventDefault()
-    nombreEntreprises += 1
   }
 </script>
 
