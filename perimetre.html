@@ -38,7 +38,7 @@
         <input
           required
           type="radio"
-          onchange="toggleFields()"
+          
           name="_entreprise.structure" value="entreprise"> Entreprise
       </label>
       
@@ -49,7 +49,7 @@
         <input
           required
           type="radio"
-          onchange="toggleFields()"
+          
           name="_entreprise.structure" value="ues"> Unité Économique et Sociale
       </label>
       
@@ -309,66 +309,6 @@
   </div>
 </fieldset>
 
-<fieldset id="fieldset-raison-sociale-ues">
-  <div class=row>
-    <div>
-  
-<label for="field--entreprise.ues.raison_sociale">Nom de l'UES*</label>
-
-
-
-<input
-  id="field--entreprise.ues.raison_sociale"
-  value=""
-  type=""
-  name="entreprise.ues.raison_sociale"
-  placeholder=""
-  
-  
-  
-  
-  required
-  
-  
-  
-  
-  
-  
-/>
-</div>
-  </div>
-</fieldset>
-
-<fieldset id="fieldset-nombre-entreprises">
-  <div class=row>
-    <div>
-  
-<label for="field--_entreprise.ues.nombre_entreprises">Nombre d'entreprises composant l'UES (le déclarant compris)*</label>
-
-
-
-<input
-  id="field--_entreprise.ues.nombre_entreprises"
-  value=""
-  type="number"
-  name="_entreprise.ues.nombre_entreprises"
-  placeholder=""
-  
-  min="2"
-  
-  
-  required
-  
-  
-  
-  
-  
-  
-/>
-</div>
-  </div>
-</fieldset>
-
 <script>
   const regionSelect = selectField('entreprise.région')
   regionSelect.addEventListener('change', loadDepartments)
@@ -386,18 +326,8 @@
       app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
     }
 
-    if (!app.data?._entreprise?.ues?.nombre_entreprises && app.data?.entreprise?.ues?.entreprises) {
-      // We did already submit this current form, so we can infer the
-      // "_entreprise.ues.nombre_entreprises" data.
-      if (!app.data._entreprise) app.data._entreprise = {}
-      // Remember we need a length which is 1 more than the real length, as the declaring entreprise is also part of its UES
-      app.data._entreprise.ues = {nombre_entreprises: app.data.entreprise.ues.entreprises.length + 1}
-    }
-
     const select = selectField('entreprise.code_naf')
     await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
-
-    toggleFields()
   }
 
   function loadDepartments() {
@@ -405,13 +335,6 @@
     const departementCodes = app.config.regions_to_departements[selectedRegion]
     const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
     buildSelectOptions(departmentSelect, departements, getVal(app.data, 'entreprise.département'))
-  }
-
-  function toggleFields() {
-    const structureField = selectField("_entreprise.structure")
-    const isUES = structureField.querySelector(':checked') && structureField.querySelector(':checked').value === "ues"
-    enableField('#fieldset-raison-sociale-ues', isUES)
-    enableField('#fieldset-nombre-entreprises', isUES)
   }
 
   document.onsend = data => {
@@ -425,11 +348,6 @@
       delete data?.indicateurs?.promotions
     } else {
       delete data?.indicateurs?.augmentations_et_promotions
-    }
-
-    if (data?._entreprise?.ues?.nombre_entreprises && data?.entreprise?.ues?.entreprises) {
-      // The `nombre_entreprises` is one more than the actual length as we count the declaring entreprise in it.
-      data.entreprise.ues.entreprises = data.entreprise.ues.entreprises.slice(0, data._entreprise.ues.nombre_entreprises -1)
     }
   }
 

@@ -150,34 +150,6 @@
   </div>
 </fieldset>
 
-<fieldset id="fieldset-niveaux">
-  <div class=row>
-  
-<label for="field--_indicateurs.rémunérations.niveaux">Nombre de coefficients ou niveaux pour les modalités de calcul*</label>
-
-
-
-<input
-  id="field--_indicateurs.rémunérations.niveaux"
-  value=""
-  type="number"
-  name="_indicateurs.rémunérations.niveaux"
-  placeholder=""
-  
-  min="2"
-  max="50"
-  
-  required
-  
-  
-  
-  
-  
-  
-/>
-</div>
-</fieldset>
-
 <fieldset id="fieldset-calculable-csp">
   <div class=row>
     <div>
@@ -264,14 +236,6 @@
       app.data._indicateurs.rémunérations.calculable = calculable
       if (app.data.indicateurs.rémunérations.non_calculable) app.data._indicateurs.rémunérations.calculable_csp = "oui"
     }
-    if (app.data?.indicateurs?.rémunérations?.mode
-        && app.data.indicateurs.rémunérations.mode !== "csp"
-        && app.data.indicateurs.rémunérations?.catégories) {
-      // We can infer the number of "niveaux" from the number of "catégories" we already have
-      if (!app.data._indicateurs) app.data._indicateurs = {}
-      if (!app.data._indicateurs.rémunérations) app.data._indicateurs.rémunérations = {}
-      app.data._indicateurs.rémunérations.niveaux = app.data._indicateurs.rémunérations.niveaux || app.data.indicateurs.rémunérations.catégories.length
-    }
   }
 
   function toggleFields() {
@@ -281,7 +245,6 @@
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
     enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-    enableField('#fieldset-niveaux', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
     enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
     enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
   }
@@ -309,12 +272,8 @@
 
     if (!data?.indicateurs?.rémunérations?.catégories) return
     const mode = data.indicateurs.rémunérations.mode
-    if (mode) {
-      data.indicateurs.rémunérations.catégories = (
-        mode === "csp"
-        ? data.indicateurs.rémunérations.catégories.slice(0, 4)
-        : data.indicateurs.rémunérations.catégories.slice(0, data._indicateurs.rémunérations.niveaux)
-      )
+    if (mode === "csp") {
+      data.indicateurs.rémunérations.catégories = data.indicateurs.rémunérations.catégories.slice(0, 4)
     }
   }
 </script>
