@@ -38,7 +38,6 @@ title: "Raison sociale et num√©ro SIREN de chacune des entreprises composant l‚Ä
 
   document.onready = function() {
     updateNombreEntreprises(app.data?.entreprise?.ues?.entreprises?.length || 2)
-    let html = ''
     for(let index = 0; index < nombreEntreprises; index++) {
       const node = document.importNode(template.content, true)
       container.appendChild(node)
@@ -56,10 +55,10 @@ title: "Raison sociale et num√©ro SIREN de chacune des entreprises composant l‚Ä
     const nodes = Array.from(container.querySelectorAll(".row"))
     nodes.map((node, index) => {
       const inputs = node.querySelectorAll("input")
-      inputs[0].id = `field--entreprise.ues.entreprises[${index}].raison_sociale`
-      inputs[0].name = `entreprise.ues.entreprises[${index}].raison_sociale`
-      inputs[1].id = `field--entreprise.ues.entreprises[${index}].siren`
-      inputs[1].name = `entreprise.ues.entreprises[${index}].siren`
+      inputs.forEach(node => {
+        node.id = node.id.replace('{index}', index)
+        node.name = node.name.replace('{index}', index)
+      })
     })
   }
 
