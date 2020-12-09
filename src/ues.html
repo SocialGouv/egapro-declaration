@@ -37,7 +37,7 @@ title: "Raison sociale et num√©ro SIREN de chacune des entreprises composant l‚Ä
   const removeEntrepriseButton = document.getElementById('removeEntrepriseBtn')
 
   document.onready = function() {
-    updateNombreEntreprises(app.data?.entreprise?.ues?.entreprises?.length || 2)
+    updateNombreEntreprises(app.data?.entreprise?.ues?.entreprises?.length || 1)
     for(let index = 0; index < nombreEntreprises; index++) {
       const node = document.importNode(template.content, true)
       container.appendChild(node)
