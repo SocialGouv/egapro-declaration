@@ -381,10 +381,8 @@
     if(regionSelect.value) loadDepartments()
 
     if (app.data?.entreprise?.raison_sociale) {
-      // There is already a "raison sociale" (filled in on the next screen) so we did
-      // already submit this current form, so we can infer the "_periode.type" data.
-      app.data._periode = {type: app.data.déclaration.fin_periode_référence ? "autre" : "civile"}
-      // And the "_entreprise.structure" data.
+      // There is already a "raison sociale" saved so we did already submit this current form,
+      // so we can infer the "_entreprise.structure" data.
       app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
     }
 

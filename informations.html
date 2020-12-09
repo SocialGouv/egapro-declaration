@@ -151,6 +151,14 @@
 </fieldset>
 
 <script>
+  document.onready = () => {
+    if (app.data?.indicateurs?.rémunérations) {
+      // There is already a "rémunérations" indicateur (filled in on the next screen) so we did
+      // already submit this current form, so we can infer the "_periode.type" data.
+      app.data._periode = {type: app.data.déclaration.fin_periode_référence ? "autre" : "civile"}
+    }
+  }
+
   document.onloaded = () => {
     updatePeriode(getVal(app.data, '_periode.type'))
   }
