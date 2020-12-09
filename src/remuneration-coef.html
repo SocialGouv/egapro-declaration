@@ -40,17 +40,74 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
     </template>
   </tbody>
 </table>
+<button onclick="addCategory(event)">Ajouter une catégorie</button>
+<span id="nombreCategories"></span> catégorie(s) définie(s)
+<button id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
 
 <script>
-  document.onready = (() => {
-    const container = document.getElementById('container')
-    const template = document.getElementById('looper').innerHTML
-    const count = Number(getVal(app.data, '_indicateurs.rémunérations.niveaux'))
-    const content = Array(count).fill().map((_, i) => {
-      const index = i
-      return template
-        .replaceAll('{index}', index)
-    }).join('')
-    container.innerHTML = content
-  })
+  let nombreCategories
+  const template = document.getElementById('looper')
+  const container = document.getElementById('container')
+  const nombreCategoriesField = document.getElementById('nombreCategories')
+  const removeCategoryButton = document.getElementById('removeCategoryBtn')
+
+  document.onready = function() {
+    updateNombreCategories(app.data?.indicateurs?.rémunérations?.catégories?.length || 1)
+    for(let index = 0; index < nombreCategories; index++) {
+      const node = document.importNode(template.content, true)
+      container.appendChild(node)
+    }
+    renameInputs()
+    toggleButton()
+  }
+
+  updateNombreCategories = function(nb) {
+    nombreCategories = nb
+    nombreCategoriesField.innerText = nb
+  }
+
+  renameInputs = function() {
+    const nodes = Array.from(container.querySelectorAll("tr"))
+    nodes.map((node, index) => {
+      const header = node.querySelector("th")
+      header.innerText = header.innerText.replace('{index}', index + 1)
+
+      const inputs = node.querySelectorAll("input")
+      inputs.forEach(input => {
+        if (input.type === 'hidden') {
+          input.value = input.value.replace('{index}', index + 1)
+        }
+        input.id = input.id.replace('{index}', index)
+        input.name = input.name.replace('{index}', index)
+      })
+    })
+  }
+
+  addCategory = function(event) {
+    event.preventDefault()
+    const node = document.importNode(template.content, true)
+    container.appendChild(node)
+    updateNombreCategories(nombreCategories + 1)
+    renameInputs()
+    toggleButton()
+  }
+
+  removeCategory = function(event) {
+    event.preventDefault()
+    const node = container.lastElementChild
+    container.removeChild(node)
+    updateNombreCategories(nombreCategories - 1)
+    renameInputs()
+    toggleButton()
+  }
+
+  toggleButton = function() {
+    removeCategoryButton.disabled = nombreCategories <= 1
+  }
+
+  document.onsend = data => {
+    if (!app.data?.indicateurs?.rémunérations?.catégories) return
+    // Make sure we remove the categories that were deleted (needed if they were previously saved)
+    app.data.indicateurs.rémunérations.catégories = app.data.indicateurs.rémunérations.catégories.slice(0, nombreCategories)
+  }
 </script>
