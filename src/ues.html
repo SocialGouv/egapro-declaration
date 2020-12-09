@@ -55,9 +55,13 @@ title: "Raison sociale et numÃ©ro SIREN de chacune des entreprises composant lâ€
     const nodes = Array.from(container.querySelectorAll(".row"))
     nodes.map((node, index) => {
       const inputs = node.querySelectorAll("input")
-      inputs.forEach(node => {
-        node.id = node.id.replace('{index}', index)
-        node.name = node.name.replace('{index}', index)
+      inputs.forEach(input => {
+        input.id = input.id.replace('{index}', index)
+        input.name = input.name.replace('{index}', index)
+      })
+      const labels = node.querySelectorAll("label")
+      labels.forEach(label => {
+        label.setAttribute('for', label.getAttribute('for').replace('{index}', index))
       })
     })
   }
