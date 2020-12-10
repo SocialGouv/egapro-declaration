@@ -59,6 +59,9 @@ const step = steps.findIndex((step) => step.name === pageName);
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "/";
   loadFormValues(form, app.data);
+  if (app.data?.déclaration?.date) {
+    document.getElementById("declaration-readonly").style = "display: block" 
+  }
 });
 
 progress.max = steps.length - 1;
@@ -90,9 +93,13 @@ form.addEventListener("submit", async (event) => {
       return alert(e)
     }
   }
-  const response = await saveFormData(event);
+  if (app.data?.déclaration?.date) {
+    alert("La déclaration a déjà été validée, les modifications éventuelles apportées à ce formulaire ne seront pas sauvegardées.")
+  } else {
+    const response = await saveFormData(event);
 
-  if (!response.ok) return;
+    if (!response.ok) return;
+  }
 
   const nextStep = steps[step].nextStep;
   if (nextStep) return redirect(`${nextStep(app.data)}.html`);
