@@ -18,10 +18,17 @@
     statut "brouillon" : elle sera alors modifiable, et remplacera votre
     déclaration actuelle une fois que vous l'aurez totalement validée jusqu'à
     la dernière étape.
-    <button>Modifier la déclaration</button>
+    <button onclick="setDraftStatus()">Modifier la déclaration</button>
   </details>
 </header>
 
+<header id="declaration-draft" style="display: none">
+  <div>
+    <hgroup>
+      <h1>Cette déclaration a déjà été validée, vous êtes en train de modifier un brouillon.</h1>
+    </hgroup>
+  </div>
+</header>
 
 <header>
   <div>

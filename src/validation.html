@@ -23,5 +23,9 @@ jointe, l'ensemble des informations saisies.</p>
     // To "déclare" the declaration, we need to send its `déclaration.date`.
     // Also, Javascript has this thing where it puts a Z instead of `+00:00`.
     app.data.déclaration.date = new Date().toISOString().slice(0, -1) + "+00:00"
+    // TODO: uncomment this line when the API accepts it
+    //app.data.déclaration.status = "final"
+    // TODO: remove this line
+    app.data._statut = "final"
   }
 </script>
