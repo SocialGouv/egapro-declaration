@@ -59,7 +59,12 @@ const step = steps.findIndex((step) => step.name === pageName);
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "/";
   loadFormValues(form, app.data);
-  if (app.data?.déclaration?.date) {
+  // TODO: uncomment this line when the API accepts this
+  //if (app.data?.déclaration?.statut === "brouillon") {
+  // TOTO: remove this line
+  if (app.data._statut === "brouillon") {
+    document.getElementById("declaration-draft").style = "display: block" 
+  } else if (app.data?.déclaration?.date) {
     document.getElementById("declaration-readonly").style = "display: block" 
   }
 });
@@ -93,7 +98,7 @@ form.addEventListener("submit", async (event) => {
       return alert(e)
     }
   }
-  if (app.data?.déclaration?.date) {
+  if (app.data?.déclaration?.date && steps[step].name !== "validation") {
     alert("La déclaration a déjà été validée, les modifications éventuelles apportées à ce formulaire ne seront pas sauvegardées.")
   } else {
     const response = await saveFormData(event);
@@ -272,5 +277,17 @@ function delVal(data, flatKey) {
     delete item[key][index];
   } else {
     delete item[key];
+  }
+}
+
+function setDraftStatus() {
+  if (confirm("Vous allez passer cette déclaration en mode brouillon, elle ne remplacera celle que vous avez déjà validée qu'une fois que vous serez allé jusqu'à la dernière étape")) {
+    document.getElementById("declaration-readonly").style = "display: none" 
+    document.getElementById("declaration-draft").style = "display: block" 
+    // TODO: uncomment this once the API allows it
+    //app.data.déclaration.statut = "brouillon"
+    // TODO: remove this line
+    app.data._statut = "brouillon"
+    app.save()
   }
 }
