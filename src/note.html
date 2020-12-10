@@ -17,7 +17,7 @@ title: "Niveau de résultat global"
   <div class=row>{% include input.html type="number" name="déclaration.index" label="Résultat final sur 100 points" min=0 max=100 readonly=true %}</div>
 </fieldset>
 
-<fieldset>
+<fieldset id="fieldset-mesures-correctives">
   <div class=row>
     {% include select.html
       name="déclaration.mesures_correctives"
@@ -27,3 +27,9 @@ title: "Niveau de résultat global"
     %}
   </div>
 </fieldset>
+
+<script>
+  document.onready = () => {
+    enableField("#fieldset-mesures-correctives", app.data.déclaration.index < 75)
+  }
+</script>
