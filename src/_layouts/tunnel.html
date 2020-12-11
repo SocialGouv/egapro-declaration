@@ -1,6 +1,29 @@
 ---
 layout: default
 ---
+<section id="draft-bar" hidden>
+  <div id="declaration-readonly">
+    <p>
+      Cette déclaration a déjà été validée, aucune modification saisie ne sera enregistrée.
+    </p>
+    <details>
+      <summary>Modifier la déclaration</summary>
+      <p>
+        Si vous souhaitez modifier la déclaration, vous pouvez la passer en
+        statut "brouillon" : elle sera alors modifiable, et remplacera votre
+        déclaration actuelle une fois que vous l'aurez totalement validée jusqu'à
+        la dernière étape.
+      </p>
+      <button onclick="setDraftStatus()">Modifier la déclaration</button>
+    </details>
+  </div>
+  <div id="declaration-draft">
+    <p>
+      Cette déclaration a déjà été validée, vous êtes en train de modifier un brouillon.
+    </p>
+  </div>
+</section>
+
 <main>
   {{ content }}
 </main>

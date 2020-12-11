@@ -200,6 +200,12 @@ table thead th:first-child {
   justify-content: center;
 }
 
+#draft-bar {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #fea;
+}
+
 @media screen and (min-width: 600px) {
   body {
     margin: 1rem auto;

@@ -63,9 +63,9 @@ document.addEventListener("ready", () => {
   //if (app.data?.déclaration?.statut === "brouillon") {
   // TOTO: remove this line
   if (app.data._statut === "brouillon") {
-    document.getElementById("declaration-draft").style = "display: block" 
+    toggleDraftStatusBar(true, false)
   } else if (app.data?.déclaration?.date) {
-    document.getElementById("declaration-readonly").style = "display: block" 
+    toggleDraftStatusBar(true, true)
   }
 });
 
@@ -294,10 +294,15 @@ function delVal(data, flatKey) {
   }
 }
 
+function toggleDraftStatusBar(isVisible, isDraft) {
+  document.getElementById("draft-bar").hidden = !isVisible
+  document.getElementById("declaration-readonly").hidden = !isDraft
+  document.getElementById("declaration-draft").hidden = isDraft
+}
+
 function setDraftStatus() {
   if (confirm("Vous allez passer cette déclaration en mode brouillon, elle ne remplacera celle que vous avez déjà validée qu'une fois que vous serez allé jusqu'à la dernière étape")) {
-    document.getElementById("declaration-readonly").style = "display: none" 
-    document.getElementById("declaration-draft").style = "display: block" 
+    toggleDraftStatusBar(true, true)
     // TODO: uncomment this once the API allows it
     //app.data.déclaration.statut = "brouillon"
     // TODO: remove this line
