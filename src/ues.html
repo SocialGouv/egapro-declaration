@@ -13,13 +13,13 @@ title: "Raison sociale et numéro Siren de chacune des entreprises composant l�
 <fieldset>
   <div class=row>
     {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true %}
-    {% include input.html name="entreprise.siren" label="Siren" readonly=true %}
+    {% include input.html name="entreprise.siren" label="Siren" class="siren" readonly=true %}
   </div>
   <div id=container>
     <template id=looper>
       <div class=row>
         {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" required=true %}
-        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" required=true %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" required=true %}
       </div>
     </template>
   </div>
@@ -87,6 +87,21 @@ title: "Raison sociale et numéro Siren de chacune des entreprises composant l�
   toggleButton = function() {
     removeEntrepriseButton.disabled = nombreEntreprises <= 1
   }
+
+  document.forms[0].addEventListener("input", event => {
+    const target = event.target
+    if (target.name.endsWith("siren")) {
+      const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
+      if (allSirens.filter(siren => siren === target.value).length >= 2) {
+        // We check if the length is >= 2 because the list of sirens also contains the current value
+        target.setCustomValidity("Le Siren a déjà été saisi")
+        target.reportValidity()
+      } else {
+        target.setCustomValidity("")
+        target.reportValidity()
+      }
+    }
+  })
 
   document.onsend = data => {
     if (!app.data?.entreprise?.ues?.entreprises) return
