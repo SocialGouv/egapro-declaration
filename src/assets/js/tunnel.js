@@ -98,7 +98,12 @@ form.addEventListener("submit", async (event) => {
       return alert(e)
     }
   }
-  if (app.data?.déclaration?.date && steps[step].name !== "validation") {
+  if (app.data?.déclaration?.date
+      && steps[step].name !== "validation"
+      // TODO: uncomment this once the API allows it
+      //&& app.data.déclaration.statut !== "brouillon") {
+      // TODO: remove the following line
+      && app.data._statut !== "brouillon") {
     alert("La déclaration a déjà été validée, les modifications éventuelles apportées à ce formulaire ne seront pas sauvegardées.")
   } else {
     const response = await saveFormData(event);
