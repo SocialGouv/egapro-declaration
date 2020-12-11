@@ -1,6 +1,6 @@
 ---
 layout: tunnel
-title: "Raison sociale et numéro SIREN de chacune des entreprises composant l’UES"
+title: "Raison sociale et numéro Siren de chacune des entreprises composant l’UES"
 ---
 <h1>{{ page.title }}</h1>
 
@@ -13,19 +13,19 @@ title: "Raison sociale et numéro SIREN de chacune des entreprises composant l�
 <fieldset>
   <div class=row>
     {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true %}
-    {% include input.html name="entreprise.siren" label="SIREN" readonly=true %}
+    {% include input.html name="entreprise.siren" label="Siren" readonly=true %}
   </div>
   <div id=container>
     <template id=looper>
       <div class=row>
         {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" required=true %}
-        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="SIREN" required=true %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" required=true %}
       </div>
     </template>
   </div>
 
   <button onclick="addEntreprise(event)">Ajouter une entreprise</button>
-  <span id="nombreEntreprises"></span> entreprises composent cette UES
+  <strong><span id="nombreEntreprises"></span> entreprises composent cette UES</strong>
   <button id="removeEntrepriseBtn" onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
 </fieldset>
 
