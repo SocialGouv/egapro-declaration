@@ -66,6 +66,16 @@ document.addEventListener("ready", () => {
     toggleDraftStatusBar(true, false)
   } else if (app.data?.déclaration?.date) {
     toggleDraftStatusBar(true, true)
+    // Fields cannot be edited
+    document.querySelectorAll('[name]').forEach(input => {
+      input.readOnly = true
+      if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
+      if(input.matches('select')) {
+        input.querySelectorAll(':not([selected])').forEach(option => {
+          option.disabled = true
+        })
+      }
+    })
   }
 });
 
