@@ -164,7 +164,7 @@ class AppStorage {
     delete this.data[key]
   }
 
-  async save(data) {
+  async save(data, event) {
     data = Object.assign(this.data, data)
     const schemaData = this.filterSchemaData(data)
     const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, schemaData)
@@ -172,7 +172,8 @@ class AppStorage {
       Object.assign(this.data, schemaData)
       localStorage.data = JSON.stringify(this.data)
     }
-    else if(response.data.error) notify.error(response.data.error)
+    // Only alert if we have an event: if we were called from a form submit (not from a `refreshForm`)
+    else if(response.data.error && event) notify.error(response.data.error)
     return response
   }
 }

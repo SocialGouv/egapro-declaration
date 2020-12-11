@@ -77,7 +77,7 @@ const saveFormData = async (event) => {
     }
   }
 
-  return await app.save(data);
+  return await app.save(data, event);
 };
 
 form.addEventListener("submit", async (event) => {
