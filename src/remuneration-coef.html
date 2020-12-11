@@ -105,6 +105,8 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
     removeCategoryButton.disabled = nombreCategories <= 1
   }
 
+  document.preFormSubmit = validateNotAllEmpty
+
   document.onsend = data => {
     if (!app.data?.indicateurs?.rémunérations?.catégories) return
     // Make sure we remove the categories that were deleted (needed if they were previously saved)
