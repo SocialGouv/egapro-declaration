@@ -19,7 +19,7 @@ title: "Raison sociale et numéro Siren de chacune des entreprises composant l�
     <template id=looper>
       <div class=row>
         {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" required=true %}
-        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" required=true onblur="validateSirenValidity(event)" %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" pattern="[0-9]{9}" placeholder="9 chiffres" required=true onblur="checkSirenValidity(event)" %}
       </div>
     </template>
   </div>
@@ -88,20 +88,20 @@ title: "Raison sociale et numéro Siren de chacune des entreprises composant l�
     removeEntrepriseButton.disabled = nombreEntreprises <= 1
   }
 
-  validateSirenValidity = event => {
+  checkSirenValidity = async event => {
     const target = event.target
-    if (target.name.endsWith("siren")) {
-      const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
-      if (allSirens.filter(siren => siren === target.value).length >= 2) {
-        // We check if the length is >= 2 because the list of sirens also contains the current value
-        target.setCustomValidity("Le Siren a déjà été saisi")
-      } else if (!isValidSiren(target.value)) {
-        target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
-      } else {
-        target.setCustomValidity("")
-      }
-      target.reportValidity()
+    if (!target.validity.valid) return
+
+    const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
+    if (allSirens.filter(siren => siren === target.value).length >= 2) {
+      // We check if the length is >= 2 because the list of sirens also contains the current value
+      target.setCustomValidity("Le Siren a déjà été saisi")
+    } else if (!await isSirenValid(target.value)) {
+      target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
+    } else {
+      target.setCustomValidity("")
     }
+    target.reportValidity()
   }
 
   document.onsend = data => {
