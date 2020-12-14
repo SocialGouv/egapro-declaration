@@ -206,6 +206,10 @@ table thead th:first-child {
   background-color: #fea;
 }
 
+[readonly] {
+  cursor: not-allowed;
+}
+
 @media screen and (min-width: 600px) {
   body {
     margin: 1rem auto;

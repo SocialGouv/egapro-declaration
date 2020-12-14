@@ -65,7 +65,7 @@ document.addEventListener("ready", () => {
     toggleDeclarationValidatedBar(true, false)
     // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
-      input.readOnly = true
+      input.setAttribute('readonly', true)
       if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
       if(input.matches('select')) {
         Array.from(input.querySelectorAll('option'))
