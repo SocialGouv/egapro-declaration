@@ -63,17 +63,15 @@ document.addEventListener("ready", () => {
   //if (app.data?.déclaration?.statut === "brouillon") {
   // TOTO: remove this line
   if (app.data._statut === "brouillon") {
-    toggleDeclarationValidatedBar(true, false)
-  } else if (app.data?.déclaration?.date) {
     toggleDeclarationValidatedBar(true, true)
+  } else if (app.data?.déclaration?.date) {
+    toggleDeclarationValidatedBar(true, false)
     // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
       input.readOnly = true
       if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
       if(input.matches('select')) {
-        input.querySelectorAll(':not([selected])').forEach(option => {
-          option.disabled = true
-        })
+        Array.from(input.querySelectorAll('option')).filter(o => !o.selected).forEach(o => o.disabled = true)
       }
     })
   }
@@ -306,17 +304,18 @@ function delVal(data, flatKey) {
 
 function toggleDeclarationValidatedBar(isVisible, isDraft) {
   document.getElementById("declaration-validated-bar").hidden = !isVisible
-  document.getElementById("declaration-readonly").hidden = !isDraft
-  document.getElementById("declaration-draft").hidden = isDraft
+  document.getElementById("declaration-readonly").hidden = isDraft
+  document.getElementById("declaration-draft").hidden = !isDraft
 }
 
-function setDraftStatus() {
-  if (confirm("Vous allez passer cette déclaration en mode brouillon, elle ne remplacera celle que vous avez déjà validée qu'une fois que vous serez allé jusqu'à la dernière étape")) {
+async function setDraftStatus() {
+  if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
     toggleDeclarationValidatedBar(true, true)
     // TODO: uncomment this once the API allows it
     //app.data.déclaration.statut = "brouillon"
     // TODO: remove this line
     app.data._statut = "brouillon"
-    app.save()
+    await app.save()
+    location.pathname = location.pathname
   }
 }
