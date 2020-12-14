@@ -71,7 +71,9 @@ document.addEventListener("ready", () => {
       input.readOnly = true
       if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
       if(input.matches('select')) {
-        Array.from(input.querySelectorAll('option')).filter(o => !o.selected).forEach(o => o.disabled = true)
+        Array.from(input.querySelectorAll('option'))
+          .filter(option => !option.selected)
+          .forEach(option => option.disabled = true)
       }
     })
   }
