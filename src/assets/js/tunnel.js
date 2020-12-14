@@ -63,9 +63,9 @@ document.addEventListener("ready", () => {
   //if (app.data?.déclaration?.statut === "brouillon") {
   // TOTO: remove this line
   if (app.data._statut === "brouillon") {
-    toggleDraftStatusBar(true, false)
+    toggleDeclarationValidatedBar(true, false)
   } else if (app.data?.déclaration?.date) {
-    toggleDraftStatusBar(true, true)
+    toggleDeclarationValidatedBar(true, true)
     // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
       input.readOnly = true
@@ -304,15 +304,15 @@ function delVal(data, flatKey) {
   }
 }
 
-function toggleDraftStatusBar(isVisible, isDraft) {
-  document.getElementById("draft-bar").hidden = !isVisible
+function toggleDeclarationValidatedBar(isVisible, isDraft) {
+  document.getElementById("declaration-validated-bar").hidden = !isVisible
   document.getElementById("declaration-readonly").hidden = !isDraft
   document.getElementById("declaration-draft").hidden = isDraft
 }
 
 function setDraftStatus() {
   if (confirm("Vous allez passer cette déclaration en mode brouillon, elle ne remplacera celle que vous avez déjà validée qu'une fois que vous serez allé jusqu'à la dernière étape")) {
-    toggleDraftStatusBar(true, true)
+    toggleDeclarationValidatedBar(true, true)
     // TODO: uncomment this once the API allows it
     //app.data.déclaration.statut = "brouillon"
     // TODO: remove this line
