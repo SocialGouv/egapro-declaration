@@ -59,12 +59,9 @@ const step = steps.findIndex((step) => step.name === pageName);
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "/";
   loadFormValues(form, app.data);
-  // TODO: uncomment this line when the API accepts this
-  //if (app.data?.déclaration?.statut === "brouillon") {
-  // TOTO: remove this line
-  if (app.data._statut === "brouillon") {
+  if (app.mode === "updating") {
     toggleDeclarationValidatedBar(true, true)
-  } else if (app.data?.déclaration?.date) {
+  } else if (app.mode === "reading") {
     toggleDeclarationValidatedBar(true, false)
     // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
@@ -82,7 +79,7 @@ document.addEventListener("ready", () => {
 progress.max = steps.length - 1;
 progress.value = step;
 
-const saveFormData = async (event) => {
+async function saveFormData (event) {
   event && event.preventDefault();
 
   const data = serializeForm(form);
@@ -108,14 +105,9 @@ form.addEventListener("submit", async (event) => {
       return alert(e)
     }
   }
-  if (app.data?.déclaration?.date
-      && steps[step].name !== "validation"
-      // TODO: uncomment this once the API allows it
-      //&& app.data.déclaration.statut !== "brouillon") {
-      // TODO: remove the following line
-      && app.data._statut !== "brouillon") {
+  if (app.mode === "reading" && steps[step].name !== "validation") {
     alert("La déclaration a déjà été validée, les modifications éventuelles apportées à ce formulaire ne seront pas sauvegardées.")
-  } else {
+  } else if(app.mode === 'creating') {
     const response = await saveFormData(event);
 
     if (!response.ok) return;

@@ -46,7 +46,7 @@ async function getNafCodes() {
 
 async function buildNafOptions(optgroup, value, attributes = {}) {
   const nafs = await getNafCodes()
-  
+
   const options = Object.keys(nafs).map(code => ({ value: code, label: `${code} — ${nafs[code]}` }))
   buildSelectOptions(optgroup, options, value, attributes)
 }
@@ -157,11 +157,29 @@ class AppStorage {
   }
 
   get annee() {
-    return app.data?.["déclaration"]?.["année_indicateurs"]
+    return this.data["déclaration"]?.["année_indicateurs"]
   }
 
   get siren() {
-    return app.data?.["entreprise"]?.["siren"]
+    return this.data["entreprise"]?.["siren"]
+  }
+
+  get isDraft() {
+    // TODO: replace with the following once the API allows it
+    // return this.data.déclaration.statut === "brouillon"
+    return this.data._statut === "brouillon"
+  }
+
+  set isDraft(value) {
+    // TODO: send to the server when toggling to "brouillon" status
+    this.data._statut = value ? "brouillon" : ""
+    this.save()
+  }
+
+  get mode() {
+    if(!this.data["déclaration"]?.["date"]) return "creating"
+    if(this.isDraft) return "updating"
+    return "reading"
   }
 
   deleteKey(key) {
