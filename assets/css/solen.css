@@ -200,6 +200,16 @@ table thead th:first-child {
   justify-content: center;
 }
 
+.declaration-mode {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #fea;
+}
+
+[readonly] {
+  cursor: not-allowed;
+}
+
 @media screen and (min-width: 600px) {
   body {
     margin: 1rem auto;

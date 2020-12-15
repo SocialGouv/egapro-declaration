@@ -16,7 +16,23 @@
 </header>
 
 <form class=main id="page-form" action="/informations.html">
-  <main>
+  <section id="declaration-readonly" class="declaration-mode" hidden>
+  <p>
+    Cette déclaration a été validée et transmise.
+  </p>
+  <p>
+    Vous pouvez la modifier et elle remplacera la déclaration actuelle une fois à nouveau validée et transmise à la dernière étape.
+  </p>
+  <button type="button" onclick="setDraftStatus()">Modifier la déclaration</button>
+</section>
+<section id="declaration-draft" class="declaration-mode" hidden>
+  <p>
+    Vous êtes en train de modifier une déclaration validée et transmise.<br>
+    Vos modifications ne seront enregistrées que lorsque vous l'aurez à nouveau validée et transmise à la dernière étape.
+  </p>
+</section>
+
+<main>
   <h1>Informations calcul et période de référence</h1>
 
 <fieldset>
@@ -158,7 +174,7 @@
     if (app.data?.indicateurs?.rémunérations) {
       // There is already a "rémunérations" indicateur (filled in on the next screen) so we did
       // already submit this current form, so we can infer the "_periode.type" data.
-      app.data._periode = {type: app.data.déclaration.fin_periode_référence ? "autre" : "civile"}
+      app.data._periode = {type: app.data.déclaration.fin_période_référence ? "autre" : "civile"}
     }
   }
 
