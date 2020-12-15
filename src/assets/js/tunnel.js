@@ -308,8 +308,9 @@ async function setDraftStatus() {
     // TODO: uncomment this once the API allows it
     //app.data.déclaration.statut = "brouillon"
     // TODO: remove this line
-    app.data._statut = "brouillon"
+    app.isDraft = true
     await app.save()
+    // Apply status change refreshing the page
     location.pathname = location.pathname
   }
 }
