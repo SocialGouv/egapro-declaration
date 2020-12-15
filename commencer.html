@@ -69,18 +69,19 @@
   </fieldset>
 
 <script>
-  // Don't confuse users with pre-entered data on this very first page of the tunnel
-  // in case they want to create a new declaration.
-  delete localStorage.data
-
   document.preFormSubmit = event => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
-    return confirm(message)
+    const confirmed = confirm(message)
+    if (confirmed) {
+      // Reset the local state
+      app.data = {}
+      delete localStorage.data
+    }
+    return confirmed
   }
 
   document.onready = function() {
-
     const schema = app.schema.properties['déclaration']['properties']['année_indicateurs']
     buildSelectOptions(
       selectField('déclaration.année_indicateurs'),
@@ -106,7 +107,9 @@
 </main>
 
 <nav>
-  <a class=button rel=prev>Précédent</a>
+  
+  <a class=button rel=prev>Recommencer</a>
+  
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>
