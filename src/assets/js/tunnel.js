@@ -301,6 +301,7 @@ function toggleDeclarationValidatedBar() {
 async function setDraftStatus() {
   if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
     app.isDraft = true
+    await app.save()
     toggleDeclarationValidatedBar()
     // Apply status change refreshing the page
     location.pathname = location.pathname

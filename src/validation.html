@@ -21,6 +21,7 @@ jointe, l'ensemble des informations saisies.</p>
 <script>
   document.onsend = async _ => {
     // To "déclare" the declaration, we need to reset its "brouillon" status.date`.
-    app.data.déclaration.brouillon = false
+    app.isDraft = false
+    await app.save()
   }
 </script>

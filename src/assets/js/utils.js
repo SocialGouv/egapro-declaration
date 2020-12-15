@@ -132,6 +132,7 @@ class AppStorage {
     if(response.status === 404) {
       // Brand new declaration, set it as "brouillon"
       this.isDraft = true
+      await this.save()
     }
     if(response.ok) Object.assign(this.data, response.data.data)
     else {
@@ -174,7 +175,6 @@ class AppStorage {
 
   set isDraft(value) {
     this.data.déclaration.brouillon = value
-    this.save()
   }
 
   get mode() {
