@@ -72,16 +72,15 @@
   document.preFormSubmit = event => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
-    const confirmed = confirm(message)
-    if (confirmed) {
-      // Reset the local state
-      app.data = {}
-      delete localStorage.data
-    }
-    return confirmed
+    return confirm(message)
   }
 
   document.onready = function() {
+    // Don't confuse users with pre-entered data on this very first page of the tunnel
+    // in case they want to create a new declaration.
+    app.data = {}
+    delete localStorage.data
+
     const schema = app.schema.properties['déclaration']['properties']['année_indicateurs']
     buildSelectOptions(
       selectField('déclaration.année_indicateurs'),
