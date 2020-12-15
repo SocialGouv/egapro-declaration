@@ -56,6 +56,7 @@
   
   
   
+  
 />
          
           
@@ -65,6 +66,7 @@
   type="number"
   name="indicateurs.rémunérations.catégories[{index}].tranches.:29"
   placeholder=""
+  
   
   min="0"
   
@@ -88,6 +90,7 @@
   name="indicateurs.rémunérations.catégories[{index}].tranches.30:39"
   placeholder=""
   
+  
   min="0"
   
   step="any"
@@ -110,6 +113,7 @@
   name="indicateurs.rémunérations.catégories[{index}].tranches.40:49"
   placeholder=""
   
+  
   min="0"
   
   step="any"
@@ -131,6 +135,7 @@
   type="number"
   name="indicateurs.rémunérations.catégories[{index}].tranches.50:"
   placeholder=""
+  
   
   min="0"
   
@@ -214,6 +219,8 @@
     removeCategoryButton.disabled = nombreCategories <= 1
   }
 
+  document.preFormSubmit = validateNotAllEmpty
+
   document.onsend = data => {
     if (!app.data?.indicateurs?.rémunérations?.catégories) return
     // Make sure we remove the categories that were deleted (needed if they were previously saved)
@@ -224,7 +231,7 @@
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>

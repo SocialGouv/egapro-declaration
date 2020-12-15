@@ -76,6 +76,20 @@ notify = {
   }
 }
 
+validateNotAllEmpty = event => {
+  // We don't want to require ALL the fields, but we need at least one
+  const allInputs = Array.from(document.querySelectorAll("input[type='number']"))
+  if (allInputs.every(input => input.value === "")) {
+    alert("Il vous faut renseigner au moins un des écarts de rémunération si votre indicateur est calculable")
+    return false
+  }
+  return true
+}
+
+isSirenValid = async value => {
+  const response = await request('GET', `/validate-siren?siren=${value}`)
+  return response.ok
+}
 
 class AppStorage {
   constructor() {
@@ -154,7 +168,7 @@ class AppStorage {
     delete this.data[key]
   }
 
-  async save(data) {
+  async save(data, event) {
     data = Object.assign(this.data, data)
     const schemaData = this.filterSchemaData(data)
     const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, schemaData)
@@ -162,7 +176,8 @@ class AppStorage {
       Object.assign(this.data, schemaData)
       localStorage.data = JSON.stringify(this.data)
     }
-    else if(response.data.error) notify.error(response.data.error)
+    // Only alert if we have an event: if we were called from a form submit (not from a `refreshForm`)
+    else if(response.data.error && event) notify.error(response.data.error)
     return response
   }
 }

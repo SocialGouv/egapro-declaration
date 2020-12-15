@@ -77,7 +77,7 @@ const saveFormData = async (event) => {
     }
   }
 
-  return await app.save(data);
+  return await app.save(data, event);
 };
 
 form.addEventListener("submit", async (event) => {
@@ -167,7 +167,7 @@ function removeEmpty(data) {
       } else {
         removeEmpty(data[key]);
       }
-    } else if (typeof data[key] === "object") {
+    } else if (data[key] && typeof data[key] === "object") {
       if (!Object.keys(data[key]).length) {
         delete data[key];
       } else {

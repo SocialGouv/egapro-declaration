@@ -42,6 +42,7 @@ des salariés par tout moyen.</p>
   
   
   
+  
   required
   
   
@@ -115,6 +116,7 @@ des salariés par tout moyen.</p>
   
   
   
+  
   required
   
   
@@ -150,6 +152,14 @@ des salariés par tout moyen.</p>
       if (!app.data._déclaration) app.data._déclaration = {}
       app.data._déclaration.publication = {site_internet: app.data.déclaration.publication.url ? "oui" : "non"}
     }
+
+    // To compute the minimum publication date, we either take the
+    // `déclaration.fin_période_référence` or if it's undefined, the end of
+    // civil year of `déclaration.année_indicateurs`
+    const endCivilYear = new Date(`${app.data.déclaration.année_indicateurs}-12-31`)
+    const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear
+    // The `min` value should be formatted like yyyy-mm-dd
+    selectField("déclaration.publication.date").min = minPubDate.toISOString().slice(0, 10)
   }
 
   function toggleFields() {
@@ -166,7 +176,7 @@ des salariés par tout moyen.</p>
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>

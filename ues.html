@@ -2,7 +2,7 @@
 <html lang="fr">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<title>Raison sociale et numéro SIREN de chacune des entreprises composant l’UES - Egalité professionnelle - Ministère du Travail</title>
+<title>Raison sociale et numéro Siren de chacune des entreprises composant l’UES - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/solen.css">
 <script src="/declaration/assets/js/utils.js"></script>
 
@@ -17,7 +17,7 @@
 
 <form class=main id="page-form" action="/ues.html">
   <main>
-  <h1>Raison sociale et numéro SIREN de chacune des entreprises composant l’UES</h1>
+  <h1>Raison sociale et numéro Siren de chacune des entreprises composant l’UES</h1>
 
 <fieldset>
   <div class=row>
@@ -33,6 +33,7 @@
   type=""
   name="entreprise.ues.nom"
   placeholder=""
+  
   
   
   
@@ -70,6 +71,7 @@
   
   
   
+  
   readonly="readonly"
   
   
@@ -78,7 +80,7 @@
 
     
   
-<label for="field--entreprise.siren">SIREN</label>
+<label for="field--entreprise.siren">Siren</label>
 
 
 
@@ -89,6 +91,7 @@
   name="entreprise.siren"
   placeholder=""
   
+  class="siren"
   
   
   
@@ -121,6 +124,7 @@
   
   
   
+  
   required
   
   
@@ -132,7 +136,7 @@
 
         
   
-<label for="field--entreprise.ues.entreprises[{index}].siren">SIREN*</label>
+<label for="field--entreprise.ues.entreprises[{index}].siren">Siren*</label>
 
 
 
@@ -141,17 +145,18 @@
   value=""
   type=""
   name="entreprise.ues.entreprises[{index}].siren"
-  placeholder=""
+  placeholder="9 chiffres"
   
+  class="siren"
   
   
   
   required
   
+  pattern="[0-9]{9}"
   
   
-  
-  
+  onblur="checkSirenValidity(event)"
   
 />
 
@@ -160,7 +165,7 @@
   </div>
 
   <button onclick="addEntreprise(event)">Ajouter une entreprise</button>
-  <span id="nombreEntreprises"></span> entreprises composent cette UES
+  <strong><span id="nombreEntreprises"></span> entreprises composent cette UES</strong>
   <button id="removeEntrepriseBtn" onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
 </fieldset>
 
@@ -223,6 +228,22 @@
     removeEntrepriseButton.disabled = nombreEntreprises <= 1
   }
 
+  checkSirenValidity = async event => {
+    const target = event.target
+    if (!target.validity.valid) return
+
+    const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
+    if (allSirens.filter(siren => siren === target.value).length >= 2) {
+      // We check if the length is >= 2 because the list of sirens also contains the current value
+      target.setCustomValidity("Le Siren a déjà été saisi")
+    } else if (!await isSirenValid(target.value)) {
+      target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
+    } else {
+      target.setCustomValidity("")
+    }
+    target.reportValidity()
+  }
+
   document.onsend = data => {
     if (!app.data?.entreprise?.ues?.entreprises) return
     // Make sure we remove the entreprises that were deleted (needed if they were previously saved)
@@ -233,7 +254,7 @@
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>

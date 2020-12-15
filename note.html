@@ -33,6 +33,7 @@
   name="déclaration.points"
   placeholder=""
   
+  
   min="0"
   max="100"
   
@@ -60,6 +61,7 @@
   type="number"
   name="déclaration.points_calculables"
   placeholder=""
+  
   
   min="0"
   max="100"
@@ -89,6 +91,7 @@
   name="déclaration.index"
   placeholder=""
   
+  
   min="0"
   max="100"
   
@@ -103,7 +106,7 @@
 </div>
 </fieldset>
 
-<fieldset>
+<fieldset id="fieldset-mesures-correctives">
   <div class=row>
     
 <label for="field--déclaration.mesures_correctives">Mesures de correction prévues à l'article D. 1142-6</label>
@@ -136,10 +139,16 @@
   </div>
 </fieldset>
 
+<script>
+  document.onready = () => {
+    enableField("#fieldset-mesures-correctives", app.data.déclaration.index < 75)
+  }
+</script>
+
 </main>
 
 <nav>
-  <a class=button href="/declaration/" rel=prev>Précédent</a>
+  <a class=button rel=prev>Précédent</a>
   <progress max=0 value=0></progress>
   
   <button rel=next>Suivant</button>

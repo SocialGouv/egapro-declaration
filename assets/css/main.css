@@ -160,6 +160,15 @@ select {
   width: auto;
 }
 
+/* No "arrows" to increase/decrease the values */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 table {
   border-collapse: collapse;
 }
