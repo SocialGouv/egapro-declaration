@@ -6,7 +6,11 @@ layout: default
 </main>
 
 <nav>
+  {% if page.prevButtonLabel %}
+  <a class=button rel=prev>{{ page.prevButtonLabel }}</a>
+  {% else %}
   <a class=button rel=prev>Précédent</a>
+  {% endif %}
   <progress max=0 value=0></progress>
   {% if page.nextButtonLabel %}
   <button rel=next>{{ page.nextButtonLabel }}</button>
