@@ -86,6 +86,10 @@ validateNotAllEmpty = event => {
   return true
 }
 
+isSirenValid = async value => {
+  const response = await request('GET', `/validate-siren?siren=${value}`)
+  return response.ok
+}
 
 class AppStorage {
   constructor() {
