@@ -59,12 +59,25 @@ const step = steps.findIndex((step) => step.name === pageName);
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "/";
   loadFormValues(form, app.data);
+  toggleDeclarationValidatedBar()
+  if (app.mode === "reading") {
+    // Fields cannot be edited
+    document.querySelectorAll('[name]').forEach(input => {
+      input.setAttribute('readonly', true)
+      if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
+      if(input.matches('select')) {
+        Array.from(input.querySelectorAll('option'))
+          .filter(option => !option.selected)
+          .forEach(option => option.disabled = true)
+      }
+    })
+  }
 });
 
 progress.max = steps.length - 1;
 progress.value = step;
 
-const saveFormData = async (event) => {
+async function saveFormData (event) {
   event && event.preventDefault();
 
   const data = serializeForm(form);
@@ -90,9 +103,12 @@ form.addEventListener("submit", async (event) => {
       return alert(e)
     }
   }
-  const response = await saveFormData(event);
 
-  if (!response.ok) return;
+  if(app.mode !== 'reading') {
+    const response = await saveFormData(event);
+
+    if (!response.ok) return;
+  }
 
   const nextStep = steps[step].nextStep;
   if (nextStep) return redirect(`${nextStep(app.data)}.html`);
@@ -274,5 +290,20 @@ function delVal(data, flatKey) {
     delete item[key][index];
   } else {
     delete item[key];
+  }
+}
+
+function toggleDeclarationValidatedBar() {
+  document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
+  document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
+}
+
+async function setDraftStatus() {
+  if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
+    app.isDraft = true
+    await app.save()
+    toggleDeclarationValidatedBar()
+    // Apply status change refreshing the page
+    location.pathname = location.pathname
   }
 }

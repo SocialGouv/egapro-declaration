@@ -46,7 +46,7 @@ async function getNafCodes() {
 
 async function buildNafOptions(optgroup, value, attributes = {}) {
   const nafs = await getNafCodes()
-  
+
   const options = Object.keys(nafs).map(code => ({ value: code, label: `${code} — ${nafs[code]}` }))
   buildSelectOptions(optgroup, options, value, attributes)
 }
@@ -65,7 +65,7 @@ function enableField(selector, enabled) {
 window.addEventListener('DOMContentLoaded', async () => {
   app = new AppStorage()
   await app.init()
-  document.onready && document.onready()
+  document.onready && await document.onready()
   document.dispatchEvent(new Event('ready'))
   document.onloaded && document.onloaded()
 })
@@ -129,6 +129,11 @@ class AppStorage {
 
   async loadRemoteData() {
     const response = await request('GET', `/declaration/${this.siren}/${this.annee}`)
+    if(response.status === 404) {
+      // Brand new declaration, set it as "brouillon"
+      this.isDraft = true
+      await this.save()
+    }
     if(response.ok) Object.assign(this.data, response.data.data)
     else {
       delete localStorage.data
@@ -157,11 +162,25 @@ class AppStorage {
   }
 
   get annee() {
-    return app.data?.["déclaration"]?.["année_indicateurs"]
+    return this.data["déclaration"]?.["année_indicateurs"]
   }
 
   get siren() {
-    return app.data?.["entreprise"]?.["siren"]
+    return this.data["entreprise"]?.["siren"]
+  }
+
+  get isDraft() {
+    return this.data.déclaration.brouillon
+  }
+
+  set isDraft(value) {
+    this.data.déclaration.brouillon = value
+  }
+
+  get mode() {
+    if(!this.data["déclaration"]?.["date"]) return "creating"
+    if(this.isDraft) return "updating"
+    return "reading"
   }
 
   deleteKey(key) {
