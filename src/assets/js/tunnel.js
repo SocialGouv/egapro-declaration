@@ -167,7 +167,7 @@ function removeEmpty(data) {
       } else {
         removeEmpty(data[key]);
       }
-    } else if (typeof data[key] === "object") {
+    } else if (data[key] && typeof data[key] === "object") {
       if (!Object.keys(data[key]).length) {
         delete data[key];
       } else {
