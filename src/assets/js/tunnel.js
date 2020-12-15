@@ -59,10 +59,8 @@ const step = steps.findIndex((step) => step.name === pageName);
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "/";
   loadFormValues(form, app.data);
-  if (app.mode === "updating") {
-    toggleDeclarationValidatedBar(true, true)
-  } else if (app.mode === "reading") {
-    toggleDeclarationValidatedBar(true, false)
+  toggleDeclarationValidatedBar()
+  if (app.mode === "reading") {
     // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
       input.setAttribute('readonly', true)
@@ -105,9 +103,8 @@ form.addEventListener("submit", async (event) => {
       return alert(e)
     }
   }
-  if (app.mode === "reading" && steps[step].name !== "validation") {
-    alert("La déclaration a déjà été validée, les modifications éventuelles apportées à ce formulaire ne seront pas sauvegardées.")
-  } else if(app.mode === 'creating') {
+
+  if(app.mode !== 'reading') {
     const response = await saveFormData(event);
 
     if (!response.ok) return;
@@ -296,20 +293,15 @@ function delVal(data, flatKey) {
   }
 }
 
-function toggleDeclarationValidatedBar(isVisible, isDraft) {
-  document.getElementById("declaration-validated-bar").hidden = !isVisible
-  document.getElementById("declaration-readonly").hidden = isDraft
-  document.getElementById("declaration-draft").hidden = !isDraft
+function toggleDeclarationValidatedBar() {
+  document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
+  document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
 }
 
 async function setDraftStatus() {
   if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
-    toggleDeclarationValidatedBar(true, true)
-    // TODO: uncomment this once the API allows it
-    //app.data.déclaration.statut = "brouillon"
-    // TODO: remove this line
     app.isDraft = true
-    await app.save()
+    toggleDeclarationValidatedBar()
     // Apply status change refreshing the page
     location.pathname = location.pathname
   }

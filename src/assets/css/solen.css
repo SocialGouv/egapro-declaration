@@ -200,7 +200,7 @@ table thead th:first-child {
   justify-content: center;
 }
 
-#declaration-validated-bar {
+.declaration-mode {
   margin: 1rem 0;
   padding: 1rem;
   background-color: #fea;

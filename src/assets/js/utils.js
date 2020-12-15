@@ -129,6 +129,10 @@ class AppStorage {
 
   async loadRemoteData() {
     const response = await request('GET', `/declaration/${this.siren}/${this.annee}`)
+    if(response.status === 404) {
+      // Brand new declaration, set it as "brouillon"
+      this.isDraft = true
+    }
     if(response.ok) Object.assign(this.data, response.data.data)
     else {
       delete localStorage.data
@@ -165,14 +169,11 @@ class AppStorage {
   }
 
   get isDraft() {
-    // TODO: replace with the following once the API allows it
-    // return this.data.déclaration.statut === "brouillon"
-    return this.data._statut === "brouillon"
+    return this.data.déclaration.brouillon
   }
 
   set isDraft(value) {
-    // TODO: send to the server when toggling to "brouillon" status
-    this.data._statut = value ? "brouillon" : ""
+    this.data.déclaration.brouillon = value
     this.save()
   }
 
