@@ -65,7 +65,7 @@ function enableField(selector, enabled) {
 window.addEventListener('DOMContentLoaded', async () => {
   app = new AppStorage()
   await app.init()
-  document.onready && document.onready()
+  document.onready && await document.onready()
   document.dispatchEvent(new Event('ready'))
   document.onloaded && document.onloaded()
 })
