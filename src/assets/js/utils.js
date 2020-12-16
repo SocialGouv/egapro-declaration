@@ -27,6 +27,23 @@ function redirect(url) {
   location.href = url
 }
 
+/**
+ * Read the deep value from an object without raising an error.
+ * While conditional chaining (ie: `obj.prop?.val?.here = "yes"`)
+ * is not widely spread yet.
+ * Usage: objectValue(obj, 'prop', 'val', 'here') # => "yes"
+ */
+function objectValue() {
+  const properties = Array.from(arguments)
+  const object = properties.shift()
+  return properties.reduce((acc, prop) => {
+    try {
+      return acc[prop]
+    }
+    catch {}
+  }, object)
+}
+
 function buildSelectOptions(select, list, value) {
   select.innerHTML = ""
   if(select.hasAttribute('empty')) list.unshift({ value: "", label: " ––– " })
@@ -211,11 +228,11 @@ class AppStorage {
   }
 
   get annee() {
-    return this.data["déclaration"]?.["année_indicateurs"]
+    return objectValue(this.data, 'déclaration', 'année_indicateurs')
   }
 
   get siren() {
-    return this.data["entreprise"]?.["siren"]
+    return objectValue(this.data, 'entreprise', 'siren')
   }
 
   get isDraft() {
@@ -227,7 +244,7 @@ class AppStorage {
   }
 
   get mode() {
-    if(!this.data["déclaration"]?.["date"]) return "creating"
+    if(!objectValue(this.data, 'déclaration', 'date')) return "creating"
     if(this.isDraft) return "updating"
     return "reading"
   }

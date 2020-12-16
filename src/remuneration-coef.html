@@ -24,7 +24,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
       <tr>
         <th>Niveau - Coefficient {index} (en %)</th>
         <td>
-          {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie {index}" %}         
+          {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie {index}" %}
           {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.:29" min=0 step="any" %}
         </td>
         <td>
@@ -52,7 +52,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
   const removeCategoryButton = document.getElementById('removeCategoryBtn')
 
   document.onready = function() {
-    updateNombreCategories(app.data?.indicateurs?.rémunérations?.catégories?.length || 1)
+    updateNombreCategories(updateValue(app.data, 'indicateurs', 'rémunérations', 'catégories', 'length') || 1)
     for(let index = 0; index < nombreCategories; index++) {
       const node = document.importNode(template.content, true)
       container.appendChild(node)
@@ -108,7 +108,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
   document.preFormSubmit = validateNotAllEmpty("Vous devez renseigner les écarts de rémunération pour les classes d'âge concernées")
 
   document.onsend = data => {
-    if (!app.data?.indicateurs?.rémunérations?.catégories) return
+    if (!objectValue(app.data, 'indicateurs', 'rémunérations', 'catégories')) return
     // Make sure we remove the categories that were deleted (needed if they were previously saved)
     app.data.indicateurs.rémunérations.catégories = app.data.indicateurs.rémunérations.catégories.slice(0, nombreCategories)
   }

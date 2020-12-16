@@ -36,7 +36,7 @@ title: "Informations calcul et période de référence"
 
 <script>
   document.onready = () => {
-    if (app.data?.indicateurs?.rémunérations) {
+    if (objectValue(app.data, 'indicateurs', 'rémunérations')) {
       // There is already a "rémunérations" indicateur (filled in on the next screen) so we did
       // already submit this current form, so we can infer the "_periode.type" data.
       app.data._periode = {type: app.data.déclaration.fin_période_référence ? "autre" : "civile"}
