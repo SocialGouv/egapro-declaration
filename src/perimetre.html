@@ -67,7 +67,8 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   document.onready = async function() {
     // Load regions
     const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
-    buildSelectOptions(regionSelect, regions, getVal(app.data, 'entreprise.région'))
+    const sortedRegions = regions.sort((a, b) => a.label.localeCompare(b.label, "fr"))
+    buildSelectOptions(regionSelect, sortedRegions, getVal(app.data, 'entreprise.région'))
     if(regionSelect.value) loadDepartments()
 
     if (app.data?.entreprise?.raison_sociale) {
@@ -83,8 +84,9 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   function loadDepartments() {
     const selectedRegion = regionSelect.value
     const departementCodes = app.config.regions_to_departements[selectedRegion]
-    const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
-    buildSelectOptions(departmentSelect, departements, getVal(app.data, 'entreprise.département'))
+    const departements = departementCodes.map(code => ({ value: code, label: `${code} - ${app.config.departements[code]}` }))
+    const sortedDepartements = departements.sort((a, b) => a.label.localeCompare(b.label, "fr"))
+    buildSelectOptions(departmentSelect, sortedDepartements, getVal(app.data, 'entreprise.département'))
   }
 
   document.onsend = data => {
