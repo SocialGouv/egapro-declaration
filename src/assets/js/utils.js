@@ -88,13 +88,16 @@ validateNotAllEmpty = event => {
 
 checkSirenValidity = async event => {
   const target = event.target
+
+  checkPatternValidity(event)
   if (target.validity.patternMismatch) {
-    target.setCustomValidity("Veuillez respecter le format requis (9 chiffres sans espace)")
-    target.reportValidity()
+    // We already treated this case in `checkPatternValidity`
     return
-  } else {
-    target.setCustomValidity("")
-    target.reportValidity()
+  }
+
+  if (target.validity.valueMissing) {
+    // Keep the default browser behavior
+    return
   }
 
   const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
@@ -112,6 +115,23 @@ checkSirenValidity = async event => {
 isSirenValid = async value => {
   const response = await request('GET', `/validate-siren?siren=${value}`)
   return response.ok
+}
+
+checkPatternValidity = event => {
+  const target = event.target
+  if (!target.placeholder) {
+    // We don't have a custom message to offer, bail
+    return
+  }
+  if (target.validity.patternMismatch) {
+    const placeholder = target.placeholder
+    target.setCustomValidity(`Veuillez respecter le format requis (${target.placeholder})`)
+    target.reportValidity()
+    return
+  } else {
+    target.setCustomValidity("")
+    target.reportValidity()
+  }
 }
 
 class AppStorage {

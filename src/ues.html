@@ -19,7 +19,7 @@ title: "Raison sociale et num√©ro Siren de chacune des entreprises composant l‚Ä
     <template id=looper>
       <div class=row>
         {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" required=true %}
-        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" pattern="[0-9]{9}" placeholder="9 chiffres" required=true onblur="checkSirenValidity(event)" %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" pattern="[0-9]{9}" placeholder="9 chiffres" required=true oninput="checkSirenValidity(event)" %}
       </div>
     </template>
   </div>
