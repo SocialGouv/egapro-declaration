@@ -88,22 +88,6 @@ title: "Raison sociale et numéro Siren de chacune des entreprises composant l�
     removeEntrepriseButton.disabled = nombreEntreprises <= 1
   }
 
-  checkSirenValidity = async event => {
-    const target = event.target
-    if (!target.validity.valid) return
-
-    const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
-    if (allSirens.filter(siren => siren === target.value).length >= 2) {
-      // We check if the length is >= 2 because the list of sirens also contains the current value
-      target.setCustomValidity("Le Siren a déjà été saisi")
-    } else if (!await isSirenValid(target.value)) {
-      target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
-    } else {
-      target.setCustomValidity("")
-    }
-    target.reportValidity()
-  }
-
   document.onsend = data => {
     if (!app.data?.entreprise?.ues?.entreprises) return
     // Make sure we remove the entreprises that were deleted (needed if they were previously saved)

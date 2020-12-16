@@ -86,6 +86,29 @@ validateNotAllEmpty = event => {
   return true
 }
 
+checkSirenValidity = async event => {
+  const target = event.target
+  if (target.validity.patternMismatch) {
+    target.setCustomValidity("Veuillez respecter le format requis (9 chiffres sans espace)")
+    target.reportValidity()
+    return
+  } else {
+    target.setCustomValidity("")
+    target.reportValidity()
+  }
+
+  const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
+  if (allSirens.filter(siren => siren === target.value).length >= 2) {
+    // We check if the length is >= 2 because the list of sirens also contains the current value
+    target.setCustomValidity("Le Siren a déjà été saisi")
+  } else if (!await isSirenValid(target.value)) {
+    target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
+  } else {
+    target.setCustomValidity("")
+  }
+  target.reportValidity()
+}
+
 isSirenValid = async value => {
   const response = await request('GET', `/validate-siren?siren=${value}`)
   return response.ok
