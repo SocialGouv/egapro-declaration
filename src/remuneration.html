@@ -12,7 +12,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
         label="L’indicateur sur l’écart de rémunération est-il calculable ?"
         required="true"
         options="oui=oui&non=non"
-        onchange="toggleFields()"
+        onchange="toggleFields(event)"
         required="required" %}
     </div>
   </div>
@@ -27,7 +27,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
         required="true"
         block="true"
         options="niveau_branche=Par niveau ou coefficient hiérarchique en application de la classification de branche&niveau_autre=Par niveau ou coefficient hiérarchique en application d'une autre méthode de cotation des postes&csp=Par catégorie socio-professionnelle"
-        onchange="toggleFields()"
+        onchange="toggleFields(event)"
         required="required" %}
     </div>
   </div>
@@ -82,7 +82,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     }
   }
 
-  function toggleFields() {
+  function toggleFields(event) {
     const isCalculableChosen = calculableField.querySelector(':checked')
     const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
     const isCalculatedCsp = calculableCspField.querySelector(':checked') && calculableCspField.querySelector(':checked').value === 'oui'
@@ -91,6 +91,15 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
     enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
     enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
+
+    if (app.data.indicateurs.rémunérations.catégories &&
+        event &&
+        ["_indicateurs.rémunérations.calculable", "indicateurs.rémunérations.mode"].includes(event.target.name)
+        ) {
+      // Make sure the following "remuneration-csp" or "remuneration-coef" form has no values
+      // for a previously filled "mode".
+      delete app.data.indicateurs.rémunérations.catégories
+    }
   }
 
   function checkCalculableCSP(event) {
@@ -112,12 +121,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       delete data?.indicateurs?.rémunérations?.résultat
       delete data?.indicateurs?.rémunérations?.population_favorable
       delete data?.indicateurs?.rémunérations?.note
-    }
-
-    if (!data?.indicateurs?.rémunérations?.catégories) return
-    const mode = data.indicateurs.rémunérations.mode
-    if (mode === "csp") {
-      data.indicateurs.rémunérations.catégories = data.indicateurs.rémunérations.catégories.slice(0, 4)
     }
   }
 </script>
