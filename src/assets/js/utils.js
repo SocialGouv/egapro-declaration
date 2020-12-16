@@ -138,7 +138,6 @@ checkPatternValidity = event => {
 
 class AppStorage {
   constructor() {
-    this.data = {}
     this.config = {}
     this.schema = {}
     this.apiUrl = ['localhost', '127.0.0.1'].includes(location.hostname)
@@ -147,12 +146,17 @@ class AppStorage {
   }
 
   async init() {
+    this.resetData()
     await this.loadConfig()
     await this.loadSchema()
     if(!this.token) return
     this.loadLocalData()
     // Is remote data actually necessary as we must have local data for token anyways?
     if(this.siren && this.annee) await this.loadRemoteData()
+  }
+
+  resetData() {
+    this.data = { source: 'formulaire' }
   }
 
   async loadConfig() {
@@ -182,7 +186,7 @@ class AppStorage {
     if(response.ok) Object.assign(this.data, response.data.data)
     else {
       delete localStorage.data
-      this.data = {}
+      this.resetData()
     }
     return response
   }
