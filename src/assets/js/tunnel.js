@@ -137,12 +137,10 @@ if (step > 0) {
   previousButton.onclick = (e) => {
     // On the "commencer.html" page (the first) we display a "recommencer" button
     e.preventDefault();
-    if (confirm("Recommencer une déclaration ?")) {
-      app.data = {}
-      delete localStorage.data
-      // Reload the page, without the local data
-      location.pathname = location.pathname
-    }
+    app.data = {}
+    delete localStorage.data
+    // Reload the page, without the local data
+    location.pathname = location.pathname
   };
 }
 

@@ -16,16 +16,12 @@ prevButtonLabel: "Recommencer"
   </fieldset>
 
 <script>
+  delete localStorage.data
+
   document.preFormSubmit = event => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
-    const confirmed = confirm(message)
-    if (confirmed) {
-      // Reset the local state
-      app.data = {}
-      delete localStorage.data
-    }
-    return confirmed
+    return confirm(message)
   }
 
   document.onready = function() {
