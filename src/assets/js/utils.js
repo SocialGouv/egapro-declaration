@@ -76,19 +76,64 @@ notify = {
   }
 }
 
-validateNotAllEmpty = event => {
-  // We don't want to require ALL the fields, but we need at least one
-  const allInputs = Array.from(document.querySelectorAll("input[type='number']"))
-  if (allInputs.every(input => input.value === "")) {
-    alert("Il vous faut renseigner au moins un des écarts de rémunération si votre indicateur est calculable")
-    return false
+validateNotAllEmpty = message => {
+  return event => {
+    // We don't want to require ALL the fields, but we need at least one
+    const allInputs = Array.from(document.querySelectorAll("input[type='number']"))
+    if (allInputs.every(input => input.value === "")) {
+      alert(message)
+      return false
+    }
+    return true
   }
-  return true
+}
+
+checkSirenValidity = async event => {
+  const target = event.target
+
+  checkPatternValidity(event)
+  if (target.validity.patternMismatch) {
+    // We already treated this case in `checkPatternValidity`
+    return
+  }
+
+  if (target.validity.valueMissing) {
+    // Keep the default browser behavior
+    return
+  }
+
+  const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
+  if (allSirens.filter(siren => siren === target.value).length >= 2) {
+    // We check if the length is >= 2 because the list of sirens also contains the current value
+    target.setCustomValidity("Le Siren a déjà été saisi")
+  } else if (!await isSirenValid(target.value)) {
+    target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
+  } else {
+    target.setCustomValidity("")
+  }
+  target.reportValidity()
 }
 
 isSirenValid = async value => {
   const response = await request('GET', `/validate-siren?siren=${value}`)
   return response.ok
+}
+
+checkPatternValidity = event => {
+  const target = event.target
+  if (!target.placeholder) {
+    // We don't have a custom message to offer, bail
+    return
+  }
+  if (target.validity.patternMismatch) {
+    const placeholder = target.placeholder
+    target.setCustomValidity(`Veuillez respecter le format requis (${target.placeholder})`)
+    target.reportValidity()
+    return
+  } else {
+    target.setCustomValidity("")
+    target.reportValidity()
+  }
 }
 
 class AppStorage {

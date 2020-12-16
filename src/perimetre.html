@@ -46,7 +46,7 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   <p>Adresse du siège de l'entreprise déclarante</p>
   <div class=row id="département-selector">
     <div>{% include select.html name="entreprise.région" label="Région" required=true empty=true %}</div>
-    <div>{% include select.html name="entreprise.département" label="Département" required=true %}</div>
+    <div>{% include select.html name="entreprise.département" label="Département" required=true empty=true %}</div>
   </div>
 
   <div class=row>
@@ -54,7 +54,7 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   </div>
 
   <div class=row>
-    {% include input.html name="entreprise.code_postal" label="Code postal (5 car.)" required=true pattern="\d{5}" %}
+    {% include input.html name="entreprise.code_postal" label="Code postal" required=true pattern="\d{5}" placeholder="5 chiffres" oninput="checkPatternValidity(event)" %}
     {% include input.html name="entreprise.commune" label="Commune" required=true %}
   </div>
 </fieldset>
@@ -67,7 +67,8 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   document.onready = async function() {
     // Load regions
     const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
-    buildSelectOptions(regionSelect, regions, getVal(app.data, 'entreprise.région'))
+    const sortedRegions = regions.sort((a, b) => a.label.localeCompare(b.label, "fr"))
+    buildSelectOptions(regionSelect, sortedRegions, getVal(app.data, 'entreprise.région'))
     if(regionSelect.value) loadDepartments()
 
     if (app.data?.entreprise?.raison_sociale) {
@@ -83,8 +84,9 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   function loadDepartments() {
     const selectedRegion = regionSelect.value
     const departementCodes = app.config.regions_to_departements[selectedRegion]
-    const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
-    buildSelectOptions(departmentSelect, departements, getVal(app.data, 'entreprise.département'))
+    const departements = departementCodes.map(code => ({ value: code, label: `${code} - ${app.config.departements[code]}` }))
+    const sortedDepartements = departements.sort((a, b) => a.label.localeCompare(b.label, "fr"))
+    buildSelectOptions(departmentSelect, sortedDepartements, getVal(app.data, 'entreprise.département'))
   }
 
   document.onsend = data => {
