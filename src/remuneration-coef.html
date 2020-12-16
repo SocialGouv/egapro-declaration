@@ -105,7 +105,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
     removeCategoryButton.disabled = nombreCategories <= 1
   }
 
-  document.preFormSubmit = validateNotAllEmpty
+  document.preFormSubmit = validateNotAllEmpty("Vous devez renseigner les écarts de rémunération pour les classes d'âge concernées")
 
   document.onsend = data => {
     if (!app.data?.indicateurs?.rémunérations?.catégories) return

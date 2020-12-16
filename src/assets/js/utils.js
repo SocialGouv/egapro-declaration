@@ -76,14 +76,16 @@ notify = {
   }
 }
 
-validateNotAllEmpty = event => {
-  // We don't want to require ALL the fields, but we need at least one
-  const allInputs = Array.from(document.querySelectorAll("input[type='number']"))
-  if (allInputs.every(input => input.value === "")) {
-    alert("Il vous faut renseigner au moins un des écarts de rémunération si votre indicateur est calculable")
-    return false
+validateNotAllEmpty = message => {
+  return event => {
+    // We don't want to require ALL the fields, but we need at least one
+    const allInputs = Array.from(document.querySelectorAll("input[type='number']"))
+    if (allInputs.every(input => input.value === "")) {
+      alert(message)
+      return false
+    }
+    return true
   }
-  return true
 }
 
 checkSirenValidity = async event => {
