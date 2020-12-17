@@ -43,7 +43,7 @@ const steps = [
   //
   { name: "maternite" },
   { name: "hautes-remunerations" },
-  { name: "note" },
+  { name: "note", nextStep: (data) => data.déclaration.points_calculables >= 75 ? "resultat" : "validation" },
   { name: "resultat" },
   { name: "validation" },
   { name: "transmission" },
