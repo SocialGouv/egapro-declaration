@@ -68,17 +68,17 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
     // Load regions
     const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
     const sortedRegions = regions.sort((a, b) => a.label.localeCompare(b.label, "fr"))
-    buildSelectOptions(regionSelect, sortedRegions, getVal(app.data, 'entreprise.région'))
+    buildSelectOptions(regionSelect, sortedRegions, app.getItem('entreprise.région'))
     if(regionSelect.value) loadDepartments()
 
-    if (getVal(app.data, 'entreprise.raison_sociale')) {
+    if (app.getItem('entreprise.raison_sociale')) {
       // There is already a "raison sociale" saved so we did already submit this current form,
       // so we can infer the "_entreprise.structure" data.
       app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
     }
 
     const select = selectField('entreprise.code_naf')
-    await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
+    await buildNafOptions(select, app.getItem('entreprise.code_naf'))
   }
 
   function loadDepartments() {
@@ -86,17 +86,17 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
     const departementCodes = app.config.regions_to_departements[selectedRegion]
     const departements = departementCodes.map(code => ({ value: code, label: `${code} - ${app.config.departements[code]}` }))
     const sortedDepartements = departements.sort((a, b) => a.label.localeCompare(b.label, "fr"))
-    buildSelectOptions(departmentSelect, sortedDepartements, getVal(app.data, 'entreprise.département'))
+    buildSelectOptions(departmentSelect, sortedDepartements, app.getItem('entreprise.département'))
   }
 
   document.onsend = data => {
-    if (getVal(data, '_entreprise.structure') === "entreprise") {
+    if (app.getItem('_entreprise.structure') === "entreprise") {
       delete data._entreprise.ues
       if(data.entreprise) delete data.entreprise.ues
     }
 
     if(data.indicateurs) {
-      if (getVal(data, 'entreprise.effectif.tranche') === "50:250") {
+      if (app.getItem('entreprise.effectif.tranche') === "50:250") {
         delete data.indicateurs.augmentations
         delete data.indicateurs.promotions
       } else {

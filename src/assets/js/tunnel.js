@@ -58,7 +58,7 @@ const step = steps.findIndex((step) => step.name === pageName);
 
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "/";
-  loadFormValues(form, app.data);
+  loadFormValues(form);
   toggleDeclarationValidatedBar()
   if (app.mode === "reading") {
     // Fields cannot be edited
@@ -124,7 +124,7 @@ const refreshForm = async (event) => {
 
   response = await app.loadRemoteData();
   if (!response.ok) return;
-  loadFormValues(form, app.data);
+  loadFormValues(form);
 };
 
 // "Previous" button
@@ -164,7 +164,7 @@ function serializeForm(form) {
     if (field.getAttribute("type") === "number") {
       value = Number(value);
     }
-    setVal(data, key, value);
+    app.setItem(key, value);
   });
 
   // Get all the names of the fields that aren't disabled (and thus included in FormData)
@@ -175,7 +175,7 @@ function serializeForm(form) {
   // We need to force remove disabled fields that might have been set previously
   allFields.forEach((field) => {
     if (!enabledFields.includes(field.name) || field.value === "") {
-      delVal(app.data, field.name);
+      app.delItem(field.name);
     }
   });
   removeEmpty(data);
@@ -200,10 +200,10 @@ function removeEmpty(data) {
   });
 }
 
-function loadFormValues(form, data = {}) {
+function loadFormValues(form) {
   Array.from(form.elements).forEach((node) => {
     if (!node.name) return;
-    const value = getVal(data, node.name);
+    const value = app.getItem(node.name);
     if (value === "") return;
     if (node.type === "radio") {
       node.checked = node.value === value;
@@ -212,83 +212,6 @@ function loadFormValues(form, data = {}) {
       node.value = node.type === "hidden" ? node.value : value;
     }
   });
-}
-
-function extractKey(flatKey) {
-  // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
-  return flatKey.match(/([^\[]+)\[?(\d+)?\]?/);
-}
-
-function getVal(data, flatKey) {
-  const keys = flatKey.split(".");
-  try {
-    const value = keys.reduce((item, currentKey) => {
-      const [_, key, index] = extractKey(currentKey);
-      return index ? item[key][index] : item[key];
-    }, data);
-    return value !== undefined ? value : "";
-  } catch {
-    // Fail silently if the item doesn't exist yet
-    return "";
-  }
-}
-
-function setVal(data, flatKey, val) {
-  // Deeply set a value in data given a flatKey like `entreprise.ues.entreprises[0].raison_sociale`
-  const keys = flatKey.split(".");
-  const ancestors = keys.slice(0, -1);
-  const property = keys.pop();
-
-  const target = ancestors.reduce((parent, name) => {
-    const [_, key, index] = extractKey(name);
-    // parent is an array
-    if (index) {
-      if (!(key in parent)) parent[key] = [];
-      if (!parent[key][index]) parent[key][index] = {};
-      return parent[key][index];
-    }
-    // parent is an object
-    else {
-      if (!(key in parent)) parent[key] = {};
-      return parent[key];
-    }
-  }, data);
-
-  // Set the value on the item
-  const [_, key, index] = extractKey(property);
-  if (index) {
-    if (!(key in target)) target[key] = [];
-    target[key][index] = val;
-  } else {
-    target[key] = val;
-  }
-}
-
-function delVal(data, flatKey) {
-  // Delete a nested value from a flat key
-  const keys = flatKey.split(".");
-  let item = data;
-  while (keys.length > 1) {
-    const [_, key, index] = extractKey(keys.shift());
-    if (!(key in item)) {
-      // This item doesn't exist yet
-      return;
-    }
-    if (index && !item[key][index]) {
-      return;
-    }
-    item = index ? item[key][index] : item[key];
-  }
-  // Only one key left, it's the one that identifies the item we want to delete
-  const [_, key, index] = extractKey(keys.shift());
-  if (!(key in item)) {
-    return;
-  }
-  if (index) {
-    delete item[key][index];
-  } else {
-    delete item[key];
-  }
 }
 
 function toggleDeclarationValidatedBar() {

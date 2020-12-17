@@ -75,7 +75,7 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
   const resultatField = selectField("indicateurs.augmentations.résultat")
 
   document.onready = () => {
-    if (getVal(app.data, 'indicateurs.augmentations')) {
+    if (app.getItem('indicateurs.augmentations')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.augmentations.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}

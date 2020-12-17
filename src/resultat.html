@@ -41,7 +41,7 @@ des salariés par tout moyen.</p>
   const siteInternetField = selectField('_déclaration.publication.site_internet')
 
   document.onready = () => {
-    if (getVal(app.data, 'déclaration.publication')) {
+    if (app.getItem('déclaration.publication')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.déclaration.publication.site_internet" data.
       if (!app.data._déclaration) app.data._déclaration = {}

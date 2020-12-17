@@ -71,7 +71,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   const modeField = selectField('indicateurs.rémunérations.mode')
 
   document.onready = () => {
-    if (getVal(app.data, 'indicateurs.rémunérations')) {
+    if (app.getItem('indicateurs.rémunérations')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.rémunérations.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}
@@ -92,7 +92,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
     enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
 
-    if (getVal(app, "data.indicateurs.rémunérations.catégories") &&
+    if (app.getItem("data.indicateurs.rémunérations.catégories") &&
         event &&
         ["_indicateurs.rémunérations.calculable", "indicateurs.rémunérations.mode"].includes(event.target.name)
         ) {
@@ -116,7 +116,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   }
 
   document.onsend = data => {
-    if (getVal(data, 'indicateurs.rémunérations')) {
+    if (app.getItem('indicateurs.rémunérations')) {
       if (data.indicateurs.rémunérations.non_calculable) {
         delete data.indicateurs.rémunérations.catégories
         delete data.indicateurs.rémunérations.résultat
