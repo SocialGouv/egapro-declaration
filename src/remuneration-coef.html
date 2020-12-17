@@ -52,7 +52,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
   const removeCategoryButton = document.getElementById('removeCategoryBtn')
 
   document.onready = function() {
-    updateNombreCategories(updateValue(app.data, 'indicateurs', 'rémunérations', 'catégories', 'length') || 1)
+    updateNombreCategories(objectValue(app.data, 'indicateurs', 'rémunérations', 'catégories', 'length') || 1)
     for(let index = 0; index < nombreCategories; index++) {
       const node = document.importNode(template.content, true)
       container.appendChild(node)
