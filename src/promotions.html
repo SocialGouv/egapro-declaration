@@ -75,7 +75,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
   const resultatField = selectField("indicateurs.promotions.résultat")
 
   document.onready = () => {
-    if (objectValue(app.data, 'indicateurs', 'promotions')) {
+    if (getVal(app.data, 'indicateurs.promotions')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.promotions.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}

@@ -71,7 +71,7 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
     buildSelectOptions(regionSelect, sortedRegions, getVal(app.data, 'entreprise.région'))
     if(regionSelect.value) loadDepartments()
 
-    if (objectValue(app.data, 'entreprise', 'raison_sociale')) {
+    if (getVal(app.data, 'entreprise.raison_sociale')) {
       // There is already a "raison sociale" saved so we did already submit this current form,
       // so we can infer the "_entreprise.structure" data.
       app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
@@ -90,13 +90,13 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   }
 
   document.onsend = data => {
-    if (objectValue(data, '_entreprise', 'structure') === "entreprise") {
+    if (getVal(data, '_entreprise.structure') === "entreprise") {
       delete data._entreprise.ues
       if(data.entreprise) delete data.entreprise.ues
     }
 
     if(data.indicateurs) {
-      if (objectValue(data, 'entreprise', 'effectif', 'tranche') === "50:250") {
+      if (getVal(data, 'entreprise.effectif.tranche') === "50:250") {
         delete data.indicateurs.augmentations
         delete data.indicateurs.promotions
       } else {
