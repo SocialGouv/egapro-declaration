@@ -30,6 +30,12 @@ title: "Niveau de résultat global"
 
 <script>
   document.onready = () => {
-    enableField("#fieldset-mesures-correctives", app.data.déclaration.index < 75)
+    enableField("#fieldset-mesures-correctives", app.data.déclaration.index < 75 && app.data.déclaration.points_calculables >= 75)
+    if (app.data.déclaration.points_calculables < 75) {
+      const indexField = selectField('déclaration.index')
+      indexField.type = "text"
+      indexField.value = "Non calculable"
+      indexField.disabled = true
+    }
   }
 </script>
