@@ -70,7 +70,7 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
   const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
 
   document.onready = () => {
-    if (app.data?.indicateurs?.augmentations_et_promotions) {
+    if (app.getItem('indicateurs.augmentations_et_promotions')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.augmentations_et_promotions.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}

@@ -37,7 +37,7 @@ title: "Raison sociale et numÃ©ro Siren de chacune des entreprises composant lâ€
   const removeEntrepriseButton = document.getElementById('removeEntrepriseBtn')
 
   document.onready = function() {
-    updateNombreEntreprises(app.data?.entreprise?.ues?.entreprises?.length || 1)
+    updateNombreEntreprises(app.getItem('entreprise.ues.entreprises.length') || 1)
     for(let index = 0; index < nombreEntreprises; index++) {
       const node = document.importNode(template.content, true)
       container.appendChild(node)
@@ -89,7 +89,7 @@ title: "Raison sociale et numÃ©ro Siren de chacune des entreprises composant lâ€
   }
 
   document.onsend = data => {
-    if (!app.data?.entreprise?.ues?.entreprises) return
+    if (!app.getItem('entreprise.ues.entreprises')) return
     // Make sure we remove the entreprises that were deleted (needed if they were previously saved)
     app.data.entreprise.ues.entreprises = app.data.entreprise.ues.entreprises.slice(0, nombreEntreprises)
   }
