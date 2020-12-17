@@ -74,7 +74,7 @@
   
   
 />
-         
+
           
 <input
   id="field--indicateurs.rémunérations.catégories[{index}].tranches.:29"
@@ -82,7 +82,6 @@
   type="number"
   name="indicateurs.rémunérations.catégories[{index}].tranches.:29"
   placeholder=""
-  
   
   min="0"
   
@@ -94,6 +93,7 @@
   
   
   
+  data-not-all-empty
 />
 
         </td>
@@ -106,7 +106,6 @@
   name="indicateurs.rémunérations.catégories[{index}].tranches.30:39"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -117,6 +116,7 @@
   
   
   
+  data-not-all-empty
 />
 
         </td>
@@ -129,7 +129,6 @@
   name="indicateurs.rémunérations.catégories[{index}].tranches.40:49"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -140,6 +139,7 @@
   
   
   
+  data-not-all-empty
 />
 
         </td>
@@ -152,7 +152,6 @@
   name="indicateurs.rémunérations.catégories[{index}].tranches.50:"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -163,6 +162,7 @@
   
   
   
+  data-not-all-empty
 />
 
         </td>
@@ -182,7 +182,7 @@
   const removeCategoryButton = document.getElementById('removeCategoryBtn')
 
   document.onready = function() {
-    updateNombreCategories(app.data?.indicateurs?.rémunérations?.catégories?.length || 1)
+    updateNombreCategories(app.getItem('indicateurs.rémunérations.catégories.length') || 1)
     for(let index = 0; index < nombreCategories; index++) {
       const node = document.importNode(template.content, true)
       container.appendChild(node)
@@ -235,10 +235,10 @@
     removeCategoryButton.disabled = nombreCategories <= 1
   }
 
-  document.preFormSubmit = validateNotAllEmpty
+  document.preFormSubmit = validateNotAllEmpty("Vous devez renseigner les écarts de rémunération pour les classes d'âge concernées")
 
   document.onsend = data => {
-    if (!app.data?.indicateurs?.rémunérations?.catégories) return
+    if (!app.getItem('indicateurs.rémunérations.catégories')) return
     // Make sure we remove the categories that were deleted (needed if they were previously saved)
     app.data.indicateurs.rémunérations.catégories = app.data.indicateurs.rémunérations.catégories.slice(0, nombreCategories)
   }

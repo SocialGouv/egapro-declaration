@@ -146,8 +146,8 @@
   
   
   
-  
   required
+  
   
   
   
@@ -177,11 +177,11 @@
   
   
   
-  
   required
   
   
   readonly="readonly"
+  
   
   
   
@@ -236,9 +236,9 @@
   id="field--entreprise.département"
   name="entreprise.département"
   required
+  empty
   
-  
-  
+  onchange="checkCodePostal(event)"
 >
   
 </select>
@@ -262,8 +262,8 @@
   
   
   
-  
   required
+  
   
   
   
@@ -277,7 +277,7 @@
   <div class=row>
     
   
-<label for="field--entreprise.code_postal">Code postal (5 car.)*</label>
+<label for="field--entreprise.code_postal">Code postal*</label>
 
 
 
@@ -286,8 +286,7 @@
   value=""
   type=""
   name="entreprise.code_postal"
-  placeholder=""
-  
+  placeholder="5 chiffres"
   
   
   
@@ -297,7 +296,8 @@
   pattern="\d{5}"
   
   
-  
+  onblur="checkCodePostal(event)"
+  oninput="checkPatternValidity(event)"
   
 />
 
@@ -317,8 +317,8 @@
   
   
   
-  
   required
+  
   
   
   
@@ -334,42 +334,58 @@
   const regionSelect = selectField('entreprise.région')
   regionSelect.addEventListener('change', loadDepartments)
   const departmentSelect = selectField('entreprise.département')
+  const codePostal = selectField('entreprise.code_postal')
 
   document.onready = async function() {
     // Load regions
     const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
-    buildSelectOptions(regionSelect, regions, getVal(app.data, 'entreprise.région'))
+    const sortedRegions = regions.sort((a, b) => a.label.localeCompare(b.label, "fr"))
+    buildSelectOptions(regionSelect, sortedRegions, app.getItem('entreprise.région'))
     if(regionSelect.value) loadDepartments()
 
-    if (app.data?.entreprise?.raison_sociale) {
+    if (app.getItem('entreprise.raison_sociale')) {
       // There is already a "raison sociale" saved so we did already submit this current form,
       // so we can infer the "_entreprise.structure" data.
       app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
     }
 
     const select = selectField('entreprise.code_naf')
-    await buildNafOptions(select, getVal(app.data, 'entreprise.code_naf'))
+    await buildNafOptions(select, app.getItem('entreprise.code_naf'))
   }
 
   function loadDepartments() {
     const selectedRegion = regionSelect.value
     const departementCodes = app.config.regions_to_departements[selectedRegion]
-    const departements = departementCodes.map(code => ({ value: code, label: app.config.departements[code] }))
-    buildSelectOptions(departmentSelect, departements, getVal(app.data, 'entreprise.département'))
+    const departements = departementCodes.map(code => ({ value: code, label: `${code} - ${app.config.departements[code]}` }))
+    const sortedDepartements = departements.sort((a, b) => a.label.localeCompare(b.label, "fr"))
+    buildSelectOptions(departmentSelect, sortedDepartements, app.getItem('entreprise.département'))
   }
 
   document.onsend = data => {
-    if (data?._entreprise?.structure === "entreprise") {
-      delete data?.entreprise?.ues
-      delete data?._entreprise?.ues
+    if (app.getItem('_entreprise.structure') === "entreprise") {
+      delete data._entreprise.ues
+      if(data.entreprise) delete data.entreprise.ues
     }
 
-    if (data?.entreprise?.effectif?.tranche === "50:250") {
-      delete data?.indicateurs?.augmentations
-      delete data?.indicateurs?.promotions
-    } else {
-      delete data?.indicateurs?.augmentations_et_promotions
+    if(data.indicateurs) {
+      if (app.getItem('entreprise.effectif.tranche') === "50:250") {
+        delete data.indicateurs.augmentations
+        delete data.indicateurs.promotions
+      } else {
+        delete data.indicateurs.augmentations_et_promotions
+      }
     }
+  }
+
+  function checkCodePostal(event) {
+    if (!codePostal.value || !departmentSelect.value) return
+
+    if (!codePostal.value.startsWith(departmentSelect.value)) {
+      codePostal.setCustomValidity("Le code postal ne correspond pas au département sélectionné")
+    } else {
+      codePostal.setCustomValidity("")
+    }
+    codePostal.reportValidity()
   }
 
 </script>

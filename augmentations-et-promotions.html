@@ -39,7 +39,7 @@
   <div class=row>
     <div>
       
-<label for="field--_indicateurs.augmentations_et_promotions.calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable</label>
+<label for="field--_indicateurs.augmentations_et_promotions.calculable">L'indicateur sur les taux d'augmentations individuelles est-il calculable ?</label>
 
 
 <div
@@ -93,7 +93,6 @@
   name="indicateurs.augmentations_et_promotions.résultat"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -104,6 +103,7 @@
   
   onblur="refreshForm(event)"
   oninput="toggleFields()"
+  
 />
 </div>
 </fieldset>
@@ -122,7 +122,6 @@
   name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -133,6 +132,7 @@
   
   onblur="refreshForm(event)"
   oninput="toggleFields()"
+  
 />
 </div>
 </fieldset>
@@ -211,7 +211,6 @@
   name="indicateurs.augmentations_et_promotions.note_en_pourcentage"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -219,6 +218,7 @@
   
   
   readonly="readonly"
+  
   
   
   
@@ -240,7 +240,6 @@
   name="indicateurs.augmentations_et_promotions.note_nombre_salariés"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -248,6 +247,7 @@
   
   
   readonly="readonly"
+  
   
   
   
@@ -269,7 +269,6 @@
   name="indicateurs.augmentations_et_promotions.note"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -277,6 +276,7 @@
   
   
   readonly="readonly"
+  
   
   
   
@@ -290,7 +290,7 @@
   const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
 
   document.onready = () => {
-    if (app.data?.indicateurs?.augmentations_et_promotions) {
+    if (app.getItem('indicateurs.augmentations_et_promotions')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.augmentations_et_promotions.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}

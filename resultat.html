@@ -58,8 +58,8 @@ des salariés par tout moyen.</p>
   
   
   
-  
   required
+  
   
   
   
@@ -132,8 +132,8 @@ des salariés par tout moyen.</p>
   
   
   
-  
   required
+  
   
   
   
@@ -162,7 +162,7 @@ des salariés par tout moyen.</p>
   const siteInternetField = selectField('_déclaration.publication.site_internet')
 
   document.onready = () => {
-    if (app.data?.déclaration?.publication) {
+    if (app.getItem('déclaration.publication')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.déclaration.publication.site_internet" data.
       if (!app.data._déclaration) app.data._déclaration = {}
@@ -173,9 +173,9 @@ des salariés par tout moyen.</p>
     // `déclaration.fin_période_référence` or if it's undefined, the end of
     // civil year of `déclaration.année_indicateurs`
     const endCivilYear = new Date(`${app.data.déclaration.année_indicateurs}-12-31`)
-    const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear
+    const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear.toISOString().slice(0, 10)
     // The `min` value should be formatted like yyyy-mm-dd
-    selectField("déclaration.publication.date").min = minPubDate.toISOString().slice(0, 10)
+    selectField("déclaration.publication.date").min = minPubDate
   }
 
   function toggleFields() {
@@ -189,6 +189,7 @@ des salariés par tout moyen.</p>
     toggleFields()
   }
 </script>
+
 </main>
 
 <nav>

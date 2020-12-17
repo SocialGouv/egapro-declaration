@@ -49,7 +49,6 @@
   name="déclaration.points"
   placeholder=""
   
-  
   min="0"
   max="100"
   
@@ -57,6 +56,7 @@
   
   
   readonly="readonly"
+  
   
   
   
@@ -78,7 +78,6 @@
   name="déclaration.points_calculables"
   placeholder=""
   
-  
   min="0"
   max="100"
   
@@ -86,6 +85,7 @@
   
   
   readonly="readonly"
+  
   
   
   
@@ -107,7 +107,6 @@
   name="déclaration.index"
   placeholder=""
   
-  
   min="0"
   max="100"
   
@@ -118,6 +117,7 @@
   
   
   
+  
 />
 </div>
 </fieldset>
@@ -125,13 +125,13 @@
 <fieldset id="fieldset-mesures-correctives">
   <div class=row>
     
-<label for="field--déclaration.mesures_correctives">Mesures de correction prévues à l'article D. 1142-6</label>
+<label for="field--déclaration.mesures_correctives">Mesures de correction prévues à l'article D. 1142-6*</label>
 
 
 <select
   id="field--déclaration.mesures_correctives"
   name="déclaration.mesures_correctives"
-  
+  required
   empty
   
   
@@ -141,7 +141,7 @@
     <option value=""> ––– </option>
     
       
-      <option value="mmo">Mesures mises en oeuvre</option>
+      <option value="mmo">Mesures misee en oeuvre</option>
     
       
       <option value="me">Mesures envisagées</option>
@@ -157,7 +157,13 @@
 
 <script>
   document.onready = () => {
-    enableField("#fieldset-mesures-correctives", app.data.déclaration.index < 75)
+    enableField("#fieldset-mesures-correctives", app.data.déclaration.index < 75 && app.data.déclaration.points_calculables >= 75)
+    if (app.data.déclaration.points_calculables < 75) {
+      const indexField = selectField('déclaration.index')
+      indexField.type = "text"
+      indexField.value = "Non calculable"
+      indexField.disabled = true
+    }
   }
 </script>
 

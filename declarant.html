@@ -54,8 +54,8 @@
   
   
   
-  
   required
+  
   
   
   
@@ -80,8 +80,8 @@
   
   
   
-  
   required
+  
   
   
   
@@ -106,18 +106,18 @@
   value=""
   type=""
   name="déclarant.téléphone"
-  placeholder=""
-  
+  placeholder="10 chiffres"
   
   
   
   
   required
   
+  pattern="[0-9]{10}"
   
   
   
-  
+  oninput="checkPatternValidity(event)"
   
 />
 

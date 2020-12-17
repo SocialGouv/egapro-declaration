@@ -76,14 +76,42 @@ notify = {
   }
 }
 
-validateNotAllEmpty = event => {
-  // We don't want to require ALL the fields, but we need at least one
-  const allInputs = Array.from(document.querySelectorAll("input[type='number']"))
-  if (allInputs.every(input => input.value === "")) {
-    alert("Il vous faut renseigner au moins un des écarts de rémunération si votre indicateur est calculable")
-    return false
+validateNotAllEmpty = message => {
+  return event => {
+    // We don't want to require ALL the fields, but we need at least one
+    const allInputs = Array.from(document.querySelectorAll("[data-not-all-empty]"))
+    if (allInputs.every(input => input.value === "")) {
+      alert(message)
+      return false
+    }
+    return true
   }
-  return true
+}
+
+checkSirenValidity = async event => {
+  const target = event.target
+
+  checkPatternValidity(event)
+  if (target.validity.patternMismatch) {
+    // We already treated this case in `checkPatternValidity`
+    return
+  }
+
+  if (target.validity.valueMissing) {
+    // Keep the default browser behavior
+    return
+  }
+
+  const allSirens = Array.from(document.querySelectorAll("input.siren")).map(node => node.value)
+  if (allSirens.filter(siren => siren === target.value).length >= 2) {
+    // We check if the length is >= 2 because the list of sirens also contains the current value
+    target.setCustomValidity("Le Siren a déjà été saisi")
+  } else if (!await isSirenValid(target.value)) {
+    target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
+  } else {
+    target.setCustomValidity("")
+  }
+  target.reportValidity()
 }
 
 isSirenValid = async value => {
@@ -91,9 +119,30 @@ isSirenValid = async value => {
   return response.ok
 }
 
+checkPatternValidity = event => {
+  const target = event.target
+  if (!target.placeholder) {
+    // We don't have a custom message to offer, bail
+    return
+  }
+  if (target.validity.patternMismatch) {
+    const placeholder = target.placeholder
+    target.setCustomValidity(`Veuillez respecter le format requis (${target.placeholder})`)
+    target.reportValidity()
+    return
+  } else {
+    target.setCustomValidity("")
+    target.reportValidity()
+  }
+}
+
+extractKey = flatKey => {
+  // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
+  return flatKey.match(/([^\[]+)\[?(\d+)?\]?/);
+}
+
 class AppStorage {
   constructor() {
-    this.data = {}
     this.config = {}
     this.schema = {}
     this.apiUrl = ['localhost', '127.0.0.1'].includes(location.hostname)
@@ -102,12 +151,17 @@ class AppStorage {
   }
 
   async init() {
+    this.resetData()
     await this.loadConfig()
     await this.loadSchema()
     if(!this.token) return
     this.loadLocalData()
     // Is remote data actually necessary as we must have local data for token anyways?
     if(this.siren && this.annee) await this.loadRemoteData()
+  }
+
+  resetData() {
+    this.data = { source: 'formulaire' }
   }
 
   async loadConfig() {
@@ -137,7 +191,7 @@ class AppStorage {
     if(response.ok) Object.assign(this.data, response.data.data)
     else {
       delete localStorage.data
-      this.data = {}
+      this.resetData()
     }
     return response
   }
@@ -162,11 +216,11 @@ class AppStorage {
   }
 
   get annee() {
-    return this.data["déclaration"]?.["année_indicateurs"]
+    return this.getItem('déclaration.année_indicateurs')
   }
 
   get siren() {
-    return this.data["entreprise"]?.["siren"]
+    return this.getItem('entreprise.siren')
   }
 
   get isDraft() {
@@ -178,13 +232,81 @@ class AppStorage {
   }
 
   get mode() {
-    if(!this.data["déclaration"]?.["date"]) return "creating"
+    if(!this.getItem('déclaration.date')) return "creating"
     if(this.isDraft) return "updating"
     return "reading"
   }
 
-  deleteKey(key) {
-    delete this.data[key]
+  getItem(flatKey) {
+    const keys = flatKey.split(".");
+    try {
+      const value = keys.reduce((item, currentKey) => {
+        const [_, key, index] = extractKey(currentKey);
+        return index ? item[key][index] : item[key];
+      }, this.data);
+      return value !== undefined ? value : "";
+    } catch {
+      // Fail silently if the item doesn't exist yet
+      return "";
+    }
+  }
+
+  setItem(flatKey, val) {
+    // Deeply set a value in data given a flatKey like `entreprise.ues.entreprises[0].raison_sociale`
+    const keys = flatKey.split(".");
+    const ancestors = keys.slice(0, -1);
+    const property = keys.pop();
+
+    const target = ancestors.reduce((parent, name) => {
+      const [_, key, index] = extractKey(name);
+      // parent is an array
+      if (index) {
+        if (!(key in parent)) parent[key] = [];
+        if (!parent[key][index]) parent[key][index] = {};
+        return parent[key][index];
+      }
+      // parent is an object
+      else {
+        if (!(key in parent)) parent[key] = {};
+        return parent[key];
+      }
+    }, this.data);
+
+    // Set the value on the item
+    const [_, key, index] = extractKey(property);
+    if (index) {
+      if (!(key in target)) target[key] = [];
+      target[key][index] = val;
+    } else {
+      target[key] = val;
+    }
+  }
+
+  delItem(flatKey) {
+    // Delete a nested value from a flat key
+    const keys = flatKey.split(".");
+    let item = this.data;
+    while (keys.length > 1) {
+      const [_, key, index] = extractKey(keys.shift());
+      if (!(key in item)) {
+        // This item doesn't exist yet
+        return;
+      }
+      if (index && !item[key][index]) {
+        return;
+      }
+      item = index ? item[key][index] : item[key];
+    }
+    // Only one key left, it's the one that identifies the item we want to delete
+    const [_, key, index] = extractKey(keys.shift());
+    if (!(key in item)) {
+      return;
+    }
+    if (index) {
+      delete item[key][index];
+    } else {
+      delete item[key];
+    }
   }
 
   async save(data, event) {

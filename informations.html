@@ -56,8 +56,8 @@
   
   
   
-  
   readonly="readonly"
+  
   
   
   
@@ -153,11 +153,11 @@
   name="entreprise.effectif.total"
   placeholder=""
   
-  
   min="1"
   
   step="any"
   required
+  
   
   
   
@@ -171,15 +171,17 @@
 
 <script>
   document.onready = () => {
-    if (app.data?.indicateurs?.rémunérations) {
+    if (app.getItem('indicateurs.rémunérations')) {
       // There is already a "rémunérations" indicateur (filled in on the next screen) so we did
       // already submit this current form, so we can infer the "_periode.type" data.
       app.data._periode = {type: app.data.déclaration.fin_période_référence ? "autre" : "civile"}
     }
+    
+    selectField("déclaration.fin_période_référence").max = `${app.data.déclaration.année_indicateurs}-12-31`
   }
 
   document.onloaded = () => {
-    updatePeriode(getVal(app.data, '_periode.type'))
+    updatePeriode(app.getItem('_periode.type'))
   }
 
   function updatePeriode(value) {

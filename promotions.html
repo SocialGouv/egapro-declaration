@@ -79,7 +79,7 @@
   </div>
 </fieldset>
 
-<h1>Ecarts de taux de promotions obtenus par CSP en %</h1>
+<p>Ecarts de taux de promotions obtenus par CSP en %</p>
 
 <fieldset id="fieldset-resultat-ouv">
   <div class=row>
@@ -95,7 +95,6 @@
   name="indicateurs.promotions.catégories[0]"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -106,6 +105,7 @@
   
   
   
+  data-not-all-empty
 />
 </div>
 </fieldset>
@@ -124,7 +124,6 @@
   name="indicateurs.promotions.catégories[1]"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -135,6 +134,7 @@
   
   
   
+  data-not-all-empty
 />
 </div>
 </fieldset>
@@ -153,7 +153,6 @@
   name="indicateurs.promotions.catégories[2]"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -164,6 +163,7 @@
   
   
   
+  data-not-all-empty
 />
 </div>
 </fieldset>
@@ -182,7 +182,6 @@
   name="indicateurs.promotions.catégories[3]"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -193,6 +192,7 @@
   
   
   
+  data-not-all-empty
 />
 </div>
 </fieldset>
@@ -211,7 +211,6 @@
   name="indicateurs.promotions.résultat"
   placeholder=""
   
-  
   min="0"
   
   step="any"
@@ -222,6 +221,7 @@
   
   onblur="refreshForm(event)"
   oninput="toggleFields()"
+  
 />
 </div>
 </fieldset>
@@ -300,7 +300,6 @@
   name="indicateurs.promotions.note"
   placeholder=""
   
-  
   min="0"
   
   
@@ -308,6 +307,7 @@
   
   
   readonly="readonly"
+  
   
   
   
@@ -320,7 +320,7 @@
   const resultatField = selectField("indicateurs.promotions.résultat")
 
   document.onready = () => {
-    if (app.data?.indicateurs?.promotions) {
+    if (app.getItem('indicateurs.promotions')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.promotions.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}
@@ -344,6 +344,8 @@
   document.onloaded = () => {
     toggleFields()
   }
+
+  document.preFormSubmit = validateNotAllEmpty("Vous devez renseigner les écarts de taux de promotions pour les CSP concernées")
 </script>
 
 </main>
