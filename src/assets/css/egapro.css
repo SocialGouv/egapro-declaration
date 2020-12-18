@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin&family=Gabriela&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: calc(100vh - 120px);
+}
+
+body {
+  background: linear-gradient(#eff0fa,#fff);
+  color: #191a49;
+  font-family: "Cabin",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+body > header {
+  background: #fff;
+  display: flex;
+  font-family: Gabriela;
+  position: fixed;
+  width:  100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+body > header div {
+  margin: auto;
+  width: 800px;
+  display: flex;
+}
+body > header img {
+  max-height: 80px;
+}
+body > header hgroup {
+  align-items: center;
+  display: flex;
+}
+body > header h1,
+body > header h2 {
+  font-size: .8rem;
+  margin: 0 1rem;
+}
+body > header h1 {
+  font-size: 1.6rem;
+}
+
+.main {
+  min-height: calc(100vh - 120px);
+  margin-top: 100px;
+  padding-bottom: 120px;
+  padding-left: 1rem;
+  background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
+}
+
+body > footer {
+  border-top: #eee solid 1px;
+  font-size: .88rem;
+  display: flex;
+  /* margin-top: 1rem; */
+  padding: 1rem 0 .5rem 0;
+}
+body > footer header {
+  width: 80%;
+  text-align: center;
+}
+body > footer header img {
+  max-height: 55px;
+  display: block;
+  margin: 0 auto;
+}
+body > footer header span {
+  display: block;
+  margin-top: .5rem;
+}
+body > footer a {
+  color: inherit;
+  font-size: .9em;
+}
+body > footer nav {
+  width: 100%;
+  margin: 0 1rem 0 1rem;
+}
+body > footer nav a {
+  display: block;
+  margin-bottom: .3rem;
+}
+body > footer p {
+  margin: 0;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+fieldset {
+  border: none;
+  margin-bottom: 2rem;
+  padding-left: 0;
+}
+
+label {
+  display: block;
+  margin: .6rem 0 .3rem 0;
+}
+
+input[type=""],
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=date],
+input[type=regex],
+textarea,
+select {
+  font: inherit;
+  background-color: #fff;
+  padding: .3rem 1rem;
+  border: 1px solid #999;
+  border-radius: .3rem;
+  width: 50%;
+}
+
+.row {
+  margin-bottom: 1rem;
+}
+
+progress {
+  display: none;
+}
+progress + * {
+  margin-left: 1rem;
+}
+
+nav {
+  margin-top: 2rem;
+}
+
+button,
+.button,
+[rel=prev],
+[rel=next] {
+  border: 1px solid #696cd1;
+  color: #696cd1;
+  border-radius: .3rem;
+  padding: .7rem 1.8rem;
+  background-color: #fff;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+[rel=next] {
+  background-color: #696cd1;
+  color: #fff;
+}
