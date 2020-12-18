@@ -40,9 +40,15 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
     </template>
   </tbody>
 </table>
-<button onclick="addCategory(event)">Ajouter une catégorie</button>
-<span id="nombreCategories"></span> catégorie(s) définie(s)
-<button id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
+
+<strong>
+  <span id="nombreCategories"></span> catégorie(s) définie(s)
+</strong>
+
+<div class="multitable-actions">
+  <button class="add" onclick="addCategory(event)">Ajouter une catégorie</button>
+  <button class="remove" id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
+</div>
 
 <script>
   let nombreCategories
