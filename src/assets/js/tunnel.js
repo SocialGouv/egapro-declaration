@@ -57,7 +57,7 @@ const pageName = fileName.split(".")[0];
 const step = steps.findIndex((step) => step.name === pageName);
 
 document.addEventListener("ready", () => {
-  if (!app.token) location.href = "/";
+  if (!app.token) location.href = "./";
   loadFormValues(form);
   toggleDeclarationValidatedBar()
   if (app.mode === "reading") {

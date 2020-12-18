@@ -17,7 +17,7 @@ async function request(method, uri, body, options = {}) {
     const error = response.json
     if(response.data.error) notify.error(response.data.error)
     delete localStorage.token
-    redirect('..')
+    redirect('./')
   }
   // if(!response.ok && response.data) alert(response.data.error)
   return response
