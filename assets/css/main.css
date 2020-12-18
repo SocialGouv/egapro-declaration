@@ -120,6 +120,7 @@ a.button[disabled] {
 }
 button:focus {
   outline: none;
+  text-decoration: underline;
 }
 
 .row {
