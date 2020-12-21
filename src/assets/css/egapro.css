@@ -139,6 +139,22 @@ select {
   max-width: 50%;
 }
 
+table input[type=""],
+table input[type=text],
+table input[type=email],
+table input[type=number],
+table input[type=date],
+table input[type=regex],
+table textarea,
+table select {
+  max-width: 80%;
+  padding: .3rem 0;
+}
+
+table thead th {
+  text-align: left;
+}
+
 .declaration-mode {
   margin: 1rem 0;
   padding: 1rem;
