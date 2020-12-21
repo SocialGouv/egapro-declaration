@@ -136,22 +136,6 @@ select {
   max-width: 50%;
 }
 
-button[disabled],
-a.button[disabled] {
-  background-color: #bbb;
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-[readonly],
-[disabled],
-[disabled] * {
-  cursor: not-allowed;
-}
-input:not([type="radio"]):read-only {
-  cursor: not-allowed;
-}
-
 .declaration-mode {
   margin: 1rem 0;
   padding: 1rem;
@@ -268,7 +252,9 @@ a.button[disabled] {
   box-shadow: none;
   cursor: not-allowed;
 }
-[readonly] {
+[readonly],
+[disabled],
+[disabled] * {
   cursor: not-allowed;
 }
 input:not([type="radio"]):read-only {
