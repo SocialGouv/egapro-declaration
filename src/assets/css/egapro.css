@@ -238,3 +238,17 @@ button.remove::before {
 #toast.error .content {
   background-color: #e11;
 }
+
+/* Cursor not-allowed on readonly/disabled */
+button[disabled],
+a.button[disabled] {
+  background-color: #bbb;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+[readonly] {
+  cursor: not-allowed;
+}
+input:not([type="radio"]):read-only {
+  cursor: not-allowed;
+}
