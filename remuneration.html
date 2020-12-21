@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
+<link rel="stylesheet" href="/declaration/assets/css/egapro.css">
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -277,7 +277,7 @@
     const target = event.target
     if (target.value === "non") {
       target.checked = false
-      alert("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
+      notify.info("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
     }
     toggleFields()
   }
@@ -339,5 +339,7 @@
     </p>
   </footer>
 </footer>
+
+<div id="toast"><div class=content></div></div>
 
 </html>

@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Raison sociale et numéro Siren de chacune des entreprises composant l’UES - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/solen.css">
+<link rel="stylesheet" href="/declaration/assets/css/egapro.css">
 <script src="/declaration/assets/js/utils.js"></script>
 
 <header>
@@ -180,9 +180,12 @@
     </template>
   </div>
 
-  <button onclick="addEntreprise(event)">Ajouter une entreprise</button>
   <strong><span id="nombreEntreprises"></span> entreprises composent cette UES</strong>
-  <button id="removeEntrepriseBtn" onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
+
+  <div class="multitable-actions">
+    <button class=add onclick="addEntreprise(event)">Ajouter une entreprise</button>
+    <button class=remove id="removeEntrepriseBtn" onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
+  </div>
 </fieldset>
 
 <script>
@@ -292,5 +295,7 @@
     </p>
   </footer>
 </footer>
+
+<div id="toast"><div class=content></div></div>
 
 </html>

@@ -19,7 +19,7 @@ async function request(method, uri, body, options = {}) {
     delete localStorage.token
     redirect('./')
   }
-  // if(!response.ok && response.data) alert(response.data.error)
+  // if(!response.ok && response.data) notify.error(response.data.error)
   return response
 }
 
@@ -71,8 +71,24 @@ window.addEventListener('DOMContentLoaded', async () => {
 })
 
 notify = {
-  error(message) {
-    alert(message)
+  get toast() {
+    return document.querySelector('#toast')
+  },
+
+  info(message, timeout) {
+    this.toast.querySelector('.content').textContent = message
+    this.toast.classList = ['info']
+    setTimeout(() => {
+      this.toast.classList = []
+    }, timeout || 3000)
+  },
+
+  error(message, timeout) {
+    this.toast.querySelector('.content').textContent = message
+    this.toast.classList = ['error']
+    setTimeout(() => {
+      this.toast.classList = []
+    }, timeout || 3000)
   }
 }
 
@@ -81,7 +97,7 @@ validateNotAllEmpty = message => {
     // We don't want to require ALL the fields, but we need at least one
     const allInputs = Array.from(document.querySelectorAll("[data-not-all-empty]"))
     if (allInputs.every(input => input.value === "")) {
-      alert(message)
+      notify.error(message)
       return false
     }
     return true
@@ -166,7 +182,7 @@ class AppStorage {
 
   async loadConfig() {
     const response = await request('GET', '/config')
-    if(!response.ok) alert("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
+    if(!response.ok) notify.error("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
     Object.entries(response.data).forEach(([key, value]) => {
       this.config[key.toLowerCase()] = value
     })

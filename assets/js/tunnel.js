@@ -86,7 +86,7 @@ async function saveFormData (event) {
     try {
       await document.onsend(data);
     } catch (e) {
-      return alert(e);
+      return notify.error(e);
     }
   }
 
@@ -100,7 +100,7 @@ form.addEventListener("submit", async (event) => {
       const result = await document.preFormSubmit(event)
       if (!result) return false
     } catch (e) {
-      return alert(e)
+      return notify.error(e)
     }
   }
 
