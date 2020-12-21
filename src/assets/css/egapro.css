@@ -245,6 +245,8 @@ button.remove::before {
   background-color: #e11;
 }
 
+/** Tweaks and Hacks **/
+
 /* Cursor not-allowed on readonly/disabled */
 button[disabled],
 a.button[disabled] {
@@ -259,4 +261,13 @@ a.button[disabled] {
 }
 input:not([type="radio"]):read-only {
   cursor: not-allowed;
+}
+
+/* "arrows" to increase/decrease numbers were asked to be removed */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
