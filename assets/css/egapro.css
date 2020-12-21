@@ -19,11 +19,12 @@ body {
 }
 
 body > header {
-  background: #fff;
-  display: flex;
-  font-family: Gabriela;
   position: fixed;
-  width:  100%;
+  display: flex;
+  padding: .5rem 0;
+  background: #fff;
+  font-family: Gabriela;
+  width: 100%;
   top: 0;
   left: 0;
   z-index: 3;
@@ -32,28 +33,31 @@ body > header div {
   margin: auto;
   width: 800px;
   display: flex;
+  align-items: center;
 }
 body > header img {
-  max-height: 80px;
+  max-height: 50px;
+  border: 1px solid #999;
 }
 body > header hgroup {
   align-items: center;
   display: flex;
-}
-body > header h1,
-body > header h2 {
-  font-size: .8rem;
+  min-width: fit-content;
   margin: 0 1rem;
 }
 body > header h1 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+}
+body > header p {
+  margin: 0 1rem;
+  font-size: .7rem;
 }
 
 .main {
   min-height: calc(100vh - 120px);
   margin-top: 100px;
   padding-bottom: 120px;
-  padding-left: 1rem;
+  padding: 1rem 1rem 0 1rem;
   background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
 }
 
@@ -92,7 +96,6 @@ body > footer nav a {
 body > footer p {
   margin: 0;
 }
-
 
 h1,
 h2,
@@ -245,6 +248,8 @@ button.remove::before {
   background-color: #e11;
 }
 
+/** Tweaks and Hacks **/
+
 /* Cursor not-allowed on readonly/disabled */
 button[disabled],
 a.button[disabled] {
@@ -259,4 +264,13 @@ a.button[disabled] {
 }
 input:not([type="radio"]):read-only {
   cursor: not-allowed;
+}
+
+/* "arrows" to increase/decrease numbers were asked to be removed */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
