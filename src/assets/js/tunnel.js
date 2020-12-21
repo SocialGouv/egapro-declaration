@@ -65,6 +65,7 @@ document.addEventListener("ready", () => {
     document.querySelectorAll('[name]').forEach(input => {
       input.setAttribute('readonly', true)
       if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
+      if(input.matches('[type=checkbox]')) input.onclick = (_) => false
       if(input.matches('select')) {
         Array.from(input.querySelectorAll('option'))
           .filter(option => !option.selected)
@@ -207,6 +208,8 @@ function loadFormValues(form) {
     if (value === "") return;
     if (node.type === "radio") {
       node.checked = node.value === value;
+    } else if (node.type === "checkbox") {
+      node.checked = value === "oui"
     } else {
       // If it's a hidden input, it's one we generated, we don't want to overwrite it with an empty value
       node.value = node.type === "hidden" ? node.value : value;

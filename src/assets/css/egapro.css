@@ -257,6 +257,6 @@ a.button[disabled] {
 [disabled] * {
   cursor: not-allowed;
 }
-input:not([type="radio"]):read-only {
+input:not([type="radio"]):not([type="checkbox"]):read-only {
   cursor: not-allowed;
 }
