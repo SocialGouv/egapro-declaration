@@ -256,6 +256,7 @@ button.remove::before {
   overflow-y: hidden;
   transition: bottom .3s ease-in-out;
   width: 100%;
+  text-align: center;
 }
 #toast.visible {
   bottom: 0;
@@ -266,7 +267,7 @@ button.remove::before {
   background-color: #888;
   width: fit-content;
   margin: 0 auto;
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
 #toast.error .content {
