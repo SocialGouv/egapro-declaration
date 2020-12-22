@@ -109,7 +109,8 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   function checkCodePostal(event) {
     if (!codePostal.value || !departmentSelect.value) return
 
-    if (!codePostal.value.startsWith(departmentSelect.value)) {
+    const departementCode = ['2A', '2B'].includes(departmentSelect.value) ? '20' : departmentSelect.value
+    if (!codePostal.value.startsWith(departementCode)) {
       codePostal.setCustomValidity("Le code postal ne correspond pas au département sélectionné")
     } else {
       codePostal.setCustomValidity("")
