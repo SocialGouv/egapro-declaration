@@ -42,13 +42,10 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 <fieldset id="fieldset-calculable-csp">
   <div class=row>
     <div>
-      {% include radios.html
-        name="_indicateurs.rémunérations.calculable_csp"
-        label="Vous déclarez que votre indicateur n’est pas calculable, avez-vous procédé au calcul de cet indicateur par catégorie socio-professionnelle ?"
-        required="true"
-        options="oui=oui&non=non"
-        onchange="checkCalculableCSP(event)"
-        required="required" %}
+      <label>
+        <input type="checkbox" id="field--_indicateurs.rémunérations.calculable_csp" name="_indicateurs.rémunérations.calculable_csp" value="oui" required="required" onchange="toggleFields(this)" />
+        Je déclare avoir procédé au calcul de cet indicateur par catégorie socio-professionnelle, et confirme que l'indicateur n'est pas calculable.
+      </label>
     </div>
   </div>
 </fieldset>
@@ -85,7 +82,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
   function toggleFields(event) {
     const isCalculableChosen = calculableField.querySelector(':checked')
     const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-    const isCalculatedCsp = calculableCspField.querySelector(':checked') && calculableCspField.querySelector(':checked').value === 'oui'
+    const isCalculatedCsp = calculableCspField.checked
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
     enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
@@ -100,15 +97,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
       // for a previously filled "mode".
       delete app.data.indicateurs.rémunérations.catégories
     }
-  }
-
-  function checkCalculableCSP(event) {
-    const target = event.target
-    if (target.value === "non") {
-      target.checked = false
-      notify.info("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
-    }
-    toggleFields()
   }
 
   document.onloaded = () => {
