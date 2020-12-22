@@ -136,12 +136,10 @@ if (step > 0) {
   };
 } else {
   previousButton.onclick = (e) => {
-    // On the "commencer.html" page (the first) we display a "recommencer" button
+    // On the "commencer.html" page (the first) we display a "nouvelle déclaration" button
     e.preventDefault();
-    app.resetData()
-    delete localStorage.data
     // Reload the page, without the local data
-    location.pathname = location.pathname
+    location.pathname = './'
   };
 }
 
