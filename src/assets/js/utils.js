@@ -71,24 +71,37 @@ window.addEventListener('DOMContentLoaded', async () => {
 })
 
 notify = {
+  timeout: null,
+
   get toast() {
     return document.querySelector('#toast')
   },
 
-  info(message, timeout) {
-    this.toast.querySelector('.content').textContent = message
-    this.toast.classList = ['info']
-    setTimeout(() => {
-      this.toast.classList = []
-    }, timeout || 3000)
+  set message(text) {
+    document.querySelector('#toast .message').textContent = text
   },
 
-  error(message, timeout) {
-    this.toast.querySelector('.content').textContent = message
-    this.toast.classList = ['error']
-    setTimeout(() => {
-      this.toast.classList = []
-    }, timeout || 3000)
+  show(message, type) {
+    clearTimeout(this.timeout)
+    this.message = message
+    this.toast.classList.add('visible', type)
+  },
+
+  close() {
+    this.toast.classList = []
+    this.timeout = setTimeout(() => (this.message = ""), 3000)
+  },
+
+  warning(message) {
+    this.show(message, 'warning')
+  },
+
+  info(message) {
+    this.show(message, 'info')
+  },
+
+  error(message) {
+    this.show(message, 'error')
   }
 }
 

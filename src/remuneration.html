@@ -106,7 +106,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     const target = event.target
     if (target.value === "non") {
       target.checked = false
-      notify.info("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
+      notify.warning("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
     }
     toggleFields()
   }
