@@ -65,6 +65,10 @@ body > header p {
   background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
 }
 
+.fulltext .main {
+  padding-bottom: 10rem;
+}
+
 body > footer {
   border-top: #eee solid 1px;
   font-size: .88rem;
