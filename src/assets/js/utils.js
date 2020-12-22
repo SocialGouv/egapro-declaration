@@ -78,16 +78,22 @@ notify = {
   },
 
   set message(text) {
-    document.querySelector('#toast .message').textContent = text
+    try {
+      document.querySelector('#toast .message').textContent = text
+    } catch {
+      alert(text)
+    }
   },
 
   show(message, type) {
+    if(!this.toast) return
     clearTimeout(this.timeout)
     this.message = message
     this.toast.classList.add('visible', type)
   },
 
   close() {
+    if(!this.toast) return
     this.toast.classList = []
     this.timeout = setTimeout(() => (this.message = ""), 3000)
   },
