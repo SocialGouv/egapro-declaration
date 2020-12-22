@@ -15,13 +15,22 @@ layout: empty
 <script src="{{ site.baseurl }}/assets/js/utils.js"></script>
 <script>
   document.onready = () => {
-    const tokenParam = '?token='
-    let token = false
-    if(location.search.startsWith(tokenParam)) {
-      token = true
-      app.token = location.search.slice(tokenParam.length)
+    const urlParams = new URLSearchParams(location.search)
+    app.resetData()
+
+    if (urlParams.has('token')) {
+      // Coming from an "authentication link" in the confirmation email
+      app.token = urlParams.get('token')
+    } else if (urlParams.has('siren') && urlParams.has('year')) {
+      // Coming from a "declaration link" from the declaration validation email
+      app.siren = urlParams.get('siren')
+      app.annee = urlParams.get('year')
+    } else {
+      // Start from scratch
+      delete localStorage.email
+      delete localStorage.token
     }
-    else if (app.token) token = true
-    token ? redirect('{{site.baseurl}}/commencer.html') : redirect('{{site.baseurl}}/presentation.html')
+    app.dataToLocalStorage()
+    redirect(app.token ? 'commencer.html' : 'presentation.html')
   }
 </script>

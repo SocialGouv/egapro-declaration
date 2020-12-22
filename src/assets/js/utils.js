@@ -193,6 +193,10 @@ class AppStorage {
     this.data = { source: 'formulaire' }
   }
 
+  dataToLocalStorage() {
+    localStorage.data = JSON.stringify(this.data)
+  }
+
   async loadConfig() {
     const response = await request('GET', '/config')
     if(!response.ok) notify.error("Le serveur ne répond pas. Veuillez contacter l'équipe technique.")
@@ -244,8 +248,16 @@ class AppStorage {
     }, {})
   }
 
+  set annee(annee) {
+    return this.setItem('déclaration.année_indicateurs', Number(annee))
+  }
+
   get annee() {
     return this.getItem('déclaration.année_indicateurs')
+  }
+
+  set siren(siren) {
+    return this.setItem('entreprise.siren', siren)
   }
 
   get siren() {
@@ -344,7 +356,7 @@ class AppStorage {
     const response = await request('PUT', `/declaration/${this.siren}/${this.annee}`, schemaData)
     if(response.ok) {
       Object.assign(this.data, schemaData)
-      localStorage.data = JSON.stringify(this.data)
+      this.dataToLocalStorage()
     }
     // Only alert if we have an event: if we were called from a form submit (not from a `refreshForm`)
     else if(response.data.error && event) notify.error(response.data.error)
