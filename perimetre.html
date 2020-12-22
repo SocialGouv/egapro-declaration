@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Périmètre retenu pour le calcul et la publication des indicateurs - Egalité professionnelle - Ministère du Travail</title>
@@ -384,7 +384,8 @@
   function checkCodePostal(event) {
     if (!codePostal.value || !departmentSelect.value) return
 
-    if (!codePostal.value.startsWith(departmentSelect.value)) {
+    const departementCode = ['2A', '2B'].includes(departmentSelect.value) ? '20' : departmentSelect.value
+    if (!codePostal.value.startsWith(departementCode)) {
       codePostal.setCustomValidity("Le code postal ne correspond pas au département sélectionné")
     } else {
       codePostal.setCustomValidity("")
@@ -437,7 +438,10 @@
 </footer>
 
 <div id="toast">
-  <div class=content></div>
+  <div class=content>
+    <span class=message></span>
+    <a href="#" onclick="notify.close()" class=close>x</a>
+  </div>
 </div>
 
 </html>

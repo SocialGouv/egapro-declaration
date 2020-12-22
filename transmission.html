@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Transmission de la procédure - Egalité professionnelle - Ministère du Travail</title>
@@ -35,12 +35,12 @@ de procédure.
 <p class=warning>Si vous ne recevez pas cet accusé de réception, merci de bien vérifier que
 celui-ci n'a pas été déplacé dans votre dossier de courriers indésirables. Si
 toutefois vous ne l'avez pas reçu, <em>il est important de ne pas faire une
-nouvelle déclaration</em>. Vous pouvez revenir sur votre déclaration, via le lien
-transmis dans l'email de validation de votre adresse électronique, à la
-dernière page de validation afin de générer l'envoi d'un nouvel accusé de
-réception.</p>
+nouvelle déclaration</em>. Vous pouvez revenir sur votre déclaration via le lien
+transmis dans l'email qui vient de vous être envoyé.</p>
 
 <center>Nous vous remercions de votre transmission.</center>
+
+<p>Si vous le souhaitez, vous pouvez effectuer une <a href="./">nouvelle déclaration</a>.</p>
 
 </main>
 
@@ -72,7 +72,10 @@ réception.</p>
 </footer>
 
 <div id="toast">
-  <div class=content></div>
+  <div class=content>
+    <span class=message></span>
+    <a href="#" onclick="notify.close()" class=close>x</a>
+  </div>
 </div>
 
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Informations déclarant pour tout contact ultérieur - Egalité professionnelle - Ministère du Travail</title>
@@ -128,6 +128,27 @@
   </div>
 </fieldset>
 
+<fieldset>
+  <div class=row>
+    <div>
+      <label>
+        <input type="checkbox" id="field--_déclarant.cgu" name="_déclarant.cgu" value="oui" required="required" />
+        J'accepte l'utilisation de mes données à caractère personnel pour réaliser des statistiques et pour vérifier la validité de ma déclaration. Pour en savoir plus sur l'usage de ces données, vous pouvez consulter nos
+        <a href="/cgu">Conditions Générales d'Utilisation</a>
+      </label>
+    </div>
+  </div>
+</fieldset>
+
+<script>
+  document.onready = () => {
+    if (app.getItem('déclarant.nom')) {
+      // If we already have a `déclarant.nom` then we already submitted this
+      // form, and have thus already agreed with the CGU.
+      app.setItem('_déclarant.cgu', 'oui')
+    }
+  }
+</script>
 </main>
 
 <nav id="tunnel-actions">
@@ -171,7 +192,10 @@
 </footer>
 
 <div id="toast">
-  <div class=content></div>
+  <div class=content>
+    <span class=message></span>
+    <a href="#" onclick="notify.close()" class=close>x</a>
+  </div>
 </div>
 
 </html>

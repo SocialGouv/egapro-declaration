@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
 <title>Commencer la déclaration - Egalité professionnelle - Ministère du Travail</title>
@@ -89,8 +89,6 @@
   </fieldset>
 
 <script>
-  delete localStorage.data
-
   document.preFormSubmit = event => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
@@ -124,7 +122,7 @@
 
 <nav id="tunnel-actions">
   
-  <a class=button rel=prev>Recommencer</a>
+  <a class=button rel=prev>Nouvelle déclaration</a>
   
   <progress max=0 value=0></progress>
   
@@ -163,7 +161,10 @@
 </footer>
 
 <div id="toast">
-  <div class=content></div>
+  <div class=content>
+    <span class=message></span>
+    <a href="#" onclick="notify.close()" class=close>x</a>
+  </div>
 </div>
 
 </html>
