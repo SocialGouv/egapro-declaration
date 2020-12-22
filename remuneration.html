@@ -8,9 +8,9 @@
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <a href="https://travail-emploi.gouv.fr/" target="_blank"><img src="/declaration/assets/img/marianne.png" alt="Marianne"></a>
     <hgroup>
-      <h1>Index Egapro</h1>
+      <h1><a href="https://index-egapro.travail.gouv.fr/" target="_blank">Index Egapro</a></h1>
     </hgroup>
     <p>
       <!-- &#8209; is an unbreakable hyphen not to split the word -->
@@ -172,43 +172,10 @@
 <fieldset id="fieldset-calculable-csp">
   <div class=row>
     <div>
-      
-<label for="field--_indicateurs.rémunérations.calculable_csp">Vous déclarez que votre indicateur n’est pas calculable, avez-vous procédé au calcul de cet indicateur par catégorie socio-professionnelle ?</label>
-
-
-<div
-  id="field--_indicateurs.rémunérations.calculable_csp"
-  name="_indicateurs.rémunérations.calculable_csp"
-  type="radiogroup"
-  >
-  
-     
-    
-      
-      
       <label>
-        <input
-          required
-          type="radio"
-          onchange="checkCalculableCSP(event)"
-          name="_indicateurs.rémunérations.calculable_csp" value="oui"> oui
+        <input type="checkbox" id="field--_indicateurs.rémunérations.calculable_csp" name="_indicateurs.rémunérations.calculable_csp" value="oui" required="required" onchange="toggleFields(this)" />
+        Je déclare avoir procédé au calcul de cet indicateur par catégorie socio-professionnelle, et confirme que l'indicateur n'est pas calculable.
       </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          onchange="checkCalculableCSP(event)"
-          name="_indicateurs.rémunérations.calculable_csp" value="non"> non
-      </label>
-      
-    
-  
-</div>
-
     </div>
   </div>
 </fieldset>
@@ -260,7 +227,7 @@
   function toggleFields(event) {
     const isCalculableChosen = calculableField.querySelector(':checked')
     const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
-    const isCalculatedCsp = calculableCspField.querySelector(':checked') && calculableCspField.querySelector(':checked').value === 'oui'
+    const isCalculatedCsp = calculableCspField.checked
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
     enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
@@ -275,15 +242,6 @@
       // for a previously filled "mode".
       delete app.data.indicateurs.rémunérations.catégories
     }
-  }
-
-  function checkCalculableCSP(event) {
-    const target = event.target
-    if (target.value === "non") {
-      target.checked = false
-      notify.info("Avant de déclarer votre indicateur incalculable, vous devez procéder au calcul de cet indicateur par CSP. Si l’indicateur est non calculable avec cette méthode, alors vous pouvez déclarer que votre indicateur est non calculable et poursuivre votre déclaration pour les autres indicateurs.")
-    }
-    toggleFields()
   }
 
   document.onloaded = () => {
@@ -344,6 +302,8 @@
   </footer>
 </footer>
 
-<div id="toast"><div class=content></div></div>
+<div id="toast">
+  <div class=content></div>
+</div>
 
 </html>

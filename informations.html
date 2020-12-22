@@ -8,9 +8,9 @@
 
 <header>
   <div>
-    <img src="/declaration/assets/img/marianne.png" alt="Marianne">
+    <a href="https://travail-emploi.gouv.fr/" target="_blank"><img src="/declaration/assets/img/marianne.png" alt="Marianne"></a>
     <hgroup>
-      <h1>Index Egapro</h1>
+      <h1><a href="https://index-egapro.travail.gouv.fr/" target="_blank">Index Egapro</a></h1>
     </hgroup>
     <p>
       <!-- &#8209; is an unbreakable hyphen not to split the word -->
@@ -175,7 +175,7 @@
 
 <script>
   document.onready = () => {
-    if (app.getItem('indicateurs.rémunérations')) {
+    if (app.getItem('indicateurs.rémunérations') || app.getItem('déclaration.fin_période_référence')) {
       // There is already a "rémunérations" indicateur (filled in on the next screen) so we did
       // already submit this current form, so we can infer the "_periode.type" data.
       app.data._periode = {type: app.data.déclaration.fin_période_référence ? "autre" : "civile"}
@@ -236,6 +236,8 @@
   </footer>
 </footer>
 
-<div id="toast"><div class=content></div></div>
+<div id="toast">
+  <div class=content></div>
+</div>
 
 </html>
