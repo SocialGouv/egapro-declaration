@@ -10,11 +10,23 @@ layout: default
   </p>
   <button type="button" onclick="setDraftStatus()">Modifier la déclaration</button>
 </section>
+
 <section id="declaration-draft" class="declaration-mode" hidden>
   <p>
     Vous êtes en train de modifier une déclaration validée et transmise.<br>
     Vos modifications ne seront enregistrées que lorsque vous l'aurez à nouveau validée et transmise à la dernière étape.
   </p>
+</section>
+
+<section id="simulation-readonly" class="declaration-mode" hidden>
+  <p>
+    Cette déclaration a été validée et transmise.
+  </p>
+  <p>
+    Elle a été établie depuis le site de « calcul et déclaration », suite à une simulation. Vous pouvez continuer à la consulter d'ici.<br>
+    Si vous souhaitez la modifier, vous pourrez le faire depuis le site « calcul et déclaration ».
+  </p>
+  <button type="button" onclick="goToSimulationApp()">Modifier depuis le site « calcul et déclaration »</button>
 </section>
 
 <main>
