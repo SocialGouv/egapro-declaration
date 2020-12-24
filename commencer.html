@@ -107,14 +107,9 @@
   }
 
   document.onready = function() {
-    const schema = app.schema.properties['déclaration']['properties']['année_indicateurs']
+    const years = app.config.years.reverse().map(year => ({label: year, value: year}))
     buildSelectOptions(
-      selectField('déclaration.année_indicateurs'),
-      [
-        { label: schema.maximum, value: schema.maximum },
-        { label: schema.minimum, value: schema.minimum },
-      ]
-    )
+      selectField('déclaration.année_indicateurs'), years)
 
     document.querySelector('button[rel=next]').disabled = !app.token
     window.validateForm = async function(form) {
