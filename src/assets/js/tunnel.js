@@ -216,7 +216,7 @@ function loadFormValues(form) {
 }
 
 function toggleDeclarationValidatedBar() {
-  if(app.data.source === 'simulation') {
+  if(app.data.source === 'simulateur') {
     document.getElementById("simulation-readonly").hidden = app.mode !== 'reading'
   } else {
     document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
@@ -236,6 +236,6 @@ async function setDraftStatus() {
 
 function goToSimulationApp() {
   const id = app.data.id
-  const simulation = window.open(`https://index-egapro.travail.gouv.fr/simulateur/${id}`, '_blank')
+  const simulation = window.open(`${location.origin}/simulateur/${id}`, '_blank');
   simulation.focus()
 }

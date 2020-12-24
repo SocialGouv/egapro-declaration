@@ -182,7 +182,7 @@ class AppStorage {
     this.schema = {}
     this.apiUrl = ['localhost', '127.0.0.1'].includes(location.hostname)
       ? 'http://localhost:2626'
-      : 'https://dev.egapro.fabrique.social.gouv.fr/api'
+      : `${location.origin}/api`;
   }
 
   async init() {
