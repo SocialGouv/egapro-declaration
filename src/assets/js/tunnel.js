@@ -216,7 +216,7 @@ function loadFormValues(form) {
 }
 
 function toggleDeclarationValidatedBar() {
-  if(app.data.source === 'simulation') {
+  if(app.data.source === 'simulateur') {
     document.getElementById("simulation-readonly").hidden = app.mode !== 'reading'
   } else {
     document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
