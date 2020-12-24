@@ -63,9 +63,6 @@ body > header p {
   padding-bottom: 120px;
   padding: 1rem 1rem 0 1rem;
   background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
-}
-
-.fulltext .main {
   padding-bottom: 10rem;
 }
 
@@ -298,10 +295,16 @@ a.button[disabled] {
 [disabled],
 [disabled] * {
   cursor: not-allowed;
+  border-width: 0;
 }
 input:not([type="radio"]):not([type="checkbox"]):read-only {
   cursor: not-allowed;
+  border-width: 0;
 }
+input[type="radio"][disabled] {
+  border-width: 0;
+}
+
 
 /* "arrows" to increase/decrease numbers were asked to be removed */
 input[type='number'] {

@@ -216,8 +216,12 @@ function loadFormValues(form) {
 }
 
 function toggleDeclarationValidatedBar() {
-  document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
-  document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
+  if(app.data.source === 'formulaire') {
+    document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
+    document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
+  } else if(app.data.source === 'simulation') {
+    document.getElementById("simulation-readonly").hidden = app.mode !== 'reading'
+  }
 }
 
 async function setDraftStatus() {
@@ -228,4 +232,10 @@ async function setDraftStatus() {
     // Apply status change refreshing the page
     location.pathname = location.pathname
   }
+}
+
+function goToSimulationApp() {
+  const id = app.data.id
+  const simulation = window.open(`https://index-egapro.travail.gouv.fr/simulateur/${id}`, '_blank')
+  simulation.focus()
 }
