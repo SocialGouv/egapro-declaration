@@ -216,11 +216,11 @@ function loadFormValues(form) {
 }
 
 function toggleDeclarationValidatedBar() {
-  if(app.data.source === 'formulaire') {
+  if(app.data.source === 'simulation') {
+    document.getElementById("simulation-readonly").hidden = app.mode !== 'reading'
+  } else {
     document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
     document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
-  } else if(app.data.source === 'simulation') {
-    document.getElementById("simulation-readonly").hidden = app.mode !== 'reading'
   }
 }
 
