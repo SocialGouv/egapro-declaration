@@ -13,18 +13,8 @@ title: "Informations calcul et période de référence"
 
 <fieldset>
   <div class=row>
-    <h4>Période de référence</h4>
-    {% include radios.html
-      name="_periode.type"
-      options="civile=Année civile&autre=Autre période"
-      onchange="updatePeriode(this.value)"
-      required="required" %}
-  </div>
-</fieldset>
-
-<fieldset id="_periode.reference">
-  <div class=row>
-    {% include input.html type="date" label="Date de fin de la période de référence" name="déclaration.fin_période_référence" %}
+    {% include input.html type="date" label="Date de fin de la période de référence" name="déclaration.fin_période_référence" required="required" %}
+    <a class="button" href="#" onclick="updatePeriode(event)">sélectionner la fin de l'année civile</a>
   </div>
 </fieldset>
 
@@ -35,22 +25,15 @@ title: "Informations calcul et période de référence"
 </fieldset>
 
 <script>
+  const finPeriodeReferenceField = selectField("déclaration.fin_période_référence")
   document.onready = () => {
-    if (app.getItem('indicateurs.rémunérations') || app.getItem('déclaration.fin_période_référence')) {
-      // There is already a "rémunérations" indicateur (filled in on the next screen) so we did
-      // already submit this current form, so we can infer the "_periode.type" data.
-      app.data._periode = {type: app.data.déclaration.fin_période_référence ? "autre" : "civile"}
+    finPeriodeReferenceField.max = `${app.data.déclaration.année_indicateurs}-12-31`
+  }
+
+  function updatePeriode(event) {
+    event.preventDefault()
+    if (!finPeriodeReferenceField.readOnly) {
+      finPeriodeReferenceField.value = finPeriodeReferenceField.max 
     }
-    
-    selectField("déclaration.fin_période_référence").max = `${app.data.déclaration.année_indicateurs}-12-31`
-  }
-
-  document.onloaded = () => {
-    updatePeriode(app.getItem('_periode.type'))
-  }
-
-  function updatePeriode(value) {
-    const fieldset = document.getElementById('_periode.reference')
-    fieldset.disabled = value !== "autre"
   }
 </script>

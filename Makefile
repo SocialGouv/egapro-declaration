@@ -2,10 +2,9 @@ serve:
 	jekyll serve -w
 
 build:
-	jekyll build --baseurl "/declaration"
+	JEKYLL_ENV=`date +"%Y.%m.%d"` jekyll build --baseurl "/declaration"
 
-deploy:
-	make build
+release: build
 	git worktree add -b deploy deploying/ origin/deploy
 	rm -rf deploying/*
 	cp -r _site/* deploying/
@@ -15,3 +14,7 @@ deploy:
 		git push
 	git worktree remove deploying
 	git branch -d deploy
+
+release-prod: release
+	git tag -f `date +"%Y.%m.%d"` origin/deploy
+	git push --tags -f
