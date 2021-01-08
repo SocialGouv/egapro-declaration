@@ -5,6 +5,16 @@
 <title>{{ page.title }} - {{ site.title }}</title>
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/egapro.css">
 
+<script>
+  // First, check the browser is compatible
+  try {
+    eval("async function _(){}")
+  }
+  catch (e) {
+    window.location.href = '{{site.baseurl}}/compatibilite.html'
+  }
+</script>
+
 {% if site.sentry-dsn %}
 <script
   src="{{ site.baseurl }}/assets/js/sentry.min.js"
