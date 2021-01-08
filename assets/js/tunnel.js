@@ -87,7 +87,7 @@ async function saveFormData (event) {
     try {
       await document.onsend(data);
     } catch (e) {
-      return notify.error(e);
+      return notify.error(e, data);
     }
   }
 
@@ -108,7 +108,7 @@ form.addEventListener("submit", async (event) => {
   if(app.mode !== 'reading') {
     const response = await saveFormData(event);
 
-    if (!response.ok) return;
+    if (!response || !response.ok) return;
   }
 
   const nextStep = steps[step].nextStep;
