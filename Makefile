@@ -2,7 +2,11 @@ serve:
 	jekyll serve -w
 
 build:
-	JEKYLL_ENV=`date +"%Y.%m.%d"` jekyll build --baseurl "/declaration"
+	echo "sentry-dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48'" >> _config.yml
+	echo "version: `date +"%Y.%m.%d"`" >> _config.yml
+	jekyll build --baseurl "/declaration"
+	sed -i '' -e '$$ d' _config.yml # remove the last line
+	sed -i '' -e '$$ d' _config.yml
 
 release: build
 	git worktree add -b deploy deploying/ origin/deploy
