@@ -18,6 +18,10 @@ body {
   margin: 0 auto;
 }
 
+header img {
+  width: 90px;
+}
+
 body > header {
   position: fixed;
   display: flex;
@@ -34,10 +38,6 @@ body > header div {
   width: 800px;
   display: flex;
   align-items: center;
-}
-body > header img {
-  max-height: 50px;
-  border: 1px solid #999;
 }
 body > header hgroup {
   align-items: center;
@@ -72,15 +72,6 @@ body > footer {
   display: flex;
   /* margin-top: 1rem; */
   padding: 1rem 0 .5rem 0;
-}
-body > footer header {
-  width: 80%;
-  text-align: center;
-}
-body > footer header img {
-  max-height: 55px;
-  display: block;
-  margin: 0 auto;
 }
 body > footer header span {
   display: block;
