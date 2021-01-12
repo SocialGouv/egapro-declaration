@@ -10,7 +10,7 @@ async function request(method, uri, body, options = {}) {
   try {
     response.data = await response.json()
   }
-  catch {
+  catch (e) {
     response.data = null
   }
   if(response.status == 401) {
@@ -80,7 +80,7 @@ notify = {
   set message(text) {
     try {
       document.querySelector('#toast .message').textContent = text
-    } catch {
+    } catch (e) {
       alert(text)
     }
   },
@@ -106,8 +106,13 @@ notify = {
     this.show(message, 'info')
   },
 
-  error(message) {
-    this.show(message, 'error')
+  error(error, data) {
+    this.show(error, 'error')
+    if (typeof Sentry !== "undefined") {
+      Sentry.captureException(error, {
+        extra: data || app.data
+      })
+    }
   }
 }
 
@@ -292,7 +297,7 @@ class AppStorage {
         return index ? item[key][index] : item[key];
       }, this.data);
       return value !== undefined ? value : "";
-    } catch {
+    } catch (e) {
       // Fail silently if the item doesn't exist yet
       return "";
     }
