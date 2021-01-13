@@ -6,7 +6,7 @@ title: "Résultat final de l’écart de rémunération entre les femmes et les 
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en % après application du seuil de pertinence à chaque catégorie" min=0 step="any" required=true onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en % après application du seuil de pertinence à chaque catégorie" min=0 step="any" required=true onblur="maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -16,7 +16,7 @@ title: "Résultat final de l’écart de rémunération entre les femmes et les 
       label="Population envers laquelle l'écart est favorable"
       empty="true"
       required=true
-      onchange="refreshForm(event)"
+      onchange="maybeRefreshForm(event)"
       options="femmes=Femmes&hommes=Hommes"
     %}
   </div>
@@ -28,6 +28,13 @@ title: "Résultat final de l’écart de rémunération entre les femmes et les 
 
 <script>
   const resultatField = selectField("indicateurs.rémunérations.résultat")
+  const populationFavorableField = selectField("indicateurs.rémunérations.population_favorable")
+
+  function maybeRefreshForm(event) {
+    if (resultatField.checkValidity() && populationFavorableField.checkValidity()) {
+      refreshForm(event)
+    }
+  }
 
   function toggleFields() {
     enableField("#fieldset-population-favorable", resultatField.value != "0")

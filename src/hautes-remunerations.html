@@ -6,7 +6,7 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
 <h1>{{ page.title }}</h1>
 
 <fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.hautes_rémunérations.résultat" label="Résultat en nombre de salariés du sexe sous-représenté" min=0 max=5 required=true onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.hautes_rémunérations.résultat" label="Résultat en nombre de salariés du sexe sous-représenté" min=0 max=5 required=true onblur="maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -16,7 +16,7 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
       label="Sexe des salariés sur-représentés"
       empty="true"
       required=true
-      onchange="refreshForm(event)"
+      onchange="maybeRefreshForm(event)"
       options="femmes=Femmes&hommes=Hommes"
     %}
   </div>
@@ -28,6 +28,14 @@ title: "Nombre de salariés du sexe sous-représenté parmi les 10 salariés aya
 
 <script>
   const resultatField = selectField("indicateurs.hautes_rémunérations.résultat")
+  const populationFavorableField = selectField("indicateurs.hautes_rémunérations.population_favorable")
+
+  function maybeRefreshForm(event) {
+    if (resultatField.checkValidity() && populationFavorableField.checkValidity()) {
+      refreshForm(event)
+    }
+  }
+
   function toggleFields() {
     enableField('#fieldset-population-favorable', resultatField.value && resultatField.value != "5")
   }

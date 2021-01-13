@@ -38,7 +38,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 </fieldset>
 
 <fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 step="any" required=true onblur="refreshForm(event)" oninput="toggleFields()" %}</div>
+  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 step="any" required=true onblur="maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-population-favorable">
@@ -48,7 +48,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
       label="Population envers laquelle l'écart est favorable"
       empty="true"
       required=true
-      onchange="refreshForm(event)"
+      onchange="maybeRefreshForm(event)"
       options="femmes=Femmes&hommes=Hommes"
     %}
   </div>
@@ -73,6 +73,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
 <script>
   const calculableField = selectField('_indicateurs.promotions.calculable')
   const resultatField = selectField("indicateurs.promotions.résultat")
+  const populationFavorableField = selectField("indicateurs.promotions.population_favorable")
 
   document.onready = () => {
     if (app.getItem('indicateurs.promotions')) {
@@ -80,6 +81,12 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
       // "_indicateurs.promotions.calculable" data.
       if (!app.data._indicateurs) app.data._indicateurs = {}
       app.data._indicateurs.promotions = {calculable: app.data.indicateurs.promotions.non_calculable ? "non" : "oui"}
+    }
+  }
+
+  function maybeRefreshForm(event) {
+    if (resultatField.checkValidity() && populationFavorableField.checkValidity()) {
+      refreshForm(event)
     }
   }
 
