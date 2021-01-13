@@ -121,7 +121,7 @@ validateNotAllEmpty = message => {
     // We don't want to require ALL the fields, but we need at least one
     const allInputs = Array.from(document.querySelectorAll("[data-not-all-empty]"))
     if (allInputs.every(input => input.value === "")) {
-      notify.error(message)
+      notify.warning(message)
       return false
     }
     return true
