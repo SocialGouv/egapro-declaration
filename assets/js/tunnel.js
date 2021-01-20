@@ -56,6 +56,20 @@ const fileName =
 const pageName = fileName.split(".")[0];
 const step = steps.findIndex((step) => step.name === pageName);
 
+const walkSteps = (step) => {
+  let currentStep = 0
+  while (currentStep < step) {
+    const nextStep = steps[currentStep].nextStep
+    if (nextStep) {
+      const nextPageName = nextStep(app.data)
+      currentStep = steps.findIndex((step) => step.name === nextPageName);
+    } else {
+      currentStep = currentStep + 1
+    }
+    console.log("step:", steps[currentStep].name)
+  }
+}
+
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "./"
   if (pageName !== 'commencer' && (!app.siren || !app.annee)) location.href = "./commencer.html"
@@ -74,6 +88,8 @@ document.addEventListener("ready", () => {
       }
     })
   }
+
+  walkSteps(step)
 });
 
 progress.max = steps.length - 1;
