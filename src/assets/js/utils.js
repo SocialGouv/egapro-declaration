@@ -201,7 +201,10 @@ class AppStorage {
   }
 
   resetData() {
-    this.data = { source: 'formulaire' }
+    this.data = {
+      source: 'formulaire',
+      déclaration: {}
+    }
   }
 
   dataToLocalStorage() {
