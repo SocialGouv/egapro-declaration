@@ -101,11 +101,10 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
     enableField('#fieldset-population-favorable', isCalculable && resultatField.value != "0")
     enableField('#fieldset-motif', isCalculableChosen && !isCalculable)
     enableField('#fieldset-note', isCalculable)
+    document.preFormSubmit = isCalculable ? validateNotAllEmpty("Vous devez renseigner les écarts de taux d'augmentations pour les CSP concernées") : undefined
   }
 
   document.onloaded = () => {
     toggleFields()
   }
-
-  document.preFormSubmit = validateNotAllEmpty("Vous devez renseigner les écarts de taux d'augmentations pour les CSP concernées")
 </script>
