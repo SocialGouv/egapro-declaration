@@ -11,7 +11,9 @@
     eval("async function _(){}")
   }
   catch (e) {
-    window.location.href = '/declaration/compatibilite.html'
+    if (!window.location.href.endsWith('/compatibilite.html')) {
+      window.location.href = '/declaration/compatibilite.html'
+    }
   }
 </script>
 

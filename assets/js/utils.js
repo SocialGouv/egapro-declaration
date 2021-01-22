@@ -146,13 +146,10 @@ checkSirenValidity = async event => {
   if (allSirens.filter(siren => siren === target.value).length >= 2) {
     // We check if the length is >= 2 because the list of sirens also contains the current value
     target.setCustomValidity("Le Siren a déjà été saisi")
+  } else if (!await isSirenValid(target.value)) {
+    target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
   } else {
-    const isSirenOk = await isSirenValid(target.value)
-    if (!isSirenOk) {
-      target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
-    } else {
-      target.setCustomValidity("")
-    }
+    target.setCustomValidity("")
   }
   target.reportValidity()
 }
