@@ -143,6 +143,7 @@ table input[type=date],
 table input[type=regex],
 table textarea,
 table select {
+  width: 100%; /* Fix all columns to be able to customize width. Acts even with max-width below */
   max-width: 80%;
   padding: .3rem 0;
 }
