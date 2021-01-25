@@ -1,0 +1,31 @@
+{
+  "name": "egapro-declaration",
+  "version": "1.0.0",
+  "description": "Ce projet est une application cliente qui utilise l'API d'EgaPro, dont elle dépend.",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src/assets/js/src -d src/assets/js/dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SocialGouv/egapro-declaration.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SocialGouv/egapro-declaration/issues"
+  },
+  "homepage": "https://github.com/SocialGouv/egapro-declaration#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "nodemon": "^2.0.7"
+  }
+}
