@@ -8,11 +8,13 @@ layout: empty
   }
   catch (e) {
     window.location.href = '{{site.baseurl}}/compatibilite.html'
+    // Avoid throwing extra errors ensure the scripts are stopped.
+    throw new Error("Votre navigateur n'est pas compatible.")
   }
 </script>
 
 
-<script src="{{ site.baseurl }}/assets/js/utils.js"></script>
+<script src="{{ site.baseurl }}/assets/js/dist/utils.js"></script>
 <script>
   document.onready = () => {
     const urlParams = new URLSearchParams(location.search)
