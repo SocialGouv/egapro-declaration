@@ -176,6 +176,30 @@ checkPatternValidity = event => {
   }
 }
 
+checkDate = event => {
+  const target = event.target
+
+  checkPatternValidity(event)
+  if (target.validity.patternMismatch) {
+    // We already treated this case in `checkPatternValidity`
+    return
+  }
+
+  if (target.validity.valueMissing) {
+    // Keep the default browser behavior
+    return
+  }
+
+  const parsedDate = new Date(target.value).toString()
+  if (parsedDate === "Invalid Date") {
+    // We check if the length is >= 2 because the list of sirens also contains the current value
+    target.setCustomValidity("Veuillez saisir une date valide au format aaaa-mm-jj (exemple : 2021-11-23)")
+  } else {
+    target.setCustomValidity("")
+  }
+  target.reportValidity()
+}
+
 extractKey = flatKey => {
   // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
   return flatKey.match(/([^\[]+)\[?(\d+)?\]?/);
