@@ -1,21 +1,7 @@
 ---
 layout: empty
 ---
-<script>
-  // First, check the browser is compatible
-  try {
-    eval("async function _(){}")
-  }
-  catch (e) {
-    window.location.href = '{{site.baseurl}}/compatibilite.html'
-    // Avoid throwing extra errors ensure the scripts are stopped.
-    throw new Error("Votre navigateur n'est pas compatible.")
-  }
-</script>
-
-
-<script src="{{ site.baseurl }}/assets/js/dist/utils.js"></script>
-<script>
+<script type="text/babel">
   document.onready = () => {
     const urlParams = new URLSearchParams(location.search)
     app.resetData()

@@ -15,7 +15,7 @@ prevButtonLabel: "Nouvelle déclaration"
     </div>
   </fieldset>
 
-<script>
+<script type="text/babel">
   document.preFormSubmit = event => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`

@@ -63,14 +63,14 @@ function enableField(selector, enabled) {
 
 // Shortcut event
 window.addEventListener('DOMContentLoaded', async () => {
-  app = new AppStorage()
+  window.app = new AppStorage()
   await app.init()
   document.onready && await document.onready()
   document.dispatchEvent(new Event('ready'))
   document.onloaded && document.onloaded()
 })
 
-notify = {
+window.notify = {
   timeout: null,
 
   get toast() {
@@ -116,7 +116,7 @@ notify = {
   }
 }
 
-validateNotAllEmpty = message => {
+function validateNotAllEmpty(message) {
   return event => {
     // We don't want to require ALL the fields, but we need at least one
     const allInputs = Array.from(document.querySelectorAll("[data-not-all-empty]"))
@@ -128,7 +128,7 @@ validateNotAllEmpty = message => {
   }
 }
 
-checkSirenValidity = async event => {
+async function checkSirenValidity(event) {
   const target = event.target
 
   checkPatternValidity(event)
@@ -154,12 +154,12 @@ checkSirenValidity = async event => {
   target.reportValidity()
 }
 
-isSirenValid = async value => {
+async function isSirenValid(value) {
   const response = await request('GET', `/validate-siren?siren=${value}`)
   return response.ok
 }
 
-checkPatternValidity = event => {
+function checkPatternValidity(event) {
   const target = event.target
   if (!target.placeholder) {
     // We don't have a custom message to offer, bail
@@ -176,7 +176,7 @@ checkPatternValidity = event => {
   }
 }
 
-extractKey = flatKey => {
+function extractKey(flatKey) {
   // This extracts "foobar[0]" into ["foobar[0]", "foobar", "0"]
   return flatKey.match(/([^\[]+)\[?(\d+)?\]?/);
 }

@@ -64,7 +64,7 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
   <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 step="any" readonly=true %}</div>
 </fieldset>
 
-<script>
+<script type="text/babel">
   const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')
   const resultatField = selectField("indicateurs.augmentations_et_promotions.résultat")
   const resultatNombreSalariesField = selectField("indicateurs.augmentations_et_promotions.résultat_nombre_salariés")
@@ -98,7 +98,7 @@ title: "Ecart de taux d'augmentations individuelles entre les femmes et les homm
     enableField('#fieldset-note-en-salaries', isCalculable)
     enableField('#fieldset-note', isCalculable)
   }
-  
+
   document.onloaded = () => {
     toggleFields()
   }

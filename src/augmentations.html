@@ -70,7 +70,7 @@ title: "Ecart de taux d'augmentations individuelles (hors promotion) entre les f
   <div class=row>{% include input.html type="number" name="indicateurs.augmentations.note" label="Nombre de points obtenus à l'indicateur" min=0 step="any" readonly=true %}</div>
 </fieldset>
 
-<script>
+<script type="text/babel">
   const calculableField = selectField('_indicateurs.augmentations.calculable')
   const resultatField = selectField("indicateurs.augmentations.résultat")
   const populationFavorableField = selectField("indicateurs.augmentations.population_favorable")

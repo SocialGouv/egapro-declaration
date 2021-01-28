@@ -39,7 +39,7 @@ title: "Pourcentage de salariées ayant bénéficié d'une augmentation dans l'a
   <div class=row>{% include input.html type="number" name="indicateurs.congés_maternité.note" label="Nombre de points obtenus à l'indicateur" min=0 max=15 type="number" readonly=true %}</div>
 </fieldset>
 
-<script>
+<script type="text/babel">
   const calculableField = selectField('_indicateurs.congés_maternité.calculable')
 
   document.onready = () => {

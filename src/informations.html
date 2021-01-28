@@ -24,7 +24,7 @@ title: "Informations calcul et période de référence"
   </div>
 </fieldset>
 
-<script>
+<script type="text/babel">
   const finPeriodeReferenceField = selectField("déclaration.fin_période_référence")
   document.onready = () => {
     finPeriodeReferenceField.max = `${app.data.déclaration.année_indicateurs}-12-31`
@@ -33,7 +33,7 @@ title: "Informations calcul et période de référence"
   function updatePeriode(event) {
     event.preventDefault()
     if (!finPeriodeReferenceField.readOnly) {
-      finPeriodeReferenceField.value = finPeriodeReferenceField.max 
+      finPeriodeReferenceField.value = finPeriodeReferenceField.max
     }
   }
 </script>

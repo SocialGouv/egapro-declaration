@@ -70,7 +70,7 @@ title: "Ecart de taux de promotions entre les femmes et les hommes"
   <div class=row>{% include input.html type="number" name="indicateurs.promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true %}</div>
 </fieldset>
 
-<script>
+<script type="text/babel">
   const calculableField = selectField('_indicateurs.promotions.calculable')
   const resultatField = selectField("indicateurs.promotions.résultat")
   const populationFavorableField = selectField("indicateurs.promotions.population_favorable")

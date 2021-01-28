@@ -4,18 +4,8 @@
 <meta charset="utf-8">
 <title>{{ page.title }} - {{ site.title }}</title>
 <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/egapro.css">
-
-<script>
-  // First, check the browser is compatible
-  try {
-    eval("async function _(){}")
-  }
-  catch (e) {
-    if (!window.location.href.endsWith('/compatibilite.html')) {
-      window.location.href = '{{site.baseurl}}/compatibilite.html'
-    }
-  }
-</script>
+<script src="{{ site.baseurl }}/assets/js/babel-polyfill.min.js"></script>
+<script src="{{ site.baseurl }}/assets/js/babel.min.js"></script>
 
 {% if site.sentry-dsn %}
 <script
@@ -23,7 +13,7 @@
   integrity="sha384-ir4+BihBClNpjZk3UKgHTr0cwRhujAjy/M5VEGvcOzjhM1Db79GAg9xLxYn4uVK4"
   crossorigin="anonymous"
 ></script>
-<script>
+<script type="text/javascript">
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: '{{ site.sentry-dsn }}',
