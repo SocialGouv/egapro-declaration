@@ -106,7 +106,7 @@ form.addEventListener("submit", async (event) => {
     }
   }
 
-  if(app.mode !== 'reading') {
+  if(app.mode !== 'reading' && pageName !== 'commencer') {
     const response = await saveFormData(event);
 
     if (!response || !response.ok) return;
