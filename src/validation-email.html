@@ -21,8 +21,5 @@ title: "Validation de l'email"
 
   document.body.addEventListener('load', () => {
     document.querySelector('button[rel=next]').disabled = !localStorage.token
-    window.validateForm = async function(form) {
-      if(localStorage.token) return true
-    }
   })
 </script>

@@ -28,9 +28,6 @@ prevButtonLabel: "Nouvelle déclaration"
       selectField('déclaration.année_indicateurs'), years)
 
     document.querySelector('button[rel=next]').disabled = !app.token
-    window.validateForm = async function(form) {
-      if(app.token) return true
-    }
   }
 
   document.onsend = async _ => {
