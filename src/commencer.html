@@ -16,10 +16,25 @@ prevButtonLabel: "Nouvelle déclaration"
   </fieldset>
 
 <script>
-  document.preFormSubmit = event => {
+  document.preFormSubmit = async _ => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
-    return confirm(message)
+    const answer = confirm(message)
+    if (answer) {
+      // Make sure we don't overwrite a declaration with empty data
+      // eg on commencer.html if we have no localStorage.
+      app.siren = selectField('entreprise.siren').value
+      app.annee = selectField('déclaration.année_indicateurs').value
+      const response = await app.loadRemoteData()
+      if (!response.ok) {
+        if (response.data.error) {
+          notify.error(response.data.error)
+        }
+        return false
+      }
+      app.dataToLocalStorage()
+    }
+    return answer
   }
 
   document.onready = function() {
@@ -28,11 +43,5 @@ prevButtonLabel: "Nouvelle déclaration"
       selectField('déclaration.année_indicateurs'), years)
 
     document.querySelector('button[rel=next]').disabled = !app.token
-  }
-
-  document.onsend = async _ => {
-    // Make sure we don't overwrite a declaration with empty data
-    // eg on commencer.html if we have no localStorage.
-    await app.loadRemoteData()
   }
 </script>
