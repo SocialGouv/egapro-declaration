@@ -66,7 +66,10 @@ document.addEventListener("ready", () => {
     document.querySelectorAll('[name]').forEach(input => {
       input.setAttribute('readonly', true)
       if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
-      if(input.matches('[type=checkbox]')) input.onclick = (_) => false
+      if(input.matches('[type=checkbox]')) {
+        input.saveOnClick = input.onclick
+        input.onclick = (_) => false
+      }
       if(input.matches('select')) {
         Array.from(input.querySelectorAll('option'))
           .filter(option => !option.selected)
@@ -228,10 +231,18 @@ function toggleDeclarationValidatedBar() {
 async function setDraftStatus() {
   if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
     app.isDraft = true
-    await app.save()
     toggleDeclarationValidatedBar()
-    // Apply status change refreshing the page
-    location.pathname = location.pathname
+      // Fields cannot be edited
+    document.querySelectorAll('[name]').forEach(input => {
+      input.removeAttribute('readonly')
+      if(input.matches('[type=radio]:not(:checked)')) input.removeAttribute('disabled')
+      if(input.matches('[type=checkbox]')) input.onclick = input.saveOnClick
+      if(input.matches('select')) {
+        Array.from(input.querySelectorAll('option'))
+          .filter(option => !option.selected)
+          .forEach(option => option.removeAttribute('disabled'))
+      }
+    })
   }
 }
 
