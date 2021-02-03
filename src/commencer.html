@@ -23,6 +23,8 @@ prevButtonLabel: "Nouvelle déclaration"
     if (answer) {
       // Make sure we don't overwrite a declaration with empty data
       // eg on commencer.html if we have no localStorage.
+      delete localStorage.data
+      app.resetData()
       app.siren = selectField('entreprise.siren').value
       app.annee = selectField('déclaration.année_indicateurs').value
       const response = await app.loadRemoteData()

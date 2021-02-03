@@ -253,21 +253,13 @@ class AppStorage {
   }
 
   async loadRemoteData() {
-    let response = await request('GET', `/declaration/${this.siren}/${this.annee}`)
+    const response = await request('GET', `/declaration/${this.siren}/${this.annee}`)
     if(response.status === 404) {
-      // Brand new declaration, set it as "brouillon"
       this.isDraft = true
-      response = await this.save()
+      return await this.save()
     }
-    if(response.ok) {
-      if (response.data) {
-        // If we just created a new record with a PUT, we won't have a data
-        // field in the response.
-        Object.assign(this.data, response.data.data)
-      }
-    } else {
-      delete localStorage.data
-      this.resetData()
+    if(response.ok && response.data) {
+      Object.assign(this.data, response.data.data)
     }
     return response
   }
