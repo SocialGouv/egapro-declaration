@@ -8,7 +8,7 @@
   {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
 >
   {% if include.options %}
-    {% assign optionsArray=include.options | split: "&" %} 
+    {% assign optionsArray=include.options | split: "&" %}
     {% if include.empty %}<option value=""> ––– </option>{% endif %}
     {% for option in optionsArray %}
       {% assign optionArray=option | split: "=" %}

@@ -3,7 +3,6 @@
 {% endif %}
 <input
   id="field--{{ include.name }}"
-  value="{{ include.value || '' }}"
   type="{{ include.type || 'text' }}"
   name="{{ include.name }}"
   placeholder="{{ include.placeholder || include.label }}"
@@ -19,4 +18,6 @@
   {% if include.onblur %}onblur="{{ include.onblur }}"{% endif %}
   {% if include.oninput %}oninput="{{ include.oninput }}"{% endif %}
   {% if include.data-not-all-empty %}data-not-all-empty{% endif %}
+  {% if include.value %}value="{{ include.value || '' }}"
+  {% else %}value="[% this.{{ include.name }} %]"{% endif %}
 />

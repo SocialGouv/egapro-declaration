@@ -1,7 +1,32 @@
-const form = document.getElementById("page-form");
-const progress = document.querySelector("progress");
-const previousButton = document.querySelector("a[rel=prev]");
-const nextButton = document.querySelector("button[rel=next]");
+
+class Template {
+  constructor(container) {
+    this.document = container
+    this.engine = Adequate.TemplateEngine
+    this.html = this.engine.compile(this.document.textContent)
+  }
+
+  cleanBooleanAttributes(attributes) {
+    attributes.forEach(attr => {
+      this.document.querySelectorAll(`[${attr}]`).forEach(input => {
+        if(input.getAttribute(`${attr}`) == "false") input.removeAttribute(`${attr}`)
+      })
+    })
+  }
+
+  render(data) {
+    this.document.outerHTML = this.engine.render(this.html, data)
+    this.cleanBooleanAttributes(['required', 'checked', 'selected'])
+    this.bindEvents()
+    checkReadWriteMode()
+  }
+
+  bindEvents() {
+    bindNavigation()
+    bindForm()
+  }
+}
+
 const steps = [
   { name: "commencer" },
   { name: "declarant" },
@@ -55,12 +80,19 @@ const fileName =
     : location.pathname.split("/").pop();
 const pageName = fileName.split(".")[0];
 const step = steps.findIndex((step) => step.name === pageName);
+const template = new Template(document.querySelector('script[type="text/html"]'))
+
 
 document.addEventListener("ready", () => {
   if (!app.token) location.href = "./"
-  if (pageName !== 'commencer' && (!app.siren || !app.annee)) location.href = "./commencer.html"
-  loadFormValues(form);
-  toggleDeclarationValidatedBar()
+  if (pageName !== 'commencer' && (!app.siren || !app.annee)) {
+    location.href = "./commencer.html"
+    return
+  }
+  template.render(app.data)
+})
+
+function checkReadWriteMode() {
   if (app.mode === "reading") {
     // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
@@ -74,14 +106,12 @@ document.addEventListener("ready", () => {
       }
     })
   }
-});
+}
 
-progress.max = steps.length - 1;
-progress.value = step;
 
-async function saveFormData (event) {
+async function saveFormData(event) {
   event && event.preventDefault();
-
+  const form = document.getElementById("page-form");
   const data = serializeForm(form);
 
   if (typeof document.onsend === "function") {
@@ -93,60 +123,70 @@ async function saveFormData (event) {
   }
 
   return await app.save(data, event);
-};
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault()
-  if (typeof document.preFormSubmit === "function") {
-    try {
-      const result = await document.preFormSubmit(event)
-      if (!result) return false
-    } catch (e) {
-      return notify.error(e)
-    }
-  }
-
-  if(app.mode !== 'reading') {
-    const response = await saveFormData(event);
-
-    if (!response || !response.ok) return;
-  }
-
-  const nextStep = steps[step].nextStep;
-  if (nextStep) return redirect(`${nextStep(app.data)}.html`);
-  else return redirect(`${steps[step + 1].name}.html`);
-});
+}
 
 const refreshForm = async (event) => {
   if (!event.target.checkValidity()) return
 
   let response = await saveFormData();
-
   if (!response.ok) return;
 
   response = await app.loadRemoteData();
   if (!response.ok) return;
-  loadFormValues(form);
 };
 
-// "Previous" button
-if (step > 0) {
-  previousButton.onclick = (e) => {
-    e.preventDefault();
-    history.back();
-  };
-} else {
-  previousButton.onclick = (e) => {
-    // On the "commencer.html" page (the first) we display a "nouvelle déclaration" button
-    e.preventDefault();
-    // Reload the page, without the local data
-    location.pathname = './'
-  };
+function bindNavigation() {
+  const progress = document.querySelector("progress");
+  const previousButton = document.querySelector("a[rel=prev]");
+  const nextButton = document.querySelector("button[rel=next]");
+
+  progress.max = steps.length - 1;
+  progress.value = step;
+
+  // "Previous" button
+  if (step > 0) {
+    previousButton.onclick = (e) => {
+      e.preventDefault();
+      history.back();
+    };
+  } else {
+    previousButton.onclick = (e) => {
+      // On the "commencer.html" page (the first) we display a "nouvelle déclaration" button
+      e.preventDefault();
+      // Reload the page, without the local data
+      location.pathname = './'
+    };
+  }
+
+  // "Next" button
+  if (step >= steps.length - 1) {
+    nextButton.setAttribute("disabled", "disabled");
+  }
 }
 
-// "Next" button
-if (step >= steps.length - 1) {
-  nextButton.setAttribute("disabled", "disabled");
+function bindForm() {
+  const form = document.getElementById("page-form")
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault()
+    if (typeof document.preFormSubmit === "function") {
+      try {
+        const result = await document.preFormSubmit(event)
+        if (!result) return false
+      } catch (e) {
+        return notify.error(e)
+      }
+    }
+
+    if(app.mode !== 'reading') {
+      const response = await saveFormData(event);
+
+      if (!response || !response.ok) return;
+    }
+
+    const nextStep = steps[step].nextStep;
+    if (nextStep) return redirect(`${nextStep(app.data)}.html`);
+    else return redirect(`${steps[step + 1].name}.html`);
+  })
 }
 
 function serializeForm(form) {
@@ -200,38 +240,11 @@ function removeEmpty(data) {
   });
 }
 
-function loadFormValues(form) {
-  Array.from(form.elements).forEach((node) => {
-    if (!node.name) return;
-    const value = app.getItem(node.name);
-    if (value === "") return;
-    if (node.type === "radio") {
-      node.checked = node.value === value;
-    } else if (node.type === "checkbox") {
-      node.checked = value === "oui"
-    } else {
-      // If it's a hidden input, it's one we generated, we don't want to overwrite it with an empty value
-      node.value = node.type === "hidden" ? node.value : value;
-    }
-  });
-}
-
-function toggleDeclarationValidatedBar() {
-  if(app.data.source === 'simulateur') {
-    document.getElementById("simulation-readonly").hidden = app.mode !== 'reading'
-  } else {
-    document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
-    document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
-  }
-}
-
 async function setDraftStatus() {
   if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
     app.isDraft = true
     await app.save()
-    toggleDeclarationValidatedBar()
-    // Apply status change refreshing the page
-    location.pathname = location.pathname
+    template.render(app.data)
   }
 }
 
