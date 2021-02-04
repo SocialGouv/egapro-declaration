@@ -12,8 +12,8 @@ title: "Raison sociale et num√©ro Siren de chacune des entreprises composant l‚Ä
 
 <fieldset>
   <div class=row>
-    {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true %}
-    {% include input.html name="entreprise.siren" label="Siren" class="siren" readonly=true %}
+    {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true data-always-readonly=true %}
+    {% include input.html name="entreprise.siren" label="Siren" class="siren" readonly=true data-always-readonly=true %}
   </div>
   <div id=container>
     <template id=looper>

@@ -232,8 +232,10 @@ async function setDraftStatus() {
   if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
     app.isDraft = true
     toggleDeclarationValidatedBar()
-      // Fields cannot be edited
     document.querySelectorAll('[name]').forEach(input => {
+      if (input.hasAttribute('data-always-readonly')) {
+        return
+      }
       input.removeAttribute('readonly')
       if(input.matches('[type=radio]:not(:checked)')) input.removeAttribute('disabled')
       if(input.matches('[type=checkbox]')) input.onclick = input.saveOnClick
