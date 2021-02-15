@@ -28,6 +28,7 @@ title: "Informations calcul et période de référence"
   const finPeriodeReferenceField = selectField("déclaration.fin_période_référence")
   document.onready = () => {
     finPeriodeReferenceField.max = `${app.data.déclaration.année_indicateurs}-12-31`
+    finPeriodeReferenceField.min = `${app.data.déclaration.année_indicateurs}-01-01`
   }
 
   function updatePeriode(event) {
