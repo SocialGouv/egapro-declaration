@@ -60,22 +60,26 @@ document.addEventListener("ready", () => {
   if (!app.token) location.href = "./"
   if (pageName !== 'commencer' && (!app.siren || !app.annee)) location.href = "./commencer.html"
   loadFormValues(form);
-  toggleDeclarationValidatedBar()
-  if (app.mode === "reading") {
-    // Fields cannot be edited
-    document.querySelectorAll('[name]').forEach(input => {
-      input.setAttribute('readonly', true)
-      if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
-      if(input.matches('[type=checkbox]')) {
-        input.saveOnClick = input.onclick
-        input.onclick = (_) => false
-      }
-      if(input.matches('select')) {
-        Array.from(input.querySelectorAll('option'))
-          .filter(option => !option.selected)
-          .forEach(option => option.disabled = true)
-      }
-    })
+  if (pageName !== 'commencer') {
+    // The page "commencer" isn't really part of the tunnel, it's only its entrance:
+    // we don't want to prevent a user from changing the year/siren and access another declaration.
+    toggleDeclarationValidatedBar()
+    if (app.mode === "reading") {
+      // Fields cannot be edited
+      document.querySelectorAll('[name]').forEach(input => {
+        input.setAttribute('readonly', true)
+        if(input.matches('[type=radio]:not(:checked)')) input.disabled = true
+        if(input.matches('[type=checkbox]')) {
+          input.saveOnClick = input.onclick
+          input.onclick = (_) => false
+        }
+        if(input.matches('select')) {
+          Array.from(input.querySelectorAll('option'))
+            .filter(option => !option.selected)
+            .forEach(option => option.disabled = true)
+        }
+      })
+    }
   }
 });
 
