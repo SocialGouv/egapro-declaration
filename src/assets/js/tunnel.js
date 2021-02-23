@@ -150,9 +150,11 @@ if (step > 0) {
 } else {
   previousButton.onclick = (e) => {
     // On the "commencer.html" page (the first) we display a "nouvelle déclaration" button
-    e.preventDefault();
+    e.preventDefault()
+    app.resetData()
+    app.dataToLocalStorage()
     // Reload the page, without the local data
-    location.pathname = './'
+    location.pathname = './commencer.html'
   };
 }
 
