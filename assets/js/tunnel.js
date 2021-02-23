@@ -104,11 +104,13 @@ async function saveFormData (event) {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault()
+  nextButton.setAttribute('disabled', 'disabled');
   if (typeof document.preFormSubmit === "function") {
     try {
       const result = await document.preFormSubmit(event)
       if (!result) return false
     } catch (e) {
+      nextButton.removeAttribute('disabled');
       return notify.error(e)
     }
   }
@@ -116,7 +118,10 @@ form.addEventListener("submit", async (event) => {
   if(app.mode !== 'reading' && pageName !== 'commencer') {
     const response = await saveFormData(event);
 
-    if (!response || !response.ok) return;
+    if (!response || !response.ok) {
+      nextButton.removeAttribute('disabled');
+      return;
+    }
   }
 
   const nextStep = steps[step].nextStep;
@@ -145,9 +150,11 @@ if (step > 0) {
 } else {
   previousButton.onclick = (e) => {
     // On the "commencer.html" page (the first) we display a "nouvelle déclaration" button
-    e.preventDefault();
+    e.preventDefault()
+    app.resetData()
+    app.dataToLocalStorage()
     // Reload the page, without the local data
-    location.pathname = './'
+    location.pathname = './commencer.html'
   };
 }
 

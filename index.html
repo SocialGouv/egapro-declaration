@@ -14,23 +14,24 @@
 <script>
   document.onready = () => {
     const urlParams = new URLSearchParams(location.search)
-    app.resetData()
 
+    if (urlParams.has('token')) {
+      // Coming from an "authentication link" in the confirmation email
+      app.token = urlParams.get('token')
+      app.dataToLocalStorage()
+    }
     if (urlParams.has('siren') && urlParams.has('year')) {
       // Coming from a "declaration link" from the declaration validation email
       app.siren = urlParams.get('siren')
       app.annee = urlParams.get('year')
+      app.dataToLocalStorage()
+      if (app.token) {
+        return redirect('commencer.html')
+      } else {
+        return redirect('email.html')
+      }
     }
-    if (urlParams.has('token')) {
-      // Coming from an "authentication link" in the confirmation email
-      app.token = urlParams.get('token')
-    } else {
-      // Start from scratch
-      delete localStorage.email
-      delete localStorage.token
-    }
-    app.dataToLocalStorage()
-    redirect(app.token ? 'commencer.html' : 'presentation.html')
+    redirect('presentation.html')
   }
 </script>
 
