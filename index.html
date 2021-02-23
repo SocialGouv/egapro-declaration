@@ -31,6 +31,9 @@
         return redirect('email.html')
       }
     }
+    if (app.token) {
+      return redirect('commencer.html')
+    }
     redirect('presentation.html')
   }
 </script>
