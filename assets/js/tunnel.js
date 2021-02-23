@@ -154,7 +154,7 @@ if (step > 0) {
     app.resetData()
     app.dataToLocalStorage()
     // Reload the page, without the local data
-    location.pathname = './commencer.html'
+    redirect('./commencer.html')
   };
 }
 
