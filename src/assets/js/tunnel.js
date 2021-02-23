@@ -104,11 +104,13 @@ async function saveFormData (event) {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault()
+  nextButton.setAttribute('disabled', 'disabled');
   if (typeof document.preFormSubmit === "function") {
     try {
       const result = await document.preFormSubmit(event)
       if (!result) return false
     } catch (e) {
+      nextButton.removeAttribute('disabled');
       return notify.error(e)
     }
   }
@@ -116,7 +118,10 @@ form.addEventListener("submit", async (event) => {
   if(app.mode !== 'reading' && pageName !== 'commencer') {
     const response = await saveFormData(event);
 
-    if (!response || !response.ok) return;
+    if (!response || !response.ok) {
+      nextButton.removeAttribute('disabled');
+      return;
+    }
   }
 
   const nextStep = steps[step].nextStep;
