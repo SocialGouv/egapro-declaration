@@ -13,6 +13,10 @@ title: "Informations déclarant pour tout contact ultérieur"
 </fieldset>
 
 <fieldset>
+    <div>{% include input.html name="déclarant.email" label="Email du déclarant" readonly=true data-always-readonly=true %}</div>
+</fieldset>
+
+<fieldset>
   <div>
     {% include input.html name="déclarant.téléphone" label="Numéro de téléphone" pattern="[0-9]{10}" placeholder="10 chiffres" required=true oninput="checkPatternValidity(event)" %}
   </div>
