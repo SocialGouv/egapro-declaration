@@ -57,8 +57,8 @@ const pageName = fileName.split(".")[0];
 const step = steps.findIndex((step) => step.name === pageName);
 
 document.addEventListener("ready", () => {
-  if (!app.token) location.href = "./"
-  if (pageName !== 'commencer' && (!app.siren || !app.annee)) location.href = "./commencer.html"
+  if (!app.token) redirect("./")
+  if (pageName !== 'commencer' && (!app.siren || !app.annee)) redirect("./commencer.html")
   loadFormValues(form);
   if (pageName !== 'commencer') {
     // The page "commencer" isn't really part of the tunnel, it's only its entrance:
