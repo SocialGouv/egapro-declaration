@@ -1,19 +1,24 @@
 ---
 layout: tunnel
-title: "Commencer la déclaration"
+title: "Commencer la déclaration ou Accéder à votre déclaration"
 prevButtonLabel: "Nouvelle déclaration"
 ---
 <h1>{{ page.title }}</h1>
-  <fieldset>
-    <div class="row">
-      {% include select.html type="number" name="déclaration.année_indicateurs" label="Année au titre de laquelle les indicateurs sont calculés" required=true empty=true %}
-    </div>
-  </fieldset>
-  <fieldset>
-    <div class="row">
-      {% include input.html type="regex" name="entreprise.siren" label="Numéro Siren de l’entreprise ou de l’entreprise déclarant pour le compte de l’UES (Unité Économique et Sociale)" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" oninput="checkSirenValidity(event)" %}
-    </div>
-  </fieldset>
+
+<p>
+  Si vous souhaitez visualiser ou modifier votre déclaration déjà transmise, veuillez saisir les informations correspondantes à la déclaration.
+</p>
+
+<fieldset>
+  <div class="row">
+    {% include select.html type="number" name="déclaration.année_indicateurs" label="Année au titre de laquelle les indicateurs sont calculés" required=true empty=true %}
+  </div>
+</fieldset>
+<fieldset>
+  <div class="row">
+    {% include input.html type="regex" name="entreprise.siren" label="Numéro Siren de l’entreprise ou de l’entreprise déclarant pour le compte de l’UES (Unité Économique et Sociale)" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" oninput="checkSirenValidity(event)" %}
+  </div>
+</fieldset>
 
 <script>
   document.preFormSubmit = async _ => {
