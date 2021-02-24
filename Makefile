@@ -22,3 +22,7 @@ release: build
 release-prod: release
 	git tag -f `date +"%Y.%m.%d"` origin/deploy
 	git push --tags -f
+
+tests:
+	./node_modules/.bin/cypress open
+.PHONY: tests
