@@ -19,6 +19,12 @@ conformément aux dispositions de l’article D.1142-5 du code du travail.</p>
 résultats</strong> ». Vous recevrez alors un accusé de réception par email.</p>
 
 <script>
+  document.onready = () => {
+    // Disable the button if we've already submitted the declaration.
+    if (app.mode === 'reading') {
+      nextButton.setAttribute("disabled", "disabled");
+    }
+  }
   document.onsend = async _ => {
     // To "déclare" the declaration, we need to reset its "brouillon" status.date`.
     app.isDraft = false
