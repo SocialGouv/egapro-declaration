@@ -256,6 +256,7 @@ async function setDraftStatus() {
           .forEach(option => option.removeAttribute('disabled'))
       }
     })
+    nextButton.removeAttribute('disabled')
   }
 }
 
