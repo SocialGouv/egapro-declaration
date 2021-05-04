@@ -3,5 +3,5 @@
   id="field--{{ include.name }}"
   name="{{ include.name }}"
   placeholder="{{ include.placeholder || include.label }}"
-  {{ include.required ? 'required' : '' }}
+  {% if include.required %}required{% endif %}
 >{{ include.value || '' }}</textarea>
