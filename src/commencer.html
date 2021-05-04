@@ -23,7 +23,7 @@ prevButtonLabel: "Nouvelle déclaration"
 <script>
   document.preFormSubmit = async _ => {
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
-    const message = `Vous allez procéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
+    const message = `Vous allez procéder ou accéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
     const answer = confirm(message)
     if (answer) {
       // Make sure we don't overwrite a declaration with empty data
