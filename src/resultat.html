@@ -1,18 +1,29 @@
 ---
 layout: tunnel
-title: "Publication du niveau de résultat global"
+title: "Publication des résultats"
 ---
 
-<h1>{{ page.title }}</h1>
+<h1>
+  <span class="year-2021-and-after">Publication des résultats obtenus</span>
+  <span class="year-2020-and-before">Publication du niveau de résultat global</span>
+</h1>
 
-<p>Le niveau de résultat est publié annuellement, au plus tard le 1er mars de
-l’année en cours, au titre de l’année précédente, sur le site Internet de
-l’entreprise lorsqu’il en existe un. À défaut, il est porté à la connaissance
-des salariés par tout moyen.</p>
+<p>
+  <span class="year-2021-and-after">Le niveau de résultat global obtenu et les résultats obtenus pour chaque
+    indicateur sont publiés annuellement, au plus tard le 1er mars de l’année
+    en cours, au titre de l’année précédente, de manière visible et lisible,
+    sur le site Internet de l’entreprise lorsqu’il en existe un.  A défaut de
+    site Internet, ils sont portés à la connaissance des salariés par tout
+    moyen.</span>
+  <span class="year-2020-and-before">Le niveau de résultat est publié annuellement, au plus tard le 1er mars de
+    l’année en cours, au titre de l’année précédente, sur le site Internet de
+    l’entreprise lorsqu’il en existe un. À défaut, il est porté à la connaissance
+    des salariés par tout moyen.</span>
+</p>
 
 <fieldset>
   <div class=row>
-    {% include input.html type="date" name="déclaration.publication.date" label="Date de publication du niveau de résultat obtenu" required=true placeholder="aaaa-mm-jj" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
+    {% include input.html type="date" name="déclaration.publication.date" label="Date de publication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span>" required=true placeholder="aaaa-mm-jj" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
   </div>
 </fieldset>
 
@@ -21,7 +32,7 @@ des salariés par tout moyen.</p>
     <div>
       {% include radios.html
         name="_déclaration.publication.site_internet"
-        label="Avez-vous un site Internet pour publier le niveau de résultat obtenu ?"
+        label="Avez-vous un site Internet pour publier le niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span> ?"
         options="oui=oui&non=non"
         onchange="toggleFields()"
         required="required" %}
@@ -30,11 +41,11 @@ des salariés par tout moyen.</p>
 </fieldset>
 
 <fieldset id="fieldset-url">
-  <div class=row>{% include input.html name="déclaration.publication.url" label="Adresse du site Internet de publication du niveau de résultat obtenu" required=true %}</div>
+  <div class=row>{% include input.html name="déclaration.publication.url" label="Adresse du site Internet de publication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span>" required=true %}</div>
 </fieldset>
 
 <fieldset id="fieldset-modalites">
-  <div class=row>{% include textarea.html name="déclaration.publication.modalités" label="Préciser les modalités de communication du niveau de résultat obtenu auprès de vos salariés" required=true %}</div>
+  <div class=row>{% include textarea.html name="déclaration.publication.modalités" label="Préciser les modalités de communication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span> auprès de vos salariés" required=true %}</div>
 </fieldset>
 
 <script>
@@ -55,6 +66,16 @@ des salariés par tout moyen.</p>
     const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear.toISOString().slice(0, 10)
     // The `min` value should be formatted like yyyy-mm-dd
     selectField("déclaration.publication.date").min = minPubDate
+
+    // Display the label "aux indicateurs calculables" if the result is non calculable but still needs to be declared.
+    if (app.data.déclaration.année_indicateurs >= 2020) {
+      const main = document.querySelector("main")
+      main.classList.add("declaration-2021-and-after")
+      if (app.data.déclaration.points_calculables < 75) {
+        main.classList.add("resultat-non-calculable")
+      }
+
+    }
   }
 
   function toggleFields() {
