@@ -273,6 +273,16 @@ button.remove::before {
   text-decoration: none;
 }
 
+.year-2021-and-after {
+  display: none;
+}
+.declaration-2021-and-after .year-2021-and-after {
+  display: inline;
+}
+.declaration-2021-and-after .year-2020-and-before {
+  display: none;
+}
+
 /** Tweaks and Hacks **/
 
 /* Cursor not-allowed on readonly/disabled */

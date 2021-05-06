@@ -2,7 +2,7 @@
 <html lang="fr" class="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
-<title>Publication du niveau de résultat global - Egalité professionnelle - Ministère du Travail</title>
+<title>Publication des résultats - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/egapro.css">
 
 <script>
@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.05.04'
+      release: '2021.05.06'
     })
   }
 </script>
@@ -77,18 +77,29 @@
 </section>
 
 <main>
-  <h1>Publication du niveau de résultat global</h1>
+  <h1>
+  <span class="year-2021-and-after">Publication des résultats obtenus</span>
+  <span class="year-2020-and-before">Publication du niveau de résultat global</span>
+</h1>
 
-<p>Le niveau de résultat est publié annuellement, au plus tard le 1er mars de
-l’année en cours, au titre de l’année précédente, sur le site Internet de
-l’entreprise lorsqu’il en existe un. À défaut, il est porté à la connaissance
-des salariés par tout moyen.</p>
+<p>
+  <span class="year-2021-and-after">Le niveau de résultat global obtenu et les résultats obtenus pour chaque
+    indicateur sont publiés annuellement, au plus tard le 1er mars de l’année
+    en cours, au titre de l’année précédente, de manière visible et lisible,
+    sur le site Internet de l’entreprise lorsqu’il en existe un.  A défaut de
+    site Internet, ils sont portés à la connaissance des salariés par tout
+    moyen.</span>
+  <span class="year-2020-and-before">Le niveau de résultat est publié annuellement, au plus tard le 1er mars de
+    l’année en cours, au titre de l’année précédente, sur le site Internet de
+    l’entreprise lorsqu’il en existe un. À défaut, il est porté à la connaissance
+    des salariés par tout moyen.</span>
+</p>
 
 <fieldset>
   <div class=row>
     
   
-<label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu*</label>
+<label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span>*</label>
 
 
 
@@ -120,7 +131,7 @@ des salariés par tout moyen.</p>
   <div class=row>
     <div>
       
-<label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu ?</label>
+<label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span> ?</label>
 
 
 <div
@@ -163,7 +174,7 @@ des salariés par tout moyen.</p>
 <fieldset id="fieldset-url">
   <div class=row>
   
-<label for="field--déclaration.publication.url">Adresse du site Internet de publication du niveau de résultat obtenu*</label>
+<label for="field--déclaration.publication.url">Adresse du site Internet de publication du niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span>*</label>
 
 
 
@@ -192,7 +203,7 @@ des salariés par tout moyen.</p>
 
 <fieldset id="fieldset-modalites">
   <div class=row>
-<label for="field--déclaration.publication.modalités">Préciser les modalités de communication du niveau de résultat obtenu auprès de vos salariés</label>
+<label for="field--déclaration.publication.modalités">Préciser les modalités de communication du niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span> auprès de vos salariés</label>
 
 
 <textarea
@@ -222,6 +233,11 @@ des salariés par tout moyen.</p>
     const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear.toISOString().slice(0, 10)
     // The `min` value should be formatted like yyyy-mm-dd
     selectField("déclaration.publication.date").min = minPubDate
+
+    // Display the label "aux indicateurs calculables" if the result is non calculable but still needs to be declared.
+    if (app.data.déclaration.année_indicateurs >= 2020) {
+      document.querySelector("main").classList.add("declaration-2021-and-after")
+    }
   }
 
   function toggleFields() {
@@ -272,7 +288,7 @@ des salariés par tout moyen.</p>
   <footer>
     <p>
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.05.04" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.05.06" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
 </footer>
