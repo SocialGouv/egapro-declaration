@@ -3,5 +3,6 @@
   id="field--{{ include.name }}"
   name="{{ include.name }}"
   placeholder="{{ include.placeholder || include.label }}"
+  {% if include.class %}class="{{ include.class }}"{% endif %}
   {% if include.required %}required{% endif %}
 >{{ include.value || '' }}</textarea>

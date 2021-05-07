@@ -180,6 +180,11 @@ table thead th {
   margin: .6rem 0;
 }
 
+.wide {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
 progress {
   display: none;
 }
