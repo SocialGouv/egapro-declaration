@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.05.06'
+      release: '2021.05.07'
     })
   }
 </script>
@@ -99,7 +99,7 @@
   <div class=row>
     
   
-<label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span>*</label>
+<label for="field--déclaration.publication.date">Date de publication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span>*</label>
 
 
 
@@ -131,7 +131,7 @@
   <div class=row>
     <div>
       
-<label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span> ?</label>
+<label for="field--_déclaration.publication.site_internet">Avez-vous un site Internet pour publier le niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span> ?</label>
 
 
 <div
@@ -172,9 +172,9 @@
 </fieldset>
 
 <fieldset id="fieldset-url">
-  <div class=row>
+  <div>
   
-<label for="field--déclaration.publication.url">Adresse du site Internet de publication du niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span>*</label>
+<label for="field--déclaration.publication.url">Adresse du site Internet de publication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span>*</label>
 
 
 
@@ -184,7 +184,7 @@
   type=""
   name="déclaration.publication.url"
   placeholder=""
-  
+  class="wide"
   
   
   
@@ -202,14 +202,15 @@
 </fieldset>
 
 <fieldset id="fieldset-modalites">
-  <div class=row>
-<label for="field--déclaration.publication.modalités">Préciser les modalités de communication du niveau de résultat obtenu<span class='year-2021-and-after'> aux indicateurs calculables</span> auprès de vos salariés</label>
+  <div>
+<label for="field--déclaration.publication.modalités">Préciser les modalités de communication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span> auprès de vos salariés</label>
 
 
 <textarea
   id="field--déclaration.publication.modalités"
   name="déclaration.publication.modalités"
   placeholder=""
+  class="wide"
   required
 ></textarea>
 </div>
@@ -236,7 +237,12 @@
 
     // Display the label "aux indicateurs calculables" if the result is non calculable but still needs to be declared.
     if (app.data.déclaration.année_indicateurs >= 2020) {
-      document.querySelector("main").classList.add("declaration-2021-and-after")
+      const main = document.querySelector("main")
+      main.classList.add("declaration-2021-and-after")
+      if (app.data.déclaration.points_calculables < 75) {
+        main.classList.add("resultat-non-calculable")
+      }
+
     }
   }
 
@@ -288,7 +294,7 @@
   <footer>
     <p>
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.05.06" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.05.07" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
 </footer>

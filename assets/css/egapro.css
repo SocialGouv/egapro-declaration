@@ -180,6 +180,11 @@ table thead th {
   margin: .6rem 0;
 }
 
+.wide {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
 progress {
   display: none;
 }
@@ -273,10 +278,14 @@ button.remove::before {
   text-decoration: none;
 }
 
-.year-2021-and-after {
+.year-2021-and-after,
+.non-calculable {
   display: none;
 }
 .declaration-2021-and-after .year-2021-and-after {
+  display: inline;
+}
+.declaration-2021-and-after.resultat-non-calculable .non-calculable {
   display: inline;
 }
 .declaration-2021-and-after .year-2020-and-before {
