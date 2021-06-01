@@ -23,7 +23,14 @@ title: "Publication des résultats"
 
 <fieldset>
   <div class=row>
-    {% include input.html type="date" name="déclaration.publication.date" label="Date de publication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span>" required=true placeholder="aaaa-mm-jj" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
+    {% include input.html
+      type="date"
+      name="déclaration.publication.date"
+      label="<span class='year-2021-and-after'>Date de publication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Date de publication du niveau de résultat obtenu</span>"
+      required=true
+      placeholder="aaaa-mm-jj"
+      pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+      oninput="checkDate(event)" %}
   </div>
 </fieldset>
 
@@ -32,7 +39,7 @@ title: "Publication des résultats"
     <div>
       {% include radios.html
         name="_déclaration.publication.site_internet"
-        label="Avez-vous un site Internet pour publier le niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span> ?"
+        label="<span class='year-2021-and-after'>Avez-vous un site Internet pour publier les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> ?</span><span class='year-2020-and-before'>Avez-vous un site Internet pour publier le niveau de résultat obtenu</span>"
         options="oui=oui&non=non"
         onchange="toggleFields()"
         required="required" %}
@@ -41,11 +48,19 @@ title: "Publication des résultats"
 </fieldset>
 
 <fieldset id="fieldset-url">
-  <div>{% include input.html name="déclaration.publication.url" label="Adresse du site Internet de publication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span>" required=true class="wide" %}</div>
+  <div>{% include input.html
+    name="déclaration.publication.url"
+    label="<span class='year-2021-and-after'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle seront publiés les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle sera publié le niveau de résultat obtenu</span>"
+    required=true
+    class="wide" %}</div>
 </fieldset>
 
 <fieldset id="fieldset-modalites">
-  <div>{% include textarea.html name="déclaration.publication.modalités" label="Préciser les modalités de communication du niveau de résultat obtenu<span class='non-calculable'> aux indicateurs calculables</span> auprès de vos salariés" required=true class="wide" %}</div>
+  <div>{% include textarea.html
+    name="déclaration.publication.modalités"
+    label="<span class='year-2021-and-after'>Préciser les modalités de communication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> auprès de vos salariés</span><span class='year-2020-and-before'>Préciser les modalités de communication du niveau de résultat obtenu auprès de vos salariés</span>"
+    required=true
+    class="wide" %}</div>
 </fieldset>
 
 <script>
