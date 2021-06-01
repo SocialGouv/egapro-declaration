@@ -19,9 +19,9 @@ title: "Ecart de rémunération entre les femmes et les hommes par catégorie so
     </tr>
   </thead>
 
-  <tbody>
+  <tbody class="percentage">
     <tr>
-      <th>Ouvriers (en %)</th>
+      <th>Ouvriers</th>
       <td>
         {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[0].nom" value="ouv" %}         
         {% include input.html type="number" name="indicateurs.rémunérations.catégories[0].tranches.:29" step="any" data-not-all-empty=true %}
@@ -37,7 +37,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par catégorie so
       </td>
     </tr>
     <tr>
-      <th>Employés (en %)</th>
+      <th>Employés</th>
       <td>
         {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[1].nom" value="emp" %}         
         {% include input.html type="number" name="indicateurs.rémunérations.catégories[1].tranches.:29" step="any" data-not-all-empty=true %}
@@ -53,7 +53,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par catégorie so
       </td>
     </tr>
     <tr>
-      <th>Techniciens et agents de maîtrise (en %)</th>
+      <th>Techniciens et agents de maîtrise</th>
       <td>
         {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[2].nom" value="tam" %}         
         {% include input.html type="number" name="indicateurs.rémunérations.catégories[2].tranches.:29" step="any" data-not-all-empty=true %}
@@ -69,7 +69,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par catégorie so
       </td>
     </tr>
     <tr>
-      <th>Ingénieurs et cadres (en %)</th>
+      <th>Ingénieurs et cadres</th>
       <td>
         {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[3].nom" value="ic" %}         
         {% include input.html type="number" name="indicateurs.rémunérations.catégories[3].tranches.:29" step="any" data-not-all-empty=true %}

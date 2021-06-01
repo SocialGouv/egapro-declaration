@@ -151,6 +151,10 @@ table thead th {
   text-align: left;
 }
 
+table tbody.percentage td::after {
+  content: "%";
+}
+
 .declaration-mode {
   margin: 1rem 0;
   padding: 1rem;
