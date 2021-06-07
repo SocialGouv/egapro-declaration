@@ -147,8 +147,16 @@ table select {
   max-width: 80%;
 }
 
+table {
+  margin-bottom: 2rem;
+}
+
 table thead th {
   text-align: left;
+}
+
+table thead th:first-child {
+  width: 20%;
 }
 
 table tbody.percentage td::after {
