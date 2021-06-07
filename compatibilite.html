@@ -4,18 +4,35 @@
 <meta charset="utf-8">
 <title>Cette application requiert un navigateur compatible - Egalité professionnelle - Ministère du Travail</title>
 <link rel="stylesheet" href="/declaration/assets/css/egapro.css">
+<style>
+  main {
+    margin-top: 100px;
+  }
+  article {
+    display: inline-block;
+    margin-right: 1rem;
+    padding-right: 1rem;
+    border-right: 1px solid #eee;
+    text-align: center;
+    width: 28%;
+    vertical-align: top;
+  }
 
-<script>
-  // First, check the browser is compatible
-  try {
-    eval("async function _(){}")
+  article img,
+  article a {
+    display: block;
+    margin: 0 auto;
   }
-  catch (e) {
-    if (!window.location.href.endsWith('/compatibilite.html')) {
-      window.location.href = '/declaration/compatibilite.html'
-    }
+
+  article img {
+    width: 80%;
+    max-width: 200px;
   }
-</script>
+
+  .others {
+    margin-top: 3rem;
+  }
+</style>
 
 
 <script
@@ -33,8 +50,6 @@
 </script>
 
 
-<script src="/declaration/assets/js/utils.js"></script>
-
 <header>
   <div>
     <a href="https://travail-emploi.gouv.fr/" target="_blank"><img src="/declaration/assets/img/marianne.svg" alt="Marianne"></a>
@@ -48,11 +63,10 @@
   </div>
 </header>
 
-<form class=main id="page-form" action="/compatibilite.html">
-  <main id="intro">
+<main id="intro">
   <h1>Cette application requiert un navigateur compatible</h1>
 
-  <p>L'Index Egapro est accessible depuis la plupart des navigateurs à jour.</p>
+<p>L'Index Egapro est accessible depuis la plupart des navigateurs à jour.</p>
 
 <p>Les navigateurs suivants sont compatibles:</p>
 
@@ -88,36 +102,7 @@
 
 <p class="others">Ainsi que <a href="https://brave.com/download/">Brave</a>, <a href="https://www.opera.com/">Opera</a>, Safari et d'autres…</p>
 
-<style>
-  article {
-    display: inline-block;
-    margin-right: 1rem;
-    padding-right: 1rem;
-    border-right: 1px solid #eee;
-    text-align: center;
-    width: 28%;
-    vertical-align: top;
-  }
-
-  article img,
-  article a {
-    display: block;
-    margin: 0 auto;
-  }
-
-  article img {
-    width: 80%;
-    max-width: 200px;
-  }
-
-  .others {
-    margin-top: 3rem;
-  }
-</style>
-
 </main>
-
-</form>
 
 <footer>
   <header>
