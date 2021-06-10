@@ -92,7 +92,8 @@ notify = {
     this.toast.classList.add('visible', type)
   },
 
-  close() {
+  close(event) {
+    event.preventDefault()
     if(!this.toast) return
     this.toast.classList = []
     this.timeout = setTimeout(() => (this.message = ""), 3000)
