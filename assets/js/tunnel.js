@@ -108,7 +108,10 @@ form.addEventListener("submit", async (event) => {
   if (typeof document.preFormSubmit === "function") {
     try {
       const result = await document.preFormSubmit(event)
-      if (!result) return false
+      if (!result) {
+        nextButton.removeAttribute('disabled');
+        return false
+      }
     } catch (e) {
       nextButton.removeAttribute('disabled');
       return notify.error(e)
