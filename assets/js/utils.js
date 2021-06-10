@@ -205,6 +205,15 @@ extractKey = flatKey => {
   return flatKey.match(/([^\[]+)\[?(\d+)?\]?/);
 }
 
+function notifyPercentage(event) {
+  const target = event.target
+  if (target.checkValidity()
+      && !isNaN(Number(target.value))
+      && Number(target.value) >= 100) {
+    notify.warning("Attention vous avez entré un pourcentage supérieur ou égal à 100%")
+  }
+}
+
 class AppStorage {
   constructor() {
     this.config = {}
