@@ -35,7 +35,11 @@ prevButtonLabel: "Nouvelle déclaration"
       const response = await app.loadRemoteData()
       if (!response.ok) {
         if (response.data.error) {
-          notify.error(response.data.error)
+          notify.error(
+            response.data.error,
+            undefined,
+            // Only log if it's not the "expected" message telling the user they don't own this declaration.
+            !response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren"))
         }
         return false
       }

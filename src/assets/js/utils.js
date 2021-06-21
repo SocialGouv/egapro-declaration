@@ -107,9 +107,9 @@ notify = {
     this.show(message, 'info')
   },
 
-  error(error, data) {
+  error(error, data, logToSentry) {
     this.show(error, 'error')
-    if (typeof Sentry !== "undefined") {
+    if (typeof Sentry !== "undefined" && logToSentry !== false) {
       Sentry.captureException(error, {
         extra: data || app.data
       })
