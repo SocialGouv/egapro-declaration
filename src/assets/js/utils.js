@@ -211,7 +211,7 @@ function notifyPercentage(event) {
   if (target.checkValidity()
       && !isNaN(Number(target.value))
       && Number(target.value) >= 100) {
-    notify.warning("Attention vous avez entré un pourcentage supérieur ou égal à 100%")
+    notify.warning("Vous avez renseigné un écart en pourcentage supérieur ou égal à 100%, si votre saisie est correcte continuez, sinon veuillez la corriger")
   }
 }
 
