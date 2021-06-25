@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.06.21'
+      release: '2021.06.25'
     })
   }
 </script>
@@ -57,6 +57,7 @@
     Vous pouvez la modifier et elle remplacera la déclaration actuelle une fois à nouveau validée et transmise à la dernière étape.
   </p>
   <button type="button" onclick="setDraftStatus()">Modifier la déclaration</button>
+  <button type="button" onclick="resendReceipt()">Renvoyer l'accusé de réception</button>
 </section>
 
 <section id="declaration-draft" class="declaration-mode" hidden>
@@ -335,7 +336,7 @@
   <footer>
     <p>
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.06.21" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.06.25" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
 </footer>

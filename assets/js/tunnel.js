@@ -268,3 +268,12 @@ function goToSimulationApp() {
   const simulation = window.open(`${location.origin}/simulateur/${id}`, '_blank');
   simulation.focus()
 }
+
+async function resendReceipt() {
+  const response = await request('POST', `/declaration/${app.siren}/${app.annee}/receipt`)
+  if (response.ok) {
+    return notify.info("L'accusé de réception a été renvoyé à votre adresse email");
+  } else {
+    return notify.error("Erreur lors du renvoi de l'accusé de réception");
+  }
+}
