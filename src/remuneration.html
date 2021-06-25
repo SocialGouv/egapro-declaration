@@ -100,10 +100,11 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     const isCalculatedCsp = calculableCspField.checked
     const isCseMisEnPlaceChosen = cseMisEnPlaceField.querySelector(':checked')
     const isCseMisEnPlace = isCseMisEnPlaceChosen && cseMisEnPlaceField.querySelector(':checked').value === 'oui'
+    const isUES = app.data.entreprise.ues !== undefined
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
-    enableField('#fieldset-cse-mis-en-place', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
-    enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode) && isCseMisEnPlace)
+    enableField('#fieldset-cse-mis-en-place', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode) && !isUES)
+    enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode) && (isUES || isCseMisEnPlace))
     enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
     enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
 
