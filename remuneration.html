@@ -179,6 +179,50 @@
   </div>
 </fieldset>
 
+<fieldset id="fieldset-cse-mis-en-place">
+  <div class=row>
+    <div>
+      
+<label for="field--_indicateurs.rémunérations.cse_mis_en_place">Un CSE a-t-il été mis en place ?</label>
+
+
+<div
+  id="field--_indicateurs.rémunérations.cse_mis_en_place"
+  name="_indicateurs.rémunérations.cse_mis_en_place"
+  type="radiogroup"
+  >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="toggleFields(event)"
+          name="_indicateurs.rémunérations.cse_mis_en_place" value="oui"> oui
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          onchange="toggleFields(event)"
+          name="_indicateurs.rémunérations.cse_mis_en_place" value="non"> non
+      </label>
+      
+    
+  
+</div>
+
+    </div>
+  </div>
+</fieldset>
+
 <fieldset id="fieldset-cse">
   <div class=row>
     
@@ -253,6 +297,7 @@
   const calculableField = selectField('_indicateurs.rémunérations.calculable')
   const calculableCspField = selectField('_indicateurs.rémunérations.calculable_csp')
   const modeField = selectField('indicateurs.rémunérations.mode')
+  const cseMisEnPlaceField = selectField('_indicateurs.rémunérations.cse_mis_en_place')
 
   document.onready = () => {
     if (app.getItem('indicateurs.rémunérations')) {
@@ -270,9 +315,12 @@
     const isCalculableChosen = calculableField.querySelector(':checked')
     const isCalculable = isCalculableChosen && calculableField.querySelector(':checked').value === 'oui'
     const isCalculatedCsp = calculableCspField.checked
+    const isCseMisEnPlaceChosen = cseMisEnPlaceField.querySelector(':checked')
+    const isCseMisEnPlace = isCseMisEnPlaceChosen && cseMisEnPlaceField.querySelector(':checked').value === 'oui'
     const mode = modeField.querySelector(':checked') && modeField.querySelector(':checked').value
     enableField('#fieldset-mode', isCalculable)
-    enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
+    enableField('#fieldset-cse-mis-en-place', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode))
+    enableField('#fieldset-cse', isCalculable && ['niveau_branche', 'niveau_autre'].includes(mode) && isCseMisEnPlace)
     enableField('#fieldset-calculable-csp', isCalculableChosen && !isCalculable)
     enableField('#fieldset-motif', isCalculableChosen && !isCalculable && isCalculatedCsp)
 
