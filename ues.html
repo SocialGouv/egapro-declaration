@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.06.25'
+      release: '2021.06.28'
     })
   }
 </script>
@@ -88,26 +88,28 @@
 
 
 
-<input
-  id="field--entreprise.ues.nom"
-  value=""
-  type=""
-  name="entreprise.ues.nom"
-  placeholder=""
-  
-  
-  
-  
-  required
-  
-  
-  
-  
-  
-  
-  
-  
-/>
+
+  <input
+    id="field--entreprise.ues.nom"
+    value=""
+    type=""
+    name="entreprise.ues.nom"
+    placeholder=""
+    
+    
+    
+    
+    required
+    
+    
+    
+    
+    
+    
+    
+    
+  />
+
 </div>
   </div>
 </fieldset>
@@ -116,57 +118,61 @@
   <div class=row>
     
   
-<label for="field--entreprise.raison_sociale">Raison sociale</label>
-
-
-
-<input
-  id="field--entreprise.raison_sociale"
-  value=""
-  type=""
-  name="entreprise.raison_sociale"
-  placeholder=""
-  
-  
-  
-  
-  
-  
-  
-  readonly="readonly"
-  data-always-readonly="true"
-  
-  
-  
-  
-/>
-
-    
-  
 <label for="field--entreprise.siren">Siren</label>
 
 
 
-<input
-  id="field--entreprise.siren"
-  value=""
-  type=""
-  name="entreprise.siren"
-  placeholder=""
-  class="siren"
+
+  <input
+    id="field--entreprise.siren"
+    value=""
+    type=""
+    name="entreprise.siren"
+    placeholder=""
+    class="siren"
+    
+    
+    
+    
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
+
+    
   
-  
-  
-  
-  
-  
-  readonly="readonly"
-  data-always-readonly="true"
-  
-  
-  
-  
-/>
+<label for="field--entreprise.raison_sociale">Raison sociale</label>
+
+
+
+
+  <input
+    id="field--entreprise.raison_sociale"
+    value=""
+    type=""
+    name="entreprise.raison_sociale"
+    placeholder=""
+    
+    
+    
+    
+    
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
 
   </div>
   <div id=container>
@@ -174,57 +180,66 @@
       <div class=row>
         
   
-<label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale*</label>
-
-
-
-<input
-  id="field--entreprise.ues.entreprises[{index}].raison_sociale"
-  value=""
-  type=""
-  name="entreprise.ues.entreprises[{index}].raison_sociale"
-  placeholder=""
-  
-  
-  
-  
-  required
-  
-  
-  
-  
-  
-  
-  
-  
-/>
-
-        
-  
 <label for="field--entreprise.ues.entreprises[{index}].siren">Siren*</label>
 
 
 
-<input
-  id="field--entreprise.ues.entreprises[{index}].siren"
-  value=""
-  type=""
-  name="entreprise.ues.entreprises[{index}].siren"
-  placeholder="9 chiffres"
-  class="siren"
+
+<div id="field-wrapper--entreprise.ues.entreprises[{index}].siren" class="loader-wrapper">
+
+  <input
+    id="field--entreprise.ues.entreprises[{index}].siren"
+    value=""
+    type=""
+    name="entreprise.ues.entreprises[{index}].siren"
+    placeholder="9 chiffres"
+    class="siren"
+    
+    
+    
+    required
+    
+    pattern="[0-9]{9}"
+    
+    
+    
+    
+    oninput="checkSirenValidity(event)"
+    
+  />
+
+  <div class="loader"></div>
+</div>
+
+
+        
   
-  
-  
-  required
-  
-  pattern="[0-9]{9}"
-  
-  
-  
-  
-  oninput="checkSirenValidity(event)"
-  
-/>
+<label for="field--entreprise.ues.entreprises[{index}].raison_sociale">Raison sociale</label>
+
+
+
+
+  <input
+    id="field--entreprise.ues.entreprises[{index}].raison_sociale"
+    value=""
+    type=""
+    name="entreprise.ues.entreprises[{index}].raison_sociale"
+    placeholder=""
+    
+    
+    
+    
+    
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
 
       </div>
     </template>
@@ -340,7 +355,7 @@
   <footer>
     <p>
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.06.25" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.06.28" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
 </footer>
