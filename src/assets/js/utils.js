@@ -147,17 +147,32 @@ checkSirenValidity = async event => {
   if (allSirens.filter(siren => siren === target.value).length >= 2) {
     // We check if the length is >= 2 because the list of sirens also contains the current value
     target.setCustomValidity("Le Siren a déjà été saisi")
-  } else if (!await isSirenValid(target.value)) {
+    target.reportValidity()
+    return
+  }
+  const response = await getSirenData(target.value)
+  const raisonSocialeField = getRaisonSocialeField(target)
+  if (!response.ok) {
+    raisonSocialeField.value = ""
     target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
   } else {
+    raisonSocialeField.value = response.data.raison_sociale
     target.setCustomValidity("")
   }
   target.reportValidity()
 }
 
-isSirenValid = async value => {
+getSirenData = async value => {
   const response = await request('GET', `/validate-siren?siren=${value}`)
-  return response.ok
+  return response
+}
+
+getRaisonSocialeField = sirenField => {
+  // Return the field associated to the given siren field name
+  const sirenFieldName = sirenField.name
+  const rsFieldName = sirenFieldName.split('.').slice(0, -1).join('.')
+  const raisonSocialeField = document.querySelector(`[name="${rsFieldName}.raison_sociale"]`)
+  return raisonSocialeField
 }
 
 checkPatternValidity = event => {

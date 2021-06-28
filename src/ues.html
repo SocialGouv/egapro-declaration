@@ -12,14 +12,14 @@ title: "Raison sociale et num√©ro Siren de chacune des entreprises composant l‚Ä
 
 <fieldset>
   <div class=row>
-    {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true data-always-readonly=true %}
     {% include input.html name="entreprise.siren" label="Siren" class="siren" readonly=true data-always-readonly=true %}
+    {% include input.html name="entreprise.raison_sociale" label="Raison sociale" readonly=true data-always-readonly=true %}
   </div>
   <div id=container>
     <template id=looper>
       <div class=row>
-        {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" required=true %}
         {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" pattern="[0-9]{9}" placeholder="9 chiffres" required=true oninput="checkSirenValidity(event)" %}
+        {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" readonly=true data-always-readonly=true %}
       </div>
     </template>
   </div>
