@@ -1,4 +1,44 @@
-@import url("https://fonts.googleapis.com/css2?family=Cabin&family=Gabriela&display=swap");
+/* FONTS */
+
+/* /!\ WARNING this will only work on a proper deployement as it'll reuse the static files from the egapro/simulateur project */
+
+/* gabriela-regular - latin */
+@font-face {
+  font-family: "Gabriela";
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/media/gabriela-v8-latin-regular.3951562b.eot); /* IE9 Compat Modes */
+  src: local("Gabriela Regular"), local("Gabriela-Regular"),
+    url(/static/media/gabriela-v8-latin-regular.3951562b.eot?#iefix)
+      format("embedded-opentype"),
+     url(/static/media/gabriela-v8-latin-regular.badfdabe.woff2)
+      format("woff2"),
+    
+      url(/static/media/gabriela-v8-latin-regular.9db49c8e.woff) format("woff"),
+     url(/static/media/gabriela-v8-latin-regular.1c9cd380.ttf)
+      format("truetype"),
+    
+      url(/static/media/gabriela-v8-latin-regular.cfd57c98.svg#Gabriela) format("svg"); /* Legacy iOS */
+}
+
+/* cabin-regular - latin */
+@font-face {
+  font-family: "Cabin";
+  font-style: normal;
+  font-weight: 400;
+  src: url(/static/media/cabin-v14-latin-regular.491d2a5b.eot); /* IE9 Compat Modes */
+  src: local("Cabin"), local("Cabin-Regular"),
+    url(/static/media/cabin-v14-latin-regular.491d2a5b.eot?#iefix)
+      format("embedded-opentype"),
+     url(/static/media/cabin-v14-latin-regular.1f3cefe3.woff2)
+      format("woff2"),
+     url(/static/media/cabin-v14-latin-regular.ad0cf94d.woff)
+      format("woff"),
+     url(/static/media/cabin-v14-latin-regular.78773388.ttf)
+      format("truetype"),
+    
+      url(/static/media/cabin-v14-latin-regular.44f981a2.svg#Cabin) format("svg"); /* Legacy iOS */
+}
 
 * {
   box-sizing: border-box;
