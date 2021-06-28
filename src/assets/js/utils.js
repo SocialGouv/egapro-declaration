@@ -150,7 +150,10 @@ checkSirenValidity = async event => {
     target.reportValidity()
     return
   }
+  const wrapper = target.parentNode
+  wrapper.classList.add("loading")
   const response = await getSirenData(target.value)
+  wrapper.classList.remove("loading")
   const raisonSocialeField = getRaisonSocialeField(target)
   if (!response.ok) {
     raisonSocialeField.value = ""

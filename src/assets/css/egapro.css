@@ -336,3 +336,45 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
+
+/* Spinner from https://tobiasahlin.com/spinkit/ */
+
+.loader {
+  width: 20px;
+  height: 20px;
+  background-color: #696cd1;
+
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: none;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+.loader-wrapper {
+  position: relative;
+}
+.loader-wrapper.loading .loader {
+  display: inline-block;
+}
