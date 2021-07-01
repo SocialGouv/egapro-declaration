@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.06.28'
+      release: '2021.07.01'
     })
   }
 </script>
@@ -80,6 +80,8 @@
 <main>
   <h1>Périmètre retenu pour le calcul et la publication des indicateurs</h1>
 
+<p>Les informations relatives à l'entreprise déclarante (Raison sociale, Code NAF, Adresse complète) sont renseignées automatiquement et sont non modifiables (source : Répertoire Sirene de l'INSEE).</p>
+
 <fieldset>
   <div class=row>
     <h4>Vous déclarez en tant que</h4>
@@ -99,7 +101,7 @@
         <input
           required
           type="radio"
-          
+          onchange="toggleFields()"
           name="_entreprise.structure" value="entreprise"> Entreprise
       </label>
       
@@ -110,8 +112,8 @@
         <input
           required
           type="radio"
-          
-          name="_entreprise.structure" value="ues"> Unité Économique et Sociale
+          onchange="toggleFields()"
+          name="_entreprise.structure" value="ues"> Unité Économique et Sociale (UES)
       </label>
       
     
@@ -123,7 +125,7 @@
 
 <fieldset>
   <div class=row>
-    <h4>Tranches d'effectifs</h4>
+    <h4>Tranches d'effectifs assujettis de l'<span class="entreprise">entreprise</span><span class="ues">UES</span></h4>
     
 
 <div
@@ -177,40 +179,6 @@
   <div class=row>
     <div>
   
-<label for="field--entreprise.raison_sociale">Raison sociale de l'entreprise déclarante*</label>
-
-
-
-
-  <input
-    id="field--entreprise.raison_sociale"
-    value=""
-    type=""
-    name="entreprise.raison_sociale"
-    placeholder=""
-    
-    
-    
-    
-    required
-    
-    
-    
-    
-    
-    
-    
-    
-  />
-
-</div>
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-    <div>
-  
 <label for="field--entreprise.siren">Numéro Siren de l'entreprise déclarante*</label>
 
 
@@ -222,7 +190,7 @@
     type=""
     name="entreprise.siren"
     placeholder=""
-    
+    class="siren"
     
     
     
@@ -244,19 +212,67 @@
 <fieldset>
   <div>
     <div>
+  
+<label for="field--entreprise.raison_sociale">Raison sociale de l'entreprise déclarante*</label>
+
+
+
+
+  <input
+    id="field--entreprise.raison_sociale"
+    value=""
+    type=""
+    name="entreprise.raison_sociale"
+    placeholder=""
+    class="wide"
+    
+    
+    
+    required
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
+</div>
+  </div>
+</fieldset>
+
+<fieldset>
+  <div>
+    <div>
+  
 <label for="field--entreprise.code_naf">Code NAF de l'entreprise déclarante*</label>
 
 
-<select
-  id="field--entreprise.code_naf"
-  name="entreprise.code_naf"
-  required
-  empty
-  
-  
->
-  
-</select>
+
+
+  <input
+    id="field--entreprise.code_naf"
+    value=""
+    type=""
+    name="entreprise.code_naf"
+    placeholder=""
+    class="wide"
+    
+    
+    
+    required
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
 </div>
   </div>
 </fieldset>
@@ -265,34 +281,62 @@
   <p>Adresse du siège de l'entreprise déclarante</p>
   <div class=row id="département-selector">
     <div>
+  
 <label for="field--entreprise.région">Région*</label>
 
 
-<select
-  id="field--entreprise.région"
-  name="entreprise.région"
-  required
-  empty
-  
-  
->
-  
-</select>
+
+
+  <input
+    id="field--entreprise.région"
+    value=""
+    type=""
+    name="entreprise.région"
+    placeholder=""
+    
+    
+    
+    
+    required
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
 </div>
     <div>
+  
 <label for="field--entreprise.département">Département*</label>
 
 
-<select
-  id="field--entreprise.département"
-  name="entreprise.département"
-  required
-  empty
-  
-  onchange="checkCodePostal(event)"
->
-  
-</select>
+
+
+  <input
+    id="field--entreprise.département"
+    value=""
+    type=""
+    name="entreprise.département"
+    placeholder=""
+    
+    
+    
+    
+    required
+    
+    
+    readonly="readonly"
+    data-always-readonly="true"
+    
+    
+    
+    
+  />
+
 </div>
   </div>
 
@@ -310,15 +354,15 @@
     type=""
     name="entreprise.adresse"
     placeholder=""
-    
+    class="wide"
     
     
     
     required
     
     
-    
-    
+    readonly="readonly"
+    data-always-readonly="true"
     
     
     
@@ -349,10 +393,10 @@
     required
     
     pattern="\d{5}"
+    readonly="readonly"
+    data-always-readonly="true"
     
     
-    
-    onblur="checkCodePostal(event)"
     oninput="checkPatternValidity(event)"
     
   />
@@ -378,8 +422,8 @@
     required
     
     
-    
-    
+    readonly="readonly"
+    data-always-readonly="true"
     
     
     
@@ -391,34 +435,27 @@
 </fieldset>
 
 <script>
-  const regionSelect = selectField('entreprise.région')
-  regionSelect.addEventListener('change', loadDepartments)
-  const departmentSelect = selectField('entreprise.département')
-  const codePostal = selectField('entreprise.code_postal')
+  const entrepriseSpan = document.querySelector('.entreprise')
+  const uesSpan = document.querySelector('.ues')
+  const structureField = selectField('_entreprise.structure')
 
   document.onready = async function() {
-    // Load regions
-    const regions = Object.entries(app.config.regions).map(([value, label]) => ({ value, label }))
-    const sortedRegions = regions.sort((a, b) => a.label.localeCompare(b.label, "fr"))
-    buildSelectOptions(regionSelect, sortedRegions, app.getItem('entreprise.région'))
-    if(regionSelect.value) loadDepartments()
-
     if (app.getItem('entreprise.raison_sociale')) {
       // There is already a "raison sociale" saved so we did already submit this current form,
       // so we can infer the "_entreprise.structure" data.
       app.data._entreprise = {structure: app.data.entreprise.ues ? "ues" : "entreprise"}
     }
-
-    const select = selectField('entreprise.code_naf')
-    await buildNafOptions(select, app.getItem('entreprise.code_naf'))
   }
 
-  function loadDepartments() {
-    const selectedRegion = regionSelect.value
-    const departementCodes = app.config.regions_to_departements[selectedRegion]
-    const departements = departementCodes.map(code => ({ value: code, label: `${code} - ${app.config.departements[code]}` }))
-    const sortedDepartements = departements.sort((a, b) => a.label.localeCompare(b.label, "fr"))
-    buildSelectOptions(departmentSelect, sortedDepartements, app.getItem('entreprise.département'))
+  function toggleFields() {
+    const structureChosen = structureField.querySelector(':checked')
+    const structure = structureChosen && structureChosen.value
+    showSpan(entrepriseSpan, structure === 'entreprise')
+    showSpan(uesSpan, structure === 'ues')
+  }
+
+  function showSpan(node, show) {
+    node.style = `display: ${show ? 'inline' : 'none'}`
   }
 
   document.onsend = data => {
@@ -437,16 +474,9 @@
     }
   }
 
-  function checkCodePostal(event) {
-    if (!codePostal.value || !departmentSelect.value) return
+  document.onloaded = () => {
 
-    const departementCode = ['2A', '2B'].includes(departmentSelect.value) ? '20' : departmentSelect.value
-    if (!codePostal.value.startsWith(departementCode)) {
-      codePostal.setCustomValidity("Le code postal ne correspond pas au département sélectionné")
-    } else {
-      codePostal.setCustomValidity("")
-    }
-    codePostal.reportValidity()
+    toggleFields()
   }
 
 </script>
@@ -487,7 +517,7 @@
   <footer>
     <p>
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.06.28" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.07.01" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
 </footer>

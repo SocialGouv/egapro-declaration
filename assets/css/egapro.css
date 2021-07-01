@@ -344,6 +344,22 @@ button.remove::before {
   display: none;
 }
 
+.entreprise, .ues {
+  display: none;
+}
+
+.wide {
+  width: 100%;
+}
+
+.grow {
+  flex-grow: 2;
+}
+
+.siren {
+  width: 9em;
+}
+
 /** Tweaks and Hacks **/
 
 /* Cursor not-allowed on readonly/disabled */
