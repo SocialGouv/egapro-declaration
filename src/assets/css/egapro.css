@@ -348,6 +348,10 @@ button.remove::before {
   display: none;
 }
 
+.wide {
+  width: 100%;
+}
+
 /** Tweaks and Hacks **/
 
 /* Cursor not-allowed on readonly/disabled */
