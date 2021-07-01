@@ -9,14 +9,15 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
     <h4>Vous déclarez en tant que</h4>
     {% include radios.html
       name="_entreprise.structure"
-      options="entreprise=Entreprise&ues=Unité Économique et Sociale"
+      options="entreprise=Entreprise&ues=Unité Économique et Sociale (UES)"
+      onchange="toggleFields()"
       required="required" %}
   </div>
 </fieldset>
 
 <fieldset>
   <div class=row>
-    <h4>Tranches d'effectifs</h4>
+    <h4>Tranches d'effectifs assujettis de l'<span class="entreprise">entreprise</span><span class="ues">UES</span></h4>
     {% include radios.html
       name="entreprise.effectif.tranche"
       options="50:250=De 50 à 250 inclus&251:999=De 251 à 999 inclus&1000:=De 1000 ou plus"
@@ -64,6 +65,9 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   regionSelect.addEventListener('change', loadDepartments)
   const departmentSelect = selectField('entreprise.département')
   const codePostal = selectField('entreprise.code_postal')
+  const entrepriseSpan = document.querySelector('.entreprise')
+  const uesSpan = document.querySelector('.ues')
+  const structureField = selectField('_entreprise.structure')
 
   document.onready = async function() {
     // Load regions
@@ -80,6 +84,17 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
 
     const select = selectField('entreprise.code_naf')
     await buildNafOptions(select, app.getItem('entreprise.code_naf'))
+  }
+
+  function toggleFields() {
+    const structureChosen = structureField.querySelector(':checked')
+    const structure = structureChosen && structureChosen.value
+    showSpan(entrepriseSpan, structure === 'entreprise')
+    showSpan(uesSpan, structure === 'ues')
+  }
+
+  function showSpan(node, show) {
+    node.style = `display: ${show ? 'inline' : 'none'}`
   }
 
   function loadDepartments() {
@@ -116,6 +131,10 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
       codePostal.setCustomValidity("")
     }
     codePostal.reportValidity()
+  }
+  document.onloaded = () => {
+
+    toggleFields()
   }
 
 </script>

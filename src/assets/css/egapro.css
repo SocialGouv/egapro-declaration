@@ -344,6 +344,10 @@ button.remove::before {
   display: none;
 }
 
+.entreprise, .ues {
+  display: none;
+}
+
 /** Tweaks and Hacks **/
 
 /* Cursor not-allowed on readonly/disabled */
