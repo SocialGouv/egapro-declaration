@@ -41,15 +41,15 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
 
 <fieldset>
   <div>
-    <div>{% include input.html name="entreprise.code_naf" label="Code NAF de l'entreprise déclarante" required=true empty=true readonly=true data-always-readonly=true class="wide" %}</div>
+    <div>{% include fake_input.html name="entreprise.code_naf" label="Code NAF de l'entreprise déclarante" class="wide" dict="app.config.naf" %}</div>
   </div>
 </fieldset>
 
 <fieldset>
   <p>Adresse du siège de l'entreprise déclarante</p>
   <div class=row id="département-selector">
-    <div>{% include input.html name="entreprise.région" label="Région" required=true empty=true readonly=true data-always-readonly=true %}</div>
-    <div>{% include input.html name="entreprise.département" label="Département" required=true empty=true readonly=true data-always-readonly=true %}</div>
+    <div>{% include fake_input.html name="entreprise.région" label="Région" dict="app.config.regions" %}</div>
+    <div>{% include fake_input.html name="entreprise.département" label="Département" dict="app.config.departements" %}</div>
   </div>
 
   <div class=row>
@@ -103,7 +103,6 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
   }
 
   document.onloaded = () => {
-
     toggleFields()
   }
 

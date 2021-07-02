@@ -166,7 +166,8 @@ input[type=number],
 input[type=date],
 input[type=regex],
 textarea,
-select {
+select,
+.fake-input {
   font: inherit;
   background-color: #fff;
   padding: .3rem 1rem;
@@ -182,7 +183,8 @@ table input[type=number],
 table input[type=date],
 table input[type=regex],
 table textarea,
-table select {
+table select,
+table .fake-input {
   width: 100%; /* Fix all columns to be able to customize width. Acts even with max-width below */
   max-width: 80%;
 }
@@ -224,7 +226,8 @@ table tbody.percentage td::after {
 .row input[type=date],
 .row input[type=regex],
 .row textarea,
-.row select {
+.row select,
+.row .fake-input {
   max-width: 100%;
 }
 
@@ -348,16 +351,16 @@ button.remove::before {
   display: none;
 }
 
-.wide {
-  width: 100%;
-}
-
 .grow {
   flex-grow: 2;
 }
 
 .siren {
   width: 9em;
+}
+
+.fake-input {
+  display: inline-block;
 }
 
 /** Tweaks and Hacks **/
