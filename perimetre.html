@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.07.01'
+      release: '2021.07.02'
     })
   }
 </script>
@@ -125,7 +125,7 @@
 
 <fieldset>
   <div class=row>
-    <h4>Tranches d'effectifs assujettis de l'<span class="entreprise">entreprise</span><span class="ues">UES</span></h4>
+    <h4>Tranche d'effectifs assujettis de l'<span class="entreprise">entreprise</span><span class="ues">UES</span></h4>
     
 
 <div
@@ -203,6 +203,7 @@
     
     
     
+    
   />
 
 </div>
@@ -237,6 +238,7 @@
     
     
     
+    
   />
 
 </div>
@@ -245,9 +247,10 @@
 
 <fieldset>
   <div>
-    <div>
+    <div><div>
   
-<label for="field--entreprise.code_naf">Code NAF de l'entreprise déclarante*</label>
+  
+<label for="field--entreprise.code_naf">Code NAF de l'entreprise déclarante</label>
 
 
 
@@ -258,31 +261,53 @@
     type=""
     name="entreprise.code_naf"
     placeholder=""
-    class="wide"
-    
-    
-    
-    required
-    
-    
-    readonly="readonly"
-    data-always-readonly="true"
     
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    style="display: none"
   />
 
+
+  <span
+    id="fake-field--entreprise.code_naf"
+    class="fake-input wide"
+    readonly="readonly"
+  >
+  </span>
 </div>
+
+<script>
+  document.addEventListener("loaded", () => {
+    const field = selectField("entreprise.code_naf")
+    const fakeField = selectFakeField("entreprise.code_naf")
+    const value = field.value
+
+    const dict = eval("app.config.naf")
+    const fakeValue = `${value} - ${dict[value]}`
+
+    fakeField.textContent = fakeValue
+  })
+</script></div>
   </div>
 </fieldset>
 
 <fieldset>
   <p>Adresse du siège de l'entreprise déclarante</p>
   <div class=row id="département-selector">
-    <div>
+    <div><div>
   
-<label for="field--entreprise.région">Région*</label>
+  
+<label for="field--entreprise.région">Région</label>
 
 
 
@@ -297,21 +322,43 @@
     
     
     
-    required
-    
-    
-    readonly="readonly"
-    data-always-readonly="true"
     
     
     
     
+    
+    
+    
+    
+    
+    style="display: none"
   />
 
+
+  <span
+    id="fake-field--entreprise.région"
+    class="fake-input"
+    readonly="readonly"
+  >
+  </span>
 </div>
-    <div>
+
+<script>
+  document.addEventListener("loaded", () => {
+    const field = selectField("entreprise.région")
+    const fakeField = selectFakeField("entreprise.région")
+    const value = field.value
+
+    const dict = eval("app.config.regions")
+    const fakeValue = `${value} - ${dict[value]}`
+
+    fakeField.textContent = fakeValue
+  })
+</script></div>
+    <div><div>
   
-<label for="field--entreprise.département">Département*</label>
+  
+<label for="field--entreprise.département">Département</label>
 
 
 
@@ -326,18 +373,39 @@
     
     
     
-    required
-    
-    
-    readonly="readonly"
-    data-always-readonly="true"
     
     
     
     
+    
+    
+    
+    
+    
+    style="display: none"
   />
 
+
+  <span
+    id="fake-field--entreprise.département"
+    class="fake-input"
+    readonly="readonly"
+  >
+  </span>
 </div>
+
+<script>
+  document.addEventListener("loaded", () => {
+    const field = selectField("entreprise.département")
+    const fakeField = selectFakeField("entreprise.département")
+    const value = field.value
+
+    const dict = eval("app.config.departements")
+    const fakeValue = `${value} - ${dict[value]}`
+
+    fakeField.textContent = fakeValue
+  })
+</script></div>
   </div>
 
   <div class=row>
@@ -363,6 +431,7 @@
     
     readonly="readonly"
     data-always-readonly="true"
+    
     
     
     
@@ -399,6 +468,7 @@
     
     oninput="checkPatternValidity(event)"
     
+    
   />
 
 
@@ -424,6 +494,7 @@
     
     readonly="readonly"
     data-always-readonly="true"
+    
     
     
     
@@ -475,7 +546,6 @@
   }
 
   document.onloaded = () => {
-
     toggleFields()
   }
 
@@ -517,7 +587,7 @@
   <footer>
     <p>
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.07.01" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.07.02" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
 </footer>

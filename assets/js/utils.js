@@ -45,6 +45,12 @@ function selectField(name) {
   return field
 }
 
+function selectFakeField(name) {
+  const field = document.getElementById(`fake-field--${name}`)
+  if(!field) throw new Error(`fake field name "${name}" does not exist.`)
+  return field
+}
+
 function enableField(selector, enabled) {
   document.querySelector(selector).disabled = !enabled
 }
@@ -56,6 +62,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.onready && await document.onready()
   document.dispatchEvent(new Event('ready'))
   document.onloaded && document.onloaded()
+  document.dispatchEvent(new Event('loaded'))
 })
 
 notify = {
