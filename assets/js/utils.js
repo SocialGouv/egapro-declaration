@@ -151,10 +151,17 @@ checkSirenValidity = async event => {
   wrapper.classList.remove("loading")
   const raisonSocialeField = getRaisonSocialeField(target)
   if (!response.ok) {
-    raisonSocialeField.value = ""
-    target.setCustomValidity("Le numéro Siren que vous avez saisi n'est pas valide")
+    if (raisonSocialeField) {
+      raisonSocialeField.value = ""
+    }
+    const errorMessage =
+      (response && response.data && response.data.error) ||
+      "Le numéro Siren que vous avez saisi n'est pas valide"
+    target.setCustomValidity(errorMessage)
   } else {
-    raisonSocialeField.value = response.data.raison_sociale
+    if (raisonSocialeField) {
+      raisonSocialeField.value = response.data.raison_sociale
+    }
     target.setCustomValidity("")
   }
   target.reportValidity()
