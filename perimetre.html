@@ -350,7 +350,7 @@
     const value = field.value
 
     const dict = eval("app.config.regions")
-    const fakeValue = `${value} - ${dict[value]}`
+    const fakeValue = `${dict[value]}`
 
     fakeField.textContent = fakeValue
   })
@@ -401,7 +401,7 @@
     const value = field.value
 
     const dict = eval("app.config.departements")
-    const fakeValue = `${value} - ${dict[value]}`
+    const fakeValue = `${dict[value]}`
 
     fakeField.textContent = fakeValue
   })
