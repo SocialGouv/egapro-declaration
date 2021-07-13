@@ -25,7 +25,9 @@ Pour pouvoir permettre de poursuivre la transmission des informations requises, 
   document.getElementById('page-form').addEventListener('submit', async (event) => {
     event.preventDefault()
     const email = event.target.email.value
-    const response = await request('post', '/token', { email })
+    const href = window.location.href
+    const url = href.replace("email.html", "?token=")
+    const response = await request('post', '/token', { email, url })
     if(response.ok) {
       localStorage.email = email
       redirect('{{ site.baseurl }}/validation-email.html')
