@@ -47,89 +47,162 @@ html,
 body {
   margin: 0;
   padding: 0;
-  min-height: calc(100vh - 120px);
+  min-height: 100%;
 }
 
 body {
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(#eff0fa,#fff);
   color: #191a49;
   font-family: "Cabin",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
 }
 
-header img {
-  width: 90px;
+.wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 50rem;
+  width: 100%;
 }
 
-body > header {
-  position: fixed;
+.app-header {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
   display: flex;
-  padding: .5rem 0;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
   background: #fff;
   font-family: Gabriela;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 3;
 }
-body > header div {
-  margin: auto;
-  width: 800px;
+
+.app-header__container {
   display: flex;
   align-items: center;
 }
-body > header hgroup {
+
+.app-header__container__logo {
+  transition: opacity .2s ease-in-out;
+}
+.app-header__container__logo:hover {
+  opacity: .5;
+}
+
+.baseline {
+  margin-left: 2rem;
+}
+
+@media (min-width: 680px) {
+  .baseline {
+    flex-grow: 1;
+    display: flex;
+    justify-items: center;
+  }
+  .baseline__text {
+    margin-left: 1rem;
+    transform: translateY(.25rem);
+  }
+}
+
+.baseline__title {
   align-items: center;
   display: flex;
   min-width: fit-content;
-  margin: 0 1rem;
-}
-body > header h1 {
   font-size: 1.5rem;
-}
-body > header a {
   color: inherit;
   text-decoration: none;
+  transition: color .2s ease-in-out;
 }
-body > header p {
-  margin: 0 1rem;
+
+.baseline__title:hover {
+  color: #23246f;
+}
+
+.baseline__text {
   font-size: .7rem;
+  line-height: 1.25
 }
 
-.main {
-  min-height: calc(100vh - 120px);
-  margin-top: 100px;
-  padding-bottom: 120px;
-  padding: 1rem 1rem 0 1rem;
-  background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
+@media (max-width: 679px) {
+  .baseline__text {
+    margin: .25rem 0 0 0;
+  }
+}
+
+.app-main {
+  min-height: calc(100vh - 5.75rem);
+  flex: 1 0 auto;
   padding-bottom: 10rem;
+  padding-top: 1rem;
+  background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
 }
 
-body > footer {
-  border-top: #eee solid 1px;
-  font-size: .88rem;
-  display: flex;
-  /* margin-top: 1rem; */
-  padding: 1rem 0 .5rem 0;
-}
-body > footer header span {
-  display: block;
-  margin-top: .5rem;
-}
-body > footer a {
+.app-main a:not(.button) {
   color: inherit;
-  font-size: .9em;
+  transition: color .2s ease-in-out;
 }
-body > footer nav {
-  width: 100%;
-  margin: 0 1rem 0 1rem;
+.app-main a:not(.button):hover {
+  color: #696cd1;
 }
-body > footer nav a {
-  display: block;
-  margin-bottom: .3rem;
+
+
+.app-footer {
+  flex-shrink: 0;
+  border-top: #f1f2fb solid 1px;
+  font-size: .88rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 }
-body > footer p {
+
+@media (min-width: 680px) {
+  .app-footer {
+    display: flex;
+  }
+  .app-footer__logo {
+    flex-shrink: 0;
+    display: block;
+    width: 5.625rem;
+  }
+  .app-footer__list-links {
+    margin: 0 2rem;
+    flex: 1 0 auto;
+  }
+  .app-footer__infos {
+  }
+}
+
+@media (max-width: 679px) {
+  .app-footer__logo {
+    display: none;
+  }
+
+  .app-footer__list-links {
+    margin: 0 0 1rem;
+  }
+}
+
+.app-footer__list-links {
+  list-style: none;
+  padding: 0;
+}
+
+.app-footer a {
+  color: inherit;
+  transition: color .2s ease-in-out;
+}
+
+.app-footer a:hover {
+  color: #696cd1;
+}
+
+.app-footer__list-links li:not(:last-child) {
+  margin-bottom: .25rem;
+}
+
+.app-footer__infos {
   margin: 0;
 }
 

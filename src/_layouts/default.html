@@ -35,50 +35,58 @@
 
 <script src="{{ site.baseurl }}/assets/js/utils.js"></script>
 
-<header>
-  <div>
-    <a href="https://travail-emploi.gouv.fr/" target="_blank">
-      <img src="{{ site.baseurl }}/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion">
+<header class="app-header">
+  <div class="app-header__container wrapper">
+    <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
+      <img src="{{ site.baseurl }}/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90" >
     </a>
-    <hgroup>
-      <h1><a href="https://index-egapro.travail.gouv.fr/" target="_blank">Index Egapro</a></h1>
-    </hgroup>
-    <p>
-      <!-- &#8209; is an unbreakable hyphen not to split the word -->
-      L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&#8209;Hommes
-    </p>
+    <div class="baseline">
+      <a href="https://index-egapro.travail.gouv.fr/" target="_blank" class="baseline__title">Index Egapro</a>
+      <p class="baseline__text">
+        L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&nbsp;Hommes
+      </p>
+    </div>
   </div>
 </header>
 
-<form class=main id="page-form" action="#">
-  {{ content }}
-</form>
+<main class="app-main wrapper" role="main">
+  <form  id="page-form" action="#">
+    {{ content }}
+  </form>
+</main>
 
-<footer>
-  <header>
-    <a href="https://travail-emploi.gouv.fr/" target="_blank">
-      <img src="{{ site.baseurl }}/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion">
-    </a>
-  </header>
-  <nav>
-    <a href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
-      target="_blank" rel="noopener noreferrer">retrouvez le simulateur au format Excel</a>
-    <a href="https://index-egapro.travail.gouv.fr/mentions-legales">mentions légales</a>
-    <a href="https://index-egapro.travail.gouv.fr/cgu">conditions
+
+<footer class="app-footer wrapper" role="contentinfo">
+  <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
+      <img src="{{ site.baseurl }}/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90">
+  </a>
+  <ul class="app-footer__list-links">
+    <li>
+      <a href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
+         target="_blank" rel="noopener noreferrer">retrouvez le simulateur au format Excel</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/mentions-legales">mentions légales</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/cgu">conditions
       générales d'utilisation</a>
-    <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">politique de
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">politique de
       confidentialité</a>
-    <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx">Contactez votre référent Egapro</a>
-  </nav>
-  <footer>
-    <p>
+    </li>
+    <li>
+      <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx">Contactez votre référent Egapro</a>
+    </li>
+  </ul>
+    <p class="app-footer__infos">
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
       <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/{{ site.version }}" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
-  </footer>
 </footer>
 
-<div id="toast">
+<div id="toast" role="alert" aria-live="assertive" aria-atomic="true">
   <div class=content>
     <span class=message></span>
     <a href="#" onclick="notify.close(event)" class=close>x</a>
