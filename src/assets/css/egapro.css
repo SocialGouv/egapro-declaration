@@ -72,16 +72,42 @@ body {
   flex-shrink: 0;
   position: sticky;
   top: 0;
-  display: flex;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
   background: #fff;
-  font-family: Gabriela;
 }
 
 .app-header__container {
   display: flex;
   align-items: center;
+  font-family: Gabriela;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.skip-links {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-bottom: #f1f2fb solid 1px;
+}
+
+.skip-links ul {
+  list-style: none;
+  margin-bottom: 0;
+  margin-top: 0;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+}
+
+.skip-links a {
+  text-decoration: none;
+  color: inherit;
+  transition: color .2s ease-in-out;
+}
+
+.skip-links a:hover,
+.skip-links a:focus {
+  color: #6a6cd0
 }
 
 .app-header__container__logo {
@@ -348,10 +374,6 @@ progress {
 }
 progress + * {
   margin-left: 1rem;
-}
-
-nav {
-  margin-top: 2rem;
 }
 
 .buttons {

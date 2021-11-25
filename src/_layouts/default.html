@@ -35,8 +35,16 @@
 
 <script src="{{ site.baseurl }}/assets/js/utils.js"></script>
 
+
 <header class="app-header">
-  <div class="app-header__container wrapper">
+  <div class="skip-links">
+    <ul class="wrapper">
+      <li><a href="#navigation">Aller au menu</a></li>
+      <li><a href="#content">Aller au contenu</a></li>
+      <li><a href="#footer">Aller au pied de page</a></li>
+    </ul>
+  </div>
+  <nav id="navigation" class="app-header__container wrapper">
     <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
       <img src="{{ site.baseurl }}/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90" >
     </a>
@@ -46,17 +54,17 @@
         L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&nbsp;Hommes
       </p>
     </div>
-  </div>
+  </nav>
 </header>
 
-<main class="app-main wrapper" role="main">
+<main id="content" class="app-main wrapper" role="main">
   <form  id="page-form" action="#">
     {{ content }}
   </form>
 </main>
 
 
-<footer class="app-footer wrapper" role="contentinfo">
+<footer class="app-footer wrapper" role="contentinfo" id="footer">
   <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
       <img src="{{ site.baseurl }}/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90">
   </a>
