@@ -42,18 +42,22 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
 </div>
 
 <fieldset>
-  <legend>Adresse du siège de l'entreprise déclarante</legend>
-  <div class=row id="département-selector">
+  <legend class="mb-0">Adresse du siège de l'entreprise déclarante</legend>
+  <div class="row mt-1" id="département-selector">
     <div>{% include fake_input.html name="entreprise.région" label="Région" dict="app.config.regions" %}</div>
     <div>{% include fake_input.html name="entreprise.département" label="Département" dict="app.config.departements" %}</div>
   </div>
   <div class=row>
-    {% include input.html name="entreprise.adresse" label="Adresse" required=true readonly=true data-always-readonly=true class="wide" %}
+    <div>
+      {% include input.html name="entreprise.adresse" label="Adresse" required=true readonly=true data-always-readonly=true class="wide" %}
+    </div>
   </div>
 
   <div class=row>
-    {% include input.html name="entreprise.code_postal" label="Code postal" required=true pattern="\d{5}" placeholder="5 chiffres" oninput="checkPatternValidity(event)" readonly=true data-always-readonly=true %}
-    {% include input.html name="entreprise.commune" label="Commune" required=true readonly=true data-always-readonly=true %}
+    <div>{% include input.html name="entreprise.code_postal" label="Code postal" required=true pattern="\d{5}" placeholder="5 chiffres" oninput="checkPatternValidity(event)" readonly=true data-always-readonly=true %}</div>
+    <div>
+      {% include input.html name="entreprise.commune" label="Commune" required=true readonly=true data-always-readonly=true %}
+    </div>
   </div>
 </fieldset>
 
