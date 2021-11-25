@@ -3,72 +3,82 @@ layout: tunnel
 title: "Ecart de taux de promotions entre les femmes et les hommes"
 ---
 
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <div class=row>
-    <div>
-      {% include radios.html
-        name="_indicateurs.promotions.calculable"
-        label="L’indicateur sur les écarts de taux de promotions est-il calculable?"
-        required="true"
-        options="oui=oui&non=non"
-        onchange="toggleFields()"
-        required="required" %}
-    </div>
-  </div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    <legend>L’indicateur sur les écarts de taux de promotions est-il calculable?</legend>
+    {% include radios.html
+    name="_indicateurs.promotions.calculable"
+    required="true"
+    options="oui=oui&non=non"
+    onchange="toggleFields()"
+    required="required" %}
+  </fieldset>
+</div>
 
-<p>Ecarts de taux de promotions obtenus par CSP en %</p>
+<h2 class="text-lg mt-0">Ecarts de taux de promotions obtenus par CSP en %</h2>
 
-<fieldset id="fieldset-resultat-ouv">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[0]" label="Ouvriers" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-ouv">
+    {% include input.html type="number" name="indicateurs.promotions.catégories[0]" label="Ouvriers" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-resultat-emp">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[1]" label="Employés" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-emp">
+    {% include input.html type="number" name="indicateurs.promotions.catégories[1]" label="Employés" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-resultat-tam">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[2]" label="Techniciens et agents de maîtrise" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-tam">
+    {% include input.html type="number" name="indicateurs.promotions.catégories[2]" label="Techniciens et agents de maîtrise" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-resultat-ic">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.catégories[3]" label="Ingénieurs et cadres" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-ic">
+    {% include input.html type="number" name="indicateurs.promotions.catégories[3]" label="Ingénieurs et cadres" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 step="any" required=true onblur="notifyPercentage(event); maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-pourcentage">
+    {% include input.html type="number" name="indicateurs.promotions.résultat" label="Résultat final en %" min=0 step="any" required=true onblur="notifyPercentage(event); maybeRefreshForm(event)" oninput="toggleFields()" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-population-favorable">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-population-favorable">
     {% include select.html
-      name="indicateurs.promotions.population_favorable"
-      label="Population envers laquelle l'écart est favorable"
-      empty="true"
-      required=true
-      onchange="maybeRefreshForm(event)"
-      options="femmes=Femmes&hommes=Hommes"
+    name="indicateurs.promotions.population_favorable"
+    label="Population envers laquelle l'écart est favorable"
+    empty="true"
+    required=true
+    onchange="maybeRefreshForm(event)"
+    options="femmes=Femmes&hommes=Hommes"
     %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-motif">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-motif">
     {% include select.html
-      name="indicateurs.promotions.non_calculable"
-      label="Précision du motif de non calculabilité de l'indicateur"
-      empty="true"
-      required=true
-      options="egvi40pcet=Effectif des groupes valides inférieur à 40% de l'effectif total&absprom=Absence de promotions"
+    name="indicateurs.promotions.non_calculable"
+    label="Précision du motif de non calculabilité de l'indicateur"
+    empty="true"
+    required=true
+    options="egvi40pcet=Effectif des groupes valides inférieur à 40% de l'effectif total&absprom=Absence de promotions"
     %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-note" class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-note" class=note>
+    {% include input.html type="number" name="indicateurs.promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
 <script>
   const calculableField = selectField('_indicateurs.promotions.calculable')

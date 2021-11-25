@@ -3,28 +3,32 @@ layout: tunnel
 title: "Résultat final de l’écart de rémunération entre les femmes et les hommes"
 ---
 
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en % après application du seuil de pertinence à chaque catégorie" min=0 step="any" required=true onblur="notifyPercentage(event); maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    {% include input.html type="number" name="indicateurs.rémunérations.résultat" label="Résultat final en % après application du seuil de pertinence à chaque catégorie" min=0 step="any" required=true onblur="notifyPercentage(event); maybeRefreshForm(event)" oninput="toggleFields()" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-population-favorable">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-population-favorable">
     {% include select.html
-      name="indicateurs.rémunérations.population_favorable"
-      label="Population envers laquelle l'écart est favorable"
-      empty="true"
-      required=true
-      onchange="maybeRefreshForm(event)"
-      options="femmes=Femmes&hommes=Hommes"
+    name="indicateurs.rémunérations.population_favorable"
+    label="Population envers laquelle l'écart est favorable"
+    empty="true"
+    required=true
+    onchange="maybeRefreshForm(event)"
+    options="femmes=Femmes&hommes=Hommes"
     %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.rémunérations.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset class=note>
+    {% include input.html type="number" name="indicateurs.rémunérations.note" label="Nombre de points obtenus à l'indicateur" min=0 readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
 <script>
   const resultatField = selectField("indicateurs.rémunérations.résultat")

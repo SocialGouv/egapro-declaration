@@ -3,31 +3,37 @@ layout: tunnel
 title: "Niveau de résultat global"
 ---
 
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <div class=row>{% include input.html type="number" name="déclaration.points" label="Total des points obtenus" min=0 max=100 readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    {% include input.html type="number" name="déclaration.points" label="Total des points obtenus" min=0 max=100 readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
-<fieldset>
-  <div class=row>{% include input.html type="number" name="déclaration.points_calculables" label="Nombre de points maximum pouvant être obtenus" min=0 max=100 readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    {% include input.html type="number" name="déclaration.points_calculables" label="Nombre de points maximum pouvant être obtenus" min=0 max=100 readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
-<fieldset class=note>
-  <div class=row>{% include input.html type="number" name="déclaration.index" label="Résultat final sur 100 points" min=0 max=100 readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset class=note>
+    {% include input.html type="number" name="déclaration.index" label="Résultat final sur 100 points" min=0 max=100 readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-mesures-correctives">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-mesures-correctives">
     {% include select.html
-      name="déclaration.mesures_correctives"
-      empty="true"
-      label="Mesures de correction prévues à l'article D. 1142-6"
-      options="mmo=Mesures mises en oeuvre&me=Mesures envisagées&mne=Mesures non envisagées"
-      required=true
+    name="déclaration.mesures_correctives"
+    empty="true"
+    label="Mesures de correction prévues à l'article D. 1142-6"
+    options="mmo=Mesures mises en oeuvre&me=Mesures envisagées&mne=Mesures non envisagées"
+    required=true
     %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
 <script>
   document.onready = () => {

@@ -3,7 +3,7 @@ layout: tunnel
 title: "Publication des résultats"
 ---
 
-<h1>
+<h1 class="text-3xl mt-0">
   <span class="year-2021-and-after">Publication des résultats obtenus</span>
   <span class="year-2020-and-before">Publication du niveau de résultat global</span>
 </h1>
@@ -21,47 +21,49 @@ title: "Publication des résultats"
     des salariés par tout moyen.</span>
 </p>
 
-<fieldset>
-  <div class=row>
+<div class="row">
+  <fieldset>
     {% include input.html
-      type="date"
-      name="déclaration.publication.date"
-      label="<span class='year-2021-and-after'>Date de publication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Date de publication du niveau de résultat obtenu</span>"
-      required=true
-      placeholder="aaaa-mm-jj"
-      pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-      oninput="checkDate(event)" %}
-  </div>
-</fieldset>
-
-<fieldset>
-  <div class=row>
-    <div>
-      {% include radios.html
-        name="_déclaration.publication.site_internet"
-        label="<span class='year-2021-and-after'>Avez-vous un site Internet pour publier les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> ?</span><span class='year-2020-and-before'>Avez-vous un site Internet pour publier le niveau de résultat obtenu</span>"
-        options="oui=oui&non=non"
-        onchange="toggleFields()"
-        required="required" %}
-    </div>
-  </div>
-</fieldset>
-
-<fieldset id="fieldset-url">
-  <div>{% include input.html
-    name="déclaration.publication.url"
-    label="<span class='year-2021-and-after'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle seront publiés les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle sera publié le niveau de résultat obtenu</span>"
+    type="date"
+    name="déclaration.publication.date"
+    label="<span class='year-2021-and-after'>Date de publication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Date de publication du niveau de résultat obtenu</span>"
     required=true
-    class="wide" %}</div>
-</fieldset>
+    placeholder="aaaa-mm-jj"
+    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    oninput="checkDate(event)" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-modalites">
-  <div>{% include textarea.html
+<div class="row">
+  <fieldset>
+    {% include radios.html
+    name="_déclaration.publication.site_internet"
+    label="<span class='year-2021-and-after'>Avez-vous un site Internet pour publier les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> ?</span><span class='year-2020-and-before'>Avez-vous un site Internet pour publier le niveau de résultat obtenu</span>"
+    options="oui=oui&non=non"
+    onchange="toggleFields()"
+    required="required" %}
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-url">
+    {% include input.html
+      name="déclaration.publication.url"
+      label="<span class='year-2021-and-after'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle seront publiés les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle sera publié le niveau de résultat obtenu</span>"
+      required=true
+      class="wide" %}
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-modalites">
+    {% include textarea.html
     name="déclaration.publication.modalités"
     label="<span class='year-2021-and-after'>Préciser les modalités de communication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> auprès de vos salariés</span><span class='year-2020-and-before'>Préciser les modalités de communication du niveau de résultat obtenu auprès de vos salariés</span>"
     required=true
-    class="wide" %}</div>
-</fieldset>
+    class="wide" %}
+  </fieldset>
+</div>
 
 <script>
   const siteInternetField = selectField('_déclaration.publication.site_internet')

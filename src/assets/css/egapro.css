@@ -55,7 +55,7 @@ body {
   display: flex;
   flex-direction: column;
   background: linear-gradient(#eff0fa,#fff);
-  color: #191a49;
+  color: #191A49;
   font-family: "Cabin",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
 }
 
@@ -136,7 +136,7 @@ body {
   min-height: calc(100vh - 5.75rem);
   flex: 1 0 auto;
   padding-bottom: 10rem;
-  padding-top: 1rem;
+  padding-top: 3rem;
   background: transparent url('https://index-egapro.travail.gouv.fr/illustration-email.svg') no-repeat bottom right;
 }
 
@@ -206,30 +206,114 @@ body {
   margin: 0;
 }
 
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+
+.m-0 {
+  margin: 0;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.my-0 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.mr-0 {
+  margin-right: 0;
+}
+
+.ml-0 {
+  margin-left: 0;
+}
+
+.mx-0 {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-weight: normal;
+  line-height: 1.25;
+  font-weight: 500;
 }
 
 fieldset {
   border: none;
-  margin-bottom: .5rem;
-  padding-left: 0;
+  margin: 0;
+  padding: 0;
 }
+
 fieldset[disabled] {
   opacity: .5;
 }
+
 fieldset .row:first-child {
   margin-top: 0;
 }
 
+fieldset legend {
+  padding: 0;
+  margin: 0 0 0.25rem 0;
+  font-weight: 500;
+}
+
 label {
   display: block;
-  margin: .6rem 0 .3rem 0;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0 0 .25rem 0;
 }
 
 input[type=""],
@@ -288,6 +372,7 @@ table tbody.percentage td::after {
   margin: 2rem 0;
   display: flex;
 }
+
 .row > :not(:last-child) {
   margin-right: 1rem;
 }
@@ -302,10 +387,6 @@ table tbody.percentage td::after {
 .row select,
 .row .fake-input {
   max-width: 100%;
-}
-
-.row h4 {
-  margin: .6rem 0;
 }
 
 .wide {
@@ -328,14 +409,21 @@ button,
 .button,
 [rel=prev],
 [rel=next] {
-  border: 1px solid #696cd1;
+  border: 1px solid #A8A9E4;
   color: #696cd1;
   border-radius: .3rem;
   padding: .7rem 1.8rem;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, .25);
   font-size: 1rem;
   text-decoration: none;
   cursor: pointer;
+  transition: background .2s ease-in-out, background .2s ease-in-out, border-color .2s ease-in-out;
+}
+
+.button:hover, button:hover {
+  background: #E6E6F7;
+  color: #23246f;
+  border-color: #C7C8ED;
 }
 
 .multitable-actions {
@@ -365,6 +453,13 @@ button.remove::before {
 
 [rel=next] {
   background-color: #696cd1;
+  border-color: #696cd1;
+  color: #fff;
+}
+
+[rel=next]:hover {
+  background: #23246f;
+  border-color: #23246f;
   color: #fff;
 }
 
@@ -459,6 +554,17 @@ input[type="radio"][disabled] {
   border-width: 0;
 }
 
+[type='radiogroup'] > *:first-child {
+  margin-top: .125rem;
+}
+
+[type='radiogroup'] > *:last-child {
+  margin-bottom: 0;
+}
+
+[type='radiogroup'] label {
+  font-weight: 400;
+}
 
 /* "arrows" to increase/decrease numbers were asked to be removed */
 input[type='number'] {

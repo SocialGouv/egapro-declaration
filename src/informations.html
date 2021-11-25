@@ -3,26 +3,26 @@ layout: tunnel
 title: "Informations calcul et période de référence"
 ---
 
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <div class="row">
+<div class="row">
+  <fieldset>
     {% include input.html type="number" name="déclaration.année_indicateurs" label="Année au titre de laquelle les indicateurs sont calculés" readonly=true data-always-readonly=true %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset>
-  <div class=row>
+<div class=row>
+  <div class="fieldset">
     {% include input.html type="date" label="Date de fin de la période de référence" name="déclaration.fin_période_référence" required="required" placeholder="aaaa-mm-jj" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
     <a class="button" href="#" onclick="updatePeriode(event)">sélectionner la fin de l'année civile</a>
   </div>
-</fieldset>
+</div>
 
-<fieldset>
-  <div class=row>
+<div class=row>
+  <fieldset>
     {% include input.html type="number" name="entreprise.effectif.total" min=1 label="Nombre de salariés pris en compte pour le calcul des indicateurs sur la période de référence (en effectif physique)" required="true" %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
 <script>
   const finPeriodeReferenceField = selectField("déclaration.fin_période_référence")
