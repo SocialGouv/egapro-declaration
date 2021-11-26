@@ -39,14 +39,14 @@ layout: default
 
 <nav id="tunnel-actions" class="buttons">
   {% if page.prevButtonLabel %}
-  <a class=button rel=prev>{{ page.prevButtonLabel }}</a>
+  <button class="button history-back">{{ page.prevButtonLabel }}</button>
   {% else %}
-  <a class=button rel=prev>Précédent</a>
+  <button class="button history-back" aria-label="étape précédent">Précédent</button>
   {% endif %}
   {% if page.nextButtonLabel %}
-  <button rel=next>{{ page.nextButtonLabel }}</button>
+  <button class="button--primary button-next">{{ page.nextButtonLabel }}</button>
   {% else %}
-  <button rel=next>Suivant</button>
+  <button class="button--primary button-next" aria-label="étape suivante">Suivant</button>
   {% endif %}
   <progress max=0 value=0></progress>
 </nav>
