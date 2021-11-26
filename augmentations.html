@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.07.16'
+      release: '2021.11.26'
     })
   }
 </script>
@@ -35,34 +35,48 @@
 
 <script src="/declaration/assets/js/utils.js"></script>
 
-<header>
-  <div>
-    <a href="https://travail-emploi.gouv.fr/" target="_blank"><img src="/declaration/assets/img/marianne.svg" alt="Marianne"></a>
-    <hgroup>
-      <h1><a href="https://index-egapro.travail.gouv.fr/" target="_blank">Index Egapro</a></h1>
-    </hgroup>
-    <p>
-      <!-- &#8209; is an unbreakable hyphen not to split the word -->
-      L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&#8209;Hommes
-    </p>
+
+<header class="app-header">
+  <div class="skip-links">
+    <ul class="wrapper">
+      <li><a href="#navigation">Aller au menu</a></li>
+      <li><a href="#content">Aller au contenu</a></li>
+      <li><a href="#footer">Aller au pied de page</a></li>
+    </ul>
   </div>
+  <nav id="navigation" class="app-header__container wrapper">
+    <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
+      <img src="/declaration/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90" >
+    </a>
+    <div class="baseline">
+      <a href="https://index-egapro.travail.gouv.fr/" target="_blank" class="baseline__title">Index Egapro</a>
+      <p class="baseline__text">
+        L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&nbsp;Hommes
+      </p>
+    </div>
+  </nav>
 </header>
 
-<form class=main id="page-form" action="#">
-  <section id="declaration-readonly" class="declaration-mode" hidden>
-  <p>
+<main id="content" class="app-main wrapper" role="main">
+  <form  id="page-form" action="#">
+    <section id="declaration-readonly" class="declaration-mode" hidden>
+  <p class="text-lg font-bold mt-0 mb-0">
     Cette déclaration a été validée et transmise.
   </p>
-  <p>
+  <p class="mt-0">
     Vous pouvez la modifier et elle remplacera la déclaration actuelle une fois à nouveau validée et transmise à la dernière étape.
   </p>
-  <button type="button" onclick="setDraftStatus()">Modifier la déclaration</button>
-  <button type="button" onclick="resendReceipt()">Renvoyer l'accusé de réception</button>
+  <div class="buttons">
+    <button type="button" onclick="setDraftStatus()" class="button--warning">Modifier la déclaration</button>
+    <button type="button" onclick="resendReceipt()" class="button--warning">Renvoyer l'accusé de réception</button>
+  </div>
 </section>
 
 <section id="declaration-draft" class="declaration-mode" hidden>
-  <p>
-    Vous êtes en train de modifier une déclaration validée et transmise.<br>
+  <p class="text-lg font-bold mt-0 mb-0">
+    Vous êtes en train de modifier une déclaration validée et transmise.
+  </p>
+  <p class="mt-0 mb-0">
     Vos modifications ne seront enregistrées que lorsque vous l'aurez à nouveau validée et transmise à la dernière étape.
   </p>
 </section>
@@ -77,12 +91,11 @@
   <button type="button" onclick="goToSimulationApp()">Modifier ma déclaration</button>
 </section>
 
-<main>
-  <h1>Ecart de taux d'augmentations individuelles (hors promotion) entre les femmes et les hommes</h1>
+<section>
+  <h1 class="text-3xl mt-0">Ecart de taux d'augmentations individuelles (hors promotion) entre les femmes et les hommes</h1>
 
-<fieldset>
-  <div class=row>
-    <div>
+<div class=row>
+  <fieldset>
       
 <label for="field--_indicateurs.augmentations.calculable">L’indicateur sur les écarts de taux d’augmentations individuelles est-il calculable ?</label>
 
@@ -120,14 +133,14 @@
   
 </div>
 
-    </div>
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<p>Ecarts de taux d’augmentations obtenus par CSP en %</p>
+<h2 class="text-lg mt-0">Ecarts de taux d’augmentations obtenus par CSP en %</h2>
 
-<fieldset id="fieldset-resultat-ouv">
-  <div class=row>
+<div class=row>
+  <fieldset id="fieldset-resultat-ouv">
+  
   
 <label for="field--indicateurs.augmentations.catégories[0]">Ouvriers</label>
 
@@ -156,11 +169,13 @@
     
   />
 
-</div>
-</fieldset>
 
-<fieldset id="fieldset-resultat-emp">
-  <div class=row>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-resultat-emp">
+    
   
 <label for="field--indicateurs.augmentations.catégories[1]">Employés</label>
 
@@ -189,11 +204,13 @@
     
   />
 
-</div>
-</fieldset>
 
-<fieldset id="fieldset-resultat-tam">
-  <div class=row>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-resultat-tam">
+    
   
 <label for="field--indicateurs.augmentations.catégories[2]">Techniciens et agents de maîtrise</label>
 
@@ -222,11 +239,13 @@
     
   />
 
-</div>
-</fieldset>
 
-<fieldset id="fieldset-resultat-ic">
-  <div class=row>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-resultat-ic">
+    
   
 <label for="field--indicateurs.augmentations.catégories[3]">Ingénieurs et cadres</label>
 
@@ -255,11 +274,13 @@
     
   />
 
-</div>
-</fieldset>
 
-<fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-resultat-pourcentage">
+    
   
 <label for="field--indicateurs.augmentations.résultat">Résultat final en %*</label>
 
@@ -288,11 +309,12 @@
     
   />
 
-</div>
-</fieldset>
 
-<fieldset id="fieldset-population-favorable">
-  <div class=row>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-population-favorable">
     
 <label for="field--indicateurs.augmentations.population_favorable">Population envers laquelle l'écart est favorable*</label>
 
@@ -318,11 +340,11 @@
   
 </select>
 
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-motif">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-motif">
     
 <label for="field--indicateurs.augmentations.non_calculable">Précision du motif de non calculabilité de l'indicateur*</label>
 
@@ -348,11 +370,12 @@
   
 </select>
 
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-note" class=note>
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-note" class=note>
+    
   
 <label for="field--indicateurs.augmentations.note">Nombre de points obtenus à l'indicateur</label>
 
@@ -381,8 +404,9 @@
     
   />
 
+
+  </fieldset>
 </div>
-</fieldset>
 
 <script>
   const calculableField = selectField('_indicateurs.augmentations.calculable')
@@ -423,48 +447,56 @@
   }
 </script>
 
-</main>
+</section>
 
-<nav id="tunnel-actions">
+<nav id="tunnel-actions" class="buttons">
   
-  <a class=button rel=prev>Précédent</a>
+  <button class="button history-back" aria-label="étape précédent">Précédent</button>
+  
+  
+  <button class="button--primary button-next" aria-label="étape suivante">Suivant</button>
   
   <progress max=0 value=0></progress>
-  
-  <button rel=next>Suivant</button>
-  
 </nav>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
 <script src="/declaration/assets/js/tunnel.js"></script>
 
-</form>
+  </form>
+</main>
 
-<footer>
-  <header>
-    <a href="https://travail-emploi.gouv.fr/" target="_blank">
-      <img src="/declaration/assets/img/marianne.svg" alt="Marianne">
-    </a>
-  </header>
-  <nav>
-    <a href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
-      target="_blank" rel="noopener noreferrer">retrouvez le simulateur au format Excel</a>
-    <a href="https://index-egapro.travail.gouv.fr/mentions-legales">mentions légales</a>
-    <a href="https://index-egapro.travail.gouv.fr/cgu">conditions
+
+<footer class="app-footer wrapper" role="contentinfo" id="footer">
+  <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
+      <img src="/declaration/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90">
+  </a>
+  <ul class="app-footer__list-links">
+    <li>
+      <a href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
+         target="_blank" rel="noopener noreferrer">retrouvez le simulateur au format Excel</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/mentions-legales">mentions légales</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/cgu">conditions
       générales d'utilisation</a>
-    <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">politique de
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">politique de
       confidentialité</a>
-    <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx">Contactez votre référent Egapro</a>
-  </nav>
-  <footer>
-    <p>
+    </li>
+    <li>
+      <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx">Contactez votre référent Egapro</a>
+    </li>
+  </ul>
+    <p class="app-footer__infos">
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.07.16" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.11.26" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
-  </footer>
 </footer>
 
-<div id="toast">
+<div id="toast" role="alert" aria-live="assertive" aria-atomic="true">
   <div class=content>
     <span class=message></span>
     <a href="#" onclick="notify.close(event)" class=close>x</a>
