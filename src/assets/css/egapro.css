@@ -43,6 +43,7 @@
 * {
   box-sizing: border-box;
 }
+
 html,
 body {
   margin: 0;
@@ -69,6 +70,7 @@ body {
 }
 
 .app-header {
+  z-index: 666;
   flex-shrink: 0;
   position: sticky;
   top: 0;
@@ -383,9 +385,7 @@ progress + * {
 }
 
 button,
-.button,
-[rel=prev],
-[rel=next] {
+.button {
   display: inline-block;
   border-radius: .3rem;
   line-height: 1.25rem;
@@ -447,14 +447,14 @@ button.remove:not([disabled]):focus {
   outline: 3px solid rgba(239, 68, 68, 0.25);
 }
 
-[rel=next] {
+.button--primary {
   background-color: #696cd1;
   border-color: #696cd1;
   color: #fff;
 }
 
-[rel=next]:not([disabled]):hover,
-[rel=next]:not([disabled]):focus{
+.button--primary:not([disabled]):hover,
+.button--primary:not([disabled]):focus{
   background: #23246f;
   border-color: #23246f;
   color: #fff;
