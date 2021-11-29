@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.11.26'
+      release: '2021.11.29'
     })
   }
 </script>
@@ -46,7 +46,7 @@
   </div>
   <nav id="navigation" class="app-header__container wrapper">
     <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
-      <img src="/declaration/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90" >
+      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90" >
     </a>
     <div class="baseline">
       <a href="https://index-egapro.travail.gouv.fr/" target="_blank" class="baseline__title">Index Egapro</a>
@@ -97,38 +97,38 @@
 <div class="row">
   <fieldset>
     <legend>L'indicateur est-il calculable&nbsp;?</legend>
-      
-
-<div
+      <div
   id="field--_indicateurs.congés_maternité.calculable"
   name="_indicateurs.congés_maternité.calculable"
   type="radiogroup"
-  >
+>
   
-     
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          onchange="toggleFields()"
-          name="_indicateurs.congés_maternité.calculable" value="oui"> oui
-      </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          onchange="toggleFields()"
-          name="_indicateurs.congés_maternité.calculable" value="non"> non
-      </label>
-      
-    
+  
+  
+  
+  
+  <label>
+    <input
+            required
+            
+            type="radio"
+            onchange="toggleFields()"
+            name="_indicateurs.congés_maternité.calculable" value="oui"> oui
+  </label>
+  
+  
+  
+  
+  <label>
+    <input
+            required
+            
+            type="radio"
+            onchange="toggleFields()"
+            name="_indicateurs.congés_maternité.calculable" value="non"> non
+  </label>
+  
+  
   
 </div>
 
@@ -149,12 +149,13 @@
     value=""
     type="number"
     name="indicateurs.congés_maternité.résultat"
-    placeholder=""
+    
     
     min="0"
     max="100"
     step="any"
     required
+    aria-required="true"
     
     
     
@@ -180,8 +181,7 @@
   id="field--indicateurs.congés_maternité.non_calculable"
   name="indicateurs.congés_maternité.non_calculable"
   required
-  empty
-  
+  aria-required="true"
   
 >
   
@@ -214,10 +214,11 @@
     value=""
     type="number"
     name="indicateurs.congés_maternité.note"
-    placeholder=""
+    
     
     min="0"
     max="15"
+    
     
     
     
@@ -262,7 +263,7 @@
 
 </section>
 
-<nav id="tunnel-actions" class="buttons">
+<div id="tunnel-actions" class="buttons">
   
   <button class="button history-back" aria-label="étape précédent">Précédent</button>
   
@@ -270,7 +271,7 @@
   <button class="button--primary button-next" aria-label="étape suivante">Suivant</button>
   
   <progress max=0 value=0></progress>
-</nav>
+</div>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
 <script src="/declaration/assets/js/tunnel.js"></script>
@@ -281,7 +282,7 @@
 
 <footer class="app-footer wrapper" role="contentinfo" id="footer">
   <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
-      <img src="/declaration/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90">
+      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90">
   </a>
   <ul class="app-footer__list-links">
     <li>
@@ -305,7 +306,7 @@
   </ul>
     <p class="app-footer__infos">
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.11.26" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.11.29" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
 </footer>
 

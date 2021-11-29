@@ -27,7 +27,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2021.11.26'
+      release: '2021.11.29'
     })
   }
 </script>
@@ -46,7 +46,7 @@
   </div>
   <nav id="navigation" class="app-header__container wrapper">
     <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
-      <img src="/declaration/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90" >
+      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90" >
     </a>
     <div class="baseline">
       <a href="https://index-egapro.travail.gouv.fr/" target="_blank" class="baseline__title">Index Egapro</a>
@@ -95,30 +95,32 @@
   <h1 class="text-3xl mt-0">Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique</h1>
 <p class="text-lg">Il faut saisir les écarts de rémunération en % <em>avant</em> application du seuil de pertinence</p>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Moins de 30 ans</th>
-      <th>De 30 à 39 ans</th>
-      <th>De 40 à 49 ans</th>
-      <th>50 ans et plus</th>
-    </tr>
-  </thead>
+<div class="overflow-hidden table-wrapper">
+  <table>
+    <thead>
+      <tr class="text-sm">
+        <th></th>
+        <th>Moins de 30 ans</th>
+        <th>De 30 à 39 ans</th>
+        <th>De 40 à 49 ans</th>
+        <th>50 ans et plus</th>
+      </tr>
+    </thead>
 
-  <tbody id="container" class="percentage">
-    <template id="looper">
-      <tr>
-        <th>Coefficient {index}</th>
-        <td>
-          
+    <tbody id="container" class="percentage">
+      <template id="looper">
+        <tr>
+          <td class="js-title font-bold text-sm">Coefficient {index}</td>
+          <td>
+            
 
   <input
     id="field--indicateurs.rémunérations.catégories[{index}].nom"
     value="categorie {index}"
     type="hidden"
     name="indicateurs.rémunérations.catégories[{index}].nom"
-    placeholder=""
+    
+    
     
     
     
@@ -136,18 +138,19 @@
   />
 
 
-          
+            
 
   <input
     id="field--indicateurs.rémunérations.catégories[{index}].tranches.:29"
     value=""
     type="number"
     name="indicateurs.rémunérations.catégories[{index}].tranches.:29"
-    placeholder=""
+    
     
     
     
     step="any"
+    
     
     
     
@@ -161,20 +164,21 @@
   />
 
 
-        </td>
-        <td>
-          
+          </td>
+          <td>
+            
 
   <input
     id="field--indicateurs.rémunérations.catégories[{index}].tranches.30:39"
     value=""
     type="number"
     name="indicateurs.rémunérations.catégories[{index}].tranches.30:39"
-    placeholder=""
+    
     
     
     
     step="any"
+    
     
     
     
@@ -188,20 +192,21 @@
   />
 
 
-        </td>
-        <td>
-          
+          </td>
+          <td>
+            
 
   <input
     id="field--indicateurs.rémunérations.catégories[{index}].tranches.40:49"
     value=""
     type="number"
     name="indicateurs.rémunérations.catégories[{index}].tranches.40:49"
-    placeholder=""
+    
     
     
     
     step="any"
+    
     
     
     
@@ -215,20 +220,21 @@
   />
 
 
-        </td>
-        <td>
-          
+          </td>
+          <td>
+            
 
   <input
     id="field--indicateurs.rémunérations.catégories[{index}].tranches.50:"
     value=""
     type="number"
     name="indicateurs.rémunérations.catégories[{index}].tranches.50:"
-    placeholder=""
+    
     
     
     
     step="any"
+    
     
     
     
@@ -242,21 +248,21 @@
   />
 
 
-        </td>
-      </tr>
-    </template>
-  </tbody>
-</table>
-
-<div>
-  <strong>
-    <span id="nombreCategories"></span> catégorie(s) définie(s)
-  </strong>
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
 </div>
 
-<div class="multitable-actions">
-  <button class="add" onclick="addCategory(event)">Ajouter une catégorie</button>
-  <button class="remove" id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
+<div class="mb-2">
+  <p><strong>
+    <span id="nombreCategories"></span> catégorie(s) définie(s)
+  </strong></p>
+  <div class="multitable-actions">
+    <button class="add" onclick="addCategory(event)">Ajouter une catégorie</button>
+    <button class="remove" id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
+  </div>
 </div>
 
 <script>
@@ -284,7 +290,7 @@
   renameInputs = function() {
     const nodes = Array.from(container.querySelectorAll("tr"))
     nodes.map((node, index) => {
-      const header = node.querySelector("th")
+      const header = node.querySelector(".js-title")
       header.innerText = header.innerText.replace('{index}', index + 1)
 
       const inputs = node.querySelectorAll("input")
@@ -331,7 +337,7 @@
 
 </section>
 
-<nav id="tunnel-actions" class="buttons">
+<div id="tunnel-actions" class="buttons">
   
   <button class="button history-back" aria-label="étape précédent">Précédent</button>
   
@@ -339,7 +345,7 @@
   <button class="button--primary button-next" aria-label="étape suivante">Suivant</button>
   
   <progress max=0 value=0></progress>
-</nav>
+</div>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
 <script src="/declaration/assets/js/tunnel.js"></script>
@@ -350,7 +356,7 @@
 
 <footer class="app-footer wrapper" role="contentinfo" id="footer">
   <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
-      <img src="/declaration/assets/img/marianne.svg" alt="Ministère du travail, de l'emploi et de l'insertion" width="90">
+      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90">
   </a>
   <ul class="app-footer__list-links">
     <li>
@@ -374,7 +380,7 @@
   </ul>
     <p class="app-footer__infos">
       Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.11.26" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2021.11.29" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
 </footer>
 
