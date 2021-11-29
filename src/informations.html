@@ -13,7 +13,7 @@ title: "Informations calcul et période de référence"
 
 <div class=row>
   <fieldset>
-   <div>{% include input.html type="date" label="Date de fin de la période de référence" name="déclaration.fin_période_référence" required="required" placeholder="aaaa-mm-jj" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}</div>
+   <div>{% include input.html type="date" label="Date de fin de la période de référence" name="déclaration.fin_période_référence" required="required" oninput="checkDate(event)" %}</div>
     <a class="button mt-1" href="#" onclick="updatePeriode(event)">sélectionner la fin de l'année civile</a>
   </fieldset>
 </div>

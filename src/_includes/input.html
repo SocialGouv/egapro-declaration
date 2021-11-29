@@ -6,10 +6,10 @@
 {% endif %}
   <input
     id="field--{{ include.name }}"
-    value="{{ include.value || '' }}"
-    type="{{ include.type || 'text' }}"
+    value="{{ include.value }}"
+    type="{{ include.type | default: 'text' }}"
     name="{{ include.name }}"
-    placeholder="{{ include.placeholder || include.label }}"
+    {% if include.placeholder %}placeholder="{{ include.placeholder }}"{% endif %}
     {% if include.class %}class="{{ include.class }}"{% endif %}
     {% if include.min %}min="{{ include.min }}"{% endif %}
     {% if include.max %}max="{{ include.max }}"{% endif %}

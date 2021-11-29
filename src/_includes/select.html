@@ -4,8 +4,6 @@
   name="{{include.name}}"
   {% if include.required %}required{% endif %}
   {% if include.required %}aria-required="true"{% endif %}
-  {% if include.empty %}empty{% endif %}
-  {% if include.type %}type="{{ include.type }}"{% endif %}
   {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
 >
   {% if include.options %}

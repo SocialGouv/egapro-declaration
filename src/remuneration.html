@@ -34,7 +34,6 @@ title: "Ecart de rémunération entre les femmes et les hommes"
     <legend>Un CSE a-t-il été mis en place&nbsp;?</legend>
       {% include radios.html
         name="_indicateurs.rémunérations.cse_mis_en_place"
-        label=""
         required="true"
         options="oui=oui&non=non"
         onchange="toggleFields(event)"
@@ -44,7 +43,7 @@ title: "Ecart de rémunération entre les femmes et les hommes"
 
 <div class="row">
   <fieldset id="fieldset-cse">
-    {% include input.html label="Date de consultation du CSE" type="date" name="indicateurs.rémunérations.date_consultation_cse" required=true placeholder="aaaa-mm-jj" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
+    {% include input.html label="Date de consultation du CSE" type="date" name="indicateurs.rémunérations.date_consultation_cse" required=true oninput="checkDate(event)" %}
   </fieldset>
 </div>
 

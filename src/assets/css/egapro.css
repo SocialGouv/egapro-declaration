@@ -316,23 +316,52 @@ table textarea,
 table select,
 table .fake-input {
   width: 100%; /* Fix all columns to be able to customize width. Acts even with max-width below */
-  max-width: 80%;
+}
+
+.table-wrapper {
+  background: #fff;
+  border-radius:.3rem;
+  border: 1px solid #e0e1e5;
+  margin-bottom: 2rem;
+  border-radius: .3rem;
 }
 
 table {
-  margin-bottom: 2rem;
+  min-width: 100%;
+  border-collapse: collapse;
 }
 
 table thead th {
   text-align: left;
 }
 
-table thead th:first-child {
-  width: 20%;
+.table-wrapper table thead th:first-child,
+.table-wrapper table tbody td:first-child {
+  width: 8rem;
 }
 
-table tbody.percentage td::after {
-  content: "%";
+.table-wrapper table tbody tr:nth-child(odd) {
+  background-color: #fbfcfe
+}
+
+table th,
+table td {
+  padding: 1rem .5rem
+}
+
+table th:first-child,
+table td:first-child{
+  padding-left: 1rem;
+}
+
+
+table th:last-child,
+table td:last-child{
+  padding-right: 1rem;
+}
+
+table th {
+  border-bottom: 1px solid #e0e1e5;
 }
 
 .declaration-mode {
@@ -381,7 +410,8 @@ progress + * {
 .buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem
+  gap: 1rem;
+  margin-top: 2rem
 }
 
 button,
@@ -554,16 +584,19 @@ a.button[disabled] {
   cursor: not-allowed;
 }
 
+.readonly,
 [readonly],
 [disabled],
 [disabled] * {
   cursor: not-allowed;
 }
 
+.readonly,
 [readonly] {
   border-color: transparent;
 }
 
+.fake-input.readonly,
 .fake-input[readonly],
 input[readonly],
 select[readonly],
@@ -647,6 +680,10 @@ input::-webkit-inner-spin-button {
 }
 .loader-wrapper.loading .loader {
   display: inline-block;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .text-3xl {

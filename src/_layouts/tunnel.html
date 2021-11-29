@@ -37,7 +37,7 @@ layout: default
   {{ content }}
 </section>
 
-<nav id="tunnel-actions" class="buttons">
+<div id="tunnel-actions" class="buttons">
   {% if page.prevButtonLabel %}
   <button class="button history-back">{{ page.prevButtonLabel }}</button>
   {% else %}
@@ -49,7 +49,7 @@ layout: default
   <button class="button--primary button-next" aria-label="étape suivante">Suivant</button>
   {% endif %}
   <progress max=0 value=0></progress>
-</nav>
+</div>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
 <script src="{{ site.baseurl }}/assets/js/tunnel.js"></script>
