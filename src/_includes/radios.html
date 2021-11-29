@@ -12,6 +12,7 @@
       <label>
         <input
           {% if include.required %}required{% endif %}
+          {% if include.required %}{% endif %}
           type="radio"
           {% if include.onchange %}onchange="{{ include.onchange }}"{% endif %}
           name="{{ include.name }}" value="{{ optionArray[0] }}"> {{ optionArray[1] }}
