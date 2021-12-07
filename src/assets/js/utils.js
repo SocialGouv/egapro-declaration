@@ -242,6 +242,10 @@ class AppStorage {
     this.apiUrl = ['localhost', '127.0.0.1'].includes(location.hostname)
       ? 'http://localhost:2626'
       : `${location.origin}/api`;
+
+    if (EGAPRO_API_URL) {
+      this.apiUrl = EGAPRO_API_URL
+    }
   }
 
   async init() {
