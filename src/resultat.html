@@ -8,7 +8,7 @@ title: "Publication des résultats"
   <span class="year-2020-and-before">Publication du niveau de résultat global</span>
 </h1>
 
-<p>
+<p style="text-align: justify; text-justify: inter-word;">
   <span class="year-2021-and-after">Le niveau de résultat global obtenu et les résultats obtenus pour chaque
     indicateur sont publiés annuellement, au plus tard le 1er mars de l’année
     en cours, au titre de l’année précédente, de manière visible et lisible,
@@ -77,10 +77,14 @@ title: "Publication des résultats"
     // To compute the minimum publication date, we either take the
     // `déclaration.fin_période_référence` or if it's undefined, the end of
     // civil year of `déclaration.année_indicateurs`
-    const endCivilYear = new Date(`${app.data.déclaration.année_indicateurs}-12-31`)
-    const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear.toISOString().slice(0, 10)
+    const endCivilYear = `${app.data.déclaration.année_indicateurs}-12-31`
+    const minPubDate = new Date(app.data.déclaration.fin_période_référence || endCivilYear)
+
+    // add a day to minPubDate
+    minPubDate.setDate(minPubDate.getDate() + 1)
+
     // The `min` value should be formatted like yyyy-mm-dd
-    selectField("déclaration.publication.date").min = minPubDate
+    selectField("déclaration.publication.date").min = minPubDate.toISOString().slice(0, 10)
 
     // Display the label "aux indicateurs calculables" if the result is non calculable but still needs to be declared.
     if (app.data.déclaration.année_indicateurs >= 2020) {
