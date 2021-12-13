@@ -18,6 +18,8 @@ prevButtonLabel: "Nouvelle déclaration"
   <div class="row">
     {% include input.html type="regex" name="entreprise.siren" label="Numéro Siren de l’entreprise ou de l’entreprise déclarant pour le compte de l’UES (Unité Économique et Sociale)" required="true" pattern="[0-9]{9}" placeholder="9 chiffres" oninput="checkSirenValidity(event)" %}
   </div>
+  <div id="errorSiren" style="display: none; color: red" />
+
 </fieldset>
 
 <script>
@@ -25,6 +27,10 @@ prevButtonLabel: "Nouvelle déclaration"
     const anneeIndicateurs = Number(selectField("déclaration.année_indicateurs").value)
     const message = `Vous allez procéder ou accéder à la déclaration de votre index de l’égalité professionnelle pour l’année ${anneeIndicateurs + 1} au titre des données de ${anneeIndicateurs}.`
     const answer = confirm(message)
+
+    const errorSiren = document.querySelector("#errorSiren")
+    errorSiren.innerHTML = ""
+
     if (answer) {
       // Make sure we don't overwrite a declaration with empty data
       // eg on commencer.html if we have no localStorage.
@@ -40,6 +46,13 @@ prevButtonLabel: "Nouvelle déclaration"
             undefined,
             // Only log if it's not the "expected" message telling the user they don't own this declaration.
             !response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren"))
+
+            if (response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren")) {
+              errorSiren.style.display = "block"
+
+              errorSiren.innerHTML = `Vous n'êtes pas autorisé à déclarer pour ce SIREN. <br/>Pour faire une demande à l'équipe Egapro,&nbsp;<a target="_blank" rel="noreferrer noopener" href="mailto:dgt.ega-pro@travail.gouv.fr?subject=EgaPro - Demander à être déclarant d'un SIREN&body=Bonjour, je souhaite être déclarant pour le SIREN ${app.siren}. Mon email de déclaration est ${localStorage.email}. Cordialement.">cliquez ici.</a>`
+            }
+
         }
         return false
       }
