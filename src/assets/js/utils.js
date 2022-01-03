@@ -243,7 +243,7 @@ class AppStorage {
       ? 'http://localhost:2626'
       : `${location.origin}/api`;
 
-    if (EGAPRO_API_URL) {
+    if (window.EGAPRO_API_URL) {
       this.apiUrl = EGAPRO_API_URL
     }
   }
