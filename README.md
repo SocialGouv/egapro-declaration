@@ -1,4 +1,4 @@
-# Egapro
+# Egapro - déclaration directe
 
 Ce projet est une application cliente qui utilise l'API d'EgaPro, dont elle dépend.
 
