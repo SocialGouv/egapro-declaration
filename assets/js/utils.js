@@ -147,10 +147,8 @@ checkSirenValidity = async event => {
   }
   const wrapper = target.parentNode
   wrapper.classList.add("loading")
-  wrapper.setAttribute('aria-busy', 'true')
   const response = await getSirenData(target.value)
   wrapper.classList.remove("loading")
-  wrapper.removeAttribute('aria-busy')
   const raisonSocialeField = getRaisonSocialeField(target)
   if (!response.ok) {
     if (raisonSocialeField) {
@@ -244,6 +242,10 @@ class AppStorage {
     this.apiUrl = ['localhost', '127.0.0.1'].includes(location.hostname)
       ? 'http://localhost:2626'
       : `${location.origin}/api`;
+
+    if (window.EGAPRO_API_URL) {
+      this.apiUrl = EGAPRO_API_URL
+    }
   }
 
   async init() {
