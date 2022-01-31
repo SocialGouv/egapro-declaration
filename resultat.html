@@ -71,7 +71,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.01.06'
+      release: '2022.01.31'
     })
   }
 </script>
@@ -294,10 +294,92 @@
 </div>
 </fieldset>
 
+
+<!-- Only visible for 2021 and after -->
+
+<fieldset style="display: none" id="plan_relance">
+  <div class=row>
+    <div>
+      
+<label for="field--_entreprise.plan_relance"><span class='ues'>Une ou plusieurs entreprises comprenant au moins 50 salariés au sein de l’UES a-t-elle bénéficié, en 2021 et/ou 2022, d’une aide prévue par la loi du 29 décembre 2020 de finances pour 2021 au titre de la mission « Plan de relance » ?</span><span class='entreprise'>Avez-vous bénéficié, en 2021 et/ou 2022, d’une aide prévue par la loi du 29 décembre 2020 de finances pour 2021 au titre de la mission « Plan de relance » ?</span></label>
+
+
+<div
+  id="field--_entreprise.plan_relance"
+  name="_entreprise.plan_relance"
+  type="radiogroup"
+  >
+  
+     
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="_entreprise.plan_relance" value="true"> oui
+      </label>
+      
+    
+      
+      
+      <label>
+        <input
+          required
+          type="radio"
+          
+          name="_entreprise.plan_relance" value="false"> non
+      </label>
+      
+    
+  
+</div>
+
+    </div>
+  </div>
+</fieldset>
+
 <script>
   const siteInternetField = selectField('_déclaration.publication.site_internet')
 
+  // We use an extra input to store the value of plan_relance in "true" or "false" instead of real boolean values.
+  function loadFakePlanRelance() {
+    if (app.data.entreprise.plan_relance === true) {
+      app.data._entreprise.plan_relance = "true"
+    } else if (app.data.entreprise.plan_relance === false){
+      app.data._entreprise.plan_relance = "false"
+    }
+  }
+
   document.onready = () => {
+    loadFakePlanRelance()
+
+    const inputsPlanRelance = document.querySelectorAll("input[name='_entreprise.plan_relance']")
+
+    if (app.data.déclaration.année_indicateurs < 2021) {
+      inputsPlanRelance.forEach(input => {
+        // To prevent to have validation on this radio input whereas it is not present on the screen.
+        input.required = false
+      })
+
+    } else {
+      inputsPlanRelance.forEach(input => {
+        input.required = true
+      });
+
+      document.querySelector("#plan_relance").style.display = "block"
+      if (app.data.entreprise.ues) {
+        document.querySelector(".ues").style.display = "inline"
+        document.querySelector(".entreprise").style.display = "none"
+      } else {
+        document.querySelector(".ues").style.display = "none"
+        document.querySelector(".entreprise").style.display = "inline"
+      }
+
+    }
+
     if (app.getItem('déclaration.publication')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.déclaration.publication.site_internet" data.
@@ -338,6 +420,15 @@
   document.onloaded = () => {
     toggleFields()
   }
+
+
+  document.onsend = data => {
+    // We restore a real boolean value for plan_relance from the fake one.
+    if (data && data._entreprise && data._entreprise.plan_relance) {
+      data.entreprise.plan_relance = data._entreprise.plan_relance === "true" ? true : false
+    }
+  }
+
 </script>
 
 </main>
@@ -375,7 +466,7 @@
       l'améliorer
       <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
         target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a
-        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.01.06" target="_blank"
+        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.01.31" target="_blank"
         rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
