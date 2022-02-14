@@ -41,17 +41,18 @@ prevButtonLabel: "Nouvelle déclaration"
       const response = await app.loadRemoteData()
       if (!response.ok) {
         if (response.data.error) {
+
+          if (response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren")) {
+            errorSiren.style.display = "block"
+
+            errorSiren.innerHTML = `Vous n'êtes pas autorisé à déclarer pour ce SIREN. <br/>Pour faire une demande à l'équipe Egapro,&nbsp;<a target="_blank" rel="noreferrer noopener" href="mailto:dgt.ega-pro@travail.gouv.fr?subject=EgaPro - Demander à être déclarant d'un SIREN&body=Bonjour, je souhaite être déclarant pour le SIREN ${app.siren}. Mon email de déclaration est ${localStorage.email}. Cordialement.">cliquez ici.</a>`
+          }
+
           notify.error(
             response.data.error,
             undefined,
             // Only log if it's not the "expected" message telling the user they don't own this declaration.
             !response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren"))
-
-            if (response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren")) {
-              errorSiren.style.display = "block"
-
-              errorSiren.innerHTML = `Vous n'êtes pas autorisé à déclarer pour ce SIREN. <br/>Pour faire une demande à l'équipe Egapro,&nbsp;<a target="_blank" rel="noreferrer noopener" href="mailto:dgt.ega-pro@travail.gouv.fr?subject=EgaPro - Demander à être déclarant d'un SIREN&body=Bonjour, je souhaite être déclarant pour le SIREN ${app.siren}. Mon email de déclaration est ${localStorage.email}. Cordialement.">cliquez ici.</a>`
-            }
 
         }
         return false
