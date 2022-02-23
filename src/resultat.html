@@ -83,6 +83,10 @@ title: "Publication des résultats"
 
   // We use an extra input to store the value of plan_relance in "true" or "false" instead of real boolean values.
   function loadFakePlanRelance() {
+    if (app.data._entreprise === undefined) {
+      app.data._entreprise = {}
+    }
+
     if (app.data.entreprise.plan_relance === true) {
       app.data._entreprise.plan_relance = "true"
     } else if (app.data.entreprise.plan_relance === false){
