@@ -71,7 +71,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.02.15'
+      release: '2022.03.07'
     })
   }
 </script>
@@ -346,6 +346,10 @@
 
   // We use an extra input to store the value of plan_relance in "true" or "false" instead of real boolean values.
   function loadFakePlanRelance() {
+    if (app.data._entreprise === undefined) {
+      app.data._entreprise = {}
+    }
+
     if (app.data.entreprise.plan_relance === true) {
       app.data._entreprise.plan_relance = "true"
     } else if (app.data.entreprise.plan_relance === false){
@@ -466,7 +470,7 @@
       l'améliorer
       <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
         target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a
-        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.02.15" target="_blank"
+        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.03.07" target="_blank"
         rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
