@@ -91,8 +91,6 @@ async function saveFormData (event) {
 
   const data = serializeForm(form);
 
-  // console.log("data in safeFormData", JSON.stringify(data, null, 2));
-
   if (typeof document.onsend === "function") {
     try {
       await document.onsend(data);
