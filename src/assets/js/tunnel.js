@@ -12,7 +12,9 @@ const steps = [
     },
   },
   { name: "ues" },
-  { name: "informations" },
+  { name: "informations",
+      nextStep: (data) => data.déclaration.période_suffisante === false ? "validation" : "remuneration"
+  },
   { name: "remuneration",
     nextStep: (data) => {
       if (data.indicateurs.rémunérations.mode === "niveau_branche")
