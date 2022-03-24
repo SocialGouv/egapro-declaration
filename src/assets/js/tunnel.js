@@ -168,6 +168,8 @@ if (step >= steps.length - 1) {
   nextButton.setAttribute("disabled", "disabled");
 }
 
+// Copie les données du form de la page courante, dans l'objet app.data.
+// Supprime les propriétés qui sont undefined.
 function serializeForm(form) {
   let data = app.data;
 
