@@ -29,7 +29,7 @@ const steps = [
     },
   },
   { name: "remuneration-coef", nextStep: (_) => "remuneration-final" },
-  { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
+  // { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-csp", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-final",
     nextStep: (data) =>
