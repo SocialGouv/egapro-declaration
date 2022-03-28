@@ -91,6 +91,21 @@ title: "Informations calcul et période de référence"
     if (!data.déclaration.période_suffisante) {
       data.déclaration.fin_période_référence = null
       data.entreprise.effectif.total = null
+
+      // We clean some fields that are not relevant anymore.
+      delete data.indicateurs
+      delete data._indicateurs
+
+      delete data.déclaration.points
+      delete data.déclaration.points_calculables
+      delete data.déclaration.index
+      delete data.déclaration.mesures_correctives
+
+      delete data.déclaration.publication
+      delete data.déclaration._publication
+
+      delete data.entreprise.plan_relance
+      delete data._entreprise.plan_relance
     }
 
   }
