@@ -89,8 +89,8 @@ title: "Informations calcul et période de référence"
 
     // We need to mention these fields because they are expected by the API and the disabled
     if (!data.déclaration.période_suffisante) {
-      data.déclaration.fin_période_référence = null
-      data.entreprise.effectif.total = null
+      delete data.déclaration.fin_période_référence
+      delete data.entreprise.effectif.total
 
       // We clean some fields that are not relevant anymore.
       delete data.indicateurs
