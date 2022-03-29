@@ -14,7 +14,6 @@ async function request(method, uri, body, options = {}) {
     response.data = null
   }
   if(response.status == 401) {
-    const error = response.json
     if(response.data.error) notify.error(response.data.error)
     delete localStorage.token
     redirect('./')
@@ -53,6 +52,14 @@ function selectFakeField(name) {
 
 function enableField(selector, enabled) {
   document.querySelector(selector).disabled = !enabled
+}
+
+function showBlock(div, show) {
+  if (show) {
+    div.style.display = "block"
+  } else {
+    div.style.display = "none"
+  }
 }
 
 // Shortcut event
@@ -385,6 +392,7 @@ class AppStorage {
     // Set the value on the item
     const [_, key, index] = extractKey(property);
     if (index) {
+      // si index truthy => cas d'un array
       if (!(key in target)) target[key] = [];
       target[key][index] = val;
     } else {
