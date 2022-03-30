@@ -50,11 +50,12 @@ title: "Informations calcul et période de référence"
   const périodeSuffisanteField = selectField("_déclaration.période_suffisante")
 
   document.onready = () => {
-    if (app.getItem('déclaration.période_suffisante')) {
+
+    // If we have a previous data for période_suffisante, it is a boolean type. Otherwise, it is undefined.
+    if ((typeof app.getItem('déclaration.période_suffisante')) === "boolean") {
       // We did already submit this current form, so we can infer the _déclaration.période_suffisante data.
       if (!app.data._déclaration) app.data._déclaration = {}
-
-      app.data._déclaration.période_suffisante = app.data.entreprise.période_suffisante ? "non" : "oui"
+      app.data._déclaration.période_suffisante = app.getItem('déclaration.période_suffisante') ? "oui" : "non"
     }
 
     finPeriodeReferenceField.max = `${app.data.déclaration.année_indicateurs}-12-31`
