@@ -12,7 +12,9 @@ const steps = [
     },
   },
   { name: "ues" },
-  { name: "informations" },
+  { name: "informations",
+      nextStep: (data) => data.déclaration.période_suffisante === false ? "validation" : "remuneration"
+  },
   { name: "remuneration",
     nextStep: (data) => {
       if (data.indicateurs.rémunérations.mode === "niveau_branche")
@@ -27,7 +29,7 @@ const steps = [
     },
   },
   { name: "remuneration-coef", nextStep: (_) => "remuneration-final" },
-  { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
+  // { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-csp", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-final",
     nextStep: (data) =>
@@ -90,8 +92,6 @@ async function saveFormData (event) {
   event && event.preventDefault();
 
   const data = serializeForm(form);
-
-  // console.log("data in safeFormData", JSON.stringify(data, null, 2));
 
   if (typeof document.onsend === "function") {
     try {
@@ -168,6 +168,8 @@ if (step >= steps.length - 1) {
   nextButton.setAttribute("disabled", "disabled");
 }
 
+// Copie les données du form de la page courante, dans l'objet app.data.
+// Supprime les propriétés qui sont undefined.
 function serializeForm(form) {
   let data = app.data;
 
