@@ -1,0 +1,14 @@
+{
+  "workbench.colorCustomizations": {
+      "statusBar.background": "#fd5661" // Change this color!
+  },
+  "files.exclude": {
+      "**/.git": true,
+      "**/.history": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true
+    },
+    "search.exclude": {
+      "**/.history": true,
+    }
+}
