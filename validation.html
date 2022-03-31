@@ -71,7 +71,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.03.30'
+      release: '2022.03.31'
     })
   }
 </script>
@@ -151,12 +151,16 @@
 <main>
   <h1>Validation de la procédure de transmission de vos indicateurs</h1>
 
-<p class="periode-suffisante" style="display: none">Vous ne disposez pas d'une période de référence de 12 mois consécutifs, vos indicateurs et votre index ne sont pas calculables.</p>
+<p class="periode-suffisante" style="display: none;">
+  <span style="background-color: #FFEEAA; font-weight: bold;">
+    Vous ne disposez pas d'une période de référence de 12 mois consécutifs, vos indicateurs et votre index ne sont pas calculables.
+  </span>
+</p>
 
 <p>Vous êtes sur le point de valider la procédure vous permettant de transmettre
 aux services du ministre chargé du travail vos indicateurs et votre niveau de
-résultat en matière d’écart de rémunération entre les femmes et les hommes
-conformément aux dispositions de l’article D.1142-5 du code du travail.</p>
+résultat en matière d'écart de rémunération entre les femmes et les hommes
+conformément aux dispositions de l'article D.1142-5 du code du travail.</p>
 
 <p>Pour relire vos données à transmettre, cliquez sur
 « <a href="/declaration/commencer.html">Revenir au début</a> ».</p>
@@ -181,6 +185,7 @@ résultats</strong> ». Vous recevrez alors un accusé de réception par email.<
     app.isDraft = false
   }
 </script>
+
 
 </main>
 
@@ -217,7 +222,7 @@ résultats</strong> ». Vous recevrez alors un accusé de réception par email.<
       l'améliorer
       <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
         target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a
-        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.03.30" target="_blank"
+        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.03.31" target="_blank"
         rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
