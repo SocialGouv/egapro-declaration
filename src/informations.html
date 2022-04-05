@@ -51,11 +51,17 @@ title: "Informations calcul et période de référence"
 
   document.onready = () => {
 
+    if (!app.data._déclaration) app.data._déclaration = {}
+
     // If we have a previous data for période_suffisante, it is a boolean type. Otherwise, it is undefined.
     if ((typeof app.getItem('déclaration.période_suffisante')) === "boolean") {
       // We did already submit this current form, so we can infer the _déclaration.période_suffisante data.
-      if (!app.data._déclaration) app.data._déclaration = {}
       app.data._déclaration.période_suffisante = app.getItem('déclaration.période_suffisante') ? "oui" : "non"
+    } else {
+      if (app.mode !== "creating") {
+        // We are on legacy declarations which didn't have this field. So we check the box to see the hidden fields.
+        app.data._déclaration.période_suffisante = "oui"
+      }
     }
 
     finPeriodeReferenceField.max = `${app.data.déclaration.année_indicateurs}-12-31`
