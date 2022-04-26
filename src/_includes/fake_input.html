@@ -20,6 +20,8 @@
     const dict = eval("{{ include.dict }}")
     const fakeValue = `{% if include.with-value %}${value} - {% endif %}${dict[value]}`
 
-    fakeField.textContent = fakeValue
+    if (value) {
+      fakeField.textContent = fakeValue
+    }
   })
 </script>
