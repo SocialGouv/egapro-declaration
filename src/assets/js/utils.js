@@ -256,12 +256,17 @@ class AppStorage {
   }
 
   async init() {
+    // Réinitialise l'objet this.data.
     this.resetData()
+    // Appele le endpoint config et le stocke dans this.config.
     await this.loadConfig()
+    // Appelle le endpoint schema et le stocke dans this.schema.
     await this.loadSchema()
     if(!this.token) return
+    // Charge this.data avec le local storage.
     this.loadLocalData()
     // Is remote data actually necessary as we must have local data for token anyways?
+    // Recharge this.data avec les données issues de l'API.
     if(this.siren && this.annee) await this.loadRemoteData()
   }
 
