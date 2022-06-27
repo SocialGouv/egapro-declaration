@@ -13,11 +13,11 @@
       format("embedded-opentype"),
      url(/static/media/gabriela-v8-latin-regular.badfdabe.woff2)
       format("woff2"),
-    
+
       url(/static/media/gabriela-v8-latin-regular.9db49c8e.woff) format("woff"),
      url(/static/media/gabriela-v8-latin-regular.1c9cd380.ttf)
       format("truetype"),
-    
+
       url(/static/media/gabriela-v8-latin-regular.cfd57c98.svg#Gabriela) format("svg"); /* Legacy iOS */
 }
 
@@ -36,7 +36,7 @@
       format("woff"),
      url(/static/media/cabin-v14-latin-regular.78773388.ttf)
       format("truetype"),
-    
+
       url(/static/media/cabin-v14-latin-regular.44f981a2.svg#Cabin) format("svg"); /* Legacy iOS */
 }
 
@@ -347,6 +347,39 @@ button.remove::before {
   display: none;
 }
 
+.only-visible-for-index-sub-75{
+  display: none;
+}
+
+.index-sub-75 .only-visible-for-index-sub-75{
+  display: block;
+}
+
+.only-visible-for-index-sub-85{
+  display: none;
+}
+
+.index-sub-85 .only-visible-for-index-sub-85{
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.only-visible-modalites-objectifs-mesures, .only-visible-modalites-objectifs, .only-visible-modalites-mesures {
+  display: none;
+}
+
+.modalites-objectifs-mesures .only-visible-modalites-objectifs-mesures, .modalites-objectifs .only-visible-modalites-objectifs, .modalites-mesures .only-visible-modalites-mesures{
+  display: inline;
+}
+
+
 .entreprise, .ues {
   display: none;
 }
@@ -403,7 +436,7 @@ input::-webkit-inner-spin-button {
   height: 20px;
   background-color: #696cd1;
 
-  border-radius: 100%;  
+  border-radius: 100%;
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
   animation: sk-scaleout 1.0s infinite ease-in-out;
   position: absolute;
@@ -421,7 +454,7 @@ input::-webkit-inner-spin-button {
 }
 
 @keyframes sk-scaleout {
-  0% { 
+  0% {
     -webkit-transform: scale(0);
     transform: scale(0);
   } 100% {
