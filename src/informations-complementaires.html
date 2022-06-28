@@ -7,11 +7,10 @@ title: "Informations complémentaires"
   Informations complémentaires
 </h1>
 
-<p style="text-align: justify; text-justify: inter-word;" class="only-visible-for-index-sub-75">
-  <span>Votre index étant inférieur à 75, veuillez renseigner les informations suivantes sur les mesures de
-    correction.</span>
-
-  <!-- champ datePublicationMesures : champ date, required, ne peut pas être inférieur à la fin de la période de référence -->
+<div class="only-visible-for-index-sub-75">
+  {% include alert.html text="Votre index étant inférieur à 75, veuillez renseigner les informations suivantes sur les
+  mesures de correction." %}
+</div>
 
 <fieldset id="fieldset-date-publication-mesures">
   <div class=row>
@@ -22,15 +21,17 @@ title: "Informations complémentaires"
 </fieldset>
 </p>
 
-<p style="text-align: justify; text-justify: inter-word;" class="only-visible-for-index-sub-85">
-  <span>Votre index étant inférieur à 85, veuillez renseigner vos objectifs de progression pour les indicateurs
-    calculables.</span>
+<div class="only-visible-for-index-sub-85">
+  {% include alert.html text="Votre index étant inférieur à 85, veuillez renseigner vos objectifs de progression pour
+  les indicateurs
+  calculables." %}
+</div>
 
 <p>Conformément à la loi n° 2020-1721 du 29 décembre 2020 de finances pour 2021 et aux articles L. 1142-9-1 et D.
   1142-6-1 du code du travail, indiquer les objectifs de progression fixés pour chaque indicateur pour lequel la note
   maximale n'a pas été atteinte :</p>
 
-<table>
+<table id="objectifs-table">
   <tr>
     <th></th>
     <th>Actuel</th>
@@ -43,35 +44,52 @@ title: "Informations complémentaires"
     </td>
     <td>
       {% include input.html
-      name="indicateurs.rémunérations.objectif_mesure"
-      min="0"
+      type="number"
+      name="indicateurs.rémunérations.objectif_de_progression"
       max="40"
+      required=true
       %}
     </td>
   </tr>
-  <tr>
-    <th>Écart de rémunération objectif</th>
+  <tr class="only-visible-tranche-50-250">
+    <th>Écart de taux d'augmentations individuelles</th>
     <td>
-      {% include input.html name="indicateurs.rémunérations.objectif_de_progression" disabled="true" %}
+      {% include input.html name="indicateurs.augmentations_et_promotions.note" disabled="true" %}
     </td>
     <td>
       {% include input.html
-      name="indicateurs.rémunérations.objectif_mesure"
-      min="0"
-      max="40"
+      type="number"
+      name="indicateurs.augmentations_et_promotions.objectif_de_progression"
+      max="35"
+      required=true
       %}
     </td>
   </tr>
-  <tr>
-    <th>Écart de taux d'augmentations individuelles</th>
+  <tr class="only-visible-tranche-250">
+    <th>Écart de taux d'augmentations individuelles (hors promotion)</th>
     <td>
       {% include input.html name="indicateurs.augmentations.note" disabled="true" %}
     </td>
     <td>
       {% include input.html
-      name="indicateurs.augmentations.objectif_mesure"
-      min="0"
-      max="40"
+      type="number"
+      name="indicateurs.augmentations.objectif_de_progression"
+      max="35"
+      required=true
+      %}
+    </td>
+  </tr>
+  <tr class="only-visible-tranche-250">
+    <th>Ecart de taux de promotions</th>
+    <td>
+      {% include input.html name="indicateurs.promotions.note" disabled="true" %}
+    </td>
+    <td>
+      {% include input.html
+      type="number"
+      name="indicateurs.promotions.objectif_de_progression"
+      max="35"
+      required=true
       %}
     </td>
   </tr>
@@ -84,9 +102,10 @@ title: "Informations complémentaires"
     </td>
     <td>
       {% include input.html
-      name="indicateurs.congés_maternité.objectif_mesure"
-      min="0"
-      max="40"
+      type="number"
+      name="indicateurs.congés_maternité.objectif_de_progression"
+      max="15"
+      required=true
       %}
     </td>
   </tr>
@@ -97,15 +116,14 @@ title: "Informations complémentaires"
     </td>
     <td>
       {% include input.html
-      name="indicateurs.hautes_rémunérations.objectif_mesure"
-      min="0"
-      max="40"
+      type="number"
+      name="indicateurs.hautes_rémunérations.objectif_de_progression"
+      max="10"
+      required=true
       %}
     </td>
   </tr>
 </table>
-
-<!-- champ date_publication_objectifs : champ date, required, ne peut pas être inférieur à la fin de la période de référence -->
 
 <fieldset id="fieldset-date-publication-objectifs">
   <div class=row>
@@ -122,7 +140,7 @@ title: "Informations complémentaires"
 </p>
 
 <fieldset id="fieldset-url">
-  <div class="row">
+  <div>
     {% include input.html
     name="déclaration.publication.url"
     label="Adresse exacte de la page Internet (URL) sur laquelle devront être publiés les objectifs de progression et/ou
@@ -131,9 +149,13 @@ title: "Informations complémentaires"
     class="wide" %}</div>
 </fieldset>
 
-<p>
-  Pour rappel, les objectifs de progression doivent être publiés sur la même page du site internet que celle où figurent
-  les résultats obtenus à chacun des indicateurs et le niveau de résultat à l’Index.
+<p style="font-size: 0.9rem;">
+  <i>
+    * Pour rappel, les objectifs de progression et/ou mesures de progression doivent être publiés sur la même page du
+    site internet que celle où
+    figurent
+    les résultats obtenus à chacun des indicateurs et le niveau de résultat à l’Index.
+  </i>
 </p>
 
 <fieldset id="fieldset-modalités-objectifs-mesures" class="hidden">
@@ -150,7 +172,27 @@ title: "Informations complémentaires"
 </fieldset>
 
 <script>
-  //const siteInternetField = selectField('_déclaration.publication.site_internet')
+
+  const MAX_NOTES_INDICATEURS = {
+    rémunérations: 40,
+    augmentations: 35,
+    promotions: 15,
+    augmentations_et_promotions: 35,
+    congés_maternité: 15,
+    hautes_rémunérations: 15
+  }
+
+  // Rendre disable les objectifs quand ils sont au maxium ou non calculables et ajouter la contrainte sur le min.
+  function addConstraintsToIndicateurs(name) {
+    const objectifField = selectField(`indicateurs.${name}.objectif_de_progression`)
+    const note = app.getItem(`indicateurs.${name}.note`)
+    const isNC = Boolean(app.getItem(`indicateurs.${name}.non_calculable`))
+
+    if (note === MAX_NOTES_INDICATEURS[name] || isNC) {
+      objectifField.disabled = true
+    }
+    objectifField.min = note
+  }
 
   document.onready = () => {
 
@@ -175,7 +217,6 @@ title: "Informations complémentaires"
       }
     }
 
-
     // Zone à afficher en fonction de l'index.
     const main = document.querySelector("main")
     if (app.data.déclaration.index < 75) {
@@ -183,6 +224,24 @@ title: "Informations complémentaires"
     }
     if (app.data.déclaration.index < 85) {
       main.classList.add("index-sub-85")
+    }
+
+    // En fonction de l'effectif, on doit afficher l'indicateur augmentations puis l'indicateur promotions, ou bien l'indicateurs augmentations_et_promotions.
+
+    const table = document.querySelector("#objectifs-table")
+    if (app.getItem("entreprise.effectif.tranche") === "50:250") {
+      table.classList.add("tranche-50-250")
+      selectField(`indicateurs.augmentations.objectif_de_progression`).disabled = true
+      selectField(`indicateurs.promotions.objectif_de_progression`).disabled = true
+    } else {
+      table.classList.add("tranche-250")
+      selectField(`indicateurs.augmentations_et_promotions.objectif_de_progression`).disabled = true
+    }
+
+    // Rendre disable les objectifs quand ils sont au maxium ou non calculables.
+
+    for (const indicateur in MAX_NOTES_INDICATEURS) {
+      addConstraintsToIndicateurs(indicateur)
     }
 
     // Partie modalité.
