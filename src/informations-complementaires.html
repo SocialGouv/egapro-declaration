@@ -38,9 +38,9 @@ title: "Informations complémentaires"
     <th>Objectif *</th>
   </tr>
   <tr>
-    <th>Écart de rémunération objectif</th>
+    <th style="text-align: left;">Écart de rémunération objectif</th>
     <td>
-      {% include input.html name="indicateurs.rémunérations.note" disabled="true" %}
+      <span id="rémunérations-note">note actuelle rému</span>
     </td>
     <td>
       {% include input.html
@@ -52,9 +52,9 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr class="only-visible-tranche-50-250">
-    <th>Écart de taux d'augmentations individuelles</th>
+    <th style="text-align: left;">Écart de taux d'augmentations individuelles</th>
     <td>
-      {% include input.html name="indicateurs.augmentations_et_promotions.note" disabled="true" %}
+      <span id="augmentations_et_promotions-note">note actuelle rému</span>
     </td>
     <td>
       {% include input.html
@@ -66,9 +66,9 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr class="only-visible-tranche-250">
-    <th>Écart de taux d'augmentations individuelles (hors promotion)</th>
+    <th style="text-align: left;">Écart de taux d'augmentations individuelles</th>
     <td>
-      {% include input.html name="indicateurs.augmentations.note" disabled="true" %}
+      <span id="augmentations-note">note actuelle rému</span>
     </td>
     <td>
       {% include input.html
@@ -80,25 +80,23 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr class="only-visible-tranche-250">
-    <th>Ecart de taux de promotions</th>
+    <th style="text-align: left;">Ecart de taux de promotions</th>
     <td>
-      {% include input.html name="indicateurs.promotions.note" disabled="true" %}
+      <span id="promotions-note">note actuelle rému</span>
     </td>
     <td>
       {% include input.html
       type="number"
       name="indicateurs.promotions.objectif_de_progression"
-      max="35"
+      max="15"
       required=true
       %}
     </td>
   </tr>
   <tr>
-    <th>Retour de congé maternité</th>
+    <th style="text-align: left;">Retour de congé maternité</th>
     <td>
-      <span class="congés-maternité-non-calculable">Non calculable</span>
-      <span class="congés-maternité-calculable"></span>
-      {% include input.html name="indicateurs.congés_maternité.note" disabled="true" %}
+      <span id="congés_maternité-note">note actuelle rému</span>
     </td>
     <td>
       {% include input.html
@@ -110,9 +108,9 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr>
-    <th>Dix plus hautes rémunérations</th>
+    <th style="text-align: left;">Dix plus hautes rémunérations</th>
     <td>
-      {% include input.html name="indicateurs.hautes_rémunérations.note" disabled="true" %}
+      <span id="hautes_rémunérations-note">note actuelle rému</span>
     </td>
     <td>
       {% include input.html
@@ -167,6 +165,7 @@ title: "Informations complémentaires"
       communication des objectifs de progression auprès de vos salariés</span><span
       class='only-visible-modalites-objectifs-mesures'>Préciser les modalités de communication des objectifs de
       progression et des mesures de correction auprès de vos salariés</span>"
+    required=true
     class="wide" %}
   </div>
 </fieldset>
@@ -179,7 +178,7 @@ title: "Informations complémentaires"
     promotions: 15,
     augmentations_et_promotions: 35,
     congés_maternité: 15,
-    hautes_rémunérations: 15
+    hautes_rémunérations: 10
   }
 
   // Rendre disable les objectifs quand ils sont au maxium ou non calculables et ajouter la contrainte sur le min.
@@ -190,13 +189,31 @@ title: "Informations complémentaires"
 
     if (note === MAX_NOTES_INDICATEURS[name] || isNC) {
       objectifField.disabled = true
+    } else {
+      objectifField.min = note + 1
     }
-    objectifField.min = note
+  }
+
+  // Afficher la note courante de l'indicateur.
+  function displayCurrentNote(name) {
+    const field = document.querySelector(`#${name}-note`)
+    const note = app.getItem(`indicateurs.${name}.note`)
+    const isNC = Boolean(app.getItem(`indicateurs.${name}.non_calculable`))
+
+    field.innerHTML = isNC ? "Non calculable" : note + " / " + MAX_NOTES_INDICATEURS[name]
+
   }
 
   document.onready = () => {
 
     // Cette page ne s'affiche que si l'index est < 85 et si l'année est > 2020.
+
+    for (const indicateur in MAX_NOTES_INDICATEURS) {
+      // Remplissage de la note courante des indicateurs.
+      displayCurrentNote(indicateur)
+      // Ajout du caractère disable et du min sur les objectifs des indicateurs.
+      addConstraintsToIndicateurs(indicateur)
+    }
 
     const endCivilYear = `${app.data.déclaration.année_indicateurs}-12-31`
     const minPubDate = new Date(app.data.déclaration.fin_période_référence || endCivilYear)
@@ -236,12 +253,6 @@ title: "Informations complémentaires"
     } else {
       table.classList.add("tranche-250")
       selectField(`indicateurs.augmentations_et_promotions.objectif_de_progression`).disabled = true
-    }
-
-    // Rendre disable les objectifs quand ils sont au maxium ou non calculables.
-
-    for (const indicateur in MAX_NOTES_INDICATEURS) {
-      addConstraintsToIndicateurs(indicateur)
     }
 
     // Partie modalité.

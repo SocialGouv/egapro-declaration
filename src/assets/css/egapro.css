@@ -478,10 +478,9 @@ input::-webkit-inner-spin-button {
 p.alert {
   -webkit-box-align: center;
   align-items: center;
-  background-color: #feebc8;
+  background-color: #FFEEAA;
   border: 0 solid #e2e8f0;
   box-sizing: border-box;
-  color: #2d3748;
   display: flex;
   font-family: Inter,sans-serif;
   line-height: 24px;
