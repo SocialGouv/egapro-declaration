@@ -208,14 +208,14 @@ function serializeForm(form) {
 
 function removeEmpty(data) {
   Object.keys(data).forEach((key) => {
-    if (typeof data[key] === "array") {
-      if (!data[key].filter((item) => item !== undefined).length) {
+    if (Array.isArray(data[key])) {
+      if (data[key].filter((item) => item !== undefined).length === 0) {
         delete data[key];
       } else {
         removeEmpty(data[key]);
       }
     } else if (data[key] && typeof data[key] === "object") {
-      if (!Object.keys(data[key]).length) {
+      if (Object.keys(data[key]).length === 0) {
         delete data[key];
       } else {
         removeEmpty(data[key]);
