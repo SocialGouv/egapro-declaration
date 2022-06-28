@@ -12,14 +12,11 @@ title: "Informations complémentaires"
   mesures de correction." %}
 </div>
 
-<fieldset id="fieldset-date-publication-mesures">
-  <div class=row>
-    {% include input.html type="date" label="Date de publication des mesures"
-    name="déclaration.publication.date_publication_mesures" required="required" placeholder="aaaa-mm-jj"
-    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
-  </div>
-</fieldset>
-</p>
+<div class=row id="fieldset-date-publication-mesures">
+  {% include input.html type="date" label="Date de publication des mesures"
+  name="déclaration.publication.date_publication_mesures" required="required" placeholder="aaaa-mm-jj"
+  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" oninput="checkDate(event)" %}
+</div>
 
 <div class="only-visible-for-index-sub-85">
   {% include alert.html text="Votre index étant inférieur à 85, veuillez renseigner vos objectifs de progression pour
@@ -33,12 +30,12 @@ title: "Informations complémentaires"
 
 <table id="objectifs-table">
   <tr>
-    <th></th>
-    <th>Actuel</th>
-    <th>Objectif *</th>
+    <th scope="col"></th>
+    <th scope="col">Actuel</th>
+    <th scope="col">Objectif *</th>
   </tr>
   <tr>
-    <th style="text-align: left;">Écart de rémunération objectif</th>
+    <th scope="row" style="text-align: left;">Écart de rémunération objectif</th>
     <td>
       <span id="rémunérations-note">note actuelle rému</span>
     </td>
@@ -52,7 +49,7 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr class="only-visible-tranche-50-250">
-    <th style="text-align: left;">Écart de taux d'augmentations individuelles</th>
+    <th scope="row" style="text-align: left;">Écart de taux d'augmentations individuelles</th>
     <td>
       <span id="augmentations_et_promotions-note">note actuelle rému</span>
     </td>
@@ -66,7 +63,7 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr class="only-visible-tranche-250">
-    <th style="text-align: left;">Écart de taux d'augmentations individuelles</th>
+    <th scope="row" style="text-align: left;">Écart de taux d'augmentations individuelles</th>
     <td>
       <span id="augmentations-note">note actuelle rému</span>
     </td>
@@ -80,7 +77,7 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr class="only-visible-tranche-250">
-    <th style="text-align: left;">Ecart de taux de promotions</th>
+    <th scope="row" style="text-align: left;">Ecart de taux de promotions</th>
     <td>
       <span id="promotions-note">note actuelle rému</span>
     </td>
@@ -94,7 +91,7 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr>
-    <th style="text-align: left;">Retour de congé maternité</th>
+    <th scope="row" style="text-align: left;">Retour de congé maternité</th>
     <td>
       <span id="congés_maternité-note">note actuelle rému</span>
     </td>
@@ -108,7 +105,7 @@ title: "Informations complémentaires"
     </td>
   </tr>
   <tr>
-    <th style="text-align: left;">Dix plus hautes rémunérations</th>
+    <th scope="row" style="text-align: left;">Dix plus hautes rémunérations</th>
     <td>
       <span id="hautes_rémunérations-note">note actuelle rému</span>
     </td>
@@ -123,52 +120,45 @@ title: "Informations complémentaires"
   </tr>
 </table>
 
-<fieldset id="fieldset-date-publication-objectifs">
-  <div class=row>
-    {% include input.html
-    type="date"
-    name="déclaration.publication.date_publication_objectifs"
-    label="Date de publication des objectifs"
-    required=true
-    placeholder="aaaa-mm-jj"
-    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-    oninput="checkDate(event)" %}
-  </div>
-</fieldset>
-</p>
+<div class=row id="fieldset-date-publication-objectifs">
+  {% include input.html
+  type="date"
+  name="déclaration.publication.date_publication_objectifs"
+  label="Date de publication des objectifs"
+  required=true
+  placeholder="aaaa-mm-jj"
+  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+  oninput="checkDate(event)" %}
+</div>
 
-<fieldset id="fieldset-url">
-  <div>
-    {% include input.html
-    name="déclaration.publication.url"
-    label="Adresse exacte de la page Internet (URL) sur laquelle devront être publiés les objectifs de progression et/ou
-    les mesures de correction *"
-    disabled=true
-    class="wide" %}</div>
-</fieldset>
+<div id="fieldset-url">
+  {% include input.html
+  name="déclaration.publication.url"
+  label="Adresse exacte de la page Internet (URL) sur laquelle devront être publiés les objectifs de progression et/ou
+  les mesures de correction *"
+  disabled=true
+  class="wide" %}</div>
 
 <p style="font-size: 0.9rem;">
-  <i>
+  <em>
     * Pour rappel, les objectifs de progression et/ou mesures de progression doivent être publiés sur la même page du
     site internet que celle où
     figurent
     les résultats obtenus à chacun des indicateurs et le niveau de résultat à l’Index.
-  </i>
+  </em>
 </p>
 
-<fieldset id="fieldset-modalités-objectifs-mesures" class="hidden">
-  <div>
-    {% include textarea.html
-    name="déclaration.publication.modalités_objectifs_mesures"
-    label="<span class='only-visible-modalites-mesures'>Préciser les modalités de communication des mesures de
-      correction auprès de vos salariés</span><span class='only-visible-modalites-objectifs'>Préciser les modalité de
-      communication des objectifs de progression auprès de vos salariés</span><span
-      class='only-visible-modalites-objectifs-mesures'>Préciser les modalités de communication des objectifs de
-      progression et des mesures de correction auprès de vos salariés</span>"
-    required=true
-    class="wide" %}
-  </div>
-</fieldset>
+<div id="fieldset-modalités-objectifs-mesures" class="hidden">
+  {% include textarea.html
+  name="déclaration.publication.modalités_objectifs_mesures"
+  label="<span class='only-visible-modalites-mesures'>Préciser les modalités de communication des mesures de
+    correction auprès de vos salariés</span><span class='only-visible-modalites-objectifs'>Préciser les modalité de
+    communication des objectifs de progression auprès de vos salariés</span><span
+    class='only-visible-modalites-objectifs-mesures'>Préciser les modalités de communication des objectifs de
+    progression et des mesures de correction auprès de vos salariés</span>"
+  required=true
+  class="wide" %}
+</div>
 
 <script>
 
