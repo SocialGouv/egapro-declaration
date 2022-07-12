@@ -46,10 +46,10 @@ prevButtonLabel: "Nouvelle déclaration"
           if (response.data.error.startsWith("Vous n'avez pas les droits nécessaires pour le siren")) {
             errorSiren.style.display = "block"
 
-            errorSiren.innerHTML = `Vous n'êtes pas autorisé à déclarer pour ce SIREN. <br/>Pour faire une demande d'autorisation à l'équipe Egapro,&nbsp;<a target="_blank" rel="noreferrer noopener" href="mailto:dgt.ega-pro@travail.gouv.fr?subject=EgaPro - Demander à être déclarant d'un SIREN&body=Bonjour, je souhaite être déclarant pour le SIREN ${app.siren}. Mon email de déclaration est ${localStorage.email}. Cordialement.">cliquez ici.</a>`
+            errorSiren.innerHTML = `L'email saisi n'est pas rattaché au Siren de votre entreprise. <br/>Pour poursuivre votre déclaration, vous devez faire une demande de rattachement en cliquant <a target="_blank" rel="noreferrer noopener" href="mailto:dgt.ega-pro@travail.gouv.fr?subject=EgaPro - Demander à être déclarant d'un SIREN&body=Bonjour, je souhaite être déclarant pour le SIREN ${app.siren}. Mon email de déclaration est ${localStorage.email}. Cordialement.">ici.</a><br/> (si ce lien ne fonctionne pas, vous pouvez nous envoyer votre Siren et email à dgt.ega-pro@travail.gouv.fr).`
 
             notify.error(
-              "Vous n'êtes pas autorisé à déclarer pour ce SIREN.",
+              "L'email saisi n'est pas rattaché au Siren de votre entreprise.",
               undefined,
               // Don't log this message which is expected to happen.
               false)
