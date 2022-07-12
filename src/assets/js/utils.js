@@ -359,6 +359,10 @@ class AppStorage {
     return "reading"
   }
 
+  /**
+   * Rend la valeur d'un champ avec une notation dot et renvoie chaîne vide si le champ n'existe pas.
+   * Récupère les données à partir de app.data.
+   */
   getItem(flatKey) {
     const keys = flatKey.split(".");
     try {
