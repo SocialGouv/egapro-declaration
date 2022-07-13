@@ -71,7 +71,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.05.10'
+      release: '2022.07.13'
     })
   }
 </script>
@@ -136,9 +136,47 @@ déclaration.</p>
 <p>Si vous ne recevez pas cet accusé de réception, merci de bien vérifier que
 celui-ci n'a pas été déplacé dans votre dossier de courriers indésirables.</p>
 
-<center>Nous vous remercions de votre transmission.</center>
+<div id="objectifs-mesures" class="show-for-2021" style="margin-top: 40px">
+  <p class="legal-text show-for-75-85"><em>Conformément à l’article 13 de la loi n° 2021-1774 du 24 décembre 2021 visant à accélérer l’égalité économique et professionnelle et au décret n° 2022-243 du 25 février 2022, les entreprises ayant obtenu un Index inférieur à 85 points doivent fixer par accord ou, à défaut, par décision unilatérale, et publier des objectifs de progression de chacun des indicateurs de l’Index. Une fois l’accord ou la décision déposé, les objectifs de progression ainsi que leurs modalités de publication doivent être transmis aux services du ministre chargé du travail et au comité social et économique.</em>
+  </p>
 
-<p>Si vous le souhaitez, vous pouvez effectuer une <a href="./commencer.html" onclick="app.resetData(); app.dataToLocalStorage()">nouvelle déclaration</a>.</p>
+  <p class="legal-text show-for-0-75">
+    <em>Conformément à l’article 13 de la loi n° 2021-1774 du 24 décembre 2021 visant à accélérer l’égalité économique et professionnelle et au décret n° 2022-243 du 25 février 2022, les entreprises ayant obtenu un Index inférieur à 75 points doivent publier, par une communication externe et au sein de l’entreprise, les mesures de correction qu’elles ont définies par accord ou, à défaut, par décision unilatérale. Par ailleurs, celles ayant obtenu un Index inférieur à 85 points doivent fixer, également par accord ou, à défaut, par décision unilatérale, et publier des objectifs de progression de chacun des indicateurs de l’Index. Une fois l’accord ou la décision déposé, les informations relatives aux mesures de correction, les objectifs de progression ainsi que leurs modalités de publication doivent être transmis aux services du ministre chargé du travail et au comité social et économique.</em>
+  </p>
+
+  <p class="show-for-75-85"><button onclick="goToMeConnecter()">Déclarer les objectifs de progression maintenant</button></p>
+
+  <p class="show-for-0-75"><button onclick="goToMeConnecter()">Déclarer les objectifs de progression et les mesures de correction maintenant</button></p>
+
+  <p>Si vous souhaitez les déclarer ultérieurement, vous pouvez vous connecter à votre espace et aller sur "Mes déclarations"</p>
+</div>
+
+  <!-- <center>Nous vous remercions de votre transmission.</center> -->
+
+<p style="margin-top: 40px">Si vous le souhaitez, vous pouvez effectuer une <a href="./commencer.html" onclick="app.resetData(); app.dataToLocalStorage()">nouvelle déclaration</a>.</p>
+
+<script>
+
+  document.onready = () => {
+
+    const index = app.getItem("déclaration.index")
+    const year = app.getItem("déclaration.année_indicateurs")
+
+    if (year && !isNaN(year) && Number(year) >= 2021) {
+      document.querySelector("#objectifs-mesures").classList.add("year-2021-and-after")
+    }
+
+    if (index !== undefined && !isNaN(index)) {
+      if (Number(index)< 75) {
+        document.querySelector("#objectifs-mesures").classList.add("index-75-and-below")
+      } else if (Number(index) < 85) {
+        document.querySelector("#objectifs-mesures").classList.add("index-between-75-and-85")
+      }
+    }
+
+  }
+
+</script>
 
 </main>
 
@@ -162,7 +200,7 @@ celui-ci n'a pas été déplacé dans votre dossier de courriers indésirables.<
       l'améliorer
       <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
         target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a
-        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.05.10" target="_blank"
+        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.07.13" target="_blank"
         rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
