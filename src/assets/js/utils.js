@@ -449,3 +449,8 @@ class AppStorage {
     return response
   }
 }
+
+function goToMeConnecter() {
+  const simulation = window.open(`${location.origin}/tableauDeBord/me-connecter`, '_blank');
+  simulation.focus()
+}

@@ -286,10 +286,6 @@ function goToSimulationApp() {
   simulation.focus()
 }
 
-function goToMeConnecter() {
-  const simulation = window.open(`${location.origin}/tableauDeBord/me-connecter`, '_blank');
-  simulation.focus()
-}
 
 async function resendReceipt() {
   const response = await request('POST', `/declaration/${app.siren}/${app.annee}/receipt`)
