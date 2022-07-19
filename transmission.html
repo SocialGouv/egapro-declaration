@@ -71,7 +71,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.07.14'
+      release: '2022.07.19'
     })
   }
 </script>
@@ -159,14 +159,14 @@ celui-ci n'a pas été déplacé dans votre dossier de courriers indésirables.<
 
   document.onready = () => {
 
-    const index = app.getItem("déclaration.index")
+    const index = app.getItem("déclaration.index") // Renvoie "" si non trouvé.
     const year = app.getItem("déclaration.année_indicateurs")
 
     if (year && !isNaN(year) && Number(year) >= 2021) {
       document.querySelector("#objectifs-mesures").classList.add("year-2021-and-after")
     }
 
-    if (index !== undefined && !isNaN(index)) {
+    if (index !== "" && !isNaN(index)) {
       if (Number(index)< 75) {
         document.querySelector("#objectifs-mesures").classList.add("index-75-and-below")
       } else if (Number(index) < 85) {
@@ -200,7 +200,7 @@ celui-ci n'a pas été déplacé dans votre dossier de courriers indésirables.<
       l'améliorer
       <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
         target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a
-        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.07.14" target="_blank"
+        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.07.19" target="_blank"
         rel="noopener noreferrer">contribuez sur Github</a>
     </p>
   </footer>
