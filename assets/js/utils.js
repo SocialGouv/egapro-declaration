@@ -451,6 +451,6 @@ class AppStorage {
 }
 
 function goToMeConnecter() {
-  const simulation = window.open(`${location.origin}/tableauDeBord/me-connecter`, '_blank');
+  const simulation = window.open(`${location.origin}/tableauDeBord/mes-declarations/${app.getItem('entreprise.siren')}`, '_blank');
   simulation.focus()
 }
