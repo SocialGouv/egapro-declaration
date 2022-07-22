@@ -256,12 +256,17 @@ class AppStorage {
   }
 
   async init() {
+    // Réinitialise l'objet this.data.
     this.resetData()
+    // Appele le endpoint config et le stocke dans this.config.
     await this.loadConfig()
+    // Appelle le endpoint schema et le stocke dans this.schema.
     await this.loadSchema()
     if(!this.token) return
+    // Charge this.data avec le local storage.
     this.loadLocalData()
     // Is remote data actually necessary as we must have local data for token anyways?
+    // Recharge this.data avec les données issues de l'API.
     if(this.siren && this.annee) await this.loadRemoteData()
   }
 
@@ -354,6 +359,10 @@ class AppStorage {
     return "reading"
   }
 
+  /**
+   * Rend la valeur d'un champ avec une notation dot et renvoie chaîne vide si le champ n'existe pas.
+   * Récupère les données à partir de app.data.
+   */
   getItem(flatKey) {
     const keys = flatKey.split(".");
     try {
@@ -439,4 +448,9 @@ class AppStorage {
     else if(response.data.error && event) notify.error(response.data.error)
     return response
   }
+}
+
+function goToMeConnecter() {
+  const simulation = window.open(`${location.origin}/tableauDeBord/mes-declarations/${app.getItem('entreprise.siren')}`, '_blank');
+  simulation.focus()
 }
