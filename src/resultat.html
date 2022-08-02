@@ -8,7 +8,7 @@ title: "Publication des résultats"
   <span class="year-2020-and-before">Publication du niveau de résultat global</span>
 </h1>
 
-<p>
+<p style="text-align: justify; text-justify: inter-word;">
   <span class="year-2021-and-after">Le niveau de résultat global obtenu et les résultats obtenus pour chaque
     indicateur sont publiés annuellement, au plus tard le 1er mars de l’année
     en cours, au titre de l’année précédente, de manière visible et lisible,
@@ -63,10 +63,64 @@ title: "Publication des résultats"
   </fieldset>
 </div>
 
+
+<!-- Only visible for 2021 and after -->
+
+<fieldset style="display: none" id="plan_relance">
+  <div class=row>
+    <div>
+      {% include radios.html
+        name="_entreprise.plan_relance"
+        label="<span class='ues'>Une ou plusieurs entreprises comprenant au moins 50 salariés au sein de l’UES a-t-elle bénéficié, en 2021 et/ou 2022, d’une aide prévue par la loi du 29 décembre 2020 de finances pour 2021 au titre de la mission « Plan de relance » ?</span><span class='entreprise'>Avez-vous bénéficié, en 2021 et/ou 2022, d’une aide prévue par la loi du 29 décembre 2020 de finances pour 2021 au titre de la mission « Plan de relance » ?</span>"
+        options="true=oui&false=non"
+        required="required" %}
+    </div>
+  </div>
+</fieldset>
+
 <script>
   const siteInternetField = selectField('_déclaration.publication.site_internet')
 
+  // We use an extra input to store the value of plan_relance in "true" or "false" instead of real boolean values.
+  function loadFakePlanRelance() {
+    if (app.data._entreprise === undefined) {
+      app.data._entreprise = {}
+    }
+
+    if (app.data.entreprise.plan_relance === true) {
+      app.data._entreprise.plan_relance = "true"
+    } else if (app.data.entreprise.plan_relance === false){
+      app.data._entreprise.plan_relance = "false"
+    }
+  }
+
   document.onready = () => {
+    loadFakePlanRelance()
+
+    const inputsPlanRelance = document.querySelectorAll("input[name='_entreprise.plan_relance']")
+
+    if (app.data.déclaration.année_indicateurs < 2021) {
+      inputsPlanRelance.forEach(input => {
+        // To prevent to have validation on this radio input whereas it is not present on the screen.
+        input.required = false
+      })
+
+    } else {
+      inputsPlanRelance.forEach(input => {
+        input.required = true
+      });
+
+      document.querySelector("#plan_relance").style.display = "block"
+      if (app.data.entreprise.ues) {
+        document.querySelector(".ues").style.display = "inline"
+        document.querySelector(".entreprise").style.display = "none"
+      } else {
+        document.querySelector(".ues").style.display = "none"
+        document.querySelector(".entreprise").style.display = "inline"
+      }
+
+    }
+
     if (app.getItem('déclaration.publication')) {
       // We did already submit this current form, so we can infer the
       // "_indicateurs.déclaration.publication.site_internet" data.
@@ -77,10 +131,14 @@ title: "Publication des résultats"
     // To compute the minimum publication date, we either take the
     // `déclaration.fin_période_référence` or if it's undefined, the end of
     // civil year of `déclaration.année_indicateurs`
-    const endCivilYear = new Date(`${app.data.déclaration.année_indicateurs}-12-31`)
-    const minPubDate = app.data.déclaration.fin_période_référence || endCivilYear.toISOString().slice(0, 10)
+    const endCivilYear = `${app.data.déclaration.année_indicateurs}-12-31`
+    const minPubDate = new Date(app.data.déclaration.fin_période_référence || endCivilYear)
+
+    // add a day to minPubDate
+    minPubDate.setDate(minPubDate.getDate() + 1)
+
     // The `min` value should be formatted like yyyy-mm-dd
-    selectField("déclaration.publication.date").min = minPubDate
+    selectField("déclaration.publication.date").min = minPubDate.toISOString().slice(0, 10)
 
     // Display the label "aux indicateurs calculables" if the result is non calculable but still needs to be declared.
     if (app.data.déclaration.année_indicateurs >= 2020) {
@@ -103,4 +161,13 @@ title: "Publication des résultats"
   document.onloaded = () => {
     toggleFields()
   }
+
+
+  document.onsend = data => {
+    // We restore a real boolean value for plan_relance from the fake one.
+    if (data && data._entreprise && data._entreprise.plan_relance) {
+      data.entreprise.plan_relance = data._entreprise.plan_relance === "true" ? true : false
+    }
+  }
+
 </script>

@@ -14,7 +14,6 @@ async function request(method, uri, body, options = {}) {
     response.data = null
   }
   if(response.status == 401) {
-    const error = response.json
     if(response.data.error) notify.error(response.data.error)
     delete localStorage.token
     redirect('./')
@@ -53,6 +52,14 @@ function selectFakeField(name) {
 
 function enableField(selector, enabled) {
   document.querySelector(selector).disabled = !enabled
+}
+
+function showBlock(div, show) {
+  if (show) {
+    div.style.display = "block"
+  } else {
+    div.style.display = "none"
+  }
 }
 
 // Shortcut event
@@ -244,15 +251,24 @@ class AppStorage {
     this.apiUrl = ['localhost', '127.0.0.1'].includes(location.hostname)
       ? 'http://localhost:2626'
       : `${location.origin}/api`;
+
+    if (window.EGAPRO_API_URL) {
+      this.apiUrl = EGAPRO_API_URL
+    }
   }
 
   async init() {
+    // Réinitialise l'objet this.data.
     this.resetData()
+    // Appele le endpoint config et le stocke dans this.config.
     await this.loadConfig()
+    // Appelle le endpoint schema et le stocke dans this.schema.
     await this.loadSchema()
     if(!this.token) return
+    // Charge this.data avec le local storage.
     this.loadLocalData()
     // Is remote data actually necessary as we must have local data for token anyways?
+    // Recharge this.data avec les données issues de l'API.
     if(this.siren && this.annee) await this.loadRemoteData()
   }
 
@@ -345,6 +361,10 @@ class AppStorage {
     return "reading"
   }
 
+  /**
+   * Rend la valeur d'un champ avec une notation dot et renvoie chaîne vide si le champ n'existe pas.
+   * Récupère les données à partir de app.data.
+   */
   getItem(flatKey) {
     const keys = flatKey.split(".");
     try {
@@ -383,6 +403,7 @@ class AppStorage {
     // Set the value on the item
     const [_, key, index] = extractKey(property);
     if (index) {
+      // si index truthy => cas d'un array
       if (!(key in target)) target[key] = [];
       target[key][index] = val;
     } else {
@@ -429,4 +450,9 @@ class AppStorage {
     else if(response.data.error && event) notify.error(response.data.error)
     return response
   }
+}
+
+function goToMeConnecter() {
+  const simulation = window.open(`${location.origin}/tableauDeBord/mes-declarations/${app.getItem('entreprise.siren')}`, '_blank');
+  simulation.focus()
 }

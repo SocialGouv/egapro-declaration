@@ -12,7 +12,9 @@ const steps = [
     },
   },
   { name: "ues" },
-  { name: "informations" },
+  { name: "informations",
+      nextStep: (data) => data.déclaration.période_suffisante === false ? "validation" : "remuneration"
+  },
   { name: "remuneration",
     nextStep: (data) => {
       if (data.indicateurs.rémunérations.mode === "niveau_branche")
@@ -27,7 +29,7 @@ const steps = [
     },
   },
   { name: "remuneration-coef", nextStep: (_) => "remuneration-final" },
-  { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
+  // { name: "remuneration-autre", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-csp", nextStep: (_) => "remuneration-final" },
   { name: "remuneration-final",
     nextStep: (data) =>
@@ -166,6 +168,8 @@ if (step >= steps.length - 1) {
   nextButton.setAttribute("disabled", "disabled");
 }
 
+// Copie les données du form de la page courante, dans l'objet app.data.
+// Supprime les propriétés qui sont undefined.
 function serializeForm(form) {
   let data = app.data;
 
@@ -240,7 +244,20 @@ function toggleDeclarationValidatedBar() {
     document.getElementById("declaration-readonly").hidden = app.mode !== 'reading'
     document.getElementById("declaration-draft").hidden = app.mode !== 'updating'
   }
+
+  const année = app.getItem("déclaration.année_indicateurs")
+  const index = app.getItem("déclaration.index")
+
+  // index may be undefined if it is Non calculable. Don't show the bar in this case.
+  const objectifsMesuresIsVisible = année >= 2021 && index && index < 85
+  const objectifsMesuresLabel = objectifsMesuresIsVisible && index < 75
+    ? "Aller aux objectifs de progression et mesures de correction"
+    : "Aller aux objectifs de progression"
+
+  document.getElementById("objectifs-mesures-button").hidden = !objectifsMesuresIsVisible
+  document.getElementById("objectifs-mesures-button").innerHTML = objectifsMesuresLabel
 }
+
 
 async function setDraftStatus() {
   if (confirm("Vous allez modifier une déclaration déjà validée et transmise.")) {
@@ -269,6 +286,7 @@ function goToSimulationApp() {
   simulation.focus()
 }
 
+
 async function resendReceipt() {
   const response = await request('POST', `/declaration/${app.siren}/${app.annee}/receipt`)
   if (response.ok) {
@@ -277,3 +295,5 @@ async function resendReceipt() {
     return notify.error("Erreur lors du renvoi de l'accusé de réception");
   }
 }
+
+

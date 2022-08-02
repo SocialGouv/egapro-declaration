@@ -13,11 +13,11 @@
       format("embedded-opentype"),
      url(/static/media/gabriela-v8-latin-regular.badfdabe.woff2)
       format("woff2"),
-    
+
       url(/static/media/gabriela-v8-latin-regular.9db49c8e.woff) format("woff"),
      url(/static/media/gabriela-v8-latin-regular.1c9cd380.ttf)
       format("truetype"),
-    
+
       url(/static/media/gabriela-v8-latin-regular.cfd57c98.svg#Gabriela) format("svg"); /* Legacy iOS */
 }
 
@@ -36,7 +36,7 @@
       format("woff"),
      url(/static/media/cabin-v14-latin-regular.78773388.ttf)
       format("truetype"),
-    
+
       url(/static/media/cabin-v14-latin-regular.44f981a2.svg#Cabin) format("svg"); /* Legacy iOS */
 }
 
@@ -668,7 +668,7 @@ input::-webkit-inner-spin-button {
 }
 
 @keyframes sk-scaleout {
-  0% { 
+  0% {
     -webkit-transform: scale(0);
     transform: scale(0);
   } 100% {
@@ -776,4 +776,31 @@ input::-webkit-inner-spin-button {
 .mx-0 {
   margin-right: 0;
   margin-left: 0;
+
+  
+/* Objectifsde progression et mesures de correction */
+
+.show-for-2021 {
+  display: none;
+}
+
+.show-for-2021.year-2021-and-after {
+  display: block;
+}
+
+.show-for-75-85, .show-for-0-75 {
+  display: none;
+}
+
+#objectifs-mesures.index-between-75-and-85 .show-for-75-85 {
+  display: block;
+}
+
+#objectifs-mesures.index-75-and-below .show-for-0-75 {
+  display: block;
+}
+
+.legal-text {
+  font-size: .9rem;
+  color: #202020;
 }
