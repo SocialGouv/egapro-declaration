@@ -1,138 +1,136 @@
 <!DOCTYPE html>
 <html lang="fr" class="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="utf-8">
-<title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
-<link rel="stylesheet" href="/declaration/assets/css/egapro.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <title>Ecart de rémunération entre les femmes et les hommes - Egalité professionnelle - Ministère du Travail</title>
+  <link rel="stylesheet" href="/declaration/assets/css/egapro.css" />
 
-<style>
-  span.profil {
-    -webkit-box-align: center;
-    -webkit-box-pack: center;
-    align-items: center;
-    background: #a0aec0;
-    border: 0 solid #fff;
-    border-radius: 9999px;
-    box-sizing: border-box;
-    color: #1a202c;
-    cursor: pointer;
-    display: inline-flex;
-    flex-shrink: 0;
-    font-family: Cabin, -apple-system, sans-serif;
-    font-size: calc(.8rem);
-    font-weight: 500;
-    height: 2rem;
-    justify-content: center;
-    line-height: 19.2px;
-    overflow-wrap: break-word;
-    position: relative;
-    text-align: center;
-    text-transform: uppercase;
-    vertical-align: top;
-    width: 2rem;
-    word-wrap: break-word;
-  }
-
-  svg.profil {
-    border: 0 solid #e2e8f0;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer;
-    display: block;
-    font-family: Cabin, -apple-system, sans-serif;
-    font-size: 12.8px;
-    font-weight: 500;
-    height: 100%;
-    line-height: 19.2px;
-    overflow-wrap: break-word;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
-    word-wrap: break-word;
-  }
-</style>
-
-<script>
-  // First, check the browser is compatible
-  try {
-    eval("async function _(){}")
-  }
-  catch (e) {
-    if (!window.location.href.endsWith('/compatibilite.html')) {
-      window.location.href = '/declaration/compatibilite.html'
+  <style>
+    span.profil {
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      align-items: center;
+      background: #a0aec0;
+      border: 0 solid #fff;
+      border-radius: 9999px;
+      box-sizing: border-box;
+      color: #1a202c;
+      cursor: pointer;
+      display: inline-flex;
+      flex-shrink: 0;
+      font-family: Cabin, -apple-system, sans-serif;
+      font-size: calc(0.8rem);
+      font-weight: 500;
+      height: 2rem;
+      justify-content: center;
+      line-height: 19.2px;
+      overflow-wrap: break-word;
+      position: relative;
+      text-align: center;
+      text-transform: uppercase;
+      vertical-align: top;
+      width: 2rem;
+      word-wrap: break-word;
     }
-  }
-</script>
 
-
-<script src="/declaration/assets/js/sentry.min.js"
-  integrity="sha384-ir4+BihBClNpjZk3UKgHTr0cwRhujAjy/M5VEGvcOzjhM1Db79GAg9xLxYn4uVK4" crossorigin="anonymous"></script>
-<script>
-  if (typeof Sentry !== "undefined") {
-    Sentry.init({
-      dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.08.02'
-    })
-  }
-</script>
-
-
-
-
-
-<script src="/declaration/assets/js/utils.js"></script>
-
-<script>
-  function redirectOnAuthentification() {
-    if (confirm('Vous allez être redirigé pour vous connnecter. Voulez-vous vous continuer ?')) {
-      window.location.href = '/declaration/tableauDeBord/me-connecter'
+    svg.profil {
+      border: 0 solid #e2e8f0;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      display: block;
+      font-family: Cabin, -apple-system, sans-serif;
+      font-size: 12.8px;
+      font-weight: 500;
+      height: 100%;
+      line-height: 19.2px;
+      overflow-wrap: break-word;
+      text-align: center;
+      text-transform: uppercase;
+      width: 100%;
+      word-wrap: break-word;
     }
-  }
-</script>
+  </style>
 
-<header>
-  <div>
-    <a href="https://travail-emploi.gouv.fr/" target="_blank"><img src="/declaration/assets/img/marianne.svg"
-        alt="Marianne"></a>
-    <hgroup>
-      <h1><a href="https://index-egapro.travail.gouv.fr/" target="_blank">Index Egapro</a></h1>
-    </hgroup>
-    <p>
-      <!-- &#8209; is an unbreakable hyphen not to split the word -->
-      L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&#8209;Hommes
-    </p>
+  <script>
+    // First, check the browser is compatible
+    try {
+      eval("async function _(){}")
+    } catch (e) {
+      if (!window.location.href.endsWith("/compatibilite.html")) {
+        window.location.href = "/declaration/compatibilite.html"
+      }
+    }
+  </script>
 
-    <!-- TODO : voir s'il faut ajouter ce moyen de se connecter à partir du site de déclaration-directe. Si oui, ajouter dans body > header div => `justify-content: center`
-    <div onClick="redirectOnAuthentification()">
-      <span class="profil">
-        <svg viewBox="0 0 128 128" class="profil" role="img" aria-label=" avatar">
-          <path fill="currentColor"
-            d="M103,102.1388 C93.094,111.92 79.3504,118 64.1638,118 C48.8056,118 34.9294,111.768 25,101.7892 L25,95.2 C25,86.8096 31.981,80 40.6,80 L87.4,80 C96.019,80 103,86.8096 103,95.2 L103,102.1388 Z">
-          </path>
-          <path fill="currentColor"
-            d="M63.9961647,24 C51.2938136,24 41,34.2938136 41,46.9961647 C41,59.7061864 51.2938136,70 63.9961647,70 C76.6985159,70 87,59.7061864 87,46.9961647 C87,34.2938136 76.6985159,24 63.9961647,24">
-          </path>
-        </svg>
-      </span>
+  
+  <script
+    src="/declaration/assets/js/sentry.min.js"
+    integrity="sha384-ir4+BihBClNpjZk3UKgHTr0cwRhujAjy/M5VEGvcOzjhM1Db79GAg9xLxYn4uVK4"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    if (typeof Sentry !== "undefined") {
+      Sentry.init({
+        dsn: "https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48",
+        release: "2022.08.02",
+      })
+    }
+  </script>
+   
+
+  <script src="/declaration/assets/js/utils.js"></script>
+
+  <script>
+    function redirectOnAuthentification() {
+      if (
+        confirm(
+          "Vous allez être redirigé pour vous connnecter. Voulez-vous vous continuer ?"
+        )
+      ) {
+        window.location.href = "/declaration/tableauDeBord/me-connecter"
+      }
+    }
+  </script>
+
+  <header class="app-header">
+    <div class="skip-links">
+      <ul class="wrapper">
+        <li><a href="#navigation">Aller au menu</a></li>
+        <li><a href="#content">Aller au contenu</a></li>
+        <li><a href="#footer">Aller au pied de page</a></li>
+      </ul>
     </div>
-    -->
-  </div>
-  <nav id="navigation" class="app-header__container wrapper">
-    <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
-      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90" >
-    </a>
-    <div class="baseline">
-      <a href="https://index-egapro.travail.gouv.fr/" target="_blank" class="baseline__title">Index Egapro</a>
-      <p class="baseline__text">
-        L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&nbsp;Hommes
-      </p>
-    </div>
-  </nav>
-</header>
 
-<main id="content" class="app-main wrapper" role="main">
-  <form  id="page-form" action="#">
-    <section id="declaration-readonly" class="declaration-mode" hidden>
+    <nav id="navigation" class="app-header__container wrapper">
+      <a
+        href="https://travail-emploi.gouv.fr/"
+        target="_blank"
+        class="app-header__container__logo"
+      >
+        <img
+          src="/declaration/assets/img/marianne.svg"
+          alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion"
+          width="90"
+        />
+      </a>
+      <div class="baseline">
+        <a
+          href="https://index-egapro.travail.gouv.fr/"
+          target="_blank"
+          class="baseline__title"
+          >Index Egapro</a
+        >
+        <p class="baseline__text">
+          L’outil de calcul et de déclaration de votre index égalité
+          professionnelle Femmes&nbsp;Hommes
+        </p>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content" class="app-main wrapper" role="main">
+    <form id="page-form" action="#"><section id="declaration-readonly" class="declaration-mode" hidden>
   <p class="text-lg font-bold mt-0 mb-0">
     Cette déclaration a été validée et transmise.
   </p>
@@ -446,62 +444,96 @@
 
 <!-- tunnel.js uses DOM and should be loaded last -->
 <script src="/declaration/assets/js/tunnel.js"></script>
+</form>
+  </main>
 
-  </form>
-</main>
-
-
-<footer class="app-footer wrapper" role="contentinfo" id="footer">
-  <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
-      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90">
-  </a>
-  <ul class="app-footer__list-links">
-    <li>
-      <a href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
-         target="_blank" rel="noopener noreferrer">retrouvez le simulateur au format Excel</a>
-    </li>
-    <li>
-      <a href="https://index-egapro.travail.gouv.fr/mentions-legales">mentions légales</a>
-    </li>
-    <li>
-      <a href="https://index-egapro.travail.gouv.fr/cgu">conditions
-      générales d'utilisation</a>
-    </li>
-    <li>
-      <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">politique de
-      confidentialité</a>
-    </li>
-    <li>
-      <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx">Contactez votre référent Egapro</a>
-    </li>
-  </ul>
+  <footer class="app-footer wrapper" role="contentinfo" id="footer">
+    <a
+      href="https://travail-emploi.gouv.fr/"
+      target="_blank"
+      class="app-footer__logo"
+    >
+      <img
+        src="/declaration/assets/img/marianne.svg"
+        alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion"
+        width="90"
+      />
+    </a>
+    <ul class="app-footer__list-links">
+      <li>
+        <a
+          href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
+          target="_blank"
+          rel="noopener noreferrer"
+          >retrouvez le simulateur au format Excel</a
+        >
+      </li>
+      <li>
+        <a href="https://index-egapro.travail.gouv.fr/mentions-legales"
+          >mentions légales</a
+        >
+      </li>
+      <li>
+        <a href="https://index-egapro.travail.gouv.fr/cgu"
+          >conditions générales d'utilisation</a
+        >
+      </li>
+      <li>
+        <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite"
+          >politique de confidentialité</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx"
+          >Contactez votre référent Egapro</a
+        >
+      </li>
+    </ul>
     <p class="app-footer__infos">
-      Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2022.08.02" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
+      Index Egapro a été développé par les équipes de la fabrique numérique des
+      ministères sociaux. Pour nous aider à l'améliorer
+      <a
+        href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
+        target="_blank"
+        rel="noopener noreferrer"
+        >donnez-nous votre avis</a
+      >
+      ou
+      <a
+        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.08.02"
+        target="_blank"
+        rel="noopener noreferrer"
+        >contribuez sur Github</a
+      >
     </p>
-</footer>
+  </footer>
 
-<div id="toast" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class=content>
-    <span class=message></span>
-    <a href="#" onclick="notify.close(event)" class=close>x</a>
+  <div id="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="content">
+      <span class="message"></span>
+      <a href="#" onclick="notify.close(event)" class="close">x</a>
+    </div>
   </div>
-</div>
 
-<!-- Matomo -->
-<script type="text/javascript">
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function () {
-    var u = "//matomo.fabrique.social.gouv.fr/";
-    _paq.push(['setTrackerUrl', u + 'matomo.php']);
-    _paq.push(['setSiteId', '11']);
-    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
-    g.type = 'text/javascript'; g.async = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
-  })();
-</script>
-<!-- End Matomo Code -->
-
+  <!-- Matomo -->
+  <script type="text/javascript">
+    var _paq = (window._paq = window._paq || [])
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(["trackPageView"])
+    _paq.push(["enableLinkTracking"])
+    ;(function () {
+      var u = "//matomo.fabrique.social.gouv.fr/"
+      _paq.push(["setTrackerUrl", u + "matomo.php"])
+      _paq.push(["setSiteId", "11"])
+      var d = document,
+        g = d.createElement("script"),
+        s = d.getElementsByTagName("script")[0]
+      g.type = "text/javascript"
+      g.async = true
+      g.src = u + "matomo.js"
+      s.parentNode.insertBefore(g, s)
+    })()
+  </script>
+  <!-- End Matomo Code -->
 </html>
