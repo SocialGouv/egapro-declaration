@@ -71,7 +71,7 @@
   if (typeof Sentry !== "undefined") {
     Sentry.init({
       dsn: 'https://b2f84ee9dc6044abbeb0f417f4335a26@sentry.fabrique.social.gouv.fr/48',
-      release: '2022.07.22'
+      release: '2022.08.02'
     })
   }
 </script>
@@ -117,25 +117,40 @@
     </div>
     -->
   </div>
+  <nav id="navigation" class="app-header__container wrapper">
+    <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-header__container__logo">
+      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90" >
+    </a>
+    <div class="baseline">
+      <a href="https://index-egapro.travail.gouv.fr/" target="_blank" class="baseline__title">Index Egapro</a>
+      <p class="baseline__text">
+        L’outil de calcul et de déclaration de votre index égalité professionnelle Femmes&nbsp;Hommes
+      </p>
+    </div>
+  </nav>
 </header>
 
-<form class="main" id="page-form" action="#">
-  <section id="declaration-readonly" class="declaration-mode" hidden>
-  <p>
+<main id="content" class="app-main wrapper" role="main">
+  <form  id="page-form" action="#">
+    <section id="declaration-readonly" class="declaration-mode" hidden>
+  <p class="text-lg font-bold mt-0 mb-0">
     Cette déclaration a été validée et transmise.
   </p>
-  <p>
+  <p class="mt-0">
     Vous pouvez la modifier et elle remplacera la déclaration actuelle une fois à nouveau validée et transmise à la dernière étape.
   </p>
-  <button type="button" onclick="setDraftStatus()">Modifier la déclaration</button>
-  <button type="button" onclick="resendReceipt()">Renvoyer l'accusé de réception</button>
-  <button id="objectifs-mesures-button" type="button" onclick="goToMeConnecter()" style="margin-top: 10px">Aller aux objectifs de progression et mesures de correction
-  </button>
+  <div class="buttons">
+    <button type="button" onclick="setDraftStatus()" class="button--warning">Modifier la déclaration</button>
+    <button type="button" onclick="resendReceipt()" class="button--warning">Renvoyer l'accusé de réception</button>
+    <button id="objectifs-mesures-button" type="button" onclick="goToMeConnecter()" class="button--warning" style="margin-top: 10px">Aller aux objectifs de progression et mesures de correction
+  </div>
 </section>
 
 <section id="declaration-draft" class="declaration-mode" hidden>
-  <p>
-    Vous êtes en train de modifier une déclaration validée et transmise.<br>
+  <p class="text-lg font-bold mt-0 mb-0">
+    Vous êtes en train de modifier une déclaration validée et transmise.
+  </p>
+  <p class="mt-0 mb-0">
     Vos modifications ne seront enregistrées que lorsque vous l'aurez à nouveau validée et transmise à la dernière étape.
   </p>
 </section>
@@ -150,8 +165,8 @@
   <button type="button" onclick="goToSimulationApp()">Modifier ma déclaration</button>
 </section>
 
-<main>
-  <h1>
+<section>
+  <h1 class="text-3xl mt-0">
   <span class="year-2021-and-after">Publication des résultats obtenus</span>
   <span class="year-2020-and-before">Publication du niveau de résultat global</span>
 </h1>
@@ -169,8 +184,8 @@
     des salariés par tout moyen.</span>
 </p>
 
-<fieldset>
-  <div class=row>
+<div class="row">
+  <fieldset>
     
   
 <label for="field--déclaration.publication.date"><span class='year-2021-and-after'>Date de publication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Date de publication du niveau de résultat obtenu</span>*</label>
@@ -183,14 +198,15 @@
     value=""
     type="date"
     name="déclaration.publication.date"
-    placeholder="aaaa-mm-jj"
+    
     
     
     
     
     required
+    aria-required="true"
     
-    pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    
     
     
     
@@ -201,55 +217,52 @@
   />
 
 
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset>
-  <div class=row>
-    <div>
-      
-<label for="field--_déclaration.publication.site_internet"><span class='year-2021-and-after'>Avez-vous un site Internet pour publier les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> ?</span><span class='year-2020-and-before'>Avez-vous un site Internet pour publier le niveau de résultat obtenu</span></label>
-
-
-<div
+<div class="row">
+  <fieldset>
+    <div
   id="field--_déclaration.publication.site_internet"
   name="_déclaration.publication.site_internet"
   type="radiogroup"
-  >
+>
   
-     
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          onchange="toggleFields()"
-          name="_déclaration.publication.site_internet" value="oui"> oui
-      </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          onchange="toggleFields()"
-          name="_déclaration.publication.site_internet" value="non"> non
-      </label>
-      
-    
+  
+  
+  
+  
+  <label>
+    <input
+            required
+            
+            type="radio"
+            onchange="toggleFields()"
+            name="_déclaration.publication.site_internet" value="oui"> oui
+  </label>
+  
+  
+  
+  
+  <label>
+    <input
+            required
+            
+            type="radio"
+            onchange="toggleFields()"
+            name="_déclaration.publication.site_internet" value="non"> non
+  </label>
+  
+  
   
 </div>
 
-    </div>
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-url">
-  <div>
+<div class="row">
+  <fieldset id="fieldset-url">
+    
   
 <label for="field--déclaration.publication.url"><span class='year-2021-and-after'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle seront publiés les résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span></span><span class='year-2020-and-before'>Indiquer l'adresse exacte de la page Internet (URL) sur laquelle sera publié le niveau de résultat obtenu</span>*</label>
 
@@ -259,14 +272,15 @@
   <input
     id="field--déclaration.publication.url"
     value=""
-    type=""
+    type="text"
     name="déclaration.publication.url"
-    placeholder=""
+    
     class="wide"
     
     
     
     required
+    aria-required="true"
     
     
     
@@ -278,11 +292,13 @@
     
   />
 
-</div>
-</fieldset>
 
-<fieldset id="fieldset-modalites">
-  <div>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset id="fieldset-modalites">
+    
 <label for="field--déclaration.publication.modalités"><span class='year-2021-and-after'>Préciser les modalités de communication des résultats obtenus<span class='non-calculable'> aux indicateurs calculables</span> auprès de vos salariés</span><span class='year-2020-and-before'>Préciser les modalités de communication du niveau de résultat obtenu auprès de vos salariés</span>*</label>
 
 
@@ -292,9 +308,11 @@
   placeholder=""
   class="wide"
   required
+  aria-required="true"
 ></textarea>
+
+  </fieldset>
 </div>
-</fieldset>
 
 
 <!-- Only visible for 2021 and after -->
@@ -302,40 +320,38 @@
 <fieldset style="display: none" id="plan_relance">
   <div class=row>
     <div>
-      
-<label for="field--_entreprise.plan_relance"><span class='ues'>Une ou plusieurs entreprises comprenant au moins 50 salariés au sein de l’UES a-t-elle bénéficié, en 2021 et/ou 2022, d’une aide prévue par la loi du 29 décembre 2020 de finances pour 2021 au titre de la mission « Plan de relance » ?</span><span class='entreprise'>Avez-vous bénéficié, en 2021 et/ou 2022, d’une aide prévue par la loi du 29 décembre 2020 de finances pour 2021 au titre de la mission « Plan de relance » ?</span></label>
-
-
-<div
+      <div
   id="field--_entreprise.plan_relance"
   name="_entreprise.plan_relance"
   type="radiogroup"
-  >
+>
   
-     
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="_entreprise.plan_relance" value="true"> oui
-      </label>
-      
-    
-      
-      
-      <label>
-        <input
-          required
-          type="radio"
-          
-          name="_entreprise.plan_relance" value="false"> non
-      </label>
-      
-    
+  
+  
+  
+  
+  <label>
+    <input
+            required
+            
+            type="radio"
+            
+            name="_entreprise.plan_relance" value="true"> oui
+  </label>
+  
+  
+  
+  
+  <label>
+    <input
+            required
+            
+            type="radio"
+            
+            name="_entreprise.plan_relance" value="false"> non
+  </label>
+  
+  
   
 </div>
 
@@ -437,48 +453,56 @@
 
 </script>
 
-</main>
+</section>
 
-<nav id="tunnel-actions">
+<div id="tunnel-actions" class="buttons">
   
-  <a class=button rel=prev>Précédent</a>
+  <button class="button history-back" aria-label="étape précédent">Précédent</button>
+  
+  
+  <button class="button--primary button-next" aria-label="étape suivante">Suivant</button>
   
   <progress max=0 value=0></progress>
-  
-  <button rel=next>Suivant</button>
-  
-</nav>
+</div>
 
 <!-- tunnel.js uses DOM and should be loaded last -->
 <script src="/declaration/assets/js/tunnel.js"></script>
 
-</form>
+  </form>
+</main>
 
-<footer>
-  <header>
-    <a href="https://travail-emploi.gouv.fr/" target="_blank">
-      <img src="/declaration/assets/img/marianne.svg" alt="Marianne">
-    </a>
-  </header>
-  <nav>
-    <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx" target="_blank" rel="noopener noreferrer">Télécharger la liste des référents Egapro (XLSX, 22 Ko)</a>
-    <a href="https://index-egapro.travail.gouv.fr/mentions-legales">Mentions légales</a>
-    <a href="https://index-egapro.travail.gouv.fr/cgu">Conditions générales d'utilisation</a>
-    <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">Politique de confidentialité</a>
-  </nav>
-  <footer>
-    <p>
-      Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à
-      l'améliorer
-      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48"
-        target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a
-        href="https://github.com/SocialGouv/egapro-declaration/tree/2022.07.22" target="_blank"
-        rel="noopener noreferrer">contribuez sur Github</a>
+
+<footer class="app-footer wrapper" role="contentinfo" id="footer">
+  <a href="https://travail-emploi.gouv.fr/" target="_blank" class="app-footer__logo">
+      <img src="/declaration/assets/img/marianne.svg" alt="Aller à la page d'accueil du Ministère du travail, de l'emploi et de l'insertion" width="90">
+  </a>
+  <ul class="app-footer__list-links">
+    <li>
+      <a href="https://travail-emploi.gouv.fr/droit-du-travail/egalite-professionnelle-discrimination-et-harcelement/indexegapro"
+         target="_blank" rel="noopener noreferrer">retrouvez le simulateur au format Excel</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/mentions-legales">mentions légales</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/cgu">conditions
+      générales d'utilisation</a>
+    </li>
+    <li>
+      <a href="https://index-egapro.travail.gouv.fr/politique-confidentialite">politique de
+      confidentialité</a>
+    </li>
+    <li>
+      <a href="https://travail-emploi.gouv.fr/IMG/xlsx/referents_egalite_professionnelle.xlsx">Contactez votre référent Egapro</a>
+    </li>
+  </ul>
+    <p class="app-footer__infos">
+      Index Egapro a été développé par les équipes de la fabrique numérique des ministères sociaux. Pour nous aider à l'améliorer
+      <a href="https://voxusagers.numerique.gouv.fr/Demarches/2240?&amp;view-mode=formulaire-avis&amp;nd_mode=en-ligne-enti%C3%A8rement&amp;nd_source=button&amp;key=73366ddb13d498f4c77d01c2983bab48" target="_blank" rel="noopener noreferrer">donnez-nous votre avis</a> ou <a href="https://github.com/SocialGouv/egapro-declaration/tree/2022.08.02" target="_blank" rel="noopener noreferrer">contribuez sur Github</a>
     </p>
-  </footer>
 </footer>
 
-<div id="toast">
+<div id="toast" role="alert" aria-live="assertive" aria-atomic="true">
   <div class=content>
     <span class=message></span>
     <a href="#" onclick="notify.close(event)" class=close>x</a>

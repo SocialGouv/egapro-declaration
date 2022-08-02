@@ -154,8 +154,10 @@ checkSirenValidity = async event => {
   }
   const wrapper = target.parentNode
   wrapper.classList.add("loading")
+  wrapper.setAttribute('aria-busy', 'true')
   const response = await getSirenData(target.value)
   wrapper.classList.remove("loading")
+  wrapper.removeAttribute('aria-busy')
   const raisonSocialeField = getRaisonSocialeField(target)
   if (!response.ok) {
     if (raisonSocialeField) {
