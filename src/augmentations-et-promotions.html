@@ -3,66 +3,74 @@ layout: tunnel
 title: "Ecart de taux d'augmentations individuelles entre les femmes et les hommes"
 ---
 
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <div class=row>
-    <div>
-      {% include radios.html
-        name="_indicateurs.augmentations_et_promotions.calculable"
-        label="L'indicateur sur les taux d'augmentations individuelles est-il calculable ?"
-        required="true"
-        options="oui=oui&non=non"
-        onchange="toggleFields()"
-        required="required" %}
-    </div>
-  </div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    <legend>L'indicateur sur les taux d'augmentations individuelles est-il calculable&nbsp;?</legend>
+    {% include radios.html
+    name="_indicateurs.augmentations_et_promotions.calculable"
+    required="true"
+    options="oui=oui&non=non"
+    onchange="toggleFields()"
+    required="required" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-resultat-pourcentage">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 step="any" required=true onblur="notifyPercentage(event); maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-pourcentage">
+    {% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat" label="Résultat final en pourcentage (%)" min=0 step="any" required=true onblur="notifyPercentage(event); maybeRefreshForm(event)" oninput="toggleFields()" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-resultat-nombre-salaries">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés" label="Résultat final en nombre équivalent de salariés" min=0 step="any" required=true onblur="maybeRefreshForm(event)" oninput="toggleFields()" %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-resultat-nombre-salaries">
+    {% include input.html type="number" name="indicateurs.augmentations_et_promotions.résultat_nombre_salariés" label="Résultat final en nombre équivalent de salariés" min=0 step="any" required=true onblur="maybeRefreshForm(event)" oninput="toggleFields()" %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-population-favorable">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-population-favorable">
     {% include select.html
-      name="indicateurs.augmentations_et_promotions.population_favorable"
-      label="Population envers laquelle l'écart est favorable"
-      empty="true"
-      required=true
-      onchange="maybeRefreshForm(event)"
-      options="femmes=Femmes&hommes=Hommes"
+    name="indicateurs.augmentations_et_promotions.population_favorable"
+    label="Population envers laquelle l'écart est favorable"
+    empty="true"
+    required=true
+    onchange="maybeRefreshForm(event)"
+    options="femmes=Femmes&hommes=Hommes"
     %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-motif">
-  <div class=row>
+<div class="row">
+  <fieldset id="fieldset-motif">
     {% include select.html
-      name="indicateurs.augmentations_et_promotions.non_calculable"
-      label="Précision du motif de non calculabilité de l'indicateur"
-      empty="true"
-      required=true
-      options="etsno5f5h=L'entreprise ne comporte pas au moins 5 femmes et 5 hommes&absaugi=Absence d'augmentations individuelles"
+    name="indicateurs.augmentations_et_promotions.non_calculable"
+    label="Précision du motif de non calculabilité de l'indicateur"
+    empty="true"
+    required=true
+    options="etsno5f5h=L'entreprise ne comporte pas au moins 5 femmes et 5 hommes&absaugi=Absence d'augmentations individuelles"
     %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-note-en-pourcentage" class="note subnote">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_en_pourcentage" label="Nombre de points obtenus sur le résultat final en pourcentage" min=0 step="any" readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-note-en-pourcentage" class="note subnote">
+    {% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_en_pourcentage" label="Nombre de points obtenus sur le résultat final en pourcentage" min=0 step="any" readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-note-en-salaries" class="note subnote">
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_nombre_salariés" label="Nombre de points obtenus sur le résultat final en nombre de salariés" min=0 step="any" readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-note-en-salaries" class="note subnote">
+    {% include input.html type="number" name="indicateurs.augmentations_et_promotions.note_nombre_salariés" label="Nombre de points obtenus sur le résultat final en nombre de salariés" min=0 step="any" readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
-<fieldset id="fieldset-note" class=note>
-  <div class=row>{% include input.html type="number" name="indicateurs.augmentations_et_promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 step="any" readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset id="fieldset-note" class=note>
+    {% include input.html type="number" name="indicateurs.augmentations_et_promotions.note" label="Nombre de points obtenus à l'indicateur" min=0 step="any" readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
 <script>
   const calculableField = selectField('_indicateurs.augmentations_et_promotions.calculable')

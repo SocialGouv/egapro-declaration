@@ -6,15 +6,16 @@
 {% endif %}
   <input
     id="field--{{ include.name }}"
-    value="{{ include.value || '' }}"
-    type="{{ include.type || 'text' }}"
+    value="{{ include.value }}"
+    type="{{ include.type | default: 'text' }}"
     name="{{ include.name }}"
-    placeholder="{{ include.placeholder || include.label }}"
+    {% if include.placeholder %}placeholder="{{ include.placeholder }}"{% endif %}
     {% if include.class %}class="{{ include.class }}"{% endif %}
     {% if include.min %}min="{{ include.min }}"{% endif %}
     {% if include.max %}max="{{ include.max }}"{% endif %}
     {% if include.step %}step="{{ include.step }}"{% endif %}
     {% if include.required %}required{% endif %}
+    {% if include.required %}aria-required="true"{% endif %}
     {% if include.disabled %}disabled{% endif %}
     {% if include.pattern %}pattern="{{ include.pattern }}"{% endif %}
     {% if include.readonly %}readonly="readonly"{% endif %}
@@ -26,6 +27,6 @@
     {% if include.hidden %}style="display: none"{% endif %}
   />
 {% if include.loader %}
-  <div class="loader"></div>
+  <div class="loader" ></div>
 </div>
 {% endif %}

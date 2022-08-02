@@ -2,37 +2,36 @@
 layout: tunnel
 title: "Informations déclarant pour tout contact ultérieur"
 ---
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <!-- fieldset display flex can't work in Chromium -->
-  <div class=row>
-    <div>{% include input.html name="déclarant.nom" label="Nom du déclarant" required=true %}</div>
+<div class="row">
+  <fieldset>
+    <div class="mb-2">{% include input.html name="déclarant.nom" label="Nom du déclarant" required=true %}</div>
     <div>{% include input.html name="déclarant.prénom" label="Prénom du déclarant" required=true %}</div>
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset>
-    <div>{% include input.html name="déclarant.email" label="Email du déclarant" readonly=true data-always-readonly=true %}</div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    {% include input.html name="déclarant.email" label="Email du déclarant" readonly=true data-always-readonly=true %}
+  </fieldset>
+</div>
 
-<fieldset>
-  <div>
+<div class="row">
+  <fieldset>
     {% include input.html name="déclarant.téléphone" label="Numéro de téléphone" pattern="[0-9]{10}" placeholder="10 chiffres" required=true oninput="checkPatternValidity(event)" %}
-  </div>
-</fieldset>
+  </fieldset>
+</div>
 
-<fieldset>
-  <div class=row>
-    <div>
-      <label>
-        <input type="checkbox" id="field--_déclarant.cgu" name="_déclarant.cgu" value="oui" required="required" />
-        J'accepte l'utilisation de mes données à caractère personnel pour réaliser des statistiques et pour vérifier la validité de ma déclaration. Pour en savoir plus sur l'usage de ces données, vous pouvez consulter nos
-        <a href="/cgu">Conditions Générales d'Utilisation</a>
-      </label>
-    </div>
-  </div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    <label class="font-normal">
+      <input type="checkbox" id="field--_déclarant.cgu" name="_déclarant.cgu" value="oui" required="required" />
+      J'accepte l'utilisation de mes données à caractère personnel pour réaliser des statistiques et pour vérifier la validité de ma déclaration. Pour en savoir plus sur l'usage de ces données, vous pouvez consulter nos
+      <a href="/cgu">Conditions Générales d'Utilisation</a>
+    </label>
+  </fieldset>
+</div>
 
 <script>
   document.onready = () => {

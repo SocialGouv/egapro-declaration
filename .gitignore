@@ -1,5 +1,8 @@
 .jekyll-metadata
 .jekyll-cache/
+.idea
+Gemfile
+Gemfile.lock
 _site/
 declaration/
 .history/

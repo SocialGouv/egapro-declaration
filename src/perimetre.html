@@ -2,30 +2,44 @@
 layout: tunnel
 title: "Périmètre retenu pour le calcul et la publication des indicateurs"
 ---
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
 <p>Les informations relatives à l'entreprise déclarante (Raison sociale, Code NAF, Adresse complète) sont renseignées automatiquement et sont non modifiables (source : Répertoire Sirene de l'INSEE).</p>
 
-<fieldset>
-  <div class=row>
-    <h4>Vous déclarez en tant que</h4>
+<div class="row">
+  <fieldset>
+    <legend>Vous déclarez en tant que</legend>
     {% include radios.html
-      name="_entreprise.structure"
-      options="entreprise=Entreprise&ues=Unité Économique et Sociale (UES)"
-      onchange="toggleFields()"
-      required="required" %}
-  </div>
-</fieldset>
+    name="_entreprise.structure"
+    options="entreprise=Entreprise&ues=Unité Économique et Sociale (UES)"
+    onchange="toggleFields()"
+    required="required" %}
+  </fieldset>
+</div>
 
-<fieldset>
-  <div class=row>
-    <h4>Tranche d'effectifs assujettis de l'<span class="entreprise">entreprise</span><span class="ues">UES</span></h4>
+<div class="row">
+  <fieldset>
+    <legend>Tranche d'effectifs assujettis de l'<span class="entreprise">entreprise</span><span class="ues">UES</span></legend>
     {% include radios.html
-      name="entreprise.effectif.tranche"
-      options="50:250=De 50 à 250 inclus&251:999=De 251 à 999 inclus&1000:=De 1000 ou plus"
-      required="required" %}
-  </div>
-</fieldset>
+    name="entreprise.effectif.tranche"
+    options="50:250=De 50 à 250 inclus&251:999=De 251 à 999 inclus&1000:=De 1000 ou plus"
+    required="required" %}
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset>
+    <div>{% include input.html name="entreprise.siren" label="Numéro Siren de l'entreprise déclarante" value="" readonly=true data-always-readonly=true class="siren" %}</div>
+  </fieldset>
+</div>
+
+<div class="row">
+  <fieldset>{% include input.html name="entreprise.raison_sociale" label="Raison sociale de l'entreprise déclarante" required=true readonly=true data-always-readonly=true class="wide" %}</fieldset>
+</div>
+
+<div class="row">
+  <fieldset>{% include fake_input.html name="entreprise.code_naf" label="Code NAF de l'entreprise déclarante" class="wide" dict="app.config.naf" with-value=true %}</fieldset>
+</div>
 
 <fieldset>
   <div class=row>
@@ -46,12 +60,11 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
 </fieldset>
 
 <fieldset>
-  <p>Adresse du siège de l'entreprise déclarante</p>
+  <legend class="mb-0">Adresse du siège de l'entreprise déclarante</legend>
   <div class=row id="département-selector">
     <div>{% include fake_input.html name="entreprise.région" label="Région" dict="app.config.regions" %}</div>
     <div>{% include fake_input.html name="entreprise.département" label="Département" dict="app.config.departements" %}</div>
   </div>
-
   <div class=row>
     {% include input.html name="entreprise.adresse" label="Adresse" readonly=true data-always-readonly=true class="wide" %}
   </div>
@@ -61,6 +74,7 @@ title: "Périmètre retenu pour le calcul et la publication des indicateurs"
     {% include input.html name="entreprise.commune" label="Commune" readonly=true data-always-readonly=true %}
 
     {% include input.html name="entreprise.code_pays" label="Code pays" readonly=true data-always-readonly=true %}
+
   </div>
 </fieldset>
 

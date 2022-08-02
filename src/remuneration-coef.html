@@ -3,51 +3,52 @@ layout: tunnel
 title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coefficient hiérarchique"
 ---
 
-<hgroup>
-  <h1>{{ page.title }}</h1>
-  <h3>Il faut saisir les écarts de rémunération en % <em>avant</em> application du seuil de pertinence</h3>
-</hgroup>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
+<p class="text-lg">Il faut saisir les écarts de rémunération en % <em>avant</em> application du seuil de pertinence</p>
 
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Moins de 30 ans</th>
-      <th>De 30 à 39 ans</th>
-      <th>De 40 à 49 ans</th>
-      <th>50 ans et plus</th>
-    </tr>
-  </thead>
-
-  <tbody id="container" class="percentage">
-    <template id="looper">
-      <tr>
-        <th>Coefficient {index}</th>
-        <td>
-          {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie {index}" %}
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.:29" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
-        </td>
-        <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.30:39" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
-        </td>
-        <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.40:49" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
-        </td>
-        <td>
-          {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.50:" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
-        </td>
+<div class="overflow-hidden table-wrapper">
+  <table>
+    <thead>
+      <tr class="text-sm">
+        <th></th>
+        <th>Moins de 30 ans</th>
+        <th>De 30 à 39 ans</th>
+        <th>De 40 à 49 ans</th>
+        <th>50 ans et plus</th>
       </tr>
-    </template>
-  </tbody>
-</table>
+    </thead>
 
-<strong>
-  <span id="nombreCategories"></span> catégorie(s) définie(s)
-</strong>
+    <tbody id="container" class="percentage">
+      <template id="looper">
+        <tr>
+          <td class="js-title font-bold text-sm">Coefficient {index}</td>
+          <td>
+            {% include input.html type="hidden" name="indicateurs.rémunérations.catégories[{index}].nom" value="categorie {index}" %}
+            {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.:29" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+          </td>
+          <td>
+            {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.30:39" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+          </td>
+          <td>
+            {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.40:49" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+          </td>
+          <td>
+            {% include input.html type="number" name="indicateurs.rémunérations.catégories[{index}].tranches.50:" step="any" data-not-all-empty=true onblur="notifyPercentage(event)" %}
+          </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
+</div>
 
-<div class="multitable-actions">
-  <button class="add" onclick="addCategory(event)">Ajouter une catégorie</button>
-  <button class="remove" id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
+<div class="mb-2">
+  <p><strong>
+    <span id="nombreCategories"></span> catégorie(s) définie(s)
+  </strong></p>
+  <div class="multitable-actions">
+    <button class="add" onclick="addCategory(event)">Ajouter une catégorie</button>
+    <button class="remove" id="removeCategoryBtn" onclick="removeCategory(event)">Supprimer la dernière ligne</button>
+  </div>
 </div>
 
 <script>
@@ -75,7 +76,7 @@ title: "Ecart de rémunération entre les femmes et les hommes par niveau ou coe
   renameInputs = function() {
     const nodes = Array.from(container.querySelectorAll("tr"))
     nodes.map((node, index) => {
-      const header = node.querySelector("th")
+      const header = node.querySelector(".js-title")
       header.innerText = header.innerText.replace('{index}', index + 1)
 
       const inputs = node.querySelectorAll("input")

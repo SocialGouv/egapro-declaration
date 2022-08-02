@@ -2,37 +2,47 @@
 layout: tunnel
 title: "Informations UES"
 ---
-<h1>{{ page.title }}</h1>
+<h1 class="text-3xl mt-0">{{ page.title }}</h1>
 
-<fieldset>
-  <div class=row>
-    <div>{% include input.html name="entreprise.ues.nom" label="Nom de l'UES" required=true %}</div>
-  </div>
-</fieldset>
+<div class="row">
+  <fieldset>
+    {% include input.html name="entreprise.ues.nom" label="Nom de l'UES" required=true %}
+  </fieldset>
+</div>
 
-<h2>Numéro Siren et Raison sociale des entreprises composant l'UES</h2>
+<h2 class="text-lg mt-0">Numéro Siren et Raison sociale des entreprises composant l'UES</h2>
 
 <p>La Raison sociale est renseignée automatiquement et est non modifiable (source : Répertoire Sirene de l'INSEE).</p>
 
-<fieldset>
-  <div class=row>
-    {% include input.html name="entreprise.siren" label="Siren" class="siren" readonly=true data-always-readonly=true %}
-    {% include input.html name="entreprise.raison_sociale" label="Raison sociale" class="grow" readonly=true data-always-readonly=true %}
+<fieldset class="mb-2">
+    <div class=row>
+      <div>
+        {% include input.html name="entreprise.siren" label="Siren" class="siren" readonly=true data-always-readonly=true %}
+      </div>
+      <div>
+        {% include input.html name="entreprise.raison_sociale" label="Raison sociale" class="grow" readonly=true data-always-readonly=true %}
+      </div>
   </div>
   <div id=container>
     <template id=looper>
       <div class=row>
-        {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" pattern="[0-9]{9}" placeholder="9 chiffres" required=true oninput="checkSirenValidity(event)" loader=true %}
-        {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" class="grow" readonly=true data-always-readonly=true %}
+        <div>
+          {% include input.html name="entreprise.ues.entreprises[{index}].siren" label="Siren" class="siren" pattern="[0-9]{9}" placeholder="9 chiffres" required=true oninput="checkSirenValidity(event)" loader=true %}
+        </div>
+        <div>
+          {% include input.html name="entreprise.ues.entreprises[{index}].raison_sociale" label="Raison sociale" class="grow" readonly=true data-always-readonly=true %}
+        </div>
       </div>
     </template>
   </div>
 
-  <strong><span id="nombreEntreprises"></span> entreprises composent cette UES</strong>
-
   <div class="multitable-actions">
-    <button class=add onclick="addEntreprise(event)">Ajouter une entreprise</button>
-    <button class=remove id="removeEntrepriseBtn" onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
+    <button class="add button--small" onclick="addEntreprise(event)">Ajouter une entreprise</button>
+    <button class="remove button--small" id="removeEntrepriseBtn" onclick="removeEntreprise(event)">Supprimer la dernière ligne</button>
+  </div>
+
+  <div class="mt-2">
+    <strong><span id="nombreEntreprises"></span> entreprises composent cette UES</strong>
   </div>
 </fieldset>
 
