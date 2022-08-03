@@ -1,5 +1,7 @@
 # Egapro - déclaration directe
 
+<span style="color: blue">Ce projet est déprécié. Cf. SocialGouv/egapro</span>
+
 Ce projet est une application cliente qui utilise l'API d'EgaPro, dont elle dépend.
 
 Ce client utilise [Jekyll](https://jekyllrb.com/) pour créer les pages statiques.
